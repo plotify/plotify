@@ -7,26 +7,9 @@
     <link rel="stylesheet" type="text/css" href="layout.css" />
   </head>
   <body>
-    <div id="characters">
-      <div id="characters-toolbar">
-        <label for="characters-search-input">
-          <i class="fa fa-search" aria-hidden="true"></i>
-        </label>
-        <input id="characters-search-input" type="text" placeholder="Charaktere suchen" />
-        <button>
-          <i class="fa fa-plus" aria-hidden="true"></i>
-        </button>
-      </div>
-      <ul data-empty-message="Erstelle deinen ersten Charakter, indem du auf das Plus drückst.">
-        <li>Max Mustermann</li>
-        <li>Rebecca Rademacher</li>
-        <li>Sebastian Schmidt</li>
-        <li>Erika Musterfrau</li>
-        <li>Jasper Meyer</li>
-        <li>Lorem ipsum dolor sit amet consetetur sadipscing</li>
-      </ul>
-    </div>
-    <div id="character">
-    </div>
+    <div id="root"></div>
+    <script>
+      require("./renderer.js");
+    </script>
   </body>
 </html>

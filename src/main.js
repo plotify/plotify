@@ -1,9 +1,9 @@
-const electron = require("electron");
+import electron from "electron";
+import path from "path";
+import url from "url";
+
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-
-const path = require("path");
-const url = require("url");
 
 let mainWindow;
 

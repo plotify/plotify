@@ -14,7 +14,9 @@
   "author": "Sebastian Schmidt <email@sebastian-schmidt.info>",
   "license": "GPL-3.0",
   "dependencies": {
-    "electron": "^1.6.2"
+    "electron": "^1.6.2",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
   },
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "^6.23.0",

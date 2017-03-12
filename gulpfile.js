@@ -41,8 +41,7 @@ gulp.task("babel-js-watch", () => {
 /* Assets Tasks */
 
 const assetsTasks = [
-  "assets-package-json-copy","assets-html-copy", "assets-css-copy",
-  "assets-fonts-copy"];
+  "assets-package-json-copy","assets-html-copy", "assets-css-copy", "assets-fonts-copy"];
 const assetsTasksDev = assetsTasks.concat([
   "assets-html-watch", "assets-css-watch", "assets-fonts-watch"]);
 
