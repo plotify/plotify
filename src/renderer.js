@@ -37,10 +37,12 @@ class App extends React.Component {
 
   addCharacter(event) {
 
-    const firstNames = ["Max", "Erika", "Rebecca", "Sebastian", "Jasper"];
+    const firstNames = ["Max", "Erika", "Rebecca", "Sebastian", "Jasper", "Gesa", "Laura", "Jonas",
+                        "Tim", "Philipp", "Sarah", "Michael", "Lena", "Anna", "Elias"];
     const firstName = this.getRandomElementFromArray(firstNames);
 
-    const lastNames = ["Mustermann", "Musterfrau", "Rademacher", "Schmidt", "Meyer"];
+    const lastNames = ["Mustermann", "Musterfrau", "Rademacher", "Schmidt", "Meyer", "Müller",
+                       "Schneider", "Kruse", "Berg", "Thiel", "Schuhmann", "Zimmer", "Wenzel"];
     const lastName = this.getRandomElementFromArray(lastNames);
 
     const newState = Object.assign({}, this.state,
