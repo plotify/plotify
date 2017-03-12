@@ -76,7 +76,7 @@ class App extends React.Component {
       <div id="characters">
         <div id="characters-toolbar">
           <label htmlFor="characters-search-input"
-                 className={this.state.filter ? 'filter-not-empty' : ''}>
+                 className={this.state.filter ? "filter-not-empty" : ""}>
             <i className="fa fa-search" aria-hidden="true"></i>
           </label>
           <input id="characters-search-input" type="text"
