@@ -1,0 +1,8 @@
+{
+  "icon": {
+    "48x48": "src/app-icons/48.png",
+    "64x64": "src/app-icons/64.png",
+    "96x96": "src/app-icons/96.png",
+    "128x128": "src/app-icons/128.png"
+  }
+}

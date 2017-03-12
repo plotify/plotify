@@ -4,10 +4,13 @@ const watch = require("gulp-watch");
 const clean = require("gulp-clean");
 const runElectron = require("gulp-run-electron");
 const runSequence = require("run-sequence");
+const shell = require("gulp-shell");
 
 const paths = {
   src: "./src",
   build: "./build",
+  distribution: "./build/distribution",
+  installers: "./build/distribution/installers"
 };
 
 
@@ -92,6 +95,28 @@ gulp.task("electron-watch", () => {
 });
 
 
+/* Distribution Tasks */
+
+const electronVersion = "1.4.13";
+
+gulp.task("install-production-dependencies", shell.task([
+  "npm --prefix " + paths.build + " install " + paths.build + " --production"
+]));
+
+gulp.task("package-linux", shell.task([
+  "electron-packager " + paths.build + " plotify " +
+        "--out " + paths.distribution + " " +
+        "--electron-version=" + electronVersion + " " +
+        "--platform=linux " +
+        "--arch=x64",
+  "electron-installer-debian " +
+        "--src " + paths.distribution + "/plotify-linux-x64 " +
+        "--dest " + paths.installers + " " +
+        "--arch amd64 " +
+        "--config deb.json"
+]));
+
+
 /* Combined Tasks */
 
 const buildTasks = babelTasks.concat(assetsTasks);
@@ -103,4 +128,11 @@ gulp.task("default", () => {
 
 gulp.task("noui", () => {
   runSequence("clean-build", buildTasksDev);
+});
+
+gulp.task("distribution:linux", () => {
+  runSequence("clean-build",
+              buildTasks,
+              "install-production-dependencies",
+              "package-linux");
 });
