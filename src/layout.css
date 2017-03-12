@@ -1,24 +1,45 @@
-/* Reset */
+/* Base */
+
+:root {
+  --border-color: #CECAC5;
+  --font-color: #333333;
+}
 
 * {
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   border: none;
   font-family: sans-serif;
   font-size: 14px;
   box-sizing: border-box;
-  color: #333333;
+  color: var(--font-color);
 }
 
 html, body, #root {
+  background-color: #FAFAFA;
+  -webkit-user-select: none;
+  cursor: default;
+  line-height: 1.4;
   height: 100%;
   width: 100%;
 }
 
-body {
-  -webkit-user-select: none;
-  cursor: default;
+::selection {
+  background-color: #EC7240;
+  color: #FFFFFF;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #E6E6E6;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #EE875D;
 }
 
 ul, ol, li {
@@ -34,36 +55,6 @@ input, input:focus, input:hover {
 }
 
 
-/* Base */
-
-:root {
-  /*--border-color: #aea79f;*/
-  --border-color: #CECAC5;
-}
-
-body {
-  background-color: #fafafa;
-  line-height: 1.4;
-}
-
-::selection {
-  background-color: #ec7240;
-  color: #ffffff;
-}
-
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-::-webkit-scrollbar-track {
-    background-color: #e6e6e6;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color: #ee875d;
-}
-
-
 /* Characters */
 
 #characters {
@@ -74,7 +65,7 @@ body {
 }
 
 #characters-toolbar {
-  background-color: #f6f6f5;
+  background-color: #F6F6F5;
   height: 45px;
   padding: 0.5em;
   position: relative;
@@ -87,7 +78,11 @@ body {
 }
 
 #characters-toolbar label i {
-  color: #aea79f;
+  color: #AEA79F;
+}
+
+#characters-toolbar label.filter-not-empty i {
+  color: var(--font-color);
 }
 
 #characters-toolbar input {
@@ -100,7 +95,7 @@ body {
 }
 
 #characters-toolbar input::-webkit-input-placeholder {
-  color: #aea79f;
+  color: #AEA79F;
 }
 
 #characters-toolbar input:focus {
@@ -127,7 +122,7 @@ body {
 }
 
 #characters ul {
-  background-color: #f6f6f5;
+  background-color: #F6F6F5;
   border-top: 1px solid var(--border-color);
   height: calc(100% - 45px);
   overflow-y: auto;
@@ -141,7 +136,7 @@ body {
 }
 
 #characters li {
-  background-color: #ffffff;
+  background-color: #FFFFFF;
   border-bottom: 1px solid var(--border-color);
   padding: 1em;
   text-overflow: ellipsis;
