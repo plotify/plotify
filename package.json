@@ -2,13 +2,11 @@
 
   "name": "plotify",
   "version": "0.1.0-SNAPSHOT",
-  "description": "",
-
-  "productName": "Plotify",
-  "productDescription": "Plane deine Charaktere, Handlungsorte, Szenen und erschaffe deine eigene Welt!",
+  "description": "Plane die Charaktere deiner Geschichte und erschaffe eine eigene Welt!",
   "homepage": "https://github.com/SebastianSchmidt/plotify",
 
-  "private": true,
+  "productName": "Plotify",
+  "productDescription": "Plane die Charaktere deiner Geschichte und erschaffe eine eigene Welt!",
 
   "main": "main.js",
   "scripts": {
@@ -16,12 +14,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "distribution:linux": "gulp distribution:linux"
   },
+
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git@github.com:SebastianSchmidt/plotify.git"
   },
+
   "author": "Sebastian Schmidt <email@sebastian-schmidt.info>",
   "license": "GPL-3.0",
+
   "dependencies": {
     "electron": "^1.6.2",
     "react": "^15.4.2",
@@ -42,4 +44,5 @@
   "optionalDependencies": {
     "electron-installer-debian": "^0.5.0"
   }
+
 }
