@@ -91,7 +91,7 @@ gulp.task("assets-fonts-watch", () => {
 
 const electronTasks = ["electron-run", "electron-watch"];
 
-gulp.task("electron-run",  () => {
+gulp.task("electron-run", () => {
   return gulp.src(paths.build.app).pipe(runElectron());
 });
 
