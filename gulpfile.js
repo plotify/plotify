@@ -8,9 +8,12 @@ const shell = require("gulp-shell");
 
 const paths = {
   src: "./src",
-  build: "./build",
-  distribution: "./build/distribution",
-  installers: "./build/distribution/installers"
+  build: {
+    root: "./build",
+    app: "./build/app",
+    distribution: "./build/distribution",
+    installers: "./build/distribution/installers"
+  }
 };
 
 const electronVersion = require("./package.json").dependencies.electron;
@@ -19,7 +22,7 @@ const electronVersion = require("./package.json").dependencies.electron;
 /* Common Tasks */
 
 gulp.task("clean-build", () => {
-  return gulp.src(paths.build, {read: false})
+  return gulp.src(paths.build.root, {read: false})
     .pipe(clean());
 });
 
@@ -35,7 +38,7 @@ gulp.task("babel-js-compile", () => {
       "presets": ["latest"],
       "plugins": ["transform-react-jsx"]
     }))
-    .pipe(gulp.dest(paths.build));
+    .pipe(gulp.dest(paths.build.app));
 });
 
 gulp.task("babel-js-watch", () => {
@@ -52,12 +55,12 @@ const assetsTasksDev = assetsTasks.concat([
 
 gulp.task("assets-package-json-copy", () => {
   return gulp.src(["package.json"])
-    .pipe(gulp.dest(paths.build));
+    .pipe(gulp.dest(paths.build.app));
 });
 
 gulp.task("assets-html-copy", () => {
   return gulp.src(paths.src + "/**/*.html")
-    .pipe(gulp.dest(paths.build));
+    .pipe(gulp.dest(paths.build.app));
 });
 
 gulp.task("assets-html-watch", () => {
@@ -66,7 +69,7 @@ gulp.task("assets-html-watch", () => {
 
 gulp.task("assets-css-copy", () => {
   return gulp.src(paths.src + "/**/*.css")
-    .pipe(gulp.dest(paths.build));
+    .pipe(gulp.dest(paths.build.app));
 });
 
 gulp.task("assets-css-watch", () => {
@@ -75,7 +78,7 @@ gulp.task("assets-css-watch", () => {
 
 gulp.task("assets-fonts-copy", () => {
   return gulp.src(paths.src + "/**/*.{eot,svg,ttf,woff,woff2,otf}")
-    .pipe(gulp.dest(paths.build));
+    .pipe(gulp.dest(paths.build.app));
 });
 
 gulp.task("assets-fonts-watch", () => {
@@ -93,25 +96,25 @@ gulp.task("electron-run",  () => {
 });
 
 gulp.task("electron-watch", () => {
-  return gulp.watch(paths.build + "/**/*.*", ["electron-run"]);
+  return gulp.watch(paths.build.app + "/**/*.*", ["electron-run"]);
 });
 
 
 /* Distribution Tasks */
 
 gulp.task("install-production-dependencies", shell.task([
-  "npm --prefix " + paths.build + " install " + paths.build + " --production"
+  "npm --prefix " + paths.build.app + " install " + paths.build.app + " --production"
 ]));
 
 gulp.task("package-linux", shell.task([
-  "electron-packager " + paths.build + " plotify " +
-        "--out " + paths.distribution + " " +
+  "electron-packager " + paths.build.app + " plotify " +
+        "--out " + paths.build.distribution + " " +
         "--electron-version=" + electronVersion + " " +
         "--platform=linux " +
         "--arch=x64",
   "electron-installer-debian " +
-        "--src " + paths.distribution + "/plotify-linux-x64 " +
-        "--dest " + paths.installers + " " +
+        "--src " + paths.build.distribution + "/plotify-linux-x64 " +
+        "--dest " + paths.build.installers + " " +
         "--arch amd64 " +
         "--config deb.json"
 ]));
