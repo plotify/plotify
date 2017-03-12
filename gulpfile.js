@@ -13,6 +13,8 @@ const paths = {
   installers: "./build/distribution/installers"
 };
 
+const electronVersion = require("./package.json").dependencies.electron;
+
 
 /* Common Tasks */
 
@@ -96,8 +98,6 @@ gulp.task("electron-watch", () => {
 
 
 /* Distribution Tasks */
-
-const electronVersion = "1.4.13";
 
 gulp.task("install-production-dependencies", shell.task([
   "npm --prefix " + paths.build + " install " + paths.build + " --production"
