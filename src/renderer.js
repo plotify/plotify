@@ -32,7 +32,7 @@ class App extends React.Component {
   }
 
   getRandomElementFromArray(array) {
-    return array[Math.floor(Math.random() * (array.length - 1 + 1))];
+    return array[Math.floor(Math.random() * array.length)];
   }
 
   addCharacter(event) {
