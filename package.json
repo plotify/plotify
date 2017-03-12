@@ -1,0 +1,19 @@
+{
+  "name": "plotify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:SebastianSchmidt/plotify.git"
+  },
+  "author": "Sebastian Schmidt <email@sebastian-schmidt.info>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "electron": "^1.6.2"
+  }
+}

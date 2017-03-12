@@ -1,0 +1,11 @@
+# Build directory
+build/
+
+# Node modules
+node_modules/
+
+# LibreOffice Lock-Files
+.~lock.*
+
+# Log files
+*.log
