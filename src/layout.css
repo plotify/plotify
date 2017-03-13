@@ -1,8 +1,19 @@
 /* Base */
 
 :root {
+
   --border-color: #CECAC5;
   --font-color: #333333;
+
+  --focus-primary-color: #EC7240;
+  --focus-primary-color-red: 236;
+  --focus-primary-color-green: 114;
+  --focus-primary-color-blue: 64;
+  --focus-secondary-color: #FFFFFF;
+
+  --level-0-background-color: #FAFAFA;
+  --level-1-background-color: #F6F6F5;
+
 }
 
 * {
@@ -17,7 +28,7 @@
 }
 
 html, body, #root {
-  background-color: #FAFAFA;
+  background-color: var(--level-0-background-color);
   -webkit-user-select: none;
   cursor: default;
   line-height: 1.4;
@@ -26,8 +37,8 @@ html, body, #root {
 }
 
 ::selection {
-  background-color: #EC7240;
-  color: #FFFFFF;
+  background-color: var(--focus-primary-color);
+  color: var(--focus-secondary-color);
 }
 
 ::-webkit-scrollbar {
@@ -65,7 +76,7 @@ input, input:focus, input:hover {
 }
 
 #characters-toolbar {
-  background-color: #F6F6F5;
+  background-color: var(--level-1-background-color);
   height: 45px;
   padding: 0.5em;
   position: relative;
@@ -99,9 +110,11 @@ input, input:focus, input:hover {
 }
 
 #characters-toolbar input:focus {
-  border-color: #e95420;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),
-              0 0 8px rgba(233, 84, 32, 0.6);
+  border-color: var(--focus-primary-color);
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075),
+                    0px 0px 8px rgba(var(--focus-primary-color-red),
+                                     var(--focus-primary-color-green),
+                                     var(--focus-primary-color-blue), 0.6);
 }
 
 #characters-toolbar button {
@@ -122,15 +135,16 @@ input, input:focus, input:hover {
 }
 
 #characters ul {
-  background-color: #F6F6F5;
+  background-color: var(--level-1-background-color);
   border-top: 1px solid var(--border-color);
   height: calc(100% - 45px);
   overflow-y: auto;
 }
 
-#characters ul:empty::after {font-size: 1em;
+#characters ul:empty::after {
   content: attr(data-empty-message);
   display: block;
+  font-size: 1em;
   padding: 2em 1em;
   text-align: center;
 }
@@ -142,4 +156,14 @@ input, input:focus, input:hover {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+#characters li.new-character {
+  font-style: italic;
+}
+
+#characters li.current-character {
+  background-color: var(--focus-primary-color);
+  color: var(--focus-secondary-color);
+  font-weight: bold;
 }
