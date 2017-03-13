@@ -23,13 +23,9 @@
   },
 
   "author": "Sebastian Schmidt <email@sebastian-schmidt.info>",
-  "contributors": [{
-    "name": "Sebastian Schmidt",
-    "email": "email@sebastian-schmidt.info"
-    },{
-    "name": "Jasper Meyer",
-    "email": "jasper.meyer@gmx.net"
-    }],
+  "contributors": [
+    { "name": "Sebastian Schmidt", "email": "email@sebastian-schmidt.info" },
+    { "name": "Jasper Meyer",      "email": "jasper.meyer@gmx.net" } ],
   "license": "GPL-3.0",
 
   "dependencies": {
