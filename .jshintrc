@@ -8,5 +8,6 @@
   "curly": true,
   "esversion": 6,
   "node": true,
-  "expr": true
+  "expr": true,
+  "-W138": true
 }
