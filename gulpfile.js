@@ -6,6 +6,10 @@ const runElectron = require("gulp-run-electron");
 const runSequence = require("run-sequence");
 const shell = require("gulp-shell");
 
+const app = {
+  version: "0.1.0"
+};
+
 const paths = {
   src: "./src",
   build: {
@@ -119,6 +123,18 @@ gulp.task("package-linux", shell.task([
         "--config deb.json"
 ]));
 
+gulp.task("package-windows", shell.task([
+  "electron-packager " + paths.build.app + " plotify " +
+        "--out " + paths.build.distribution + " " +
+        "--electron-version=" + electronVersion + " " +
+        "--platform win32 " +
+        "--arch x64",
+  "electron-installer-windows " +
+        "--src " + paths.build.distribution + "/plotify-win32-x64 " +
+        "--dest " + paths.build.installers + " " +
+        "--options.version " + app.version + " " +
+        "--options.iconUrl file://src/app-icons/64.ico"
+]));
 
 /* Combined Tasks */
 
@@ -138,4 +154,11 @@ gulp.task("distribution:linux", () => {
               buildTasks,
               "install-production-dependencies",
               "package-linux");
+});
+
+gulp.task("distribution:windows", () => {
+  runSequence("clean-build",
+              buildTasks,
+              "install-production-dependencies",
+              "package-windows");
 });

@@ -12,7 +12,8 @@
   "scripts": {
     "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "distribution:linux": "gulp distribution:linux"
+    "distribution:linux": "gulp distribution:linux",
+    "distribution:windows": "gulp distribution:windows"
   },
 
   "private": true,
@@ -22,6 +23,13 @@
   },
 
   "author": "Sebastian Schmidt <email@sebastian-schmidt.info>",
+  "contributors": [{
+    "name": "Sebastian Schmidt",
+    "email": "email@sebastian-schmidt.info"
+    },{
+    "name": "Jasper Meyer",
+    "email": "jasper.meyer@gmx.net"
+    }],
   "license": "GPL-3.0",
 
   "dependencies": {
