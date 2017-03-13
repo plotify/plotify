@@ -1,13 +1,10 @@
 {
-
   "name": "plotify",
   "version": "0.1.0-SNAPSHOT",
   "description": "Plane die Charaktere deiner Geschichte und erschaffe eine eigene Welt!",
   "homepage": "https://github.com/SebastianSchmidt/plotify",
-
   "productName": "Plotify",
   "productDescription": "Plane die Charaktere deiner Geschichte und erschaffe eine eigene Welt!",
-
   "main": "main.js",
   "scripts": {
     "start": "gulp",
@@ -15,19 +12,23 @@
     "distribution:linux": "gulp distribution:linux",
     "distribution:windows": "gulp distribution:windows"
   },
-
   "private": true,
   "repository": {
     "type": "git",
     "url": "git@github.com:SebastianSchmidt/plotify.git"
   },
-
   "author": "Sebastian Schmidt <email@sebastian-schmidt.info>",
   "contributors": [
-    { "name": "Sebastian Schmidt", "email": "email@sebastian-schmidt.info" },
-    { "name": "Jasper Meyer",      "email": "jasper.meyer@gmx.net" } ],
+    {
+      "name": "Sebastian Schmidt",
+      "email": "email@sebastian-schmidt.info"
+    },
+    {
+      "name": "Jasper Meyer",
+      "email": "jasper.meyer@gmx.net"
+    }
+  ],
   "license": "GPL-3.0",
-
   "dependencies": {
     "electron": "1.6.2",
     "react": "15.4.2",
@@ -48,7 +49,7 @@
     "run-sequence": "1.2.2"
   },
   "optionalDependencies": {
-    "electron-installer-debian": "0.5.0"
+    "electron-installer-debian": "0.5.0",
+    "electron-installer-windows": "^0.2.0"
   }
-
 }

@@ -133,7 +133,8 @@ gulp.task("package-windows", shell.task([
         "--src " + paths.build.distribution + "/plotify-win32-x64 " +
         "--dest " + paths.build.installers + " " +
         "--options.version " + app.version + " " +
-        "--options.iconUrl file://src/app-icons/64.ico"
+        "--options.iconUrl file://app-icons/64.ico " +
+        "--noMsi"
 ]));
 
 /* Combined Tasks */
