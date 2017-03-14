@@ -7,13 +7,19 @@ import { createStore } from "redux";
 import charactersApp from "./characters/reducers";
 
 import { Provider } from "react-redux";
-import VisibleCharactersList from "./characters/visible-characters-list";
+import VisibleCharactersList from "./characters/containers/visible-characters-list";
+import SelectedCharacter from "./characters/containers/selected-character";
 
 const store = createStore(charactersApp);
 
 class App extends React.Component {
   render() {
-    return(<VisibleCharactersList />);
+    return(
+      <div id="app">
+        <VisibleCharactersList />
+        <SelectedCharacter />
+      </div>
+    );
   }
 }
 

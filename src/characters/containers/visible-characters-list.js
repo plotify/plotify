@@ -6,8 +6,8 @@ import {
   setFilter,
   selectCharacter,
   unselectCharacter
-} from "./actions";
-import CharactersList from "./characters-list";
+} from "../actions";
+import CharactersList from "../presentational/characters-list";
 
 const getVisibleCharacters = (characters, filter) => {
   return characters.filter((character) => {

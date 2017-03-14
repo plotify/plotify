@@ -19,7 +19,6 @@
 * {
   margin: 0;
   padding: 0;
-  background-color: #FFFFFF;
   border: none;
   font-family: sans-serif;
   font-size: 14px;
@@ -27,7 +26,7 @@
   color: var(--font-color);
 }
 
-html, body, #root {
+html, body, #root, #app {
   background-color: var(--level-0-background-color);
   -webkit-user-select: none;
   cursor: default;
@@ -66,11 +65,12 @@ input, input:focus, input:hover {
 }
 
 
-/* Characters */
+/* Characters List */
 
 #characters {
   border-right: 1px solid var(--border-color);
   box-shadow: 0 0 7px 0 var(--border-color);
+  float: left;
   height: 100%;
   width: 18em;
 }
@@ -166,4 +166,19 @@ input, input:focus, input:hover {
   background-color: var(--focus-primary-color);
   color: var(--focus-secondary-color);
   font-weight: bold;
+}
+
+
+/* Selected Character */
+
+#character {
+  height: 100%;
+  margin-left: 18em;
+  width: calc(100% - 18em);
+}
+
+#character p {
+  padding-top: calc(45px + 2em);
+  text-align: center;
+  vertical-align: middle;
 }
