@@ -22,7 +22,6 @@ const paths = {
 
 const electronVersion = require("./package.json").dependencies.electron;
 
-
 /* Common Tasks */
 
 gulp.task("clean-build", () => {
@@ -123,18 +122,21 @@ gulp.task("package-linux", shell.task([
         "--config deb.json"
 ]));
 
-gulp.task("package-windows", shell.task([
+gulp.task("package-windows",  shell.task([
   "electron-packager " + paths.build.app + " plotify " +
         "--out " + paths.build.distribution + " " +
         "--electron-version=" + electronVersion + " " +
         "--platform win32 " +
         "--arch x64",
+  // 58s. 72 mb
   "electron-installer-windows " +
         "--src " + paths.build.distribution + "/plotify-win32-x64 " +
         "--dest " + paths.build.installers + " " +
         "--options.version " + app.version + " " +
-        "--options.iconUrl file://src/app-icons/64.ico"
+        "--options.iconUrl file://G:/projects/alpha/plotify/app-icons/64.ico " +
+        "--noMsi"
 ]));
+
 
 /* Combined Tasks */
 

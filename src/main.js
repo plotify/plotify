@@ -5,6 +5,11 @@ import url from "url";
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
+// squirrel startup
+if(require("electron-squirrel-startup")) {
+  app.quit();
+}
+
 let mainWindow;
 
 function createWindow() {
