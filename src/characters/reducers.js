@@ -1,5 +1,13 @@
-import { ADD_CHARACTER, ADD_RANDOM_CHARACTER, SET_FILTER } from "./actions";
+import {
+  ADD_CHARACTER,
+  ADD_RANDOM_CHARACTER,
+  SET_FILTER,
+  SELECT_CHARACTER,
+  UNSELECT_CHARACTER
+} from "./actions";
+
 import { combineReducers } from "redux";
+import uuid from "uuid";
 
 function getRandomElementFromArray(array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -16,11 +24,13 @@ function characters(state = [], action) {
 
     case ADD_CHARACTER:
       return state.concat({
+        id: uuid.v4(),
         name: action.payload.name
       });
 
     case ADD_RANDOM_CHARACTER:
       return state.concat({
+        id: uuid.v4(),
         name: getRandomElementFromArray(firstNames) + " " + getRandomElementFromArray(lastNames)
       });
 
@@ -45,9 +55,27 @@ function filter(state = "", action) {
 
 }
 
+function selected(state = null, action) {
+
+  switch (action.type) {
+
+    case SELECT_CHARACTER:
+      return action.payload.id;
+
+    case UNSELECT_CHARACTER:
+      return null;
+
+    default:
+      return state;
+
+  }
+
+}
+
 const charactersApp = combineReducers({
   characters,
-  filter
+  filter,
+  selected
 });
 
 export default charactersApp;

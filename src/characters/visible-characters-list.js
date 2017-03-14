@@ -1,6 +1,12 @@
 import { connect } from "react-redux";
 
-import { addCharacter, addRandomCharacter, setFilter } from "./actions";
+import {
+  addCharacter,
+  addRandomCharacter,
+  setFilter,
+  selectCharacter,
+  unselectCharacter
+} from "./actions";
 import CharactersList from "./characters-list";
 
 const getVisibleCharacters = (characters, filter) => {
@@ -25,7 +31,8 @@ const mapStateToProps = (state) => {
   return {
     characters: getVisibleCharacters(state.characters, state.filter),
     emptyMessage: getEmptyMessage(state.characters, state.filter),
-    filter: state.filter
+    filter: state.filter,
+    selectedCharacterId: state.selected
   };
 };
 
@@ -39,6 +46,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSetFilter: (filter) => {
       dispatch(setFilter(filter));
+    },
+    onSelectCharacter: (id) => {
+      dispatch(selectCharacter(id));
+    },
+    onUnselectCharacter: () => {
+      dispatch(unselectCharacter());
     }
   };
 };

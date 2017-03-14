@@ -162,7 +162,7 @@ input, input:focus, input:hover {
   font-style: italic;
 }
 
-#characters li.current-character {
+#characters li.selected-character {
   background-color: var(--focus-primary-color);
   color: var(--focus-secondary-color);
   font-weight: bold;

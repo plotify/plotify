@@ -21,7 +21,15 @@ export default class CharactersList extends React.Component {
         </div>
         <ul data-empty-message={this.props.emptyMessage}>
           {this.props.characters.map((character, index) => {
-            return <CharacterListElement name={character.name} key={index} />;
+            return (
+              <CharacterListElement
+                name={character.name}
+                key={character.id}
+                selectedCharacter={this.props.selectedCharacterId === character.id}
+                newCharacter={false}
+                onSelectCharacter={() => this.props.onSelectCharacter(character.id) }
+                onUnselectCharacter={() => this.props.onUnselectCharacter() } />
+            );
           })}
         </ul>
       </div>
@@ -30,7 +38,35 @@ export default class CharactersList extends React.Component {
 }
 
 export class CharacterListElement extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+    if (event.ctrlKey && this.props.selectedCharacter) {
+      this.props.onUnselectCharacter();
+    } else {
+      this.props.onSelectCharacter();
+    }
+  }
+
   render() {
-    return <li>{this.props.name}</li>;
+
+    let classNames = "";
+
+    if (this.props.selectedCharacter) {
+      classNames = "selected-character";
+    }
+
+    if (this.props.newCharacter) {
+      classNames += " new-character";
+    }
+
+    return (
+      <li className={classNames} onClick={(event) => this.handleClick(event)}>{this.props.name}</li>
+    );
+
   }
 }

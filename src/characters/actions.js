@@ -1,6 +1,8 @@
 export const ADD_CHARACTER = "ADD_CHARACTER";
 export const ADD_RANDOM_CHARACTER = "ADD_RANDOM_CHARACTER";
 export const SET_FILTER = "SET_FILTER";
+export const SELECT_CHARACTER = "SELECT_CHARACTER";
+export const UNSELECT_CHARACTER = "UNSELECT_CHARACTER";
 
 export function addCharacter(name) {
   return {
@@ -17,5 +19,19 @@ export function setFilter(filter) {
   return {
     type: SET_FILTER,
     payload: { filter }
+  };
+}
+
+export function selectCharacter(id) {
+  return {
+    type: SELECT_CHARACTER,
+    payload: { id }
+  };
+}
+
+export function unselectCharacter() {
+  return {
+    type: UNSELECT_CHARACTER,
+    payload: {}
   };
 }
