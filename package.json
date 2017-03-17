@@ -47,10 +47,10 @@
     "gulp-run-electron": "3.0.1",
     "gulp-shell": "0.6.3",
     "gulp-watch": "4.3.11",
-    "run-sequence": "1.2.2"
+    "run-sequence": "1.2.2",
+    "electron-winstaller": "2.5.2"
   },
   "optionalDependencies": {
-    "electron-installer-debian": "0.5.0",
-    "electron-winstaller": "2.5.2"
+    "electron-installer-debian": "0.5.0"
   }
 }
