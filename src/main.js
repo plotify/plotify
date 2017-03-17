@@ -4,9 +4,10 @@ import url from "url";
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
+const squirrel = require("./squirrelEvents");
 
 // squirrel startup
-if(require("electron-squirrel-startup")) {
+if(squirrel.handleEvents()) {
   app.quit();
 }
 
@@ -14,7 +15,13 @@ let mainWindow;
 
 function createWindow() {
 
-  mainWindow = new BrowserWindow({ width: 1000, height: 600 });
+  var path = require("path");
+
+  mainWindow = new BrowserWindow({
+    width: 1000,
+    height: 600,
+    icon: path.join(__dirname, "images/logo-64.png")
+  });
 
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, "index.html"),
