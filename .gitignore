@@ -1,6 +1,9 @@
 # Build directory
 build/
 
+# Installers directory
+installers/
+
 # Node modules
 node_modules/
 

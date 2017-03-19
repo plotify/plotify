@@ -11,6 +11,7 @@ const packageJson = require("./package.json");
 
 const paths = {
   src: "./src",
+  installers: "./installers",
   build: {
     root: "./build",
     app: "./build/app",
@@ -158,13 +159,13 @@ gulp.task("win-package", () => {
       console.log("Creating Windows Installer...");
       var result = electronInstaller.createWindowsInstaller({
         appDirectory: paths.build.distribution + "/plotify-win32-x64",
-        outputDirectory: paths.build.installers,
+        outputDirectory: paths.installers,
         authors: "alpha",
         exe: "Plotify.exe",
         noMsi: true,
         icon: "app-icons/64.ico",
         setupIcon: "app-icons/64.ico",
-        iconUrl: "file://G:/projects/alpha/plotify/app-icons/64.ico"
+        iconUrl: "file://alpha.suhail.uberspace.de/releases/assets/64.ico"
       });
       return result.then(() => {
         console.log("Successfully created Windows Installer!");
