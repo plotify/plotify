@@ -29,7 +29,7 @@ autoUpdater.on("error", function() {
     "Update-Server herstellen.");
   });
 
-autoUpdater.setFeedURL("http://alpha.suhail.uberspace.de:80/releases/plotify/");
+autoUpdater.setFeedURL("https://alpha.suhail.uberspace.de/releases/plotify/");
 autoUpdater.checkForUpdates();
 
 window.autoUpdater = autoUpdater;

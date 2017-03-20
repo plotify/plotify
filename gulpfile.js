@@ -164,7 +164,8 @@ gulp.task("win-package", () => {
         exe: "Plotify.exe",
         noMsi: true,
         icon: "app-icons/64.ico",
-        setupIcon: "app-icons/64.ico"
+        setupIcon: "app-icons/64.ico",
+        iconUrl: "https://alpha.suhail.uberspace.de/releases/assets/64.ico"
       });
       return result.then(() => {
         console.log("Successfully created Windows Installer!");
