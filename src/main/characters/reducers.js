@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import UUID from "../common/uuid";
+import UUID from "../commons/uuid";
 
 import {
   ADD_CHARACTER,

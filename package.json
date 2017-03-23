@@ -8,7 +8,7 @@
   "main": "main.js",
   "scripts": {
     "start": "gulp",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "gulp test",
     "distribution:linux": "gulp distribution:linux",
     "distribution:windows": "gulp distribution:windows"
   },

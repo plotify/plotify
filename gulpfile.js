@@ -214,6 +214,10 @@ gulp.task("noui", () => {
   runSequence("clean-build", buildTasksDev, testsTasksDev);
 });
 
+gulp.task("test", () => {
+  runSequence("clean-build", buildTasks, testsTasks);
+});
+
 gulp.task("distribution:linux", () => {
   runSequence("clean-build",
               buildTasks,

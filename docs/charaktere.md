@@ -6,4 +6,4 @@ Jeder Charakter hat die folgenden Attribute:
 |-----------|----------|------------------------------------------------------------------|
 | id        | UUID     | Ein eindeutiger Bezeichner für den Charakter in Form einer UUID. |
 | name      | String   | Der Name des Charakters.                                         |
-| deleted   | bool     | Wurde der Charakter gelöscht?                                    |
+| deleted   | boolean  | Wurde der Charakter gelöscht?                                    |
