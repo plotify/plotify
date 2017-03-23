@@ -1,8 +1,8 @@
 import {describe, it} from "mocha";
 import {expect} from "chai";
 
-import Character from "../../main/characters/character";
-import UUID from "../../main/commons/uuid";
+import Character from "../../../main/javascript/characters/character";
+import UUID from "../../../main/javascript/commons/uuid";
 
 describe("Character", () => {
 

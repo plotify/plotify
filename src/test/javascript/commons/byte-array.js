@@ -1,7 +1,7 @@
 import {describe, it} from "mocha";
 import {expect} from "chai";
 
-import ByteArray from "../../main/commons/byte-array";
+import ByteArray from "../../../main/javascript/commons/byte-array";
 
 describe("ByteArray", () => {
 

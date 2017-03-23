@@ -1,6 +1,6 @@
 /* jslint browser: true */
 
-const packageJson = require("./package.json");
+const packageJson = require("../package.json");
 const remote = require("electron").remote;
 const autoUpdater = remote.autoUpdater;
 

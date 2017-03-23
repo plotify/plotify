@@ -5,7 +5,7 @@
   "homepage": "https://github.com/SebastianSchmidt/plotify",
   "productName": "Plotify",
   "productDescription": "Plane die Charaktere deiner Geschichte und erschaffe eine eigene Welt!",
-  "main": "main.js",
+  "main": "javascript/main.js",
   "scripts": {
     "start": "gulp",
     "test": "gulp test",

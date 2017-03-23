@@ -14,6 +14,7 @@ const packageJson = require("./package.json");
 
 const paths = {
   src: "./src",
+  icons: "./src/main/resources/app-icons",
   installers: "./installers",
   build: {
     root: "./build",
@@ -160,7 +161,7 @@ gulp.task("win-package", () => {
     dir: paths.build.app.main,
     arch: "x64",
     electronVersion: electronVersion,
-    icon: "app-icons/64.ico",
+    icon: paths.icons + "/64.ico",
     name: packageJson.name,
     platform: "win32",
     overwrite: true,
@@ -187,8 +188,8 @@ gulp.task("win-package", () => {
         authors: "alpha",
         exe: "Plotify.exe",
         noMsi: true,
-        icon: "app-icons/64.ico",
-        setupIcon: "app-icons/64.ico",
+        icon: paths.icons + "/64.ico",
+        setupIcon: paths.icons + "/64.ico",
         iconUrl: "https://alpha.suhail.uberspace.de/releases/assets/64.ico"
       });
       return result.then(() => {

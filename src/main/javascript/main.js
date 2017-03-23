@@ -20,11 +20,11 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
-    icon: path.join(__dirname, "images/logo-64.png")
+    icon: path.join(__dirname, "../resources/app-icons/64.png")
   });
 
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, "index.html"),
+    pathname: path.join(__dirname, "../resources/index.html"),
     protocol: "file:",
     slashes: true
   }));
