@@ -23,11 +23,11 @@ export default class CharactersList extends React.Component {
           {this.props.characters.map((character, index) => {
             return (
               <CharacterListElement
-                name={character.name}
-                key={character.id}
-                selectedCharacter={this.props.selectedCharacterId === character.id}
+                name={character.getName()}
+                key={character.getId()}
+                selectedCharacter={this.props.selectedCharacterId === character.getId()}
                 newCharacter={false}
-                onSelectCharacter={() => this.props.onSelectCharacter(character.id) }
+                onSelectCharacter={() => this.props.onSelectCharacter(character.getId()) }
                 onUnselectCharacter={() => this.props.onUnselectCharacter() } />
             );
           })}

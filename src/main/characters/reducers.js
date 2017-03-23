@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import UUID from "../commons/uuid";
+import Character from "./character";
 
 import {
   ADD_CHARACTER,
@@ -20,19 +20,21 @@ const lastNames = ["Mustermann", "Musterfrau", "Rademacher", "Schmidt", "Meyer",
 
 function characters(state = [], action) {
 
+  let character;
+
   switch (action.type) {
 
     case ADD_CHARACTER:
-      return state.concat({
-        id: UUID.random(),
-        name: action.payload.name
-      });
+      character = new Character();
+      character.setName(action.payload.name);
+      return state.concat(character);
 
     case ADD_RANDOM_CHARACTER:
-      return state.concat({
-        id: UUID.random(),
-        name: getRandomElementFromArray(firstNames) + " " + getRandomElementFromArray(lastNames)
-      });
+      character = new Character();
+      const name = getRandomElementFromArray(firstNames) + " " +
+                   getRandomElementFromArray(lastNames);
+      character.setName(name);
+      return state.concat(character);
 
     default:
       return state;

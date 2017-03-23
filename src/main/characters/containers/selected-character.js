@@ -4,7 +4,7 @@ import Character from "../presentational/character";
 
 const getSelectedCharacter = (characters, selected) => {
   return characters.find((character) => {
-    return character.id === selected;
+    return character.getId() === selected;
   });
 };
 

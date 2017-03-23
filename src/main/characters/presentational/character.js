@@ -6,7 +6,7 @@ export default class Character extends React.Component {
     let character;
 
     if (this.props.character) {
-      character = <p>{this.props.character.name + " ausgewählt."}</p>;
+      character = <p>{this.props.character.getName() + " ausgewählt."}</p>;
     } else {
       character = <p>Wählen Sie einen Charakter aus der Liste aus,<br /> um diesen anzuzeigen.</p>;
     }
