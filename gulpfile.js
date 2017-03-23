@@ -2,11 +2,14 @@ const gulp = require("gulp");
 const babel = require("gulp-babel");
 const watch = require("gulp-watch");
 const clean = require("gulp-clean");
-const runElectron = require("gulp-run-electron");
+const mocha = require("gulp-mocha");
 const runSequence = require("run-sequence");
+
 const shell = require("gulp-shell");
+const runElectron = require("gulp-run-electron");
 const electronInstaller = require("electron-winstaller");
 const winPackager = require("electron-packager");
+
 const packageJson = require("./package.json");
 
 const paths = {
@@ -14,7 +17,11 @@ const paths = {
   installers: "./installers",
   build: {
     root: "./build",
-    app: "./build/app",
+    app: {
+      root: "./build/app",
+      main: "./build/app/main",
+      tests: "./build/app/test"
+    },
     distribution: "./build/distribution",
     installers: "./build/distribution/installers"
   }
@@ -41,7 +48,7 @@ gulp.task("babel-js-compile", () => {
       "presets": ["latest"],
       "plugins": ["transform-react-jsx"]
     }))
-    .pipe(gulp.dest(paths.build.app));
+    .pipe(gulp.dest(paths.build.app.root));
 });
 
 gulp.task("babel-js-watch", () => {
@@ -62,17 +69,17 @@ const assetsTasksDev = assetsTasks.concat([
 
 gulp.task("assets-package-json-copy", () => {
   return gulp.src(["package.json"])
-    .pipe(gulp.dest(paths.build.app));
+    .pipe(gulp.dest(paths.build.app.main));
 });
 
 gulp.task("assets-html-copy", () => {
   return gulp.src(paths.src + "/**/*.html")
-    .pipe(gulp.dest(paths.build.app));
+    .pipe(gulp.dest(paths.build.app.root));
 });
 
 gulp.task("assets-images-copy", () => {
   return gulp.src(paths.src + "/**/*.png")
-    .pipe(gulp.dest(paths.build.app));
+    .pipe(gulp.dest(paths.build.app.root));
 });
 
 gulp.task("assets-html-watch", () => {
@@ -81,7 +88,7 @@ gulp.task("assets-html-watch", () => {
 
 gulp.task("assets-css-copy", () => {
   return gulp.src(paths.src + "/**/*.css")
-    .pipe(gulp.dest(paths.build.app));
+    .pipe(gulp.dest(paths.build.app.root));
 });
 
 gulp.task("assets-css-watch", () => {
@@ -90,7 +97,7 @@ gulp.task("assets-css-watch", () => {
 
 gulp.task("assets-fonts-copy", () => {
   return gulp.src(paths.src + "/**/*.{eot,svg,ttf,woff,woff2,otf}")
-    .pipe(gulp.dest(paths.build.app));
+    .pipe(gulp.dest(paths.build.app.root));
 });
 
 gulp.task("assets-fonts-watch", () => {
@@ -99,27 +106,44 @@ gulp.task("assets-fonts-watch", () => {
 });
 
 
+/* Tests Tasks */
+
+const testsTasks = ["tests-execute"];
+const testsTasksDev = testsTasks.concat(["tests-watch"]);
+
+gulp.task("tests-execute", () => {
+  return gulp.src(paths.build.app.tests + "/**/*.js", { read: false })
+    .pipe(mocha({
+      reporter: "spec"
+    }));
+});
+
+gulp.task("tests-watch", () => {
+  return gulp.watch(paths.build.app.tests + "/**/*.*", ["tests-execute"]);
+});
+
+
 /* Electron Tasks */
 
 const electronTasks = ["electron-run", "electron-watch"];
 
 gulp.task("electron-run", () => {
-  return gulp.src(paths.build.app).pipe(runElectron());
+  return gulp.src(paths.build.app.main).pipe(runElectron());
 });
 
 gulp.task("electron-watch", () => {
-  return gulp.watch(paths.build.app + "/**/*.*", ["electron-run"]);
+  return gulp.watch(paths.build.app.main + "/**/*.*", ["electron-run"]);
 });
 
 
 /* Distribution Tasks */
 
 gulp.task("install-production-dependencies", shell.task([
-  "npm --prefix " + paths.build.app + " install " + paths.build.app + " --production"
+  "npm --prefix " + paths.build.app.main + " install " + paths.build.app.main + " --production"
 ]));
 
 gulp.task("package-linux", shell.task([
-  "electron-packager " + paths.build.app + " plotify " +
+  "electron-packager " + paths.build.app.main + " plotify " +
         "--out " + paths.build.distribution + " " +
         "--electron-version=" + electronVersion + " " +
         "--platform=linux " +
@@ -133,7 +157,7 @@ gulp.task("package-linux", shell.task([
 
 gulp.task("win-package", () => {
   const options = {
-    dir: paths.build.app,
+    dir: paths.build.app.main,
     arch: "x64",
     electronVersion: electronVersion,
     icon: "app-icons/64.ico",
@@ -183,16 +207,17 @@ const buildTasks = babelTasks.concat(assetsTasks);
 const buildTasksDev = babelTasksDev.concat(assetsTasksDev);
 
 gulp.task("default", () => {
-  runSequence("clean-build", buildTasksDev, electronTasks);
+  runSequence("clean-build", buildTasksDev, testsTasksDev, electronTasks);
 });
 
 gulp.task("noui", () => {
-  runSequence("clean-build", buildTasksDev);
+  runSequence("clean-build", buildTasksDev, testsTasksDev);
 });
 
 gulp.task("distribution:linux", () => {
   runSequence("clean-build",
               buildTasks,
+              testsTasks,
               "install-production-dependencies",
               "package-linux");
 });
@@ -200,6 +225,7 @@ gulp.task("distribution:linux", () => {
 gulp.task("distribution:windows", () => {
   runSequence("clean-build",
               buildTasks,
+              testsTasks,
               "install-production-dependencies",
               "win-package");
 });
