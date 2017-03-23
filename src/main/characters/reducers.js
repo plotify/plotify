@@ -1,3 +1,6 @@
+import { combineReducers } from "redux";
+import UUID from "../common/uuid";
+
 import {
   ADD_CHARACTER,
   ADD_RANDOM_CHARACTER,
@@ -5,9 +8,6 @@ import {
   SELECT_CHARACTER,
   UNSELECT_CHARACTER
 } from "./actions";
-
-import { combineReducers } from "redux";
-import uuid from "uuid";
 
 function getRandomElementFromArray(array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -24,13 +24,13 @@ function characters(state = [], action) {
 
     case ADD_CHARACTER:
       return state.concat({
-        id: uuid.v4(),
+        id: UUID.random(),
         name: action.payload.name
       });
 
     case ADD_RANDOM_CHARACTER:
       return state.concat({
-        id: uuid.v4(),
+        id: UUID.random(),
         name: getRandomElementFromArray(firstNames) + " " + getRandomElementFromArray(lastNames)
       });
 
