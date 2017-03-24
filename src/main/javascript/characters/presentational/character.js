@@ -9,13 +9,15 @@ export default class Character extends React.Component {
     if (this.props.character) {
       character = this.renderCharacter();
     } else {
-      character = <span>Wählen Sie einen Charakter aus der Liste aus,<br />
-                        um diesen anzuzeigen.</span>;
+      character = <p className="no-characters-hint">
+                    Wählen Sie einen Charakter aus der Liste aus,<br />
+                    um diesen anzuzeigen.
+                  </p>;
     }
 
     return (
       <div id="character">
-        <p>{character}</p>
+        {character}
       </div>
     );
 
@@ -26,7 +28,9 @@ export default class Character extends React.Component {
       <input
         ref={(input) => { this.nameInput = input; }}
         type="text"
+        placeholder="Name des Charakters"
         value={this.props.character.name}
+        className="character-name"
         onChange={event => {
           this.props.onCharacterNameChanged(this.props.character.id, event.target.value); }} />
     );

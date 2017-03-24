@@ -181,10 +181,19 @@ input, input:focus, input:hover {
   height: 100%;
   margin-left: 18em;
   width: calc(100% - 18em);
+  padding: 1em;
 }
 
-#character p {
+#character p.no-characters-hint {
   padding-top: calc(45px + 2em);
   text-align: center;
   vertical-align: middle;
+}
+
+#character input.character-name {
+  width: 100%;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
