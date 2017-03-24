@@ -7,9 +7,8 @@ import {
   UNSELECT_CHARACTER
 } from "./action-types";
 
-export function addCharacter(name) {
+export function addCharacter() {
   const character = new Character();
-  character.name = name;
   return {
     type: ADD_CHARACTER,
     payload: character

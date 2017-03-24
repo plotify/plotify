@@ -164,7 +164,7 @@ input, input:focus, input:hover {
   white-space: nowrap;
 }
 
-#characters li.new-character {
+#characters li.character-without-name {
   font-style: italic;
 }
 

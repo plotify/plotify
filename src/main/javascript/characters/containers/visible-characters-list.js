@@ -31,14 +31,15 @@ const mapStateToProps = (state) => {
     characters: getVisibleCharacters(state.characters, state.filter),
     emptyMessage: getEmptyMessage(state.characters, state.filter),
     filter: state.filter,
-    selectedCharacterId: state.selected
+    selectedCharacterId: state.selected.id,
+    selectedCharacterIsNew: state.selected.newCharacter
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onAddCharacter: (name) => {
-      dispatch(addCharacter(name));
+    onAddCharacter: () => {
+      dispatch(addCharacter());
     },
     onAddRandomCharacter: () => {
       dispatch(addRandomCharacter());

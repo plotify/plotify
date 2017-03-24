@@ -24,11 +24,18 @@ export default class Character extends React.Component {
   renderCharacter() {
     return (
       <input
+        ref={(input) => { this.nameInput = input; }}
         type="text"
         value={this.props.character.name}
         onChange={event => {
           this.props.onCharacterNameChanged(this.props.character.id, event.target.value); }} />
     );
+  }
+
+  componentDidUpdate() {
+    if (this.nameInput && !this.props.character.name) {
+      this.nameInput.focus();
+    }
   }
 
 }

@@ -43,14 +43,26 @@ function filter(state = "", action) {
   }
 }
 
-function selected(state = null, action) {
+function selected(state = { id: null, newCharacter: false }, action) {
   switch (action.type) {
 
     case SELECT_CHARACTER:
-      return action.payload.id;
+      return {
+        id: action.payload.id,
+        newCharacter: false
+      };
+
+    case ADD_CHARACTER:
+      return {
+        id: action.payload.id,
+        newCharacter: true
+      };
 
     case UNSELECT_CHARACTER:
-      return null;
+      return {
+        id: null,
+        newCharacter: false
+      };
 
     default:
       return state;
