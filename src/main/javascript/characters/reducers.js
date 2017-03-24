@@ -33,7 +33,7 @@ function characters(state = [], action) {
       character = new Character();
       const name = getRandomElementFromArray(firstNames) + " " +
                    getRandomElementFromArray(lastNames);
-      character.setName(name);
+      character.name = name;
       return state.concat(character);
 
     default:

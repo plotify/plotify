@@ -14,15 +14,15 @@ export default class Character {
 
   }
 
-  getId() {
+  get id() {
     return this._id;
   }
 
-  getName() {
+  get name() {
     return this._name;
   }
 
-  setName(name) {
+  set name(name) {
 
     if (typeof name !== "string") {
       throw new TypeError();
@@ -32,11 +32,11 @@ export default class Character {
 
   }
 
-  isDeleted() {
+  get deleted() {
     return this._deleted;
   }
 
-  setDeleted(deleted) {
+  set deleted(deleted) {
 
     if (typeof deleted !== "boolean") {
       throw new TypeError();

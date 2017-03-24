@@ -11,7 +11,7 @@ import CharactersList from "../presentational/characters-list";
 
 const getVisibleCharacters = (characters, filter) => {
   return characters.filter((character) => {
-    return character.getName().toLowerCase().includes(filter.toLowerCase());
+    return character.name.toLowerCase().includes(filter.toLowerCase());
   });
 };
 
