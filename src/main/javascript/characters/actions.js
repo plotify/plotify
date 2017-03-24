@@ -1,20 +1,26 @@
 import Character from "./character";
-
-export const ADD_CHARACTER = "ADD_CHARACTER";
-export const SET_FILTER = "SET_FILTER";
-export const SELECT_CHARACTER = "SELECT_CHARACTER";
-export const UNSELECT_CHARACTER = "UNSELECT_CHARACTER";
+import {
+  ADD_CHARACTER,
+  CHANGE_CHARACTER_NAME,
+  SET_FILTER,
+  SELECT_CHARACTER,
+  UNSELECT_CHARACTER
+} from "./action-types";
 
 export function addCharacter(name) {
-
   const character = new Character();
   character.name = name;
-
   return {
     type: ADD_CHARACTER,
     payload: character
   };
+}
 
+export function changeCharacterName(id, name) {
+  return {
+    type: CHANGE_CHARACTER_NAME,
+    payload: { id, name }
+  };
 }
 
 export function addRandomCharacter() {

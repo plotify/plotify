@@ -65,6 +65,27 @@ input, input:focus, input:hover {
 }
 
 
+/* Input */
+
+#app input {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.5em 0.75em;
+}
+
+#app input::-webkit-input-placeholder {
+  color: #AEA79F;
+}
+
+#app input:focus {
+  border-color: var(--focus-primary-color);
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075),
+                    0px 0px 8px rgba(var(--focus-primary-color-red),
+                                     var(--focus-primary-color-green),
+                                     var(--focus-primary-color-blue), 0.6);
+}
+
+
 /* Characters List */
 
 #characters {
@@ -97,24 +118,9 @@ input, input:focus, input:hover {
 }
 
 #characters-toolbar input {
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 0.5em 0.75em;
   padding-left: 2em;
   width: calc(100% - 3em);
   float: left;
-}
-
-#characters-toolbar input::-webkit-input-placeholder {
-  color: #AEA79F;
-}
-
-#characters-toolbar input:focus {
-  border-color: var(--focus-primary-color);
-  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075),
-                    0px 0px 8px rgba(var(--focus-primary-color-red),
-                                     var(--focus-primary-color-green),
-                                     var(--focus-primary-color-blue), 0.6);
 }
 
 #characters-toolbar button {

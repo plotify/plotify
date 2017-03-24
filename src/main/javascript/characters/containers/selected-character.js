@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-
+import { changeCharacterName } from "../actions";
 import Character from "../presentational/character";
 
 const getSelectedCharacter = (characters, selected) => {
@@ -14,8 +14,17 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onCharacterNameChanged: (id, name) => {
+      dispatch(changeCharacterName(id, name));
+    }
+  };
+};
+
 const SelectedCharacter = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Character);
 
 export default SelectedCharacter;

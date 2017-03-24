@@ -4,13 +4,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { createStore } from "redux";
-import charactersApp from "./characters/reducers";
+import charactersReducer from "./characters/reducers";
 
 import { Provider } from "react-redux";
 import VisibleCharactersList from "./characters/containers/visible-characters-list";
 import SelectedCharacter from "./characters/containers/selected-character";
 
-const store = createStore(charactersApp);
+const store = createStore(charactersReducer);
 
 class App extends React.Component {
   render() {

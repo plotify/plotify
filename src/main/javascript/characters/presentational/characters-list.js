@@ -10,7 +10,6 @@ export default class CharactersList extends React.Component {
             <i className="fa fa-search" aria-hidden="true"></i>
           </label>
           <input
-            id="characters-search-input"
             type="text"
             placeholder="Charaktere suchen"
             value={this.props.filter}
