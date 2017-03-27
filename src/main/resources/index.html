@@ -6,11 +6,14 @@
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="layout.css" />
   </head>
-  <body>
+  <body id="version-012">
     <div id="root"></div>
     <script>
       require("../javascript/updater.js")
       require("../javascript/renderer.js");
+      const package = require("../package.json");
+      const appName = package.productName + " " + package.version;
+      document.title = appName;
     </script>
   </body>
 </html>

@@ -184,7 +184,7 @@ gulp.task("win-package", () => {
       console.log("Creating Windows Installer...");
       var result = electronInstaller.createWindowsInstaller({
         appDirectory: paths.build.distribution + "/plotify-win32-x64",
-        outputDirectory: paths.build.installers,
+        outputDirectory: paths.installers + "/windows",
         authors: "alpha",
         exe: "Plotify.exe",
         noMsi: true,
