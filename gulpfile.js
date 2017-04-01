@@ -1,12 +1,15 @@
+const path = require("path");
+
 const gulp = require("gulp");
 const babel = require("gulp-babel");
 const watch = require("gulp-watch");
 const clean = require("gulp-clean");
 const mocha = require("gulp-mocha");
 const runSequence = require("run-sequence");
-
 const shell = require("gulp-shell");
 const runElectron = require("gulp-run-electron");
+
+const rebuild = require("electron-rebuild").default;
 const electronInstaller = require("electron-winstaller");
 const winPackager = require("electron-packager");
 
@@ -143,6 +146,30 @@ gulp.task("install-production-dependencies", shell.task([
   "npm --prefix " + paths.build.app.main + " install " + paths.build.app.main + " --production"
 ]));
 
+gulp.task("rebuild-production-dependencies", () => {
+
+  const absolutePath = path.normalize(__dirname + "/" + paths.build.app.main);
+  const rebuilder = rebuild(absolutePath, electronVersion, undefined, ["sqlite3"], true);
+
+  const lifecycle = rebuilder.lifecycle;
+
+  lifecycle.on("module-found", (moduleName) => {
+    console.log("Module found: " + moduleName);
+  });
+
+  lifecycle.on("module-done", () => {
+    console.log("Module done.");
+  });
+
+  return rebuilder
+    .then(() => console.info("Rebuild successful."))
+    .catch((e) => {
+      console.error("Rebuild failed.");
+      console.error(e);
+    });
+
+});
+
 gulp.task("package-linux", shell.task([
   "electron-packager " + paths.build.app.main + " plotify " +
         "--out " + paths.build.distribution + " " +
@@ -156,7 +183,8 @@ gulp.task("package-linux", shell.task([
         "--config deb.json"
 ]));
 
-gulp.task("win-package", () => {
+gulp.task("package-windows", () => {
+
   const options = {
     dir: paths.build.app.main,
     arch: "x64",
@@ -177,7 +205,7 @@ gulp.task("win-package", () => {
 
   winPackager(options, (err, appPaths) => {
     if (err) {
-      console.log("Eror packaging: " + err);
+      console.log("Error packaging: " + err);
     } else {
       console.log("Successfully packaged (" + __dirname + "/" + appPaths + ")");
 
@@ -200,6 +228,7 @@ gulp.task("win-package", () => {
     );
     }
   });
+
 });
 
 /* Combined Tasks */
@@ -224,6 +253,7 @@ gulp.task("distribution:linux", () => {
               buildTasks,
               testsTasks,
               "install-production-dependencies",
+              "rebuild-production-dependencies",
               "package-linux");
 });
 
@@ -232,5 +262,6 @@ gulp.task("distribution:windows", () => {
               buildTasks,
               testsTasks,
               "install-production-dependencies",
-              "win-package");
+              "rebuild-production-dependencies",
+              "package-windows");
 });

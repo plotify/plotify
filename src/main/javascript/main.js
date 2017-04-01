@@ -11,6 +11,8 @@ if(squirrel.handleEvents()) {
   app.quit();
 }
 
+require("./characters/model/index");
+
 let mainWindow;
 
 function createWindow() {

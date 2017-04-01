@@ -4,6 +4,15 @@ Plotify ist eine Software für Schriftsteller/innen, mit denen die Charaktere ei
 Geschichte geplant und entwickelt werden können.
 
 
+## Entwicklung
+
+```bash
+npm install
+npm run rebuild
+npm start
+```
+
+
 ## Lizenz
 
 Plotify ist eine freie Software. Jeder darf die Software kostenlos verwenden,
