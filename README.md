@@ -12,6 +12,9 @@ npm run rebuild
 npm start
 ```
 
+Wichtig: Das Modul `electron-rebuild` verwendet das Modul `node-gyp`. Prüfen Sie,
+ob alle notwendige Software für `node-gyp` installiert ist: [Preconditions for node-gyp](https://github.com/nodejs/node-gyp#installation)
+
 
 ## Lizenz
 
