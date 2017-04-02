@@ -1,7 +1,5 @@
-# Build directory
+# Build directories
 build/
-
-# Installers directory
 installers/
 
 # Node modules
@@ -12,3 +10,7 @@ node_modules/
 
 # Log files
 *.log
+
+# IntelliJ IDEA
+.idea/
+*.iml
