@@ -1,4 +1,4 @@
-import UUID from "../commons/uuid";
+import UUID from "../../commons/uuid";
 
 export default class Character {
 

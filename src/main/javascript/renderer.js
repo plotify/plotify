@@ -4,11 +4,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { createStore } from "redux";
-import charactersReducer from "./characters/reducers";
+import charactersReducer from "./characters/ui/reducers";
 
 import { Provider } from "react-redux";
-import VisibleCharactersList from "./characters/containers/visible-characters-list";
-import SelectedCharacter from "./characters/containers/selected-character";
+import VisibleCharactersList from "./characters/ui/containers/visible-characters-list";
+import SelectedCharacter from "./characters/ui/containers/selected-character";
 
 const store = createStore(charactersReducer);
 
