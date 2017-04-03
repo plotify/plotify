@@ -1,7 +1,7 @@
 import { describe, it } from "mocha";
 import { expect } from "chai";
 
-import UUID from "../../../main/javascript/commons/uuid";
+import UUID from "../../../main/shared/commons/uuid";
 
 const exampleBytes = [31, 71, 77, 243,
                       251, 88,

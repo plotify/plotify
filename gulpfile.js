@@ -17,7 +17,7 @@ const packageJson = require("./package.json");
 
 const paths = {
   src: "./src",
-  icons: "./src/main/resources/app-icons",
+  icons: "./src/main/ui/resources/app-icons",
   installers: "./installers",
   build: {
     root: "./build",

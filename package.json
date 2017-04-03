@@ -5,7 +5,7 @@
   "homepage": "https://github.com/SebastianSchmidt/plotify",
   "productName": "Plotify",
   "productDescription": "Plane die Charaktere deiner Geschichte und erschaffe eine eigene Welt!",
-  "main": "javascript/main.js",
+  "main": "main.js",
   "scripts": {
     "rebuild": "electron-rebuild -f -w sqlite3",
     "start": "gulp",
@@ -32,13 +32,13 @@
   "license": "GPL-3.0",
   "dependencies": {
     "electron": "1.6.2",
-    "electron-rebuild": "^1.5.7",
+    "electron-rebuild": "1.5.7",
     "react": "15.4.2",
     "react-dom": "15.4.2",
     "react-redux": "5.0.3",
     "redux": "3.6.0",
     "redux-thunk": "2.2.0",
-    "sqlite3": "^3.1.8"
+    "sqlite3": "3.1.8"
   },
   "devDependencies": {
     "babel-plugin-transform-react-jsx": "6.23.0",
@@ -54,7 +54,10 @@
     "gulp-shell": "0.6.3",
     "gulp-watch": "4.3.11",
     "mocha": "3.2.0",
-    "run-sequence": "1.2.2"
+    "run-sequence": "1.2.2",
+    "sinon": "2.1.0",
+    "sinon-chai": "2.9.0",
+    "tmp": "0.0.31"
   },
   "optionalDependencies": {
     "electron-installer-debian": "0.5.0"

@@ -4,20 +4,22 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { createStore } from "redux";
-import charactersReducer from "./characters/ui/reducers";
-
 import { Provider } from "react-redux";
-import VisibleCharactersList from "./characters/ui/containers/visible-characters-list";
-import SelectedCharacter from "./characters/ui/containers/selected-character";
 
-const store = createStore(charactersReducer);
+import { sendMessageToMain } from "../shared/commons/ipc";
+import { CREATE_STORY } from "../shared/stories/ipc-channels";
+
+sendMessageToMain(CREATE_STORY, (event, payload) => {
+  console.log("New story: " + payload);
+});
+
+const store = createStore((state = {}, action) => { return state; });
 
 class App extends React.Component {
   render() {
     return(
       <div id="app">
-        <VisibleCharactersList />
-        <SelectedCharacter />
+        <h1>Hello world</h1>
       </div>
     );
   }

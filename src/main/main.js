@@ -2,16 +2,10 @@ import electron from "electron";
 import path from "path";
 import url from "url";
 
+require("./model/index");
+
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-const squirrel = require("./squirrelEvents");
-
-// squirrel startup
-if(squirrel.handleEvents()) {
-  app.quit();
-}
-
-require("./characters/model/index");
 
 let mainWindow;
 
@@ -22,11 +16,11 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
-    icon: path.join(__dirname, "../resources/app-icons/64.png")
+    icon: path.join(__dirname, "./ui/resources/app-icons/64.png")
   });
 
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, "../resources/index.html"),
+    pathname: path.join(__dirname, "./ui/index.html"),
     protocol: "file:",
     slashes: true
   }));
