@@ -8,12 +8,15 @@ import Subheader from "material-ui/Subheader";
 import Avatar from "material-ui/Avatar";
 import List from "material-ui/List/List";
 import ListItem from "material-ui/List/ListItem";
+import {Toolbar, ToolbarGroup} from "material-ui/Toolbar";
+import TextField from "material-ui/TextField";
 
 import ContentAdd from "material-ui/svg-icons/content/add";
 // import ContentDelete from "material-ui/svg-icons/content/delete";
 import NavigationRefresh from "material-ui/svg-icons/navigation/refresh";
 import CommunicationChatBubble from "material-ui/svg-icons/communication/chat-bubble";
 import SocialPerson from "material-ui/svg-icons/social/person";
+import ActionSearch from "material-ui/svg-icons/action/search";
 
 import packageJson from "../../package.json";
 
@@ -44,7 +47,16 @@ const mainNavigationStyle = {
 };
 
 const characterListStyle = {
-  float: "left"
+  float: "left",
+  width: "auto"
+};
+
+const searchBarStyles = {
+  background: "#fff",
+  icon: {
+    color: "blue",
+    margin: 5
+  }
 };
 
 export default class PlotifyApp extends React.Component {
@@ -66,6 +78,14 @@ export default class PlotifyApp extends React.Component {
           </div>
 
           <div id="CharacterList" style={characterListStyle}>
+            <Toolbar style={searchBarStyles}>
+              <ToolbarGroup>
+                <ActionSearch style={searchBarStyles.icon} />
+                <TextField
+                  hintText="Suche"
+                />
+              </ToolbarGroup>
+            </Toolbar>
             <List>
                <Subheader>Charaktere</Subheader>
                <ListItem
