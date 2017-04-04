@@ -16,7 +16,13 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
-    icon: path.join(__dirname, "./ui/resources/app-icons/64.png")
+    icon: path.join(__dirname, "./ui/resources/app-icons/64.png"),
+    show: false
+  });
+
+  mainWindow.on("ready-to-show", () => {
+    mainWindow.show();
+    mainWindow.focus();
   });
 
   mainWindow.loadURL(url.format({
