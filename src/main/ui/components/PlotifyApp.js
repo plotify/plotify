@@ -22,13 +22,14 @@ import packageJson from "../../package.json";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
+/*
 import { sendMessageToMain } from "../../shared/commons/ipc";
 import { CREATE_STORY } from "../../shared/stories/ipc-channels";
-
 
 sendMessageToMain(CREATE_STORY, (event, payload) => {
   console.log("New story: " + payload);
 });
+*/
 
 const styles = {
   title: {
