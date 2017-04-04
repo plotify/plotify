@@ -15,7 +15,7 @@ import NavigationRefresh from "material-ui/svg-icons/navigation/refresh";
 import CommunicationChatBubble from "material-ui/svg-icons/communication/chat-bubble";
 import SocialPerson from "material-ui/svg-icons/social/person";
 
-import packageJson from "../../../../../package.json";
+import packageJson from "../../package.json";
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";

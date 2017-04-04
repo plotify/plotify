@@ -82,7 +82,7 @@ gulp.task("assets-html-copy", () => {
 });
 
 gulp.task("assets-images-copy", () => {
-  return gulp.src(paths.src + "/**/*.png")
+  return gulp.src(paths.src + "/**/*.{png,jpg,jpeg,ico}")
     .pipe(gulp.dest(paths.build.app.root));
 });
 
