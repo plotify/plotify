@@ -2,25 +2,28 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
+import darkBaseTheme from "material-ui/styles/baseThemes/darkBaseTheme";
+import PlotifyApp from "./components/PlotifyApp";
+
+import injectTapEventPlugin from "react-tap-event-plugin";
 
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
-import { sendMessageToMain } from "../shared/commons/ipc";
-import { CREATE_STORY } from "../shared/stories/ipc-channels";
-
-sendMessageToMain(CREATE_STORY, (event, payload) => {
-  console.log("New story: " + payload);
-});
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
 
 const store = createStore((state = {}, action) => { return state; });
 
 class App extends React.Component {
   render() {
     return(
-      <div id="app">
-        <h1>Hello world</h1>
-      </div>
+      <MuiThemeProvider>
+        <PlotifyApp/>
+      </MuiThemeProvider>
     );
   }
 }

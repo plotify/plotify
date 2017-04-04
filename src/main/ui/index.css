@@ -23,21 +23,21 @@
   font: caption;
   font-size: 14px;
   box-sizing: border-box;
-  color: var(--font-color);
+  /*color: var(--font-color);*/
 }
 
 html, body, #root, #app {
-  background-color: var(--level-0-background-color);
+  /*background-color: var(--level-0-background-color);*/
   -webkit-user-select: none;
   cursor: default;
-  line-height: 1.4;
+  /*line-height: 1.4;*/
   height: 100%;
   width: 100%;
 }
 
 ::selection {
-  background-color: var(--focus-primary-color);
-  color: var(--focus-secondary-color);
+  /*background-color: var(--focus-primary-color);
+  color: var(--focus-secondary-color);*/
 }
 
 ::-webkit-scrollbar {
@@ -53,15 +53,15 @@ html, body, #root, #app {
 }
 
 ul, ol, li {
-  list-style-type: none;
+  /*list-style-type: none;*/
 }
 
 input, input:focus, input:hover {
-  border: none;
+  /*border: none;*/
 }
 
 :focus {
-  outline: 0;
+  /*outline: 0;*/
 }
 
 
