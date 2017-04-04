@@ -1,22 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import CharacterList from "./character/CharacterList";
 import AppBar from "material-ui/AppBar";
 import IconButton from "material-ui/IconButton";
-import FloatingActionButton from "material-ui/FloatingActionButton";
-import Subheader from "material-ui/Subheader";
-import Avatar from "material-ui/Avatar";
-import List from "material-ui/List/List";
-import ListItem from "material-ui/List/ListItem";
-import {Toolbar, ToolbarGroup} from "material-ui/Toolbar";
-import TextField from "material-ui/TextField";
 
-import ContentAdd from "material-ui/svg-icons/content/add";
-// import ContentDelete from "material-ui/svg-icons/content/delete";
-import NavigationRefresh from "material-ui/svg-icons/navigation/refresh";
+import TextField from "material-ui/TextField";
+import Paper from "material-ui/Paper";
+
+import ActionDelete from "material-ui/svg-icons/action/delete";
+import ContentRedo from "material-ui/svg-icons/content/redo";
+import ContentUndo from "material-ui/svg-icons/content/undo";
 import CommunicationChatBubble from "material-ui/svg-icons/communication/chat-bubble";
 import SocialPerson from "material-ui/svg-icons/social/person";
-import ActionSearch from "material-ui/svg-icons/action/search";
+import { Toolbar, ToolbarGroup } from "material-ui/Toolbar";
+import List from "material-ui/List/List";
+import ListItem from "material-ui/List/ListItem";
 
 import packageJson from "../../package.json";
 
@@ -37,25 +36,25 @@ const styles = {
   },
 };
 
-const letterAvatarStyle = {
-  margin: 5
-};
-
 const mainNavigationStyle = {
-  width: "20%",
-  float: "left"
 };
 
-const characterListStyle = {
-  float: "left",
-  width: "auto"
+const characterDetailStyles = {
+  panel: {
+    padding: 15,
+    height: "auto",
+    width: 300,
+    margin: 20,
+    display: "inline-block"
+  }
 };
 
-const searchBarStyles = {
-  background: "#fff",
-  icon: {
-    color: "blue",
-    margin: 5
+const appBarStyles = {
+  color: "#fff",
+  toolbar: {
+    background: "none",
+    color: "#fff",
+    marginRight: 0
   }
 };
 
@@ -65,8 +64,21 @@ export default class PlotifyApp extends React.Component {
       <div id="PlotifyApp">
         <AppBar
           title={packageJson.productName}
-          iconElementRight={<IconButton tooltip="Redo"><NavigationRefresh /></IconButton>}
-          />
+          style={appBarStyles}>
+          <Toolbar style={appBarStyles.toolbar}>
+            <ToolbarGroup>
+              <IconButton tooltip="Undo">
+                <ContentUndo color="white"/>
+              </IconButton>
+              <IconButton tooltip="Redo">
+                <ContentRedo color="white"/>
+              </IconButton>
+              <IconButton tooltip="Delete">
+                <ActionDelete color="white"/>
+              </IconButton>
+            </ToolbarGroup>
+          </Toolbar>
+          </AppBar>
 
           <div id="MainNavigation" style={mainNavigationStyle}>
             <List>
@@ -77,28 +89,26 @@ export default class PlotifyApp extends React.Component {
             </List>
           </div>
 
-          <div id="CharacterList" style={characterListStyle}>
-            <Toolbar style={searchBarStyles}>
-              <ToolbarGroup>
-                <ActionSearch style={searchBarStyles.icon} />
-                <TextField
-                  hintText="Suche"
-                />
-              </ToolbarGroup>
-            </Toolbar>
-            <List>
-               <Subheader>Charaktere</Subheader>
-               <ListItem
-                 primaryText="Rumpelstielzchen"
-                 leftAvatar={
-                   <Avatar
-                     size={30}
-                     style={letterAvatarStyle}>
-                     R
-                   </Avatar>
-                 }
-               />
-            </List>
+          <CharacterList />
+
+          <div id="CharacterDetails" style={characterDetailStyles}>
+            <Paper style={characterDetailStyles.panel} zDepth={1}>
+              <TextField
+                hintText="Gebe hier den Namen ein"
+                floatingLabelText="Name"
+              />
+            </Paper>
+            <br/>
+            <Paper style={characterDetailStyles.panel} zDepth={1}>
+              <TextField
+                hintText=""
+                floatingLabelText="Körpergröße"
+              />
+              <TextField
+                hintText=""
+                floatingLabelText="Augenfarbe"
+              />
+            </Paper>
           </div>
 
       </div>
