@@ -5,7 +5,44 @@ import app from "../../shared/commons/app";
 import { getConnection, setConnection } from "./connection";
 import { CREATE_STORY } from "../../shared/stories/ipc-channels";
 
-export function getNewFilePath() {
+export function createNewStory() {
+  return new Promise((resolve, reject) => {
+
+    const filePath = getNewFilePath();
+    const mode = sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE;
+
+    const db = new sqlite3.Database(filePath, mode, (error) => {
+
+      if (error) {
+        reject(error);
+      } else {
+        db.close((error) => {
+          resolve(filePath);
+        });
+      }
+
+    });
+
+  });
+}
+
+export function registerCreateStoryIpcChannel(ipcMain) {
+  ipcMain.on(CREATE_STORY, (event, payload) => {
+    createNewStory().then((file) => {
+      event.sender.send(payload.callbackChannel, {
+        error: false,
+        result: file
+      });
+    }).catch((error) => {
+      event.sender.send(payload.callbackChannel, {
+        error: true,
+        result: error
+      });
+    });
+  });
+}
+
+function getNewFilePath() {
 
   const directory = app.getPath("documents");
 
@@ -18,28 +55,5 @@ export function getNewFilePath() {
   } while (fs.existsSync(filePath));
 
   return filePath;
-
-}
-
-export function registerCreateStoryIpcChannel(ipcMain) {
-
-  ipcMain.on(CREATE_STORY, (event, payload) => {
-
-    const filePath = getNewFilePath();
-    const mode = sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE;
-
-    const db = new sqlite3.Database(filePath, mode, (error) => {
-
-      if (error) {
-        // TODO Error handling
-        event.sender.send(payload.callbackChannel, error);
-      } else {
-        db.close();
-        event.sender.send(payload.callbackChannel, filePath);
-      }
-
-    });
-
-  });
 
 }

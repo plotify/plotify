@@ -37,15 +37,17 @@
     "react": "15.4.2",
     "react-dom": "15.4.2",
     "react-redux": "5.0.3",
-    "react-tap-event-plugin": "^2.0.1",
+    "react-tap-event-plugin": "2.0.1",
     "redux": "3.6.0",
     "redux-thunk": "2.2.0",
     "sqlite3": "3.1.8"
   },
   "devDependencies": {
+    "babel-plugin-transform-builtin-extend": "1.1.2",
     "babel-plugin-transform-react-jsx": "6.23.0",
     "babel-preset-latest": "6.22.0",
     "chai": "3.5.0",
+    "chai-as-promised": "6.0.0",
     "electron-packager": "8.5.2",
     "electron-winstaller": "2.5.2",
     "gulp": "3.9.1",
