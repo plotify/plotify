@@ -19,7 +19,7 @@ import { sendToModel } from "../shared/commons/ipc";
 import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
 sendToModel(CREATE_STORY)
   .then(file => sendToModel(OPEN_STORY, file))
-  .then(file => console.log("Story opened: " + file))
+  .then(file => console.log("Story created and opened: " + file))
   .catch(error => console.log("Could not create or open story: " + error));
 */
 
