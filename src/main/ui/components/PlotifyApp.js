@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 
+//---- MATERIAL UI START
 import CharacterList from "./character/CharacterList";
 import AppBar from "material-ui/AppBar";
 import IconButton from "material-ui/IconButton";
@@ -12,15 +15,15 @@ import ActionDelete from "material-ui/svg-icons/action/delete";
 import ContentRedo from "material-ui/svg-icons/content/redo";
 import ContentUndo from "material-ui/svg-icons/content/undo";
 import CommunicationChatBubble from "material-ui/svg-icons/communication/chat-bubble";
-import SocialPerson from "material-ui/svg-icons/social/person";
 import { Toolbar, ToolbarGroup } from "material-ui/Toolbar";
 import List from "material-ui/List/List";
 import ListItem from "material-ui/List/ListItem";
+//---- MATERIAL UI COMPONENTS END
 
+//---- INTERNALS START
 import packageJson from "../../package.json";
-
-import { createStore } from "redux";
-import { Provider } from "react-redux";
+import MainNavigation from "./MainNavigation";
+//---- INTERNALS END
 
 /*
 import { sendMessageToMain } from "../../shared/commons/ipc";
@@ -30,15 +33,6 @@ sendMessageToMain(CREATE_STORY, (event, payload) => {
   console.log("New story: " + payload);
 });
 */
-
-const styles = {
-  title: {
-    cursor: "pointer",
-  },
-};
-
-const mainNavigationStyle = {
-};
 
 const characterDetailStyles = {
   panel: {
@@ -60,12 +54,35 @@ const appBarStyles = {
 };
 
 export default class PlotifyApp extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      navigationOpen: false,
+    };
+    this.toggleMainNavigation = this.toggleMainNavigation.bind(this);
+    this.closeMainNavigation = this.closeMainNavigation.bind(this);
+  }
+
+  toggleMainNavigation() {
+    this.setState({
+      navigationOpen: !this.state.navigationOpen
+    });
+  }
+
+  closeMainNavigation() {
+    this.setState({
+      navigationOpen: false
+    });
+  }
+
   render() {
     return(
       <div id="PlotifyApp">
         <AppBar
           title={packageJson.productName}
-          style={appBarStyles}>
+          style={appBarStyles}
+          onLeftIconButtonTouchTap={this.toggleMainNavigation}>
           <Toolbar style={appBarStyles.toolbar}>
             <ToolbarGroup>
               <IconButton tooltip="Undo">
@@ -81,35 +98,35 @@ export default class PlotifyApp extends React.Component {
           </Toolbar>
           </AppBar>
 
-          <div id="MainNavigation" style={mainNavigationStyle}>
-            <List>
-               <ListItem
-                 primaryText="Charaktere"
-                 leftIcon={<SocialPerson />}
-               />
-            </List>
-          </div>
+          <MainNavigation
+              open={this.state.navigationOpen}
+              docked={false}
+              onRequestChange={(navigationOpen) => this.setState({navigationOpen})}
+              />
 
-          <CharacterList />
+          <div id="ContentWrapper" onClick={this.closeMainNavigation}>
 
-          <div id="CharacterDetails" style={characterDetailStyles}>
-            <Paper style={characterDetailStyles.panel} zDepth={1}>
-              <TextField
-                hintText="Gebe hier den Namen ein"
-                floatingLabelText="Name"
-              />
-            </Paper>
-            <br/>
-            <Paper style={characterDetailStyles.panel} zDepth={1}>
-              <TextField
-                hintText=""
-                floatingLabelText="Körpergröße"
-              />
-              <TextField
-                hintText=""
-                floatingLabelText="Augenfarbe"
-              />
-            </Paper>
+            <CharacterList />
+
+            <div id="CharacterDetails" style={characterDetailStyles}>
+              <Paper style={characterDetailStyles.panel} zDepth={1}>
+                <TextField
+                  hintText="Gebe hier den Namen ein"
+                  floatingLabelText="Name"
+                />
+              </Paper>
+              <br/>
+              <Paper style={characterDetailStyles.panel} zDepth={1}>
+                <TextField
+                  hintText=""
+                  floatingLabelText="Körpergröße"
+                />
+                <TextField
+                  hintText=""
+                  floatingLabelText="Augenfarbe"
+                />
+              </Paper>
+            </div>
           </div>
 
       </div>
