@@ -13,7 +13,7 @@ Behalte stets den Überblick und erschaffe eine fantastische Geschichte! :books:
 - **Feature 2:**
   At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
   gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-- **Feature 1:**
+- **Feature 3:**
   Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
   sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed..
 
