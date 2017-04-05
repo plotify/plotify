@@ -2,7 +2,7 @@
 
 Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft,
 die Charaktere deiner Geschichte zu planen und zu organisieren.
-Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
+Behalte stets den Überblick und erschaffe eine fantastische Geschichte! :books:
 
 ![Screenshot von Plotify](docs/screenshot.png)
 
