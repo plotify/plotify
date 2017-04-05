@@ -1,19 +1,61 @@
 # Plotify
 
-Plotify ist eine Software für Schriftsteller/innen, mit denen die Charaktere einer
-Geschichte geplant und entwickelt werden können.
+Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft,
+die Charaktere deiner Geschichte zu planen und zu organisieren.
+Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
+
+![Screenshot von Plotify](docs/screenshot.png)
+
+- **Feature 1:**
+  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+  eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+  voluptua.
+- **Feature 2:**
+  At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+- **Feature 1:**
+  Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
+  sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed..
 
 
-## Entwicklung
+## Installation
 
-```bash
-npm install
-npm run rebuild
-npm start
-```
+Lade dir Plotify kostenlos für dein Betriebssystem herunter:
 
-Wichtig: Das Modul `electron-rebuild` verwendet das Modul `node-gyp`. Prüfen Sie,
-ob alle notwendige Software für `node-gyp` installiert ist: [Preconditions for node-gyp](https://github.com/nodejs/node-gyp#installation)
+<table>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/SebastianSchmidt/plotify/releases">
+                <img src="docs/windows-logo.png" />
+            </a>
+         </td>
+        <td align="center" colspan="2">
+            <a href="https://github.com/SebastianSchmidt/plotify/releases">
+                <img src="docs/linux-logo.png" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/SebastianSchmidt/plotify/releases">
+                <b>Windows</b><br />
+                Windows 7, 8, 10
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://github.com/SebastianSchmidt/plotify/releases">
+                <b>.deb</b><br />
+                Ubuntu, Debian
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://github.com/SebastianSchmidt/plotify/releases">
+                <b>.rpm</b><br />
+                Red Hat, Fedora, CentOS
+            </a>
+        </td>
+    </tr>
+</table>
 
 
 ## Lizenz
@@ -22,3 +64,17 @@ Plotify ist eine freie Software. Jeder darf die Software kostenlos verwenden,
 weiterverbreiten, deren Quelltext studieren, verändern und verbessern.
 Plotify ist lizenziert unter der [GNU General Public License Version 3](LICENSE).
 Erfahre mehr über die Bedeutung von [freier Software](https://www.gnu.org/philosophy/free-sw.de.html).
+
+
+## Entwicklung
+
+```bash
+git clone https://github.com/SebastianSchmidt/plotify.git
+cd plotify
+npm install
+npm run rebuild
+npm start
+```
+
+Wichtig: Das Modul `electron-rebuild` verwendet das Modul `node-gyp`. Prüfen Sie,
+ob alle notwendige Software für `node-gyp` installiert ist: [Preconditions for node-gyp](https://github.com/nodejs/node-gyp#installation)
