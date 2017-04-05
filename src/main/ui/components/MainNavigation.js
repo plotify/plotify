@@ -6,13 +6,17 @@ import ReactDOM from "react-dom";
 //------ COMPONENTS START
 import List from "material-ui/List/List";
 import ListItem from "material-ui/List/ListItem";
+import Menu from "material-ui/Menu";
 import MenuItem from "material-ui/MenuItem";
 import Drawer from "material-ui/Drawer";
-import { Toolbar, ToolbarGroup } from "material-ui/Toolbar";
 //------ COMPONENTS END
 //------ ICONS START
 import SocialPerson from "material-ui/svg-icons/social/person";
+import ActionDelete from "material-ui/svg-icons/action/delete";
 //------ ICONS END
+//------ LAYOUT START
+import spacing from "material-ui/styles/spacing";
+//------ LAYOUT END
 //---- MATERIAL UI COMPONENTS END
 
 //---- INTERNALS START
@@ -20,49 +24,36 @@ import packageJson from "../../package.json";
 //---- INTERNALS END
 
 const styles = {
-  appBar: {
-    color: "#fff"
+  menu: {
+    position: "relative",
+    height: "100%"
   },
   menuItem: {
-
+  },
+  trash: {
+    position: "absolute",
+    bottom: 0,
   }
 };
 
 export default class MainNavigation extends React.Component {
-
   constructor(props) {
     super(props);
-    this.close = this.close.bind(this);
   }
 
-  close() {
-    this.props.onRequestChange(false);
-  }
-
-  render()  {
+  render() {
     return(
-
-      <Drawer id="MainNavigation"
-          style={styles}
-          docked={this.props.docked}
-          width={this.props.width}
-          open={this.props.open}>
-
-          <Toolbar
-            style={styles.toolbar}>
-            {packageJson.productName}
-          </Toolbar>
-
-          <MenuItem
-           style={styles.menuItem}
-           primaryText="Charaktere"
-           leftIcon={<SocialPerson />}
-           onTouchTap={this.close}
-          />
-
-        </Drawer>
-
+      <div style={styles.menu}>
+        <MenuItem tooltip="Charaktere verwalten"
+          leftIcon={
+            <SocialPerson/>
+          }/>
+        <MenuItem style={styles.trash}
+          leftIcon={
+            <ActionDelete/>
+          }>
+        </MenuItem>
+      </div>
     );
   }
-
 }

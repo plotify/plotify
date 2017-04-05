@@ -4,12 +4,8 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 
 //---- MATERIAL UI START
-import CharacterList from "./character/CharacterList";
 import AppBar from "material-ui/AppBar";
 import IconButton from "material-ui/IconButton";
-
-import TextField from "material-ui/TextField";
-import Paper from "material-ui/Paper";
 
 import ActionDelete from "material-ui/svg-icons/action/delete";
 import ContentRedo from "material-ui/svg-icons/content/redo";
@@ -18,11 +14,14 @@ import CommunicationChatBubble from "material-ui/svg-icons/communication/chat-bu
 import { Toolbar, ToolbarGroup } from "material-ui/Toolbar";
 import List from "material-ui/List/List";
 import ListItem from "material-ui/List/ListItem";
-//---- MATERIAL UI COMPONENTS END
+import spacing from "material-ui/styles/spacing";
+//---- MATERIAL UI END
 
 //---- INTERNALS START
 import packageJson from "../../package.json";
 import MainNavigation from "./MainNavigation";
+import CharacterList from "./character/CharacterList";
+import CharacterDetail from "./character/CharacterDetail";
 //---- INTERNALS END
 
 /*
@@ -34,17 +33,42 @@ sendMessageToMain(CREATE_STORY, (event, payload) => {
 });
 */
 
-const characterDetailStyles = {
-  panel: {
-    padding: 15,
-    height: "auto",
-    width: 300,
-    margin: 20,
-    display: "inline-block"
+const styles = {
+  contentWrapper: {
+    position: "fixed",
+    overflow: "auto",
+    top: 64,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  mainNavigation: {
+
+  },
+  columns: {
+    col1: {
+      float: "left",
+      width: spacing.desktopGutter + spacing.desktopGutterLess * 2,
+      borderRight: "1px solid #c2c2c2",
+      height: "100%",
+      overflow: "hidden"
+    },
+    col2: {
+      float: "left",
+      borderRight: "1px solid #c2c2c2",
+      height: "100%",
+      width: 340,
+    },
+    col3: {
+      float: "left",
+      width: "auto",
+      height: "100%",
+    }
   }
 };
 
 const appBarStyles = {
+  position: "absolute",
   color: "#fff",
   toolbar: {
     background: "none",
@@ -59,21 +83,13 @@ export default class PlotifyApp extends React.Component {
     super(props);
     this.state = {
       navigationOpen: false,
+      character: {
+        active: 1,
+      },
+      navigation: {
+        active: 1
+      }
     };
-    this.toggleMainNavigation = this.toggleMainNavigation.bind(this);
-    this.closeMainNavigation = this.closeMainNavigation.bind(this);
-  }
-
-  toggleMainNavigation() {
-    this.setState({
-      navigationOpen: !this.state.navigationOpen
-    });
-  }
-
-  closeMainNavigation() {
-    this.setState({
-      navigationOpen: false
-    });
   }
 
   render() {
@@ -81,54 +97,37 @@ export default class PlotifyApp extends React.Component {
       <div id="PlotifyApp">
         <AppBar
           title={packageJson.productName}
-          style={appBarStyles}
-          onLeftIconButtonTouchTap={this.toggleMainNavigation}>
+          style={appBarStyles}>
           <Toolbar style={appBarStyles.toolbar}>
             <ToolbarGroup>
-              <IconButton tooltip="Undo">
+              <IconButton tooltip="Rückgängig">
                 <ContentUndo color="white"/>
               </IconButton>
-              <IconButton tooltip="Redo">
+              <IconButton tooltip="Wiederherstellen">
                 <ContentRedo color="white"/>
               </IconButton>
-              <IconButton tooltip="Delete">
+              <IconButton tooltip="Löschen">
                 <ActionDelete color="white"/>
               </IconButton>
             </ToolbarGroup>
           </Toolbar>
           </AppBar>
 
-          <MainNavigation
-              open={this.state.navigationOpen}
-              docked={false}
-              onRequestChange={(navigationOpen) => this.setState({navigationOpen})}
+          <div id="ContentWrapper" style={styles.contentWrapper}>
+
+            <div style={styles.columns.col1}>
+              <MainNavigation
+                style={styles.mainNavigation}
+                active={this.state.navigation.active}
               />
-
-          <div id="ContentWrapper" onClick={this.closeMainNavigation}>
-
-            <CharacterList />
-
-            <div id="CharacterDetails" style={characterDetailStyles}>
-              <Paper style={characterDetailStyles.panel} zDepth={1}>
-                <TextField
-                  hintText="Gebe hier den Namen ein"
-                  floatingLabelText="Name"
-                />
-              </Paper>
-              <br/>
-              <Paper style={characterDetailStyles.panel} zDepth={1}>
-                <TextField
-                  hintText=""
-                  floatingLabelText="Körpergröße"
-                />
-                <TextField
-                  hintText=""
-                  floatingLabelText="Augenfarbe"
-                />
-              </Paper>
+            </div>
+            <div style={styles.columns.col2}>
+              <CharacterList />
+            </div>
+            <div style={styles.columns.col3}>
+              <CharacterDetail characterId={this.state.character.active}/>
             </div>
           </div>
-
       </div>
     );
   }
