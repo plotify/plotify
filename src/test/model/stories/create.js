@@ -15,7 +15,7 @@ import app from "../../../main/shared/commons/app";
 chai.use(sinonChai);
 chai.use(chaiAsPromised);
 
-describe("stories/create", () => {
+describe("stories / create", () => {
 
   describe("#createNewStory", () => {
 

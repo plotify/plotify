@@ -50,7 +50,12 @@ gulp.task("babel-js-compile", () => {
   return gulp.src(paths.src + "/**/*.js")
     .pipe(babel({
       "presets": ["latest"],
-      "plugins": ["transform-react-jsx"]
+      "plugins": [
+        "transform-react-jsx",
+        ["babel-plugin-transform-builtin-extend", {
+          globals: ["Error", "Array"]
+        }]
+      ]
     }))
     .pipe(gulp.dest(paths.build.app.root));
 });

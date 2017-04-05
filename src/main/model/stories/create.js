@@ -16,8 +16,9 @@ export function createNewStory() {
       if (error) {
         reject(error);
       } else {
-        db.close();
-        resolve(filePath);
+        db.close((error) => {
+          resolve(filePath);
+        });
       }
 
     });
@@ -28,9 +29,15 @@ export function createNewStory() {
 export function registerCreateStoryIpcChannel(ipcMain) {
   ipcMain.on(CREATE_STORY, (event, payload) => {
     createNewStory().then((file) => {
-      event.sender.send(payload.callbackChannel, file);
+      event.sender.send(payload.callbackChannel, {
+        error: false,
+        result: file
+      });
     }).catch((error) => {
-      event.sender.send(payload.callbackChannel, error);
+      event.sender.send(payload.callbackChannel, {
+        error: true,
+        result: error
+      });
     });
   });
 }
