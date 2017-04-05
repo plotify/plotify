@@ -24,12 +24,12 @@ Lade dir Plotify kostenlos für dein Betriebssystem herunter:
 
 <table>
     <tr>
-        <td align="center">
+        <td align="center" width="50%">
             <a href="https://github.com/SebastianSchmidt/plotify/releases">
                 <img src="docs/windows-logo.png" />
             </a>
          </td>
-        <td align="center" colspan="2">
+        <td align="center" colspan="2" width="50%">
             <a href="https://github.com/SebastianSchmidt/plotify/releases">
                 <img src="docs/linux-logo.png" />
             </a>
