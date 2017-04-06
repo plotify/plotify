@@ -41,20 +41,17 @@ Jeder Eintrag hat die folgenden Attribute:
 
 Charaktere und deren Steckbriefe werden in den folgenden Tabellen in einer
 SQLite-Datenbank abgelegt. Alle Texte werden in der Zeichenkodierung UTF-8
-gespeichert. Für jede Tabellenspalte können die folgenden Merkmale festgelegt
-werden:
+gespeichert.
 
-| Abkürzung | Bedeutung   |
-|-----------|-------------|
-| PK        | Primary Key |
-| NU        | Not null    |
+### characters
 
-### Table: characters
-
-| Name      | Datentyp | Merkmale | Default | Check                      | Foreign key    |
-|-----------|----------|----------|---------|----------------------------|----------------|
-| id        | BLOB     | PK, NU   |         |                            |                |
-| name      | TEXT     | NU       |         |                            |                |
-| deleted   | INTEGER  | NU       | 0       | deleted = 0 OR deleted = 1 | &nbsp;         |
+```sql
+CREATE TABLE `characters` (
+  `id`      BLOB    NOT NULL,
+  `name`    TEXT    NOT NULL,
+  `deleted` INTEGER NOT NULL CHECK(deleted = 0 OR deleted = 1),
+  PRIMARY KEY(id)
+);
+```
 
 Die ID sind die 16 Bytes der UUID des Charakters.
