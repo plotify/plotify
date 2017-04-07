@@ -11,7 +11,7 @@ let mainWindow;
 
 function createWindow() {
 
-  var path = require("path");
+  let path = require("path");
 
   mainWindow = new BrowserWindow({
     width: 1000,

@@ -215,7 +215,7 @@ gulp.task("package-windows", () => {
       console.log("Successfully packaged (" + __dirname + "/" + appPaths + ")");
 
       console.log("Creating Windows Installer...");
-      var result = electronInstaller.createWindowsInstaller({
+      let result = electronInstaller.createWindowsInstaller({
         appDirectory: paths.build.distribution + "/plotify-win32-x64",
         outputDirectory: paths.installers + "/windows",
         authors: "alpha",

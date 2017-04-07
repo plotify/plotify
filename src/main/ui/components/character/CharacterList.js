@@ -1,3 +1,4 @@
+
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -8,23 +9,23 @@ import ListItem from "material-ui/List/ListItem";
 import Avatar from "material-ui/Avatar";
 import TextField from "material-ui/TextField";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-import Subheader from "material-ui/Subheader";
 //------ COMPONENTS END
 //------ ICONS START
 import ContentAdd from "material-ui/svg-icons/content/add";
 //------ ICONS END
-
-import spacing from "material-ui/styles/spacing";
 //---- MATERIAL UI COMPONENTS END
 
 //---- INTERNALS START
 import SearchBar from "../search/SearchBar";
+import PlotifyMainTheme, {palette, spacing} from "../../themes/PlotifyMainTheme";
 //---- INTERNALS END
 
 const styles = {
   list: {
+    zIndex: 3,
     position: "relative",
-    height: "100%"
+    height: "100%",
+    backgroundColor: "white",
   },
   characterItem: {
     letterAvatar: {
@@ -32,7 +33,7 @@ const styles = {
     }
   },
   addButton: {
-    marginLeft: "calc(50% - 28px)",
+    marginLeft: "calc(50% - " + spacing.desktopToolbarHeight / 2 + "px)",
     position: "absolute",
     bottom: 26,
   }

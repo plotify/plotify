@@ -3,7 +3,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import getMuiTheme from "material-ui/styles/getMuiTheme";
 import PlotifyApp from "./components/PlotifyApp";
+//------ LAYOUT START
+import PlotifyMainTheme from "./themes/PlotifyMainTheme";
+//------ LAYOUT END
+
 
 import injectTapEventPlugin from "react-tap-event-plugin";
 
@@ -28,7 +33,7 @@ const store = createStore((state = {}, action) => { return state; });
 class App extends React.Component {
   render() {
     return(
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={getMuiTheme(PlotifyMainTheme)}>
         <PlotifyApp/>
       </MuiThemeProvider>
     );
