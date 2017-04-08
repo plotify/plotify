@@ -9,32 +9,86 @@ Jeder Charakter hat die folgenden Attribute:
 
 | Name      | Datentyp | Beschreibung                                                     |
 |-----------|----------|------------------------------------------------------------------|
-| id        | UUID     | Ein eindeutiger Bezeichner für den Charakter in Form einer UUID. |
+| id        | String   | Ein eindeutiger Bezeichner für den Charakter in Form einer UUID. |
 | name      | String   | Der Name des Charakters.                                         |
 | deleted   | boolean  | Wurde der Charakter gelöscht?                                    |
+
+Ein Charakter im JSON-Format könnte beispielsweise folgendermaßen aussehen:
+
+```javascript
+{
+  id: "e926d949-a50b-489b-94be-7d63da9ac028",
+  name: "Max Mustermann",
+  deleted: false
+}
+```
 
 Jedem Charakter ist ein Steckbrief zugeordnet, der aus einer Reihe von
 gruppierten Key-Value-Paaren besteht. Jeder Steckbrief hat die folgenden
 Attribute:
 
-| Name      | Datentyp | Beschreibung                                                     |
-|-----------|----------|------------------------------------------------------------------|
-| id        | UUID     | Die ID des Charakters, dem dieser Steckbrief zugeorndet ist.     |
-| groups    | Group[]  | Ein Array mit den Gruppen des Steckbriefs.                       |
+| Name        | Datentyp | Beschreibung                                                     |
+|-------------|----------|------------------------------------------------------------------|
+| characterId | String   | Die ID des Charakters, dem dieser Steckbrief zugeorndet ist.     |
+| groups      | Group[]  | Ein Array mit den Gruppen des Steckbriefs.                       |
 
 Jede Gruppe hat die folgenden Attribute:
 
-| Name      | Datentyp | Beschreibung                                                     |
-|-----------|----------|------------------------------------------------------------------|
-| title     | String   | Der Titel der Gruppe.                                            |
-| entries   | Entry[]  | Ein Array mit den Einträgen in der Gruppe.                       |
+| Name        | Datentyp | Beschreibung                                                     |
+|-------------|----------|------------------------------------------------------------------|
+| id          | String   | Die ID der Gruppe.                                               |
+| title       | String   | Der Titel der Gruppe.                                            |
+| entries     | Entry[]  | Ein Array mit den Einträgen in der Gruppe.                       |
 
 Jeder Eintrag hat die folgenden Attribute:
 
-| Name      | Datentyp | Beschreibung                                                     |
-|-----------|----------|------------------------------------------------------------------|
-| title     | String   | Der Titel des Eintrags.                                          |
-| value     | String   | Der Wert des Eintrags.                                           |
+| Name        | Datentyp | Beschreibung                                                     |
+|-------------|----------|------------------------------------------------------------------|
+| id          | String   | Die ID des Eintrags.                                             |
+| title       | String   | Der Titel des Eintrags.                                          |
+| value       | String   | Der Wert des Eintrags.                                           |
+
+Ein Steckbrief im JSON-Format könnte beispielsweise folgendermaßen aussehen:
+
+```javascript
+{
+  characterId: "e926d949-a50b-489b-94be-7d63da9ac028",
+  groups: [
+    {
+      id: "d8bec6e8-1f4f-4b3e-b651-71e9a5bbeae4"
+      title: "Äußere Merkmale",
+      entries: [
+        {
+          id: "0a39ceab-71f2-42d5-9daf-be017e1e07f3"
+          title: "Augenfarbe",
+          value: "blau"
+        },
+        {
+          id: "d2b2c642-5a05-4cf1-9793-26b0a7182d4c"
+          title: "Haarfarbe",
+          value: "schwarz"
+        }
+      ]
+    },
+    {
+      id: "d7f899cb-241b-4eb7-8d9f-80be40e587f2"
+      title: "Innere Merkmale",
+      entries: [
+        {
+          id: "3112f49f-f6db-4a66-b73c-e2b0a88ba60c"
+          title: "Interessen",
+          value: "Beispiel sein"
+        },
+        {
+          id: "26c3d90c-d0f5-49ff-81a8-ad2af62e484e"
+          title: "Moralvorstellungen",
+          value: ""
+        }
+      ]
+    }
+  ]
+}
+```
 
 
 ## Tabellen in SQLite
