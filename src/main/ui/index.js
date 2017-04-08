@@ -21,6 +21,12 @@ import injectTapEventPlugin from "react-tap-event-plugin";
  .then(file => console.log("Story created and opened: " + file))
  .catch(error => console.log("Could not create or open story: " + error));
  */
+/* Beispiel für das Abrufen der nicht gelöschten Charaktere:
+import { sendToModel } from "../shared/commons/ipc";
+import { FIND_CHARACTERS } from "../shared/characters/ipc-channels";
+sendToModel(FIND_CHARACTERS, { deleted: false })
+  .then(characters => console.log(characters));*/
+
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";
 

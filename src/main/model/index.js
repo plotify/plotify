@@ -1,9 +1,7 @@
 import { ipcMain } from "electron";
 
-import { registerCreateStoryIpcChannel } from "./stories/create";
-import { registerOpenStoryIpcChannel } from "./stories/open";
-import { registerCloseStoryIpcChannel } from "./stories/close";
+import registerStoryIpcChannels from "./stories";
+import registerCharactersIpcChannels from "./characters";
 
-registerCreateStoryIpcChannel(ipcMain);
-registerOpenStoryIpcChannel(ipcMain);
-registerCloseStoryIpcChannel(ipcMain);
+registerStoryIpcChannels(ipcMain);
+registerCharactersIpcChannels(ipcMain);

@@ -18,7 +18,7 @@ export function sendToModel(channel, args) {
 
     ipcRenderer.send(channel, {
       callbackChannel: callbackChannel,
-      args: args
+      args: args || {}
     });
 
   });
