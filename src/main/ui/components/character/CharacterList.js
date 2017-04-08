@@ -1,24 +1,10 @@
-
 import React from "react";
-import ReactDOM from "react-dom";
-
-//---- MATERIAL UI START
-//------ COMPONENTS START
-import List from "material-ui/List/List";
-import ListItem from "material-ui/List/ListItem";
+import {List, ListItem} from "material-ui/List";
 import Avatar from "material-ui/Avatar";
-import TextField from "material-ui/TextField";
 import FloatingActionButton from "material-ui/FloatingActionButton";
-//------ COMPONENTS END
-//------ ICONS START
 import ContentAdd from "material-ui/svg-icons/content/add";
-//------ ICONS END
-//---- MATERIAL UI COMPONENTS END
-
-//---- INTERNALS START
 import SearchBar from "../search/SearchBar";
-import PlotifyMainTheme, {palette, spacing} from "../../themes/PlotifyMainTheme";
-//---- INTERNALS END
+import {palette, spacing} from "../../themes/PlotifyMainTheme";
 
 const styles = {
   list: {
@@ -39,28 +25,55 @@ const styles = {
   }
 };
 
-export default class CharacterList extends React.Component {
 
+export default class CharacterList extends React.Component {
   render() {
-    return(
+    return (
       <div id="CharacterList" style={styles.list}>
         <SearchBar />
         <List>
-           <ListItem
-             primaryText="Rumpelstielzchen"
-             leftAvatar={
-               <Avatar
-                 size={30}
-                 style={styles.characterItem.letterAvatar}>
-                 R
-               </Avatar>
-             }
-           />
+          {
+            this.props.characters.map((character) => {
+              return (
+                <CharacterListItem
+                  name={character.name}
+                  key={character.id}
+                />
+              );
+            })
+          }
         </List>
         <FloatingActionButton style={styles.addButton}>
           <ContentAdd/>
         </FloatingActionButton>
       </div>
+    );
+  }
+}
+
+class CharacterListItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(event) {
+
+  }
+
+  render() {
+    return (
+      <ListItem
+        hoverColor={palette.accent2Color}
+        primaryText={this.props.name}
+        leftAvatar={
+          <Avatar
+            size={30}
+            style={styles.characterItem.letterAvatar}>
+            {this.props.name.charAt(0)}
+          </Avatar>
+        }
+      />
     );
   }
 }

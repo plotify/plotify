@@ -1,0 +1,25 @@
+
+export const CHANGE_CHARACTER_NAME = "CHANGE_CHARACTER_NAME";
+
+// UI ACTIONS
+export const DESELECT_CHARACTER = "DESELECT_CHARACTER";
+export const SELECT_CHARACTER = "SELECT_CHARACTER";
+export const SET_FILTER = "SET_FILTER";
+export const CHANGE_PAGE = "CHANGE_PAGE";
+
+// MODEL ACTIONS
+//---- CHARACTER
+export const ADD_CHARACTER = "ADD_CHARACTER";
+export const CREATE_CHARACTER = "CREATE_CHARACTER";
+export const SAVE_CHARACTER = "SAVE_CHARACTER";
+export const DELETE_CHARACTER = "DELETE_CHARACTER";
+export const UNDO = "UNDO";
+export const REDO = "REDO";
+
+//---- STORY
+export const CREATE_STORY = "CREATE_STORY";
+export const OPEN_STORY = "OPEN_STORY";
+
+//---- GENERIC
+export const OPEN_SETTINGS = "OPEN_SETTINGS";
+export const OPEN_ABOUT = "OPEN_ABOUT";

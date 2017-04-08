@@ -1,28 +1,16 @@
 import React from "react";
-import ReactDOM from "react-dom";
-
-//---- MATERIAL UI START
-//------ COMPONENTS START
 import TextField from "material-ui/TextField";
 import Paper from "material-ui/Paper";
-import { Toolbar, ToolbarGroup } from "material-ui/Toolbar";
-//------ COMPONENTS END
-//---- MATERIAL UI END
-
-//---- INTERNALS START
-//------ LAYOUT START
-import PlotifyMainTheme, {palette, spacing} from "../../themes/PlotifyMainTheme";
-//------ LAYOUT END
-//---- INTERNALS END
+import {palette, spacing} from "../../themes/PlotifyMainTheme";
 
 /* Beispiel für das Erstellen und Öffnen einer neuen Geschichte:
-import { sendToModel } from "../shared/commons/ipc";
-import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
-sendToModel(CREATE_STORY)
-  .then(file => sendToModel(OPEN_STORY, file))
-  .then(file => console.log("Story created and opened: " + file))
-  .catch(error => console.log("Could not create or open story: " + error));
-*/
+ import { sendToModel } from "../shared/commons/ipc";
+ import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
+ sendToModel(CREATE_STORY)
+ .then(file => sendToModel(OPEN_STORY, file))
+ .then(file => console.log("Story created and opened: " + file))
+ .catch(error => console.log("Could not create or open story: " + error));
+ */
 
 
 const styles = {
@@ -66,7 +54,7 @@ const styles = {
 
 export default class CharacterDetail extends React.Component {
   render() {
-    return(
+    return (
       <div id="CharacterDetails" style={styles}>
         <div id="Attributes" style={styles.attributes}>
           <Paper style={styles.panel} zDepth={1}>
@@ -97,18 +85,18 @@ export default class CharacterDetail extends React.Component {
         </div>
 
         <Paper style={styles.toolbar} zDepth={2} rounded={false}>
-            <TextField
-              hintText="Gebe hier den Namen ein"
-              floatingLabelText="Name"
-              style={styles.toolbar.textField}
-              floatingLabelStyle={styles.toolbar.textField.colors}
-              floatingLabelFocusStyle={styles.toolbar.textField.colors}
-              underlineFocusStyle={styles.toolbar.textField.colors}
-              underlineStyle={styles.toolbar.textField.colors}
-              hintStyle={styles.toolbar.textField.colors}
-              inputStyle={styles.toolbar.textField.colors}
-              defaultValue={this.props.characterId}
-            />
+          <TextField
+            hintText="Gebe hier den Namen ein"
+            floatingLabelText="Name"
+            style={styles.toolbar.textField}
+            floatingLabelStyle={styles.toolbar.textField.colors}
+            floatingLabelFocusStyle={styles.toolbar.textField.colors}
+            underlineFocusStyle={styles.toolbar.textField.colors}
+            underlineStyle={styles.toolbar.textField.colors}
+            hintStyle={styles.toolbar.textField.colors}
+            inputStyle={styles.toolbar.textField.colors}
+            defaultValue={this.props.characterId}
+          />
         </Paper>
 
       </div>
