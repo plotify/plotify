@@ -29,11 +29,13 @@ sendToModel(FIND_CHARACTERS, { deleted: false })
 /* Beispiel für das Erstellen eines Charakters:
 import { sendToModel } from "../shared/commons/ipc";
 import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
-import { CREATE_CHARACTER } from "../shared/characters/ipc-channels";
+import { CREATE_CHARACTER, UPDATE_CHARACTER } from "../shared/characters/ipc-channels";
 sendToModel(CREATE_STORY)
   .then(file => sendToModel(OPEN_STORY, file))
   .then(() => sendToModel(CREATE_CHARACTER))
-  .then(characterId => console.log("Created: " + characterId));*/
+  .then(characterId => sendToModel(UPDATE_CHARACTER,
+    { id: characterId, name: "Max Mustermann", deleted: false }))
+  .then(() => console.log("Charakter erstellt!"));*/
 
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";
