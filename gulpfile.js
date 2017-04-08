@@ -36,8 +36,7 @@ const electronVersion = packageJson.dependencies.electron;
 /* Common Tasks */
 
 gulp.task("clean-build", () => {
-  return gulp.src(paths.build.root, {read: false})
-    .pipe(clean());
+  return gulp.src(paths.build.root, {read: false}).pipe(clean());
 });
 
 
@@ -67,51 +66,20 @@ gulp.task("babel-js-watch", () => {
 
 /* Assets Tasks */
 
-const assetsTasks = [
-  "assets-package-json-copy",
-  "assets-html-copy",
-  "assets-css-copy",
-  "assets-fonts-copy",
-  "assets-images-copy"];
-const assetsTasksDev = assetsTasks.concat([
-  "assets-html-watch", "assets-css-watch", "assets-fonts-watch"]);
+const assetsTasks = ["assets-package-json-copy", "assets-copy"];
+const assetsTasksDev = assetsTasks.concat(["assets-watch"]);
+const assetsPath = paths.src + "/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,eot,ttf,woff,woff2,otf}";
 
 gulp.task("assets-package-json-copy", () => {
-  return gulp.src(["package.json"])
-    .pipe(gulp.dest(paths.build.app.main));
+  return gulp.src(["package.json"]).pipe(gulp.dest(paths.build.app.main));
 });
 
-gulp.task("assets-html-copy", () => {
-  return gulp.src(paths.src + "/**/*.html")
-    .pipe(gulp.dest(paths.build.app.root));
+gulp.task("assets-copy", () => {
+  return gulp.src(assetsPath).pipe(gulp.dest(paths.build.app.root));
 });
 
-gulp.task("assets-images-copy", () => {
-  return gulp.src(paths.src + "/**/*.{png,jpg,jpeg,ico}")
-    .pipe(gulp.dest(paths.build.app.root));
-});
-
-gulp.task("assets-html-watch", () => {
-  return gulp.watch(paths.src + "/**/*.html", ["assets-html-copy"]);
-});
-
-gulp.task("assets-css-copy", () => {
-  return gulp.src(paths.src + "/**/*.css")
-    .pipe(gulp.dest(paths.build.app.root));
-});
-
-gulp.task("assets-css-watch", () => {
-  return gulp.watch(paths.src + "/**/*.css", ["assets-css-copy"]);
-});
-
-gulp.task("assets-fonts-copy", () => {
-  return gulp.src(paths.src + "/**/*.{eot,svg,ttf,woff,woff2,otf}")
-    .pipe(gulp.dest(paths.build.app.root));
-});
-
-gulp.task("assets-fonts-watch", () => {
-  return gulp.watch(paths.src + "/**/*.{eot,svg,ttf,woff,woff2,otf}",
-    ["assets-fonts-copy"]);
+gulp.task("assets-watch", () => {
+  return gulp.watch(assetsPath, ["assets-copy"]);
 });
 
 

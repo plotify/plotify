@@ -1,5 +1,5 @@
-import { ipcMain as ipc } from "electron";
 import { getConnection, setConnection } from "./connection";
+import { sendCallback } from "../../shared/commons/ipc";
 import { OPEN_STORY } from "../../shared/stories/ipc-channels";
 
 import sqlite3 from "sqlite3";
@@ -13,12 +13,12 @@ export function openStory(filePath) {
 
     const mode = sqlite3.OPEN_READWRITE;
 
-    const db = new sqlite3.Database(filePath, mode, (error) => {
+    const connection = new sqlite3.Database(filePath, mode, (error) => {
 
       if (error) {
         reject(error);
       } else {
-        setConnection(db);
+        setConnection(connection);
         resolve(filePath);
       }
 
@@ -36,16 +36,8 @@ export class AnotherStoryAlreadyOpenedError extends Error {
 
 export function registerOpenStoryIpcChannel(ipcMain) {
   ipcMain.on(OPEN_STORY, (event, payload) => {
-    openStory(payload.args).then((file) => {
-      event.sender.send(payload.callbackChannel, {
-        error: false,
-        result: file
-      });
-    }).catch((error) => {
-      event.sender.send(payload.callbackChannel, {
-        error: true,
-        result: error
-      });
-    });
+    openStory(payload.args)
+      .then(file => sendCallback(event, payload, file))
+      .catch(error => sendCallback(event, payload, error, false));
   });
 }

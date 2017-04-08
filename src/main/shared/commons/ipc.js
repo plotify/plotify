@@ -9,10 +9,10 @@ export function sendToModel(channel, args) {
     const callbackChannel = callbackChannelPrefix + UUID.random().toString();
 
     ipcRenderer.once(callbackChannel, (event, message) => {
-      if (message.error) {
-        reject(message.result);
-      } else {
+      if (message.successful) {
         resolve(message.result);
+      } else {
+        reject(message.result);
       }
     });
 
@@ -21,5 +21,12 @@ export function sendToModel(channel, args) {
       args: args
     });
 
+  });
+}
+
+export function sendCallback(originEvent, originPayload, result = undefined, successful = true) {
+  originEvent.sender.send(originPayload.callbackChannel, {
+    successful: successful,
+    result: result
   });
 }
