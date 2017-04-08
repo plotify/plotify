@@ -5,6 +5,8 @@ import app from "../../shared/commons/app";
 import { getConnection, setConnection } from "./connection";
 import { CREATE_STORY } from "../../shared/stories/ipc-channels";
 
+const newStorySqlStatements = loadNewStorySqlStatements();
+
 export function createNewStory() {
   return new Promise((resolve, reject) => {
 
@@ -13,12 +15,13 @@ export function createNewStory() {
 
     const db = new sqlite3.Database(filePath, mode, (error) => {
 
-      if (error) {
-        reject(error);
-      } else {
+      if (!error) {
+        db.exec(newStorySqlStatements);
         db.close((error) => {
           resolve(filePath);
         });
+      } else {
+        reject(error);
       }
 
     });
@@ -40,6 +43,11 @@ export function registerCreateStoryIpcChannel(ipcMain) {
       });
     });
   });
+}
+
+function loadNewStorySqlStatements() {
+  const file = path.join(__dirname, "new-story.sql");
+  return fs.readFileSync(file, "utf-8").toString();
 }
 
 function getNewFilePath() {
