@@ -36,8 +36,7 @@ const electronVersion = packageJson.dependencies.electron;
 /* Common Tasks */
 
 gulp.task("clean-build", () => {
-  return gulp.src(paths.build.root, {read: false})
-    .pipe(clean());
+  return gulp.src(paths.build.root, {read: false}).pipe(clean());
 });
 
 
@@ -72,8 +71,7 @@ const assetsTasksDev = assetsTasks.concat(["assets-watch"]);
 const assetsPath = paths.src + "/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,eot,ttf,woff,woff2,otf}";
 
 gulp.task("assets-package-json-copy", () => {
-  return gulp.src(["package.json"])
-    .pipe(gulp.dest(paths.build.app.main));
+  return gulp.src(["package.json"]).pipe(gulp.dest(paths.build.app.main));
 });
 
 gulp.task("assets-copy", () => {
