@@ -1,4 +1,3 @@
-import { ipcMain as ipc } from "electron";
 import { getConnection, setConnection } from "./connection";
 import { OPEN_STORY } from "../../shared/stories/ipc-channels";
 
@@ -13,12 +12,12 @@ export function openStory(filePath) {
 
     const mode = sqlite3.OPEN_READWRITE;
 
-    const db = new sqlite3.Database(filePath, mode, (error) => {
+    const connection = new sqlite3.Database(filePath, mode, (error) => {
 
       if (error) {
         reject(error);
       } else {
-        setConnection(db);
+        setConnection(connection);
         resolve(filePath);
       }
 

@@ -19,14 +19,16 @@ import { Provider } from "react-redux";
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-/* Beispiel für das Erstellen und Öffnen einer neuen Geschichte:
+/* Beispiel für das Erstellen, Öffnen und Schließen einer neuen Geschichte:
 import { sendToModel } from "../shared/commons/ipc";
-import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
+import { CREATE_STORY, OPEN_STORY,CLOSE_STORY } from "../shared/stories/ipc-channels";
 sendToModel(CREATE_STORY)
   .then(file => sendToModel(OPEN_STORY, file))
   .then(file => console.log("Story created and opened: " + file))
-  .catch(error => console.log("Could not create or open story: " + error));
-*/
+  .then(() => sendToModel(CLOSE_STORY))
+  .then(() => console.log("Story closed."))
+  .catch(error => console.log("Could not create or open story: " + error));*/
+
 
 const store = createStore((state = {}, action) => { return state; });
 
