@@ -1,4 +1,5 @@
 import { getConnection, setConnection } from "./connection";
+import { sendCallback } from "../../shared/commons/ipc";
 import { CLOSE_STORY } from "../../shared/stories/ipc-channels";
 
 export function closeStory() {
@@ -38,13 +39,8 @@ export class CouldNotCloseStoryError extends Error {
 
 export function registerCloseStoryIpcChannel(ipcMain) {
   ipcMain.on(CLOSE_STORY, (event, payload) => {
-    closeStory().then(() => {
-      event.sender.send(payload.callbackChannel, { error: false });
-    }).catch((error) => {
-      event.sender.send(payload.callbackChannel, {
-        error: true,
-        result: error
-      });
-    });
+    closeStory()
+      .then(() => sendCallback(event, payload))
+      .catch(error => sendCallback(event, payload, error, false));
   });
 }

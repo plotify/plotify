@@ -3,6 +3,7 @@ import fs from "fs";
 import sqlite3 from "sqlite3";
 import app from "../../shared/commons/app";
 import { getConnection, setConnection } from "./connection";
+import { sendCallback } from "../../shared/commons/ipc";
 import { CREATE_STORY } from "../../shared/stories/ipc-channels";
 
 const newStorySqlStatements = loadNewStorySqlStatements();
@@ -29,22 +30,6 @@ export function createNewStory() {
   });
 }
 
-export function registerCreateStoryIpcChannel(ipcMain) {
-  ipcMain.on(CREATE_STORY, (event, payload) => {
-    createNewStory().then((file) => {
-      event.sender.send(payload.callbackChannel, {
-        error: false,
-        result: file
-      });
-    }).catch((error) => {
-      event.sender.send(payload.callbackChannel, {
-        error: true,
-        result: error
-      });
-    });
-  });
-}
-
 function loadNewStorySqlStatements() {
   const file = path.join(__dirname, "new-story.sql");
   return fs.readFileSync(file, "utf-8").toString();
@@ -64,4 +49,12 @@ function getNewFilePath() {
 
   return filePath;
 
+}
+
+export function registerCreateStoryIpcChannel(ipcMain) {
+  ipcMain.on(CREATE_STORY, (event, payload) => {
+    createNewStory()
+      .then(file => sendCallback(event, payload, file))
+      .catch(error => sendCallback(event, payload, error, false));
+  });
 }

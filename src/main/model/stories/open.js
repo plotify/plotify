@@ -1,4 +1,5 @@
 import { getConnection, setConnection } from "./connection";
+import { sendCallback } from "../../shared/commons/ipc";
 import { OPEN_STORY } from "../../shared/stories/ipc-channels";
 
 import sqlite3 from "sqlite3";
@@ -35,16 +36,8 @@ export class AnotherStoryAlreadyOpenedError extends Error {
 
 export function registerOpenStoryIpcChannel(ipcMain) {
   ipcMain.on(OPEN_STORY, (event, payload) => {
-    openStory(payload.args).then((file) => {
-      event.sender.send(payload.callbackChannel, {
-        error: false,
-        result: file
-      });
-    }).catch((error) => {
-      event.sender.send(payload.callbackChannel, {
-        error: true,
-        result: error
-      });
-    });
+    openStory(payload.args)
+      .then(file => sendCallback(event, payload, file))
+      .catch(error => sendCallback(event, payload, error, false));
   });
 }
