@@ -26,6 +26,14 @@ import { sendToModel } from "../shared/commons/ipc";
 import { FIND_CHARACTERS } from "../shared/characters/ipc-channels";
 sendToModel(FIND_CHARACTERS, { deleted: false })
   .then(characters => console.log(characters));*/
+/* Beispiel für das Erstellen eines Charakters:
+import { sendToModel } from "../shared/commons/ipc";
+import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
+import { CREATE_CHARACTER } from "../shared/characters/ipc-channels";
+sendToModel(CREATE_STORY)
+  .then(file => sendToModel(OPEN_STORY, file))
+  .then(() => sendToModel(CREATE_CHARACTER))
+  .then(characterId => console.log("Created: " + characterId));*/
 
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";
