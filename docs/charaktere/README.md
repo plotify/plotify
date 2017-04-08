@@ -40,12 +40,16 @@ Jeder Eintrag hat die folgenden Attribute:
 ## Tabellen in SQLite
 
 Charaktere und deren Steckbriefe werden in den folgenden Tabellen in einer
-SQLite-Datenbank abgelegt. Alle Texte werden in der Zeichenkodierung UTF-8
-gespeichert. Die IDs sind die 16 Bytes einer UUID.
+SQLite-Datenbank abgelegt.
 
 ![](tables.png)
 
-### character
+- Alle Texte werden in der Zeichenkodierung UTF-8 gespeichert.
+- Die IDs sind die 16 Bytes einer UUID.
+- Die Spalte `queue` der Tabelle `character_changes_sequence` kann die folgenden
+  Werte enthalten: 0 = past, 1 = future.
+- Die Spalte `type` der Tabelle `character_changes_sequence` kann die folgenden
+  Werte enthalten: 0 = character, 1 = entry_group, 2 = entry.
 
 ```sql
 CREATE TABLE `character` (
@@ -54,22 +58,14 @@ CREATE TABLE `character` (
   PRIMARY KEY(id),
   FOREIGN KEY(`presence_history_id`) REFERENCES character_history(id)
 );
-```
 
-### character_history
-
-```sql
 CREATE TABLE `character_history` (
   `id`      BLOB    NOT NULL,
   `name`    TEXT    NOT NULL,
   `deleted` INTEGER NOT NULL DEFAULT 0 CHECK(deleted = 0 OR deleted = 1),
   PRIMARY KEY(id)
 );
-```
 
-### character_changes_sequence
-
-```sql
 CREATE TABLE `character_changes_sequence` (
   `character_id` BLOB    NOT NULL,
   `queue`        INTEGER NOT NULL CHECK(queue = 0 OR queue = 1),
@@ -78,11 +74,7 @@ CREATE TABLE `character_changes_sequence` (
   `history_id`   BLOB NOT NULL,
   FOREIGN KEY(`character_id`) REFERENCES character(id)
 );
-```
 
-### entry_group
-
-```sql
 CREATE TABLE `entry_group` (
   `character_id`        BLOB NOT NULL,
   `id`                  BLOB NOT NULL,
@@ -91,11 +83,7 @@ CREATE TABLE `entry_group` (
   FOREIGN KEY(`character_id`)        REFERENCES character(id),
   FOREIGN KEY(`presence_history_id`) REFERENCES entry_group_history(id)
 );
-```
 
-### entry_group_history
-
-```sql
 CREATE TABLE `entry_group_history` (
   `id`       BLOB    NOT NULL,
   `title`    TEXT    NOT NULL,
@@ -103,11 +91,7 @@ CREATE TABLE `entry_group_history` (
   `deleted`  INTEGER NOT NULL DEFAULT 0 CHECK(deleted = 0 OR deleted = 1),
   PRIMARY KEY(id)
 );
-```
 
-### entry
-
-```sql
 CREATE TABLE `entry` (
   `group_id`            BLOB NOT NULL,
   `id`                  BLOB NOT NULL,
@@ -116,11 +100,7 @@ CREATE TABLE `entry` (
   FOREIGN KEY(`group_id`)            REFERENCES entry_group(id),
   FOREIGN KEY(`presence_history_id`) REFERENCES entry_history(id)
 );
-```
 
-### entry_history
-
-```sql
 CREATE TABLE `entry_history` (
   `id`       BLOB    NOT NULL,
   `title`    TEXT    NOT NULL,
