@@ -13,29 +13,33 @@ import {pagesReducer} from "./service/reducers";
 import PlotifyMainTheme from "./themes/PlotifyMainTheme";
 
 import injectTapEventPlugin from "react-tap-event-plugin";
-/* Beispiel für das Erstellen und Öffnen einer neuen Geschichte:
- import { sendToModel } from "../shared/commons/ipc";
- import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
- sendToModel(CREATE_STORY)
- .then(file => sendToModel(OPEN_STORY, file))
- .then(file => console.log("Story created and opened: " + file))
- .catch(error => console.log("Could not create or open story: " + error));
- */
-/* Beispiel für das Abrufen der nicht gelöschten Charaktere:
-import { sendToModel } from "../shared/commons/ipc";
-import { FIND_CHARACTERS } from "../shared/characters/ipc-channels";
-sendToModel(FIND_CHARACTERS, { deleted: false })
-  .then(characters => console.log(characters));*/
-/* Beispiel für das Erstellen eines Charakters:
+/* Beispiel:
 import { sendToModel } from "../shared/commons/ipc";
 import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
-import { CREATE_CHARACTER, UPDATE_CHARACTER } from "../shared/characters/ipc-channels";
+import {
+  CREATE_CHARACTER,
+  UPDATE_CHARACTER,
+  FIND_CHARACTERS
+} from "../shared/characters/ipc-channels";
 sendToModel(CREATE_STORY)
   .then(file => sendToModel(OPEN_STORY, file))
+
   .then(() => sendToModel(CREATE_CHARACTER))
   .then(characterId => sendToModel(UPDATE_CHARACTER,
     { id: characterId, name: "Max Mustermann", deleted: false }))
-  .then(() => console.log("Charakter erstellt!"));*/
+  .then(() => sendToModel(CREATE_CHARACTER))
+  .then(characterId => sendToModel(UPDATE_CHARACTER,
+    { id: characterId, name: "Erika Musterfrau", deleted: false }))
+
+  .then(() => sendToModel(CREATE_CHARACTER))
+  .then(characterId => sendToModel(UPDATE_CHARACTER,
+    { id: characterId, name: "Mr Deleted", deleted: true }))
+
+  .then(() => sendToModel(FIND_CHARACTERS, { deleted: false }))
+  .then(characters => console.log(characters))
+  .then(() => sendToModel(FIND_CHARACTERS, { deleted: true }))
+  .then(characters => console.log(characters));
+*/
 
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";

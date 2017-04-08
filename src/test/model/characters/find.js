@@ -15,7 +15,7 @@ chai.use(chaiAsPromised);
 
 describe("characters / find", () => {
 
-  describe("#findCharacters", () => {
+  /*describe("#findCharacters", () => {
 
     it("should return not deleted characters", () => {
       return expect(findCharacters(false)).to.eventually.have.property("length", 2);
@@ -29,7 +29,7 @@ describe("characters / find", () => {
       return expect(findCharacters(true)).to.eventually.have.property("length", 4);
     });
 
-  });
+  });*/
 
   describe("registerFindCharactersIpcChannel", () => {
 
