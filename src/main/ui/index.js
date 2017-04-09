@@ -53,6 +53,16 @@ sendToModel(CREATE_STORY)
     { id: characterId, name: "Max Muster", deleted: false }))
   .then(characterId => sendToModel(UPDATE_CHARACTER,
     { id: characterId, name: "Max Mustermann", deleted: false }));*/
+/* Beispiel für das Öffnen einer Datei:
+import { sendToModel } from "../shared/commons/ipc";
+import { OPEN_STORY_DIALOG } from "../shared/stories/ipc-channels";
+import { CREATE_CHARACTER, UPDATE_CHARACTER } from "../shared/characters/ipc-channels";
+sendToModel(OPEN_STORY_DIALOG)
+  .then(() => sendToModel(CREATE_CHARACTER))
+  .then(characterId => sendToModel(UPDATE_CHARACTER,
+    { id: characterId, name: "Erika", deleted: false }))
+  .then(() => console.log("Opened and character created."))
+  .catch(error => console.log("Error: " + error.message)); */
 
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";

@@ -13,10 +13,14 @@ import sqlite3 from "sqlite3";
 import {
   openStory,
   maxSupportedFileVersion,
-  AnotherStoryAlreadyOpenedError,
-  UnsupportedFileVersionError,
   registerOpenStoryIpcChannel
 } from "../../../main/model/stories/open";
+
+import {
+  AnotherStoryAlreadyOpenedError,
+  UnsupportedFileVersionError
+} from "../../../main/shared/stories/errors";
+
 import { getConnection, setConnection } from "../../../main/model/stories/connection";
 import { OPEN_STORY } from "../../../main/shared/stories/ipc-channels";
 

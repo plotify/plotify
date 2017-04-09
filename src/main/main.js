@@ -2,6 +2,7 @@ import electron from "electron";
 import url from "url";
 
 require("./model/index");
+import { setMainWindow } from "./model/main-window";
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -18,6 +19,8 @@ function createWindow() {
     icon: path.join(__dirname, "./ui/resources/app-icons/64.png"),
     show: false,
   });
+
+  setMainWindow(mainWindow);
 
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();

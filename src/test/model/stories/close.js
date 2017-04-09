@@ -6,10 +6,14 @@ import chaiAsPromised from "chai-as-promised";
 
 import {
   closeStory,
-  NoStoryOpenedError,
-  CouldNotCloseStoryError,
   registerCloseStoryIpcChannel
 } from "../../../main/model/stories/close";
+
+import {
+  NoStoryOpenedError,
+  CouldNotCloseStoryError
+} from "../../../main/shared/stories/errors";
+
 import { getConnection, setConnection } from "../../../main/model/stories/connection";
 import { CLOSE_STORY } from "../../../main/shared/stories/ipc-channels";
 

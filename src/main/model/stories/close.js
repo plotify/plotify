@@ -1,6 +1,10 @@
 import { getConnection, setConnection } from "./connection";
 import { sendCallback } from "../../shared/commons/ipc";
 import { CLOSE_STORY } from "../../shared/stories/ipc-channels";
+import {
+  NoStoryOpenedError,
+  CouldNotCloseStoryError
+} from "../../shared/stories/errors";
 
 export function closeStory() {
   return new Promise((resolve, reject) => {
@@ -21,20 +25,6 @@ export function closeStory() {
     });
 
   });
-}
-
-export class NoStoryOpenedError extends Error {
-  constructor() {
-    super("No story is opened.");
-    this.name = "NoStoryOpenedError";
-  }
-}
-
-export class CouldNotCloseStoryError extends Error {
-  constructor(message) {
-    super(message);
-    this.name = "CouldNotCloseStoryError";
-  }
 }
 
 export function registerCloseStoryIpcChannel(ipcMain) {

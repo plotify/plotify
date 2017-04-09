@@ -1,6 +1,10 @@
 import { getConnection, setConnection } from "./connection";
 import { sendCallback } from "../../shared/commons/ipc";
 import { OPEN_STORY } from "../../shared/stories/ipc-channels";
+import {
+  AnotherStoryAlreadyOpenedError,
+  UnsupportedFileVersionError
+} from "../../shared/stories/errors";
 
 import sqlite3 from "sqlite3";
 
@@ -33,7 +37,7 @@ export function openStory(filePath) {
         const userVersion = row["user_version"];
 
         if (userVersion > maxSupportedFileVersion) {
-          reject(new UnsupportedFileVersionError(userVersion));
+          reject(new UnsupportedFileVersionError(maxSupportedFileVersion, userVersion));
           return;
         }
 
@@ -47,23 +51,7 @@ export function openStory(filePath) {
   });
 }
 
-export class AnotherStoryAlreadyOpenedError extends Error {
-  constructor() {
-    super("Another story has already been opened.");
-    this.name = "AnotherStoryAlreadyOpenedError";
-  }
-}
 
-export class UnsupportedFileVersionError extends Error {
-
-  constructor(unsupportedFileVersion) {
-    super("Unsupported story version.");
-    this.name = "UnsupportedStoryVersionError";
-    this.maxSupportedFileVersion = maxSupportedFileVersion;
-    this.unsupportedFileVersion = unsupportedFileVersion;
-  }
-
-}
 
 export function registerOpenStoryIpcChannel(ipcMain) {
   ipcMain.on(OPEN_STORY, (event, payload) => {
