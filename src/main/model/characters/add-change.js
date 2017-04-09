@@ -12,8 +12,10 @@ function getTypeTable(type) {
       return "character";
     case Type.ENTRY_GROUP:
       return "entry_group";
-    default:
+    case Type.ENTRY:
       return "entry";
+    default:
+      throw new Error("Unknown type.");
   }
 }
 
