@@ -12,7 +12,9 @@ import sqlite3 from "sqlite3";
 
 import {
   openStory,
+  maxSupportedFileVersion,
   AnotherStoryAlreadyOpenedError,
+  UnsupportedFileVersionError,
   registerOpenStoryIpcChannel
 } from "../../../main/model/stories/open";
 import { getConnection, setConnection } from "../../../main/model/stories/connection";
@@ -54,6 +56,41 @@ describe("stories / open", () => {
       const notExistingFile = file + ".not-existing";
       return expect(openStory(notExistingFile)).to.eventually.be.rejectedWith(
         "SQLITE_CANTOPEN: unable to open database file");
+    });
+
+    it("should be rejected if the file version is no supported", () => {
+      return expect(new Promise((resolve, reject) => {
+        const db = new sqlite3.Database(file, sqlite3.OPEN_READWRITE, (error) => {
+
+          if (error) {
+            reject(error);
+            return;
+          }
+
+          db.run("PRAGMA user_version = " + (maxSupportedFileVersion + 1) + ";", (error) => {
+
+            if (error) {
+              reject(error);
+              return;
+            }
+
+            db.close((error) => {
+
+              if (error) {
+                reject(error);
+                return;
+              }
+
+              openStory(file)
+                .then(path => resolve(path))
+                .catch(error => reject(error));
+
+            });
+
+          });
+
+        });
+      })).to.eventually.be.rejected.and.be.an.instanceOf(UnsupportedFileVersionError);
     });
 
   });
