@@ -1,7 +1,7 @@
 import packageJson from "../../package.json";
 
 export default {
-  START: {
+  WELCOME: {
     title: packageJson.productName,
   },
   CHARACTER: {

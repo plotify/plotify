@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-//---- MATERIAL UI START
-//------ COMPONENTS START
+//---- MATERIAL UI WELCOME
+//------ COMPONENTS WELCOME
 import { Toolbar, ToolbarGroup, ToolbarTitle } from "material-ui/Toolbar";
 import ActionSearch from "material-ui/svg-icons/action/search";
 import TextField from "material-ui/TextField";

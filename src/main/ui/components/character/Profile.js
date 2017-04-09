@@ -52,7 +52,7 @@ const styles = {
   }
 };
 
-export default class CharacterDetail extends React.Component {
+export class Profile extends React.Component {
   render() {
     return (
       <div id="CharacterDetails" style={styles}>

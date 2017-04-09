@@ -6,21 +6,23 @@ import ActionDelete from "material-ui/svg-icons/action/delete";
 import ContentRedo from "material-ui/svg-icons/content/redo";
 import ContentUndo from "material-ui/svg-icons/content/undo";
 import {palette, spacing} from "../../themes/PlotifyMainTheme";
-import MainNavigation from "../navigation/MainNavigation";
-import CharacterList from "../character/CharacterList";
-import CharacterDetail from "../character/CharacterDetail";
-import ActionMenu from "../menu/ActionMenu";
-import StartPage from "../StartPage";
-import Pages from "../../constants/pages";
+import MainNavigation from "../containers/MainNavigation";
+import {Profile} from "../character/Profile";
+import ActionMenu from "./ActionMenu";
+import WelcomeSection from "../containers/mixed/WelcomeSection";
+import TrashSection from "../containers/TrashSection";
+import Sections from "../../constants/sections";
+import CharacterList from "./CharacterList";
+
 
 /*
-import { sendMessageToMain } from "../../shared/commons/ipc";
-import { CREATE_STORY } from "../../shared/stories/ipc-channels";
+ import { sendMessageToMain } from "../../shared/commons/ipc";
+ import { CREATE_STORY } from "../../shared/stories/ipc-channels";
 
-sendMessageToMain(CREATE_STORY, (event, payload) => {
-  console.log("New story: "  payload);
-});
-*/
+ sendMessageToMain(CREATE_STORY, (event, payload) => {
+ console.log("New story: "  payload);
+ });
+ */
 
 const styles = {
   appBar: {
@@ -40,9 +42,7 @@ const styles = {
     right: 0,
     bottom: 0,
   },
-  mainNavigation: {
-
-  },
+  mainNavigation: {},
   columns: {
     col1: {
       float: "left",
@@ -70,16 +70,12 @@ const styles = {
   }
 };
 
-export default class PresentationalPlotifyApp extends React.Component {
+export default class PlotifyApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: Pages.CHARACTER,
       actionMenu: {
         open: false,
-      },
-      character: {
-        active: 1,
       },
     };
     this.toggleActionMenu = this.toggleActionMenu.bind(this);
@@ -105,10 +101,9 @@ export default class PresentationalPlotifyApp extends React.Component {
   }
 
   render() {
-
     let content = "";
-    switch (this.state.currentPage) {
-      case Pages.CHARACTER:
+    switch (this.props.currentSection) {
+      case Sections.CHARACTER:
         content =
           <span>
             <div style={styles.columns.col2}>
@@ -126,29 +121,26 @@ export default class PresentationalPlotifyApp extends React.Component {
               />
             </div>
             <div style={styles.columns.col3}>
-              <CharacterDetail characterId={this.state.character.active}/>
+              <Profile />
             </div>
           </span>;
         break;
-      case Pages.TRASH:
+      case Sections.TRASH:
         content =
-          <span>
-            trash
-          </span>;
+          <TrashSection />
         break;
       default:
-          content =
-          <div style={styles.columns.col2Full}>
-            <StartPage />
-          </div>;
+        content =
+          <WelcomeSection />
         break;
 
     }
 
-    return(
+
+    return (
       <div id="PlotifyApp">
         <AppBar
-          title={this.state.currentPage.title}
+          title={this.props.currentSection.title}
           style={styles.appBar}
           onLeftIconButtonTouchTap={this.toggleActionMenu}>
           <ActionMenu
@@ -171,16 +163,16 @@ export default class PresentationalPlotifyApp extends React.Component {
           </Toolbar>
         </AppBar>
 
-          <div id="ContentWrapper" style={styles.contentWrapper}>
-            <div style={styles.columns.col1}>
-              <MainNavigation
-                style={styles.mainNavigation}
-              />
-            </div>
-
-            {content}
-
+        <div id="ContentWrapper" style={styles.contentWrapper}>
+          <div style={styles.columns.col1}>
+            <MainNavigation
+              style={styles.mainNavigation}
+            />
           </div>
+
+          {content}
+
+        </div>
       </div>
     );
   }

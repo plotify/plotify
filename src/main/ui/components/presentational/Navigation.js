@@ -3,7 +3,7 @@ import MenuItem from "material-ui/MenuItem";
 import SocialPerson from "material-ui/svg-icons/social/person";
 import ActionDelete from "material-ui/svg-icons/action/delete";
 import {palette} from "../../themes/PlotifyMainTheme";
-import Pages from "../../constants/pages";
+import Section from "../../constants/sections";
 
 const styles = {
   menu: {
@@ -37,30 +37,32 @@ export default class Navigation extends React.Component {
   }
 
   goToCharacters() {
-    this.props.onChangePage(Pages.CHARACTER);
+    this.props.onChangeSection(Section.CHARACTER);
   }
 
   goToTrash() {
-    this.props.onChangePage(Pages.TRASH);
+    this.props.onChangeSection(Section.TRASH);
   }
 
   render() {
-    const {currentPage} = this.props;
+    const {currentSection} = this.props;
     return (
       <div style={styles.menu}>
         <MenuItem
-          style={ currentPage === Pages.CHARACTER ? styles.active : styles.menuItem }
+          disabled={this.props.disabled}
+          style={ currentSection === Section.CHARACTER ? styles.active : styles.menuItem }
           leftIcon={
             <SocialPerson
-              color={ currentPage === Pages.CHARACTER ? styles.iconActive.color : "" }
+              color={ currentSection === Section.CHARACTER ? styles.iconActive.color : "" }
             />
           }
           onTouchTap={this.goToCharacters}/>
         <MenuItem
-          style={ currentPage === Pages.TRASH ? styles.trashActive : styles.trash }
+          disabled={this.props.disabled}
+          style={ currentSection === Section.TRASH ? styles.trashActive : styles.trash }
           leftIcon={
             <ActionDelete
-              color={ currentPage === Pages.TRASH ? styles.iconActive.color : "" }
+              color={ currentSection === Section.TRASH ? styles.iconActive.color : "" }
             />
           }
           onTouchTap={this.goToTrash}/>
@@ -70,5 +72,5 @@ export default class Navigation extends React.Component {
 }
 
 Navigation.propTypes = {
-  onChangePage: React.PropTypes.func.isRequired,
+  onChangeSection: React.PropTypes.func.isRequired,
 };

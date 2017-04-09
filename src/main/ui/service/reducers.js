@@ -1,17 +1,23 @@
-import {CHANGE_PAGE, SELECT_CHARACTER} from "./action-types";
+import {
+  CHANGE_SECTION,
+  REQUEST_STORY,
+  RECEIVE_STORY,
+  SELECT_CHARACTER,
+} from "./action-types";
 import {combineReducers} from "redux";
-import Pages from "../constants/pages";
+import Pages from "../constants/sections";
 
-function currentPage(state = Pages.START, action) {
+
+function currentSection(state = Pages.WELCOME, action) {
   switch (action.type) {
-    case CHANGE_PAGE:
+    case CHANGE_SECTION:
       return action.payload;
     default:
       return state;
   }
 }
 
-function characters(action) {
+function characters(state = [], action) {
   switch (action.type) {
     case SELECT_CHARACTER:
     default:
@@ -27,12 +33,18 @@ function selected() {
 
 }
 
-export const charactersReducer = combineReducers({
-  characters,
-  filter,
-  selected
-});
+function story(state = "", action) {
+  switch (action.type) {
+    case REQUEST_STORY:
+    case RECEIVE_STORY:
+      return action.payload;
+    default:
+      return state;
+  }
+}
 
-export const pagesReducer = combineReducers({
-  currentPage,
+export const combinedReducer = combineReducers({
+  currentSection,
+  characters,
+  story,
 });

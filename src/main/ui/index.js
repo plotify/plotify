@@ -6,9 +6,9 @@ import logger from "redux-logger";
 
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
-import PlotifyApp from "./components/app/PresentationalPlotifyApp";
+import RealPlotifyApp from "./components/containers/RealPlotifyApp";
 
-import {pagesReducer} from "./service/reducers";
+import {combinedReducer} from "./service/reducers";
 
 import PlotifyMainTheme from "./themes/PlotifyMainTheme";
 
@@ -56,19 +56,20 @@ sendToModel(CREATE_STORY)
 
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";
+import thunkMiddleware from "redux-thunk";
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
 
-const store = createStore(pagesReducer, applyMiddleware(logger));
+const store = createStore(combinedReducer, applyMiddleware(thunkMiddleware, logger));
 
 class App extends React.Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(PlotifyMainTheme)}>
-        <PlotifyApp/>
+        <RealPlotifyApp/>
       </MuiThemeProvider>
     );
   }

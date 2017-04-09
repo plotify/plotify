@@ -1,5 +1,4 @@
 import electron from "electron";
-import path from "path";
 import url from "url";
 
 require("./model/index");
@@ -17,12 +16,14 @@ function createWindow() {
     width: 1000,
     height: 600,
     icon: path.join(__dirname, "./ui/resources/app-icons/64.png"),
-    show: false
+    show: false,
   });
 
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
     mainWindow.focus();
+    mainWindow.maximize();
+    mainWindow.openDevTools();
   });
 
   mainWindow.loadURL(url.format({
