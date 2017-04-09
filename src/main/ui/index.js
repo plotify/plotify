@@ -40,6 +40,19 @@ sendToModel(CREATE_STORY)
   .then(() => sendToModel(FIND_CHARACTERS, { deleted: true }))
   .then(characters => console.log(characters));
 */
+/*
+import { sendToModel } from "../shared/commons/ipc";
+import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
+import { CREATE_CHARACTER, UPDATE_CHARACTER } from "../shared/characters/ipc-channels";
+sendToModel(CREATE_STORY)
+  .then(file => sendToModel(OPEN_STORY, file))
+  .then(() => sendToModel(CREATE_CHARACTER))
+  .then(characterId => sendToModel(UPDATE_CHARACTER,
+    { id: characterId, name: "Max", deleted: false }))
+  .then(characterId => sendToModel(UPDATE_CHARACTER,
+    { id: characterId, name: "Max Muster", deleted: false }))
+  .then(characterId => sendToModel(UPDATE_CHARACTER,
+    { id: characterId, name: "Max Mustermann", deleted: false }));*/
 
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";

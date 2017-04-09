@@ -2,6 +2,7 @@ import UUID from "../../shared/commons/uuid";
 import { sendCallback } from "../../shared/commons/ipc";
 import { UPDATE_CHARACTER } from "../../shared/characters/ipc-channels";
 import { getConnection } from "../stories/connection";
+import { addChange, Type } from "./add-change";
 
 export function updateCharacter(id, name, deleted) {
   return new Promise((resolve, reject) => {
@@ -18,16 +19,9 @@ export function updateCharacter(id, name, deleted) {
         return;
       }
 
-      db.run("UPDATE character SET presence_history_id = ? WHERE id = ?",
-        [historyId, id], (error) => {
-
-        if (error) {
-          reject(error);
-        } else {
-          resolve();
-        }
-
-      });
+      addChange(id, id, Type.CHARACTER, historyId)
+        .then(() => resolve(id))
+        .catch(error => reject(error));
 
     });
 
@@ -40,7 +34,7 @@ export function registerUpdateCharacterIpcChannel(ipcMain) {
       payload.args.id,
       payload.args.name,
       payload.args.deleted
-    ).then(() => sendCallback(event, payload))
+    ).then((id) => sendCallback(event, payload, id))
      .catch(error => sendCallback(event, payload, error, false));
   });
 }
