@@ -5,7 +5,8 @@ import PlotifyApp from "../presentational/PlotifyApp";
 const mapStateToProps = (state) => {
   return {
     currentSection: state.currentSection,
-    storyName: state.story
+    storyName: state.story,
+    sectionIsLoading: state.sectionIsLoading,
   };
 };
 

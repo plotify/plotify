@@ -12,6 +12,14 @@ import {FIND_CHARACTERS} from "../../shared/characters/ipc-channels";
 import {CREATE_STORY, OPEN_STORY} from "../../shared/stories/ipc-channels";
 import Sections from "../constants/sections";
 
+// Communication State
+export function sectionIsLoading(trueOrFalse) {
+  return {
+    type: "TOGGLE_SECTION_LOADING",
+    payload: trueOrFalse
+  }
+}
+
 // UI ACTIONS
 
 // SECTIONS
@@ -87,11 +95,18 @@ export function receiveStory(file) {
 export function createStory() {
   return function (dispatch) {
     dispatch(requestStory());
-    return sendToModel(CREATE_STORY)
-      .then(file => {
-        console.log("Story created", file);
-        dispatch(openStory(file));
-      })
+    let loadingPromise = new Promise((resolve, reject) => {
+      dispatch(sectionIsLoading(true));
+      resolve();
+    });
+    loadingPromise.then(() => {
+      return sendToModel(CREATE_STORY)
+        .then(file => {
+          console.log("Story created", file);
+          dispatch(openStory(file))
+            .then(dispatch(sectionIsLoading(false)));
+        })
+    });
   }
 }
 
@@ -107,6 +122,7 @@ export function openStory(file) {
         dispatch(changeSection(Sections.CHARACTER));
       })
       .catch(error => {
+        dispatch(sectionIsLoading(false));
         console.log("Could not create or open story: ", error);
       });
   }

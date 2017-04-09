@@ -8,6 +8,15 @@ import {combineReducers} from "redux";
 import Pages from "../constants/sections";
 
 
+function sectionIsLoading(state = false, action) {
+  switch (action.type) {
+    case "TOGGLE_SECTION_LOADING":
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
 function currentSection(state = Pages.WELCOME, action) {
   switch (action.type) {
     case CHANGE_SECTION:
@@ -47,4 +56,5 @@ export const combinedReducer = combineReducers({
   currentSection,
   characters,
   story,
+  sectionIsLoading,
 });

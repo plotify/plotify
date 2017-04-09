@@ -13,6 +13,7 @@ import WelcomeSection from "../containers/mixed/WelcomeSection";
 import TrashSection from "../containers/TrashSection";
 import Sections from "../../constants/sections";
 import CharacterList from "./CharacterList";
+import {CircularProgress} from "material-ui";
 
 
 /*
@@ -67,7 +68,22 @@ const styles = {
       width: "calc(100% - 396px)",
       height: "100%",
     }
-  }
+  },
+  loading: {
+    position: "absolute",
+    height: "100%",
+    width: "100%",
+    background: "white",
+    opacity: .5,
+    zIndex: 2,
+    spinner: {
+      position: "relative",
+      top: "50%",
+      left: "50%",
+      marginTop: -40,
+      marginLeft: -40,
+    }
+  },
 };
 
 export default class PlotifyApp extends React.Component {
@@ -169,6 +185,12 @@ export default class PlotifyApp extends React.Component {
               style={styles.mainNavigation}
             />
           </div>
+          {
+            this.props.sectionIsLoading &&
+            <div style={styles.loading}>
+              <CircularProgress size={80} thickness={5} style={styles.loading.spinner}/>
+            </div>
+          }
 
           {content}
 
