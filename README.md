@@ -4,59 +4,10 @@ Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft,
 die Charaktere deiner Geschichte zu planen und zu organisieren.
 Behalte stets den Überblick und erschaffe eine fantastische Geschichte! :books:
 
+**Hinweis: Plotify befindet sich noch in der ersten Entwicklungsphase.
+Eine erste Testversion wird bald veröffentlicht.**
+
 ![Screenshot von Plotify](docs/screenshot.png)
-
-- **Feature 1:**
-  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-  eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-  voluptua.
-- **Feature 2:**
-  At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-  gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-- **Feature 3:**
-  Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor
-  sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed..
-
-
-## Installation
-
-Lade dir Plotify kostenlos für dein Betriebssystem herunter:
-
-<table>
-    <tr>
-        <td align="center" width="50%">
-            <a href="https://github.com/SebastianSchmidt/plotify/releases">
-                <img src="docs/windows-logo.png" />
-            </a>
-         </td>
-        <td align="center" colspan="2" width="50%">
-            <a href="https://github.com/SebastianSchmidt/plotify/releases">
-                <img src="docs/linux-logo.png" />
-            </a>
-        </td>
-    </tr>
-    <tr>
-        <td align="center">
-            <a href="https://github.com/SebastianSchmidt/plotify/releases">
-                <b>Windows</b><br />
-                Windows 7, 8, 10
-            </a>
-        </td>
-        <td align="center">
-            <a href="https://github.com/SebastianSchmidt/plotify/releases">
-                <b>.deb</b><br />
-                Ubuntu, Debian, Linux Mint
-            </a>
-        </td>
-        <td align="center">
-            <a href="https://github.com/SebastianSchmidt/plotify/releases">
-                <b>.rpm</b><br />
-                Red Hat, Fedora, CentOS
-            </a>
-        </td>
-    </tr>
-</table>
-
 
 ## Lizenz
 
