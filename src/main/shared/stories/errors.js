@@ -11,7 +11,7 @@ export class UnsupportedFileVersionError extends Error {
 
   constructor(maxSupportedFileVersion, unsupportedFileVersion) {
     super("Unsupported story version.");
-    this.name = "UnsupportedStoryVersionError";
+    this.name = "UnsupportedFileVersionError";
     this.maxSupportedFileVersion = maxSupportedFileVersion;
     this.unsupportedFileVersion = unsupportedFileVersion;
   }

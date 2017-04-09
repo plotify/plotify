@@ -62,7 +62,16 @@ sendToModel(OPEN_STORY_DIALOG)
   .then(characterId => sendToModel(UPDATE_CHARACTER,
     { id: characterId, name: "Erika", deleted: false }))
   .then(() => console.log("Opened and character created."))
-  .catch(error => console.log("Error: " + error.message)); */
+  .catch(error => {
+
+    if (error.name === "UnsupportedFileVersionError") {
+      console.log("Unsupported file version!");
+    } else if (error.name === "NoStoryChosenError") {
+      console.log("No story chosen. Ignore this.");
+    } else {
+      console.log("Could not open story: " + error.name);
+    }
+  });*/
 
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";
