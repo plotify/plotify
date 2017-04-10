@@ -43,3 +43,10 @@ React `Components` abgebildet. Der Zustand dieser `Components` ist von dem Zusta
 Anwendung abhängig. Dieser `state` kann beispielsweise durch Redux verwaltet werden.
 
 Siehe auch: [React Quickstart](https://facebook.github.io/react/docs/hello-world.html)
+
+### Material UI
+> A Set of React Components that Implement Google's Material Design
+
+[Material-UI](http://www.material-ui.com/) ist eine React-Implementierung von Google's Material Design.
+Zur Erstellung von Oberflächen werden in erster Linie die bestehenden Komponenten verwendet, wodurch ein
+einheitliches Design und Verhalten über alle Plattformen gewährleistet ist.
