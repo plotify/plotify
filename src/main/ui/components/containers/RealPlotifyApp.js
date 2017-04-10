@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-  }
+  };
 };
 
 
@@ -22,4 +22,3 @@ const RealPlotifyApp = connect(
 )(PlotifyApp);
 
 export default RealPlotifyApp;
-

@@ -2,7 +2,7 @@ import {
   CHANGE_SECTION,
   REQUEST_STORY,
   RECEIVE_STORY,
-  SELECT_CHARACTER,
+  SELECT_CHARACTER
 } from "./action-types";
 import {combineReducers} from "redux";
 import Pages from "../constants/sections";

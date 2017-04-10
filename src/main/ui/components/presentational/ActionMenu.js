@@ -46,7 +46,7 @@ class CustomMenu extends React.Component {
 
 // TODO
 const mapStateToProps = (state) => {
-  return {}
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -57,7 +57,7 @@ const mapDispatchToProps = (dispatch) => {
     onOpenStory: (file) => {
       dispatch(openStory(file));
     }
-  }
+  };
 };
 
 const ActionMenu = connect(

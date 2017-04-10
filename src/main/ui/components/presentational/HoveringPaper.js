@@ -46,4 +46,3 @@ export default class HoveringPaper extends React.Component {
     );
   }
 }
-;

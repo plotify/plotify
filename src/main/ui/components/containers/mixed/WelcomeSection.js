@@ -66,7 +66,7 @@ class MixedWelcomeSection extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isLoading: state.isLoading
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -77,7 +77,7 @@ const mapDispatchToProps = (dispatch) => {
     onOpenStory: (file) => {
       dispatch(openStory(file));
     }
-  }
+  };
 };
 
 const WelcomeSection = connect(

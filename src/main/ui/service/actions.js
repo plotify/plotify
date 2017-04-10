@@ -17,7 +17,7 @@ export function sectionIsLoading(trueOrFalse) {
   return {
     type: "TOGGLE_SECTION_LOADING",
     payload: trueOrFalse
-  }
+  };
 }
 
 // UI ACTIONS
@@ -60,7 +60,7 @@ export function receiveCharacters(characters) {
   return {
     type: RECEIVE_CHARACTERS,
     payload: characters
-  }
+  };
 }
 
 export function findCharacters() {
@@ -82,14 +82,14 @@ export function requestStory(file = "") {
   return {
     type: REQUEST_STORY,
     payload: file,
-  }
+  };
 }
 
 export function receiveStory(file) {
   return {
     type: RECEIVE_STORY,
     payload: file,
-  }
+  };
 }
 
 export function createStory() {
@@ -105,9 +105,9 @@ export function createStory() {
           console.log("Story created", file);
           dispatch(openStory(file))
             .then(dispatch(sectionIsLoading(false)));
-        })
+        });
     });
-  }
+  };
 }
 
 export function openStory(file) {
@@ -116,7 +116,7 @@ export function openStory(file) {
     return sendToModel(OPEN_STORY, file)
       .then(file => {
         console.log("Story opened: ", file);
-        dispatch(receiveStory(file))
+        dispatch(receiveStory(file));
       })
       .then(file => {
         dispatch(changeSection(Sections.CHARACTER));
@@ -125,5 +125,5 @@ export function openStory(file) {
         dispatch(sectionIsLoading(false));
         console.log("Could not create or open story: ", error);
       });
-  }
+  };
 }

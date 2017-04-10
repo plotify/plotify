@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
   return {
     currentSection: state.currentSection,
     disabled: disabled
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch) => {
     onChangeSection: (page) => {
       dispatch(changeSection(page));
     }
-  }
+  };
 };
 
 const MainNavigation = connect(

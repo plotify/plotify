@@ -74,7 +74,7 @@ const styles = {
     height: "100%",
     width: "100%",
     background: "white",
-    opacity: .5,
+    opacity: 0.5,
     zIndex: 2,
     spinner: {
       position: "relative",
@@ -142,12 +142,10 @@ export default class PlotifyApp extends React.Component {
           </span>;
         break;
       case Sections.TRASH:
-        content =
-          <TrashSection />
+        content = <TrashSection />;
         break;
       default:
-        content =
-          <WelcomeSection />
+        content = <WelcomeSection />;
         break;
 
     }
