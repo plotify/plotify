@@ -9,6 +9,7 @@ const runSequence = require("run-sequence");
 const shell = require("gulp-shell");
 const runElectron = require("gulp-run-electron");
 
+const checkDependencies = require("check-dependencies");
 const rebuild = require("electron-rebuild").default;
 const electronInstaller = require("electron-winstaller");
 const winPackager = require("electron-packager");
@@ -33,10 +34,31 @@ const paths = {
 
 const electronVersion = packageJson.dependencies.electron;
 
-/* Common Tasks */
+/* Preparation Tasks */
+
+const preparationTasks = ["clean-build", "check-dependencies"];
 
 gulp.task("clean-build", () => {
   return gulp.src(paths.build.root, {read: false}).pipe(clean());
+});
+
+gulp.task("check-dependencies", () => {
+  return checkDependencies().then(result => {
+    if (!result.depsWereOk)  {
+
+      console.log("The following dependencies are not installed in the exact same versions " +
+                  "that are specified in package.json:");
+
+      result.error.forEach(message => {
+        if (!message.includes("to install missing packages")) {
+          console.log(" - " + message);
+        }
+      });
+
+      throw new Error("Invoke npm install to install missing packages.");
+
+    }
+  });
 });
 
 
@@ -215,19 +237,19 @@ const buildTasks = babelTasks.concat(assetsTasks);
 const buildTasksDev = babelTasksDev.concat(assetsTasksDev);
 
 gulp.task("default", () => {
-  runSequence("clean-build", buildTasksDev, testsTasksDev, electronTasks);
+  runSequence(preparationTasks, buildTasksDev, testsTasksDev, electronTasks);
 });
 
 gulp.task("noui", () => {
-  runSequence("clean-build", buildTasksDev, testsTasksDev);
+  runSequence(preparationTasks, buildTasksDev, testsTasksDev);
 });
 
 gulp.task("test", () => {
-  runSequence("clean-build", buildTasks, testsTasks);
+  runSequence(preparationTasks, buildTasks, testsTasks);
 });
 
 gulp.task("distribution:linux", () => {
-  runSequence("clean-build",
+  runSequence(preparationTasks,
               buildTasks,
               testsTasks,
               "install-production-dependencies",
@@ -236,7 +258,7 @@ gulp.task("distribution:linux", () => {
 });
 
 gulp.task("distribution:windows", () => {
-  runSequence("clean-build",
+  runSequence(preparationTasks,
               buildTasks,
               testsTasks,
               "install-production-dependencies",
