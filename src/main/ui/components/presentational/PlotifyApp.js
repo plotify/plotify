@@ -32,7 +32,8 @@ const styles = {
     toolbar: {
       background: "none",
       color: "#fff",
-      marginRight: 0
+      marginRight: 0,
+      paddingRight: 0
     }
   },
   contentWrapper: {
