@@ -56,7 +56,7 @@
 // //
 // // SelectableList = wrapState();
 //
-// export default class PresentationalCharacterList extends React.Component {
+// export default class CharacterList extends React.Component {
 //
 //   render() {
 //     return(

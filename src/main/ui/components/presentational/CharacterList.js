@@ -27,9 +27,15 @@ const styles = {
 
 export default class CharacterList extends React.Component {
   render() {
+    console.log(this.props.characters);
     return (
       <div id="CharacterList" style={styles.list}>
-        <SearchBar />
+        <SearchBar
+          onSetFilter={this.props.onSetFilter}
+        />
+        {
+          this.props.characters.size === 0 && this.props.emptyMessage
+        }
         <List>
           {
             this.props.characters.map((character) => {

@@ -1,8 +1,11 @@
 import {
+  ADD_CHARACTER,
   CHANGE_SECTION,
-  REQUEST_STORY,
+  DESELECT_CHARACTER, RECEIVE_CHARACTERS,
   RECEIVE_STORY,
-  SELECT_CHARACTER
+  REQUEST_STORY,
+  SELECT_CHARACTER,
+  SET_FILTER
 } from "./action-types";
 import {combineReducers} from "redux";
 import Pages from "../constants/sections";
@@ -26,20 +29,51 @@ function currentSection(state = Pages.WELCOME, action) {
   }
 }
 
-function characters(state = [], action) {
+function filter(state = "", action) {
   switch (action.type) {
-    case SELECT_CHARACTER:
+    case SET_FILTER: {
+      return action.payload
+    }
     default:
       return state;
   }
 }
 
-function filter() {
-
+function characters(state = [], action) {
+  switch (action.type) {
+    case ADD_CHARACTER:
+      return {};
+    case RECEIVE_CHARACTERS:
+      return action.payload;
+    default:
+      return state;
+  }
 }
 
-function selected() {
+function selected(state = {id: null, newCharacter: false}, action) {
+  switch (action.type) {
+    case SELECT_CHARACTER:
+      return {
+        id: action.payload.id,
+        newCharacter: false
+      };
 
+    case ADD_CHARACTER:
+      return {
+        id: action.payload.id,
+        newCharacter: true
+      };
+
+    case DESELECT_CHARACTER:
+      return {
+        id: null,
+        newCharacter: false
+      };
+
+    default:
+      return state;
+
+  }
 }
 
 function story(state = "", action) {
@@ -55,6 +89,8 @@ function story(state = "", action) {
 export const combinedReducer = combineReducers({
   currentSection,
   characters,
+  filter,
   story,
   sectionIsLoading,
+  selected
 });

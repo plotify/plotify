@@ -7,23 +7,12 @@ import ContentRedo from "material-ui/svg-icons/content/redo";
 import ContentUndo from "material-ui/svg-icons/content/undo";
 import {palette, spacing} from "../../themes/PlotifyMainTheme";
 import MainNavigation from "../containers/MainNavigation";
-import {Profile} from "../character/Profile";
 import ActionMenu from "./ActionMenu";
 import WelcomeSection from "../containers/mixed/WelcomeSection";
 import TrashSection from "../containers/TrashSection";
 import Sections from "../../constants/sections";
-import CharacterList from "./CharacterList";
 import {CircularProgress} from "material-ui";
-
-
-/*
- import { sendMessageToMain } from "../../shared/commons/ipc";
- import { CREATE_STORY } from "../../shared/stories/ipc-channels";
-
- sendMessageToMain(CREATE_STORY, (event, payload) => {
- console.log("New story: "  payload);
- });
- */
+import CharacterSection from "../containers/CharacterSection";
 
 const styles = {
   appBar: {
@@ -55,20 +44,6 @@ const styles = {
       borderRightStyle: "solid",
       borderColor: palette.borderColor,
     },
-    col2: {
-      float: "left",
-      borderRightWidth: 1,
-      borderRightStyle: "solid",
-      borderColor: palette.borderColor,
-      height: "100%",
-      width: 340,
-    },
-    col3: {
-      position: "relative",
-      float: "left",
-      width: "calc(100% - 396px)",
-      height: "100%",
-    }
   },
   loading: {
     position: "absolute",
@@ -121,24 +96,7 @@ export default class PlotifyApp extends React.Component {
     let content = "";
     switch (this.props.currentSection) {
       case Sections.CHARACTER:
-        content =
-          <span>
-            <div style={styles.columns.col2}>
-              <CharacterList
-                characters={[
-                  { id: "1", name: "John Watson" },
-                  { id: "2", name: "Mary Morstan" },
-                  { id: "3", name: "Mycroft Holmes" },
-                  { id: "4", name: "Irene Adler" },
-                  { id: "5", name: "Inspektor Lestrade" },
-                  { id: "6", name: "Mrs. Hudson" }
-                ]}
-              />
-            </div>
-            <div style={styles.columns.col3}>
-              <Profile />
-            </div>
-          </span>;
+        content = <CharacterSection />;
         break;
       case Sections.TRASH:
         content = <TrashSection />;
@@ -146,14 +104,13 @@ export default class PlotifyApp extends React.Component {
       default:
         content = <WelcomeSection />;
         break;
-
     }
 
 
     return (
       <div id="PlotifyApp">
         <AppBar
-          title={this.props.currentSection.title}
+          title={this.props.currentSection.title + " " + this.props.storyName}
           style={styles.appBar}
           onLeftIconButtonTouchTap={this.toggleActionMenu}>
           <ActionMenu

@@ -3,7 +3,7 @@ import FolderOpen from "material-ui/svg-icons/file/folder-open";
 import AvNewReleases from "material-ui/svg-icons/av/new-releases";
 import HoveringPaper from "../../presentational/HoveringPaper";
 import {connect} from "react-redux";
-import {createStory, openStory} from "../../../service/actions";
+import {createStory, openStoryDialog} from "../../../service/actions";
 
 const styles = {
   wrapper: {
@@ -52,7 +52,7 @@ class MixedWelcomeSection extends React.Component {
             Neue Geschichte erstellen
           </HoveringPaper>
           <HoveringPaper
-            onTouchTap={this.props.openStory}>
+            onTouchTap={this.props.onOpenStory}>
             <FolderOpen style={styles.icons}/>
             Geschichte öffnen
           </HoveringPaper>
@@ -62,7 +62,6 @@ class MixedWelcomeSection extends React.Component {
   }
 }
 
-// TODO
 const mapStateToProps = (state) => {
   return {
     isLoading: state.isLoading
@@ -74,8 +73,8 @@ const mapDispatchToProps = (dispatch) => {
     onCreateStory: () => {
       dispatch(createStory());
     },
-    onOpenStory: (file) => {
-      dispatch(openStory(file));
+    onOpenStory: () => {
+      dispatch(openStoryDialog());
     }
   };
 };

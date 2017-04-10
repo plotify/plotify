@@ -12,6 +12,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    /*
+     onDelete: (id) => {
+     dispatch(deleteCharacter(id))
+     },
+     onUndo: () => {
+     dispatch(undo())
+     },
+     onRedo: () => {
+     dispatch(redo())
+     }
+     */
   };
 };
 
