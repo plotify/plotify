@@ -4,8 +4,6 @@ node_js:
 os:
   - linux
   - osx
-env:
-  - CXX=gcc-4.8
 before_script:
   - npm install -g gulp
   - npm run rebuild
