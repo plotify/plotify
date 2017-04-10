@@ -57,15 +57,31 @@ export class Profile extends React.Component {
     return (
       <div id="CharacterDetails" style={styles}>
         <div id="Attributes" style={styles.attributes}>
+
           <Paper style={styles.panel} zDepth={1}>
             <TextField
-              hintText=""
-              floatingLabelText="Körpergröße"
+              floatingLabelText="Alter"
+              defaultValue="37"
               fullWidth={true}
             />
             <TextField
-              hintText=""
-              floatingLabelText="Augenfarbe"
+              floatingLabelText="Größe"
+              defaultValue="1,80 m"
+              fullWidth={true}
+            />
+            <TextField
+              floatingLabelText="Gewicht"
+              defaultValue="95 kg"
+              fullWidth={true}
+            />
+            <TextField
+              floatingLabelText="Körperbau"
+              defaultValue="Füllig"
+              fullWidth={true}
+            />
+            <TextField
+              floatingLabelText="Gesicht"
+              defaultValue="Ernster Blick, kantige Gesichtszüge"
               fullWidth={true}
             />
           </Paper>
@@ -73,12 +89,12 @@ export class Profile extends React.Component {
           <Paper style={styles.panel} zDepth={1}>
             <TextField
               hintText=""
-              floatingLabelText="Körpergröße"
+              floatingLabelText="Hello World"
               fullWidth={true}
             />
             <TextField
               hintText=""
-              floatingLabelText="Augenfarbe"
+              floatingLabelText="Lorem Ipsum"
               fullWidth={true}
             />
           </Paper>
@@ -86,8 +102,8 @@ export class Profile extends React.Component {
 
         <Paper style={styles.toolbar} zDepth={2} rounded={false}>
           <TextField
-            hintText="Gebe hier den Namen ein"
             floatingLabelText="Name"
+            defaultValue="Mycroft Holmes"
             style={styles.toolbar.textField}
             floatingLabelStyle={styles.toolbar.textField.colors}
             floatingLabelFocusStyle={styles.toolbar.textField.colors}
@@ -95,7 +111,6 @@ export class Profile extends React.Component {
             underlineStyle={styles.toolbar.textField.colors}
             hintStyle={styles.toolbar.textField.colors}
             inputStyle={styles.toolbar.textField.colors}
-            defaultValue={this.props.characterId}
           />
         </Paper>
 

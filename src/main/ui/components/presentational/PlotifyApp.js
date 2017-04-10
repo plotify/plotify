@@ -126,14 +126,12 @@ export default class PlotifyApp extends React.Component {
             <div style={styles.columns.col2}>
               <CharacterList
                 characters={[
-                  {
-                    id: "123",
-                    name: "Rumpelstielzchen",
-                  },
-                  {
-                    id: "2345",
-                    name: "Jasper"
-                  }
+                  { id: "1", name: "John Watson" },
+                  { id: "2", name: "Mary Morstan" },
+                  { id: "3", name: "Mycroft Holmes" },
+                  { id: "4", name: "Irene Adler" },
+                  { id: "5", name: "Inspektor Lestrade" },
+                  { id: "6", name: "Mrs. Hudson" }
                 ]}
               />
             </div>

@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
     characters: state.characters,
     filter: state.filter,
     selectedCharacterId: state.selected.id,
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -22,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
     onDeselect: () => {
       dispatch(deselectCharacter());
     }
-  }
+  };
 };
 
 const CharacterList = connect(
