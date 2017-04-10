@@ -1,8 +1,9 @@
 import electron from "electron";
 import url from "url";
-
-require("./model/index");
+import isDev from "electron-is-dev";
 import { setMainWindow } from "./model/main-window";
+
+import "./model/index";
 
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -23,10 +24,15 @@ function createWindow() {
   setMainWindow(mainWindow);
 
   mainWindow.on("ready-to-show", () => {
+
     mainWindow.show();
     mainWindow.focus();
     mainWindow.maximize();
-    mainWindow.openDevTools();
+
+    if (isDev) {
+      mainWindow.openDevTools();
+    }
+
   });
 
   mainWindow.loadURL(url.format({

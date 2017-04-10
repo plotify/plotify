@@ -194,7 +194,7 @@ gulp.task("package-windows", () => {
     platform: "win32",
     overwrite: true,
     out: paths.build.distribution,
-    appCopyright: "Copyright (C) 2017 alpha. All rights reserved",
+    appCopyright: "Copyright (C) 2017. All rights reserved",
     win32metadata: {
       CompanyName: "alpha",
       FileDescription: packageJson.productDescription,
