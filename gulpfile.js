@@ -175,12 +175,7 @@ gulp.task("package-linux", shell.task([
         "--src " + paths.build.distribution + "/plotify-linux-x64 " +
         "--dest " + paths.build.installers + " " +
         "--arch amd64 " +
-        "--config linux-package.json"/*,
-  "electron-installer-redhat " +
-        "--src " + paths.build.distribution + "/plotify-linux-x64 " +
-        "--dest " + paths.build.installers + " " +
-        "--arch x86_64 " +
-        "--config linux-package.json"*/
+        "--config linux-package.json"
 ]));
 
 gulp.task("package-windows", () => {

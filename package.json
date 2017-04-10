@@ -67,7 +67,6 @@
     "tmp": "0.0.31"
   },
   "optionalDependencies": {
-    "electron-installer-debian": "0.5.1",
-    "electron-installer-redhat": "0.4.0"
+    "electron-installer-debian": "0.5.1"
   }
 }
