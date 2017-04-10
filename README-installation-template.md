@@ -25,7 +25,7 @@ Lade dir Plotify kostenlos für dein Betriebssystem herunter:
         <td align="center">
             <a href="https://github.com/SebastianSchmidt/plotify/releases">
                 <b>Linux</b><br />
-                Debian, Ubuntu, Linux Mint
+                Ubuntu, Linux Mint, elementary OS
             </a>
         </td>
     </tr>
