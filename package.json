@@ -55,7 +55,6 @@
     "gulp": "3.9.1",
     "gulp-babel": "6.1.2",
     "gulp-clean": "0.3.2",
-    "gulp-fail": "^1.0.5",
     "gulp-mocha": "4.3.0",
     "gulp-run-electron": "3.0.1",
     "gulp-shell": "0.6.3",
@@ -67,7 +66,7 @@
     "tmp": "0.0.31"
   },
   "optionalDependencies": {
-    "electron-installer-debian": "0.5.0",
+    "electron-installer-debian": "0.5.1",
     "electron-installer-redhat": "0.4.0"
   }
 }

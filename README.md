@@ -1,6 +1,6 @@
 # Plotify
 
-[![Build status](https://img.shields.io/travis/SebastianSchmidt/plotify.svg)](https://travis-ci.org/SebastianSchmidt/plotify)
+[![Build status](https://img.shields.io/travis/SebastianSchmidt/plotify/master.svg)](https://travis-ci.org/SebastianSchmidt/plotify)
 [![Dependencies status](https://img.shields.io/david/SebastianSchmidt/plotify.svg)](https://david-dm.org/SebastianSchmidt/plotify)
 [![Development dependencies status](https://img.shields.io/david/dev/SebastianSchmidt/plotify.svg)](https://david-dm.org/SebastianSchmidt/plotify?type=dev)
 [![Optional dependencies status](https://img.shields.io/david/optional/SebastianSchmidt/plotify.svg)](https://david-dm.org/SebastianSchmidt/plotify?type=optional)
