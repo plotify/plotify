@@ -5,7 +5,7 @@ os:
   - linux
   - osx
 env:
-  - CXX=g++-4.8
+  - CXX=gcc-4.8
 before_script:
   - npm install -g gulp
   - npm run rebuild
