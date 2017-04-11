@@ -11,7 +11,8 @@
     "start": "gulp",
     "test": "gulp test",
     "distribution:linux": "gulp distribution:linux",
-    "distribution:windows": "gulp distribution:windows"
+    "distribution:windows": "gulp distribution:windows",
+    "distribution:macos": "gulp distribution:macos"
   },
   "private": true,
   "repository": {

@@ -170,7 +170,8 @@ gulp.task("package-linux", shell.task([
         "--out " + paths.build.distribution + " " +
         "--electron-version=" + electronVersion + " " +
         "--platform=linux " +
-        "--arch=x64",
+        "--arch=x64 " +
+        "--icon=" + paths.icons + "/64.png",
   "electron-installer-debian " +
         "--src " + paths.build.distribution + "/plotify-linux-x64 " +
         "--dest " + paths.build.installers + " " +
@@ -226,6 +227,15 @@ gulp.task("package-windows", () => {
 
 });
 
+gulp.task("package-macos", shell.task([
+  "electron-packager " + paths.build.app.main + " plotify " +
+        "--out " + paths.build.distribution + " " +
+        "--electron-version=" + electronVersion + " " +
+        "--platform=darwin " +
+        "--arch=x64 " +
+        "--icon=" + paths.icons + "/64.icns"
+]));
+
 /* Combined Tasks */
 
 const buildTasks = babelTasks.concat(assetsTasks);
@@ -259,4 +269,13 @@ gulp.task("distribution:windows", () => {
               "install-production-dependencies",
               "rebuild-production-dependencies",
               "package-windows");
+});
+
+gulp.task("distribution:macos", () => {
+  runSequence(preparationTasks,
+              buildTasks,
+              testsTasks,
+              "install-production-dependencies",
+              "rebuild-production-dependencies",
+              "package-macos");
 });
