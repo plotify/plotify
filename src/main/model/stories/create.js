@@ -16,14 +16,25 @@ export function createNewStory() {
 
     const db = new sqlite3.Database(filePath, mode, (error) => {
 
-      if (!error) {
-        db.exec(newStorySqlStatements);
-        db.close((error) => {
-          resolve(filePath);
-        });
-      } else {
-        reject(error);
+      if (error) {
+        return reject(error);
       }
+
+      db.exec(newStorySqlStatements, (error) => {
+
+        if (error) {
+          return reject(error);
+        }
+
+        db.close((error) => {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(filePath);
+          }
+        });
+
+      });
 
     });
 
