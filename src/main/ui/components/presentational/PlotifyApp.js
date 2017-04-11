@@ -7,7 +7,7 @@ import ContentRedo from "material-ui/svg-icons/content/redo";
 import ContentUndo from "material-ui/svg-icons/content/undo";
 import {palette, spacing} from "../../themes/PlotifyMainTheme";
 import MainNavigation from "../containers/MainNavigation";
-import ActionMenu from "./ActionMenu";
+import ActionMenu from "../containers/mixed/ActionMenu";
 import WelcomeSection from "../containers/mixed/WelcomeSection";
 import TrashSection from "../containers/TrashSection";
 import Sections from "../../constants/sections";

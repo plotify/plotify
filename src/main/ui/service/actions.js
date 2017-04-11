@@ -8,8 +8,7 @@ import {
   SELECT_CHARACTER
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
-import {FIND_CHARACTERS} from "../../shared/characters/ipc-channels";
-import {CREATE_CHARACTER, UPDATE_CHARACTER} from "../../shared/characters/ipc-channels";
+import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER} from "../../shared/characters/ipc-channels";
 import {CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
 import Sections from "../constants/sections";
 
@@ -113,10 +112,14 @@ export function createStory() {
         .then(file => {
           console.log("Story created", file);
           dispatch(openStory(file))
+            .then(() => sendToModel(CREATE_CHARACTER))
+            .then(characterId => sendToModel(UPDATE_CHARACTER,
+              {id: characterId, name: "Erika", deleted: false}))
+            .then(() => console.log("Opened and character created."))
+            .then(() => dispatch(findCharacters()))
+            .then(() => dispatch(changeSection(Sections.CHARACTER)))
             .then(dispatch(sectionIsLoading(false)))
-            .then(() => {
-              dispatch(changeSection(Sections.CHARACTER));
-            })
+
         });
     });
   };
