@@ -76,6 +76,11 @@ export function saveMainWindowPreferences(bounds, maximized) {
     y: bounds.y,
     maximized: maximized
   };
-  fs.truncateSync(file, 0);
+
+  if (fs.existsSync(file)) {
+    fs.truncateSync(file, 0);
+  }
+
   fs.writeFileSync(file, JSON.stringify(preferences));
+  
 }
