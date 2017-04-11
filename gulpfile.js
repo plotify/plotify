@@ -14,6 +14,11 @@ const rebuild = require("electron-rebuild").default;
 const electronInstaller = require("electron-winstaller");
 const winPackager = require("electron-packager");
 
+const checker = require("license-checker");
+const fs = require("fs");
+const ownLicenseFile = "./LICENSE";
+const generatedLicenseFile = "./build/LICENSE";
+
 const packageJson = require("./package.json");
 
 const paths = {
@@ -165,6 +170,36 @@ gulp.task("rebuild-production-dependencies", () => {
 
 });
 
+gulp.task("generate-license-file", () => {
+
+  const options = Object.freeze({ encoding: "utf-8" });
+  const separator = "---------------------------------------------------------" +
+    "-----------------------";
+
+  const ownLicenseFileContent = fs.readFileSync(ownLicenseFile, options) + "\n\n";
+  fs.appendFileSync(generatedLicenseFile, ownLicenseFileContent, options);
+
+  checker.init({ start: "./build/app/main" }, (error, json) => {
+    for (let name in json) {
+
+      const p = json[name];
+
+      let output = separator + "\n\n";
+      output += "Package:   " + name + "\n";
+      output += "Publisher: " + p.publisher + "\n";
+      output += "License:   " + p.licenses + "\n\n";
+
+      if (p.licenseFile) {
+        output += fs.readFileSync(p.licenseFile, options) + "\n\n";
+      }
+
+      fs.appendFileSync(generatedLicenseFile, output, options);
+
+    }
+  });
+
+});
+
 gulp.task("package-linux", shell.task([
   "electron-packager " + paths.build.app.main + " plotify " +
         "--out " + paths.build.distribution + " " +
@@ -259,6 +294,7 @@ gulp.task("distribution:linux", () => {
               testsTasks,
               "install-production-dependencies",
               "rebuild-production-dependencies",
+              "generate-license-file",
               "package-linux");
 });
 
@@ -268,6 +304,7 @@ gulp.task("distribution:windows", () => {
               testsTasks,
               "install-production-dependencies",
               "rebuild-production-dependencies",
+              "generate-license-file",
               "package-windows");
 });
 
@@ -277,5 +314,6 @@ gulp.task("distribution:macos", () => {
               testsTasks,
               "install-production-dependencies",
               "rebuild-production-dependencies",
+              "generate-license-file",
               "package-macos");
 });
