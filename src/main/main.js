@@ -37,8 +37,8 @@ function createWindow() {
     mainWindow.on("unmaximize", updateCachedMainWindowPreferences);
 
     mainWindow.on("ready-to-show", () => {
-
-      if (preferences.maximize) {
+      
+      if (preferences.maximized) {
         mainWindow.maximize();
       }
 
@@ -67,7 +67,9 @@ function createWindow() {
 }
 
 function updateCachedMainWindowPreferences() {
-  mainWindowBounds = mainWindow.getBounds();
+  if (!mainWindow.isMaximized()) {
+    mainWindowBounds = mainWindow.getBounds();
+  }
   mainWindowMaximized = mainWindow.isMaximized();
 }
 

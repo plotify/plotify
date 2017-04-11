@@ -69,6 +69,7 @@ function getDefaultMainWindowPreferences() {
 }
 
 export function saveMainWindowPreferences(bounds, maximized) {
+
   const preferences = {
     width: bounds.width,
     height: bounds.height,
@@ -82,5 +83,5 @@ export function saveMainWindowPreferences(bounds, maximized) {
   }
 
   fs.writeFileSync(file, JSON.stringify(preferences));
-  
+
 }
