@@ -23,13 +23,13 @@ describe("stories / create", () => {
     beforeEach(() => { directory = prepareTestDirectory(); });
 
     it("should create new file in users documents directory", () => {
-      const expectedFilePath = path.join(directory, "new-story-1.story");
+      const expectedFilePath = path.join(directory, "Neue Geschichte.story");
       expect(createNewStory()).to.eventually.equal(expectedFilePath);
     });
 
     it("should create new file with incremented name if file already exists", () => {
-      fs.closeSync(fs.openSync(path.join(directory, "new-story-1.story"), "w"));
-      const expectedFilePath = path.join(directory, "new-story-2.story");
+      fs.closeSync(fs.openSync(path.join(directory, "Neue Geschichte.story"), "w"));
+      const expectedFilePath = path.join(directory, "Neue Geschichte 2.story");
       expect(createNewStory()).to.eventually.equal(expectedFilePath);
     });
 
