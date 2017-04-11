@@ -110,7 +110,7 @@ export default class PlotifyApp extends React.Component {
     return (
       <div id="PlotifyApp">
         <AppBar
-          title={this.props.currentSection.title + " " + this.props.storyName}
+          title={this.props.currentSection.title}
           style={styles.appBar}
           onLeftIconButtonTouchTap={this.toggleActionMenu}>
           <ActionMenu

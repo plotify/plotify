@@ -29,13 +29,6 @@ export class NoStoryChosenError extends Error {
 
 // Close:
 
-export class NoStoryOpenedError extends Error {
-  constructor() {
-    super("No story is opened.");
-    this.name = "NoStoryOpenedError";
-  }
-}
-
 export class CouldNotCloseStoryError extends Error {
   constructor(message) {
     super(message);

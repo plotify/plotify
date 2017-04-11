@@ -4,16 +4,8 @@ import { stub, spy, match } from "sinon";
 import sinonChai from "sinon-chai";
 import chaiAsPromised from "chai-as-promised";
 
-import {
-  closeStory,
-  registerCloseStoryIpcChannel
-} from "../../../main/model/stories/close";
-
-import {
-  NoStoryOpenedError,
-  CouldNotCloseStoryError
-} from "../../../main/shared/stories/errors";
-
+import { closeStory, registerCloseStoryIpcChannel } from "../../../main/model/stories/close";
+import { CouldNotCloseStoryError } from "../../../main/shared/stories/errors";
 import { getConnection, setConnection } from "../../../main/model/stories/connection";
 import { CLOSE_STORY } from "../../../main/shared/stories/ipc-channels";
 
@@ -36,10 +28,9 @@ describe("stories / close", () => {
 
     });
 
-    it("should be rejected if no connection is open", () => {
+    it("should be resolved even if no connection is open", () => {
       setConnection(null);
-      return expect(closeStory()).to.eventually.be.rejected.and.be.an.instanceof(
-        NoStoryOpenedError);
+      return expect(closeStory()).to.eventually.be.resolved;
     });
 
     it("should be rejected if connection could not be closed", () => {

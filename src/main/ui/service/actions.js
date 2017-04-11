@@ -9,8 +9,9 @@ import {
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
 import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER} from "../../shared/characters/ipc-channels";
-import {CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
+import {CREATE_STORY, CLOSE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
 import Sections from "../constants/sections";
+import path from "path";
 
 // Communication State
 export function sectionIsLoading(trueOrFalse) {
@@ -118,8 +119,7 @@ export function createStory() {
             .then(() => console.log("Opened and character created."))
             .then(() => dispatch(findCharacters()))
             .then(() => dispatch(changeSection(Sections.CHARACTER)))
-            .then(dispatch(sectionIsLoading(false)))
-
+            .then(dispatch(sectionIsLoading(false)));
         });
     });
   };
@@ -128,10 +128,16 @@ export function createStory() {
 export function openStory(file) {
   return function (dispatch) {
     dispatch(requestStory(file));
-    return sendToModel(OPEN_STORY, file)
+    return sendToModel(CLOSE_STORY)
+      .then(() => sendToModel(OPEN_STORY, file))
       .then((file) => {
+
         console.log("Story opened: ", file);
         dispatch(receiveStory(file));
+
+        /* jslint browser: true */
+        document.title = path.basename(file, ".story") + " - Plotify";
+
       })
       /*
        .then(() => {

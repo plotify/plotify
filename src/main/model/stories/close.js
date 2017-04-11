@@ -1,10 +1,7 @@
 import { getConnection, setConnection } from "./connection";
 import { sendCallback } from "../../shared/commons/ipc";
 import { CLOSE_STORY } from "../../shared/stories/ipc-channels";
-import {
-  NoStoryOpenedError,
-  CouldNotCloseStoryError
-} from "../../shared/stories/errors";
+import { CouldNotCloseStoryError } from "../../shared/stories/errors";
 
 export function closeStory() {
   return new Promise((resolve, reject) => {
@@ -12,7 +9,7 @@ export function closeStory() {
     const connection = getConnection();
 
     if (connection === null) {
-      throw new NoStoryOpenedError();
+      return resolve();
     }
 
     connection.close((error) => {

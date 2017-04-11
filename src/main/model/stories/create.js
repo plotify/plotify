@@ -50,12 +50,22 @@ function getNewFilePath() {
 
   const directory = app.getPath("documents");
 
+  let fileNameSuffix;
   let filePath;
   let counter = 0;
 
   do {
+
     counter++;
-    filePath = path.join(directory, "new-story-" + counter + ".story");
+
+    if (counter > 1) {
+        fileNameSuffix = " " + counter;
+    } else {
+      fileNameSuffix = "";
+    }
+
+    filePath = path.join(directory, "Neue Geschichte" + fileNameSuffix + ".story");
+
   } while (fs.existsSync(filePath));
 
   return filePath;
