@@ -22,11 +22,9 @@ export function openStoryDialog() {
   return new Promise((resolve, reject) => {
 
     dialog.showOpenDialog(getMainWindow(), options, (paths) => {
-      
+
       if (paths) {
-        openStory(paths[0])
-          .then(file => resolve(file))
-          .catch(error => reject(error));
+        resolve(paths[0]);
       } else {
         reject(new NoStoryChosenError());
       }
