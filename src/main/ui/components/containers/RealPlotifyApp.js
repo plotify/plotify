@@ -26,7 +26,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-
 const RealPlotifyApp = connect(
   mapStateToProps,
   mapDispatchToProps

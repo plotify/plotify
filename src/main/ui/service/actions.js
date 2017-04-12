@@ -1,15 +1,18 @@
 import {
   CHANGE_SECTION,
+  CLOSE_MSG,
   DESELECT_CHARACTER,
   RECEIVE_CHARACTERS,
   RECEIVE_STORY,
   REQUEST_CHARACTERS,
   REQUEST_STORY,
-  SELECT_CHARACTER
+  SELECT_CHARACTER,
+  SHOW_ERROR_MSG,
+  SHOW_MSG
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
 import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER} from "../../shared/characters/ipc-channels";
-import {CREATE_STORY, CLOSE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
+import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
 import Sections from "../constants/sections";
 import path from "path";
 
@@ -22,6 +25,26 @@ export function sectionIsLoading(trueOrFalse) {
 }
 
 // UI ACTIONS
+
+export function showMessage(message) {
+  return {
+    type: SHOW_MSG,
+    payload: message
+  };
+}
+
+export function showErrorMessage(message = "Fehler") {
+  return {
+    type: SHOW_ERROR_MSG,
+    payload: message
+  };
+}
+
+export function closeMessage() {
+  return {
+    type: CLOSE_MSG,
+  };
+}
 
 // SECTIONS
 export function changeSection(section) {
@@ -104,11 +127,11 @@ export function receiveStory(file) {
 export function createStory() {
   return function (dispatch) {
     let loadingPromise = new Promise((resolve, reject) => {
+      dispatch(sectionIsLoading(true));
+      dispatch(requestStory());
       resolve();
     });
     loadingPromise.then(() => {
-      dispatch(sectionIsLoading(true));
-      dispatch(requestStory());
       return sendToModel(CREATE_STORY)
         .then(file => {
           console.log("Story created", file);
@@ -139,14 +162,11 @@ export function openStory(file) {
         document.title = path.basename(file, ".story") + " - Plotify";
 
       })
-      /*
-       .then(() => {
-       dispatch(changeSection(Sections.CHARACTER));
-       })
-       */
       .catch(error => {
         dispatch(sectionIsLoading(false));
-        console.log("Could not create or open story: ", error);
+        const message = "Could not create or open story: " + error;
+        console.log(message);
+        dispatch(showErrorMessage(message));
       });
   };
 }
@@ -162,6 +182,8 @@ export function openStoryDialog() {
         .then((file) => {
           console.log("Story Chosen", file);
           dispatch(receiveStory(file));
+          /* jslint browser: true */
+          document.title = path.basename(file, ".story") + " - Plotify";
         })
         .then(() => {
             console.log("Lade Charaktere...");
@@ -174,14 +196,27 @@ export function openStoryDialog() {
         })
         .catch(error => {
           dispatch(sectionIsLoading(false));
+          let message;
           if (error.name === "UnsupportedFileVersionError") {
-            console.log("Unsupported file version!");
+            message = "Unsupported file version!";
           } else if (error.name === "NoStoryChosenError") {
-            console.log("No story chosen. Ignore this.");
+            message = "No story chosen. Ignore this.";
           } else {
-            console.log("Could not open story: " + error.name);
+            message = "Could not open story: " + error.name;
           }
+          console.log(message);
+          dispatch(showErrorMessage(message));
         });
     });
+  };
+}
+
+export function closeStory() {
+  return (dispatch) => {
+    return sendToModel(CLOSE_STORY)
+      .then(() => dispatch(changeSection(Sections.WELCOME)))
+      .catch((error) => {
+        dispatch(showErrorMessage());
+      });
   };
 }

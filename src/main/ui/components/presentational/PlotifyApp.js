@@ -13,6 +13,7 @@ import TrashSection from "../containers/TrashSection";
 import Sections from "../../constants/sections";
 import {CircularProgress} from "material-ui";
 import CharacterSection from "../containers/CharacterSection";
+import InfoMessage from "../containers/InfoMessage";
 
 const styles = {
   appBar: {
@@ -149,6 +150,7 @@ export default class PlotifyApp extends React.Component {
           {content}
 
         </div>
+        <InfoMessage />
       </div>
     );
   }

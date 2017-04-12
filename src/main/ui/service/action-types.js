@@ -6,6 +6,10 @@ export const DESELECT_CHARACTER = "DESELECT_CHARACTER";
 export const SELECT_CHARACTER = "SELECT_CHARACTER";
 export const SET_FILTER = "SET_FILTER";
 export const CHANGE_SECTION = "CHANGE_SECTION";
+export const SHOW_MSG = "SHOW_MSG";
+export const SHOW_ERROR_MSG = "SHOW_ERROR_MSG";
+export const SHOW_SUCCESS_MSG = "SHOW_SUCCESS_MSG";
+export const CLOSE_MSG = "CLOSE_MSG";
 
 // MODEL ACTIONS
 //---- CHARACTER
