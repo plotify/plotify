@@ -225,9 +225,9 @@ gulp.task("package-windows", () => {
     platform: "win32",
     overwrite: true,
     out: paths.build.distribution,
-    appCopyright: "Copyright (C) 2017 Sebastian Schmidt. All rights reserved",
+    appCopyright: "Copyright (C) 2017 Sebastian Schmidt und Jasper Meyer",
     win32metadata: {
-      CompanyName: "alpha",
+      CompanyName: "Sebastian Schmidt und Jasper Meyer",
       FileDescription: packageJson.productDescription,
       ProductName: packageJson.productName,
       OriginalFilename: packageJson.productName + ".exe"
