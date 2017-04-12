@@ -180,19 +180,10 @@ export function openStoryDialog() {
     loadingPromise.then(() => {
       return sendToModel(OPEN_STORY_DIALOG)
         .then((file) => {
-          console.log("Story Chosen", file);
-          dispatch(receiveStory(file));
-          /* jslint browser: true */
-          document.title = path.basename(file, ".story") + " - Plotify";
-        })
-        .then(() => {
-            console.log("Lade Charaktere...");
-            dispatch(findCharacters());
-          }
-        )
-        .then(() => {
-          dispatch(changeSection(Sections.CHARACTER));
-          dispatch(sectionIsLoading(false));
+          dispatch(openStory(file))
+            .then(() => dispatch(findCharacters()))
+            .then(() => dispatch(changeSection(Sections.CHARACTER)))
+            .then(dispatch(sectionIsLoading(false)))
         })
         .catch(error => {
           dispatch(sectionIsLoading(false));
