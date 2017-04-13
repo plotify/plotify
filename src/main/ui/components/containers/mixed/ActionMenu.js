@@ -6,6 +6,7 @@ import Divider from "material-ui/Divider";
 import ActionInfo from "material-ui/svg-icons/action/info";
 import ActionSettings from "material-ui/svg-icons/action/settings";
 import FolderOpen from "material-ui/svg-icons/file/folder-open";
+import FileFolder from "material-ui/svg-icons/file/folder";
 import AvNewReleases from "material-ui/svg-icons/av/new-releases";
 import {createStory, openStoryDialog, openStoryFileLocation} from "../../../service/actions";
 import {connect} from "react-redux";
@@ -62,7 +63,7 @@ class CustomMenu extends React.Component {
           <MenuItem
             primaryText="Speicherort öffnen"
             onTouchTap={this.handleOpenStoryFileLocation}
-            leftIcon={<FolderOpen/>}
+            leftIcon={<FileFolder/>}
             disabled={this.props.noStoryOpen}
           />
           <Divider/>
