@@ -15,6 +15,7 @@ import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER} from "../../shared/
 import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
 import Sections from "../constants/sections";
 import path from "path";
+import { shell } from "electron";
 
 // Communication State
 export function sectionIsLoading(trueOrFalse) {
@@ -211,5 +212,11 @@ export function closeStory() {
       .catch((error) => {
         dispatch(showErrorMessage());
       });
+  };
+}
+
+export function openStoryFileLocation() {
+  return (dispatch, getState) => {
+    shell.showItemInFolder(getState().story);
   };
 }

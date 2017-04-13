@@ -7,7 +7,7 @@ import ActionInfo from "material-ui/svg-icons/action/info";
 import ActionSettings from "material-ui/svg-icons/action/settings";
 import FolderOpen from "material-ui/svg-icons/file/folder-open";
 import AvNewReleases from "material-ui/svg-icons/av/new-releases";
-import {createStory, openStoryDialog} from "../../../service/actions";
+import {createStory, openStoryDialog, openStoryFileLocation} from "../../../service/actions";
 import {connect} from "react-redux";
 
 
@@ -16,7 +16,7 @@ class CustomMenu extends React.Component {
     super(props);
     this.handleCreateStory = this.handleCreateStory.bind(this);
     this.handleOpenStory = this.handleOpenStory.bind(this);
-    this.handleSettings = this.handleSettings.bind(this);
+    this.handleOpenStoryFileLocation = this.handleOpenStoryFileLocation.bind(this);
     this.handleAbout = this.handleAbout.bind(this);
   }
 
@@ -30,8 +30,9 @@ class CustomMenu extends React.Component {
     this.props.onOpenStory();
   }
 
-  handleSettings(event) {
+  handleOpenStoryFileLocation(event) {
     this.props.onRequestClose();
+    this.props.onOpenStoryFileLocation();
   }
 
   handleAbout(event) {
@@ -59,10 +60,12 @@ class CustomMenu extends React.Component {
           />
           <Divider/>
           <MenuItem
-            primaryText="Einstellungen"
-            onTouchTap={this.handleSettings}
-            leftIcon={<ActionSettings/>}
+            primaryText="Speicherort öffnen"
+            onTouchTap={this.handleOpenStoryFileLocation}
+            leftIcon={<FolderOpen/>}
+            disabled={this.props.noStoryOpen}
           />
+          <Divider/>
           <MenuItem
             primaryText="Über Plotify"
             onTouchTap={this.handleAbout}
@@ -75,7 +78,9 @@ class CustomMenu extends React.Component {
 
 // TODO
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    noStoryOpen: state.story === ""
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -85,6 +90,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onOpenStory: () => {
       dispatch(openStoryDialog());
+    },
+    onOpenStoryFileLocation: () => {
+      dispatch(openStoryFileLocation());
     }
   };
 };
