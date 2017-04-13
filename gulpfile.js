@@ -17,7 +17,6 @@ const winPackager = require("electron-packager");
 const checker = require("license-checker");
 const fs = require("fs");
 const ownLicenseFile = "./LICENSE";
-const generatedLicenseFile = "./build/LICENSE";
 
 const packageJson = require("./package.json");
 
@@ -32,8 +31,9 @@ const paths = {
       main: "./build/app/main",
       tests: "./build/app/test"
     },
-    distribution: "./build/distribution",
-    installers: "./build/distribution/installers"
+    packaged: "./build/packaged",
+    licenseFile: "./build/packaged/LICENSE",
+    installers: "./build/installers"
   }
 };
 
@@ -170,14 +170,14 @@ gulp.task("rebuild-production-dependencies", () => {
 
 });
 
-gulp.task("generate-license-file", () => {
+gulp.task("package:generate-license-file", () => {
 
   const options = Object.freeze({ encoding: "utf-8" });
   const separator = "---------------------------------------------------------" +
     "-----------------------";
 
   const ownLicenseFileContent = fs.readFileSync(ownLicenseFile, options) + "\n\n";
-  fs.appendFileSync(generatedLicenseFile, ownLicenseFileContent, options);
+  fs.appendFileSync(paths.build.licenseFile, ownLicenseFileContent, options);
 
   checker.init({ start: "./build/app/main" }, (error, json) => {
     for (let name in json) {
@@ -193,28 +193,51 @@ gulp.task("generate-license-file", () => {
         output += fs.readFileSync(p.licenseFile, options) + "\n\n";
       }
 
-      fs.appendFileSync(generatedLicenseFile, output, options);
+      fs.appendFileSync(paths.build.licenseFile, output, options);
 
     }
   });
 
 });
 
-gulp.task("package-linux", shell.task([
+gulp.task("package:add-license-file-to-packages", () => {
+  fs.readdir(paths.build.packaged, (error, files) => {
+    files.forEach(file => {
+      const filePath = path.join(paths.build.packaged, file);
+      fs.stat(filePath, (error, stats) => {
+        if (stats.isDirectory()) {
+          const oldElectronLicenseFile = path.join(filePath, "LICENSE");
+          const newElectronLicenseFile= path.join(filePath, "LICENSE-electron");
+          fs.rename(oldElectronLicenseFile, newElectronLicenseFile, (error) => {
+            fs.createReadStream(paths.build.licenseFile)
+              .pipe(fs.createWriteStream(oldElectronLicenseFile));
+          });
+        }
+      });
+    });
+  });
+});
+
+gulp.task("package:linux", shell.task([
   "electron-packager " + paths.build.app.main + " plotify " +
-        "--out " + paths.build.distribution + " " +
+        "--out " + paths.build.packaged + " " +
         "--electron-version=" + electronVersion + " " +
         "--platform=linux " +
         "--arch=x64 " +
-        "--icon=" + paths.icons + "/64.png",
+        "--icon=" + paths.icons + "/64.png"
+
+]));
+
+gulp.task("installer:linux", shell.task([
   "electron-installer-debian " +
-        "--src " + paths.build.distribution + "/plotify-linux-x64 " +
+        "--src " + paths.build.packaged + "/plotify-linux-x64 " +
         "--dest " + paths.build.installers + " " +
         "--arch amd64 " +
         "--config linux-package.json"
 ]));
 
-gulp.task("package-windows", () => {
+// TODO split: package:windows and installer:windows
+gulp.task("package:windows", () => {
 
   const options = {
     dir: paths.build.app.main,
@@ -224,7 +247,7 @@ gulp.task("package-windows", () => {
     name: packageJson.name,
     platform: "win32",
     overwrite: true,
-    out: paths.build.distribution,
+    out: paths.build.packaged,
     appCopyright: "Copyright (C) 2017 Sebastian Schmidt und Jasper Meyer",
     win32metadata: {
       CompanyName: "Sebastian Schmidt und Jasper Meyer",
@@ -242,7 +265,7 @@ gulp.task("package-windows", () => {
 
       console.log("Creating Windows Installer...");
       let result = electronInstaller.createWindowsInstaller({
-        appDirectory: paths.build.distribution + "/plotify-win32-x64",
+        appDirectory: paths.build.packaged + "/plotify-win32-x64",
         outputDirectory: paths.installers + "/windows",
         authors: "alpha",
         exe: "Plotify.exe",
@@ -262,9 +285,9 @@ gulp.task("package-windows", () => {
 
 });
 
-gulp.task("package-macos", shell.task([
+gulp.task("package:macos", shell.task([
   "electron-packager " + paths.build.app.main + " plotify " +
-        "--out " + paths.build.distribution + " " +
+        "--out " + paths.build.packaged + " " +
         "--electron-version=" + electronVersion + " " +
         "--platform=darwin " +
         "--arch=x64 " +
@@ -294,18 +317,21 @@ gulp.task("distribution:linux", () => {
               testsTasks,
               "install-production-dependencies",
               "rebuild-production-dependencies",
-              "generate-license-file",
-              "package-linux");
+              "package:linux",
+              "package:generate-license-file",
+              "package:add-license-file-to-packages",
+              "installer:linux");
 });
 
+// TODO package:add-license-file-to-packages
 gulp.task("distribution:windows", () => {
   runSequence(preparationTasks,
               buildTasks,
               testsTasks,
               "install-production-dependencies",
               "rebuild-production-dependencies",
-              "generate-license-file",
-              "package-windows");
+              "package:generate-license-file",
+              "package:windows");
 });
 
 gulp.task("distribution:macos", () => {
@@ -315,5 +341,6 @@ gulp.task("distribution:macos", () => {
               "install-production-dependencies",
               "rebuild-production-dependencies",
               "generate-license-file",
+              "add-license-file-to-packages",
               "package-macos");
 });
