@@ -16,12 +16,15 @@ export default class InfoSnackbar extends React.Component {
   }
 
   render() {
+
     return (
       <Snackbar
         open={this.props.open}
         message={this.props.message}
         autoHideDuration={this.state.autoHideDuration}
         onRequestClose={this.props.handleRequestClose}
+        onActionTouchTap={this.props.handleActionTouchTap}
+        action={this.props.action}
       />
     );
   }

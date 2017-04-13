@@ -8,7 +8,7 @@ import {
   REQUEST_STORY,
   SELECT_CHARACTER,
   SHOW_ERROR_MSG,
-  SHOW_MSG
+  SHOW_MSG, SHOW_SUCCESS_MSG
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
 import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER} from "../../shared/characters/ipc-channels";
@@ -29,20 +29,30 @@ export function sectionIsLoading(trueOrFalse) {
 export function showMessage(message) {
   return {
     type: SHOW_MSG,
-    payload: message
+    payload: {message}
   };
 }
 
 export function showErrorMessage(message = "Fehler") {
   return {
     type: SHOW_ERROR_MSG,
-    payload: message
+    payload: {message}
+  };
+}
+
+export function showSuccessMessage(message = "Success", withAction = false) {
+  return {
+    type: SHOW_SUCCESS_MSG,
+    payload: {
+      message: message,
+      withAction: withAction
+    }
   };
 }
 
 export function closeMessage() {
   return {
-    type: CLOSE_MSG,
+    type: CLOSE_MSG
   };
 }
 
@@ -126,25 +136,22 @@ export function receiveStory(file) {
 
 export function createStory() {
   return function (dispatch) {
-    let loadingPromise = new Promise((resolve, reject) => {
-      dispatch(sectionIsLoading(true));
-      dispatch(requestStory());
-      resolve();
-    });
-    loadingPromise.then(() => {
-      return sendToModel(CREATE_STORY)
-        .then(file => {
-          console.log("Story created", file);
-          dispatch(openStory(file))
-            .then(() => sendToModel(CREATE_CHARACTER))
-            .then(characterId => sendToModel(UPDATE_CHARACTER,
-              {id: characterId, name: "Erika", deleted: false}))
-            .then(() => console.log("Opened and character created."))
-            .then(() => dispatch(findCharacters()))
-            .then(() => dispatch(changeSection(Sections.CHARACTER)))
-            .then(dispatch(sectionIsLoading(false)));
-        });
-    });
+    dispatch(sectionIsLoading(true));
+    dispatch(requestStory());
+    return sendToModel(CREATE_STORY)
+      .then(file => {
+        console.log("Story created", file);
+        const scsMessage = "Deine Geschichte wurde erfolgreich erstellt. ";
+        dispatch(showSuccessMessage(scsMessage, true));
+        dispatch(openStory(file))
+          .then(() => sendToModel(CREATE_CHARACTER))
+          .then(characterId => sendToModel(UPDATE_CHARACTER,
+            {id: characterId, name: "Erika", deleted: false}))
+          .then(() => console.log("Opened and character created."))
+          .then(() => dispatch(findCharacters()))
+          .then(() => dispatch(changeSection(Sections.CHARACTER)))
+          .then(dispatch(sectionIsLoading(false)));
+      });
   };
 }
 
@@ -173,32 +180,27 @@ export function openStory(file) {
 
 export function openStoryDialog() {
   return function (dispatch) {
-    let loadingPromise = new Promise((resolve, reject) => {
-      dispatch(sectionIsLoading(true));
-      resolve();
-    });
-    loadingPromise.then(() => {
-      return sendToModel(OPEN_STORY_DIALOG)
-        .then((file) => {
-          dispatch(openStory(file))
-            .then(() => dispatch(findCharacters()))
-            .then(() => dispatch(changeSection(Sections.CHARACTER)))
-            .then(dispatch(sectionIsLoading(false)))
-        })
-        .catch(error => {
-          dispatch(sectionIsLoading(false));
-          let message;
-          if (error.name === "UnsupportedFileVersionError") {
-            message = "Unsupported file version!";
-          } else if (error.name === "NoStoryChosenError") {
-            message = "No story chosen. Ignore this.";
-          } else {
-            message = "Could not open story: " + error.name;
-          }
-          console.log(message);
-          dispatch(showErrorMessage(message));
-        });
-    });
+    dispatch(sectionIsLoading(true));
+    return sendToModel(OPEN_STORY_DIALOG)
+      .then((file) => {
+        dispatch(openStory(file))
+          .then(() => dispatch(findCharacters()))
+          .then(() => dispatch(changeSection(Sections.CHARACTER)))
+          .then(dispatch(sectionIsLoading(false)));
+      })
+      .catch(error => {
+        dispatch(sectionIsLoading(false));
+        let message;
+        if (error.name === "UnsupportedFileVersionError") {
+          message = "Unsupported file version!";
+        } else if (error.name === "NoStoryChosenError") {
+          message = "No story chosen. Ignore this.";
+        } else {
+          message = "Could not open story: " + error.name;
+        }
+        console.log(message);
+        dispatch(showMessage(message));
+      });
   };
 }
 

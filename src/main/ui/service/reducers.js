@@ -29,24 +29,26 @@ function message(state = {message: "NaN", open: false, type: INFO}, action) {
   switch (action.type) {
     case SHOW_MSG:
       return {
-        message: action.payload,
+        message: action.payload.message,
         open: true
       };
     case SHOW_ERROR_MSG:
       return {
-        message: action.payload,
+        message: action.payload.message,
         open: true,
         type: ERROR
       };
     case SHOW_SUCCESS_MSG:
       return {
-        message: action.payload,
+        message: action.payload.message,
         open: true,
-        type: SUCCESS
+        type: SUCCESS,
+        withAction: action.payload.withAction,
       };
     case CLOSE_MSG:
       return {
-        open: false
+        open: false,
+        message: state.message,
       };
     default:
       return state;

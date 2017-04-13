@@ -10,7 +10,7 @@ const styles = {
     float: "left",
     height: "100%",
     maxWidth: "95%",
-    minWidth: "400",
+    minWidth: 400,
   },
   paperWrapper: {
     position: "absolute",
