@@ -13,7 +13,7 @@ const mapStateToProps = (state) => {
   };
 
   const conditionalProps = {
-    action: "öffnen",
+    action: "Speicherort öffnen",
     handleActionTouchTap: () => {
       console.log("OPENING", state.story);
       shell.showItemInFolder(state.story);

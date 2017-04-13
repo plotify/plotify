@@ -5,7 +5,7 @@ export default class InfoSnackbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      autoHideDuration: 4000,
+      autoHideDuration: 5000,
     };
   }
 
