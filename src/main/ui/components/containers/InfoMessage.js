@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
   const conditionalProps = {
     action: "Speicherort öffnen",
     handleActionTouchTap: () => {
-      console.log("OPENING", state.story);
+      // TODO Auslagern und die Action openStoryFileLocation verwenden:
       shell.showItemInFolder(state.story);
     }
   };
