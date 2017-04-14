@@ -125,6 +125,7 @@ CREATE TABLE `character_changes_sequence` (
   `queue`        INTEGER NOT NULL CHECK(queue = 0 OR queue = 1),
   `position`     INTEGER NOT NULL CHECK(position >= 0),
   `type`         INTEGER NOT NULL CHECK(type = 0 OR type = 1 OR type = 2),
+  `type_id`      TEXT NOT NULL,
   `history_id`   TEXT NOT NULL,
   FOREIGN KEY(`character_id`) REFERENCES character(id)
 );

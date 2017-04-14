@@ -11,7 +11,7 @@ import {
   SHOW_MSG, SHOW_SUCCESS_MSG
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
-import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER} from "../../shared/characters/ipc-channels";
+import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER, CAN_UNDO_CHARACTER_CHANGE, UNDO_CHARACTER_CHANGE} from "../../shared/characters/ipc-channels";
 import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
 import Sections from "../constants/sections";
 import path from "path";
@@ -147,7 +147,14 @@ export function createStory() {
         dispatch(openStory(file))
           .then(() => sendToModel(CREATE_CHARACTER))
           .then(characterId => sendToModel(UPDATE_CHARACTER,
-            {id: characterId, name: "Erika", deleted: false}))
+            { id: characterId, name: "Erika", deleted: false }))
+          .then(characterId => sendToModel(UPDATE_CHARACTER,
+            { id: characterId, name: "Erika Musterfrau", deleted: false }))
+          //.then(characterId => sendToModel(UNDO_CHARACTER_CHANGE, characterId))
+          //.then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
+          //.then(content => console.log(content))
+          //.then(characterId => sendToModel(CAN_UNDO_CHARACTER_CHANGE, characterId))
+          //.then(canUndo => console.log("can undo? " + canUndo))
           .then(() => console.log("Opened and character created."))
           .then(() => dispatch(findCharacters()))
           .then(() => dispatch(changeSection(Sections.CHARACTER)))

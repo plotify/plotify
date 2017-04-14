@@ -1,8 +1,9 @@
 import UUID from "../../shared/commons/uuid";
 import { sendCallback } from "../../shared/commons/ipc";
 import { UPDATE_CHARACTER } from "../../shared/characters/ipc-channels";
+import ChangeType from "../../shared/characters/change-type";
 import { getConnection } from "../stories/connection";
-import { addChange, Type } from "./add-change";
+import { addChange } from "./add-change";
 
 export function updateCharacter(id, name, deleted) {
   return new Promise((resolve, reject) => {
@@ -10,16 +11,16 @@ export function updateCharacter(id, name, deleted) {
     const db = getConnection();
 
     const historyId = UUID.random().toString();
+    const params = [historyId, name, deleted ? 1 : 0];
 
-    db.run("INSERT INTO character_history (id, name, deleted) VALUES (?, ?, ?)",
-      [historyId, name, deleted ? 1 : 0], (error) => {
+    db.run("INSERT INTO character_history (id, name, deleted) VALUES (?, ?, ?)", params, (err) => {
 
-      if (error) {
-        reject(error);
+      if (err) {
+        reject(err);
         return;
       }
 
-      addChange(id, id, Type.CHARACTER, historyId)
+      addChange(id, id, ChangeType.CHARACTER, historyId)
         .then(() => resolve(id))
         .catch(error => reject(error));
 

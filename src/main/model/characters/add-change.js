@@ -1,28 +1,6 @@
 import { getConnection } from "../stories/connection";
-
-export const Type = Object.freeze({
-  CHARACTER: 0,
-  ENTRY_GROUP: 1,
-  ENTRY: 2
-});
-
-function getTypeTable(type) {
-  switch (type) {
-    case Type.CHARACTER:
-      return "character";
-    case Type.ENTRY_GROUP:
-      return "entry_group";
-    case Type.ENTRY:
-      return "entry";
-    default:
-      throw new Error("Unknown type.");
-  }
-}
-
-const Queue = Object.freeze({
-  PAST: 0,
-  FUTURE: 1
-});
+import ChangeType from "../../shared/characters/change-type";
+import { getTypeTable, Queue } from "./changes-sequence";
 
 export function addChange(id, characterId, type, newHistoryId) {
   return new Promise((resolve, reject) => {
@@ -32,9 +10,9 @@ export function addChange(id, characterId, type, newHistoryId) {
 
 function getPrevHistoryId(id, characterId, type, newHistoryId, resolve, reject) {
 
-  const sql = "SELECT presence_history_id as prevHistoryId " +
-              "FROM " + getTypeTable(type) + " " +
-              "WHERE id = ?;";
+  const sql = " SELECT presence_history_id as prevHistoryId " +
+              " FROM " + getTypeTable(type) + "             " +
+              " WHERE id = ?                                ";
 
   getConnection().get(sql, [id], (error, row) => {
 
@@ -55,9 +33,9 @@ function getPrevHistoryId(id, characterId, type, newHistoryId, resolve, reject) 
 function updatePresenceHistoryId(id, characterId, type, newHistoryId, prevHistoryId,
                                  resolve, reject) {
 
-  const sql = "UPDATE " + getTypeTable(type) + " " +
-              "SET presence_history_id = ? " +
-              "WHERE id = ?;";
+  const sql = " UPDATE " + getTypeTable(type) + " " +
+              " SET presence_history_id = ?       " +
+              " WHERE id = ?                      ";
 
   getConnection().run(sql, [newHistoryId, id], (error) => {
 
@@ -68,17 +46,17 @@ function updatePresenceHistoryId(id, characterId, type, newHistoryId, prevHistor
 
     console.log("presence_history_id updated.");
 
-    handleFutureQueue(characterId, type, prevHistoryId, resolve, reject);
+    handleFutureQueue(id, characterId, type, prevHistoryId, resolve, reject);
 
   });
 
 }
 
-function handleFutureQueue(characterId, type, prevHistoryId, resolve, reject) {
+function handleFutureQueue(id, characterId, type, prevHistoryId, resolve, reject) {
 
-  const sql = "SELECT position, history_id " +
-              "FROM character_changes_sequence " +
-              "WHERE character_id = ? AND queue = ?;";
+  const sql = " SELECT position, history_id          " +
+              " FROM character_changes_sequence      " +
+              " WHERE character_id = ? AND queue = ? ";
 
   getConnection().all(sql, [characterId, Queue.FUTURE], (error, rows) => {
 
@@ -90,20 +68,21 @@ function handleFutureQueue(characterId, type, prevHistoryId, resolve, reject) {
     console.log("Future queue: " + rows.length);
 
     if (rows.length === 0) {
-      handleNoFuture(characterId, type, prevHistoryId, resolve, reject);
+      handleNoFuture(id, characterId, type, prevHistoryId, resolve, reject);
     } else {
       // TODO Implementieren
+      throw new Error("Unsupported operation.");
     }
 
   });
 
 }
 
-function handleNoFuture(characterId, type, prevHistoryId, resolve, reject) {
+function handleNoFuture(id, characterId, type, prevHistoryId, resolve, reject) {
 
-  const sql = "SELECT max(position) AS maxPosition " +
-              "FROM character_changes_sequence " +
-              "WHERE character_id = ? AND queue = ?;";
+  const sql = " SELECT max(position) AS maxPosition  " +
+              " FROM character_changes_sequence      " +
+              " WHERE character_id = ? AND queue = ? ";
 
   getConnection().get(sql, [characterId, Queue.PAST], (error, row) => {
 
@@ -125,19 +104,20 @@ function handleNoFuture(characterId, type, prevHistoryId, resolve, reject) {
 
     console.log("next position: " + position);
 
-    addToPast(position, characterId, type, prevHistoryId, resolve, reject);
+    addToPast(id, position, characterId, type, prevHistoryId, resolve, reject);
 
   });
 
 }
 
-function addToPast(position, characterId, type, prevHistoryId, resolve, reject) {
+function addToPast(id, position, characterId, type, prevHistoryId, resolve, reject) {
 
-  const sql = "INSERT INTO character_changes_sequence " +
-              "(position, character_id, type, history_id, queue) " +
-              "VALUES (?, ?, ?, ?, ?);";
+  const sql = " INSERT INTO character_changes_sequence                     " +
+              " (position, character_id, type, type_id, history_id, queue) " +
+              " VALUES (?, ?, ?, ?, ?, ?)                                  ";
+  const params = [position, characterId, type, id, prevHistoryId, Queue.PAST];
 
-  getConnection().run(sql, [position, characterId, type, prevHistoryId, Queue.PAST], (error) => {
+  getConnection().run(sql, params, (error) => {
     if (error) {
       console.log(error.message);
       reject(error);
