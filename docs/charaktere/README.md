@@ -147,20 +147,22 @@ CREATE TABLE `entry_group_history` (
 );
 
 CREATE TABLE `entry` (
-  `group_id`            TEXT NOT NULL,
+  `character_id`        TEXT NOT NULL,
   `id`                  TEXT NOT NULL,
   `presence_history_id` TEXT NOT NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(`group_id`)            REFERENCES entry_group(id),
+  FOREIGN KEY(`character_id`)        REFERENCES character(id),
   FOREIGN KEY(`presence_history_id`) REFERENCES entry_history(id)
 );
 
 CREATE TABLE `entry_history` (
   `id`       TEXT    NOT NULL,
+  `group_id` TEXT    NOT NULL,
   `title`    TEXT    NOT NULL,
   `value`    TEXT    NOT NULL DEFAULT '',
   `position` INTEGER NOT NULL            CHECK(position >= 0),
   `deleted`  INTEGER NOT NULL DEFAULT 0  CHECK(deleted = 0 OR deleted = 1),
-  PRIMARY KEY(id)
+  PRIMARY KEY(id),
+  FOREIGN KEY(`group_id`) REFERENCES entry_group(id)
 );
 ```
