@@ -4,6 +4,8 @@ import url from "url";
 import isDev from "electron-is-dev";
 import { getMainWindowPreferences, saveMainWindowPreferences } from "./model/user/main-window";
 import { setMainWindow } from "./model/main-window";
+import { getConnection, setConnection } from "./model/stories/connection";
+import { closeStory } from "./model/stories/close";
 
 import "./model/index";
 
@@ -37,7 +39,7 @@ function createWindow() {
     mainWindow.on("unmaximize", updateCachedMainWindowPreferences);
 
     mainWindow.on("ready-to-show", () => {
-      
+
       if (preferences.maximized) {
         mainWindow.maximize();
       }
@@ -84,5 +86,17 @@ app.on("window-all-closed", () => {
 app.on("activate", () => {
   if (mainWindow === null) {
     createWindow();
+  }
+});
+
+app.on("will-quit", (event) => {
+  if (getConnection() !== null) {
+    event.preventDefault();
+    closeStory()
+      .then(() => app.quit())
+      .catch(() => {
+        setConnection(null);
+        app.quit();
+      });
   }
 });
