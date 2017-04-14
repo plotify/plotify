@@ -1,5 +1,7 @@
 /* jslint browser: true */
 
+import isDev from "electron-is-dev";
+
 import React from "react";
 import ReactDOM from "react-dom";
 import logger from "redux-logger";
@@ -81,8 +83,15 @@ import thunkMiddleware from "redux-thunk";
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
+let middleware;
 
-const store = createStore(combinedReducer, applyMiddleware(thunkMiddleware, logger));
+if (isDev) {
+  middleware = applyMiddleware(thunkMiddleware, logger);
+} else {
+  middleware = applyMiddleware(thunkMiddleware);
+}
+
+const store = createStore(combinedReducer, middleware);
 
 class App extends React.Component {
   render() {
