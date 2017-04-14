@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 //---- MATERIAL UI WELCOME
 //------ COMPONENTS WELCOME
-import { Toolbar, ToolbarGroup, ToolbarTitle } from "material-ui/Toolbar";
+import {Toolbar, ToolbarGroup, ToolbarTitle} from "material-ui/Toolbar";
 import ActionSearch from "material-ui/svg-icons/action/search";
 import TextField from "material-ui/TextField";
 //------ COMPONENTS END
@@ -49,6 +49,7 @@ export default class SearchBar extends React.Component {
     };
     this.focus = this.focus.bind(this);
     this.blur = this.blur.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   focus() {
@@ -61,19 +62,28 @@ export default class SearchBar extends React.Component {
   blur() {
     this.refs.input.blur();
     this.setState({
-      active: false
+      active: this.state.value !== ""
     });
   }
 
-  render() {
-    const { active } = this.state;
+  handleChange(event) {
+    const val = event.target.value;
+    console.log("FILTER VALUE", val);
+    this.setState({
+      value: val
+    });
+    this.props.onSetFilter(val);
+  }
 
-    return(
+  render() {
+    const {active} = this.state;
+
+    return (
       <Toolbar style={styles.toolbar}>
         <ToolbarGroup
           className="marginTransition"
           style={active ? styles.title.active : styles.title }>
-          <ToolbarTitle text="Alle" />
+          <ToolbarTitle text="Alle"/>
         </ToolbarGroup>
         <ToolbarGroup
           className="marginTransition"
@@ -81,13 +91,14 @@ export default class SearchBar extends React.Component {
           <ActionSearch
             style={styles.icon}
             onClick={this.focus}
-            />
+          />
           <TextField
             className="marginTransition"
             ref="input"
             hintText="Suche"
             onFocus={this.focus}
             onBlur={this.blur}
+            onChange={this.handleChange}
             style={ active ? styles.input.active : styles.input}
           />
         </ToolbarGroup>

@@ -4,7 +4,7 @@ import Avatar from "material-ui/Avatar";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import SearchBar from "./SearchBar";
-import {palette, spacing} from "../../themes/PlotifyMainTheme";
+import PlotifyMainTheme, {palette, spacing} from "../../themes/PlotifyMainTheme";
 
 const styles = {
   list: {
@@ -12,10 +12,20 @@ const styles = {
     position: "relative",
     height: "100%",
     backgroundColor: "white",
+    overflowY: "auto",
   },
   characterItem: {
     letterAvatar: {
       margin: 5
+    },
+    selected: {
+      backgroundColor: palette.primary2Color,
+      color: palette.alternateTextColor,
+      letterAvatar: {
+        margin: 5,
+        backgroundColor: palette.primary1Color,
+        color: palette.alternateTextColor
+      },
     }
   },
   addButton: {
@@ -27,16 +37,21 @@ const styles = {
 
 export default class CharacterList extends React.Component {
   render() {
-    console.log(this.props.characters);
     return (
       <div id="CharacterList" style={styles.list}>
         <SearchBar
-          onSetFilter={this.props.onSetFilter}
+          onSetFilter={(filter) => this.props.onSetFilter(filter)}
         />
-        {
-          this.props.characters.size === 0 && this.props.emptyMessage
-        }
+
         <List>
+          {
+            this.props.characters.length === 0 &&
+            <ListItem
+              primaryText={this.props.emptyMessage}
+              disabled={true}
+              style={{fontFamily: PlotifyMainTheme.fontFamily, textAlign: "center"}}
+            />
+          }
           {
             this.props.characters.map((character) => {
               return (
@@ -51,7 +66,9 @@ export default class CharacterList extends React.Component {
             })
           }
         </List>
-        <FloatingActionButton style={styles.addButton}>
+        <FloatingActionButton
+          style={styles.addButton}
+          onTouchTap={this.props.onAddCharacter}>
           <ContentAdd/>
         </FloatingActionButton>
       </div>
@@ -76,13 +93,14 @@ class CharacterListItem extends React.Component {
   render() {
     return (
       <ListItem
+        style={this.props.selectedCharacter ? styles.characterItem.selected : {}}
         onTouchTap={this.handleClick}
         hoverColor={palette.accent2Color}
         primaryText={this.props.name}
         leftAvatar={
           <Avatar
             size={30}
-            style={styles.characterItem.letterAvatar}>
+            style={this.props.selectedCharacter ? styles.characterItem.selected.letterAvatar : styles.characterItem.letterAvatar}>
             {this.props.name.charAt(0)}
           </Avatar>
         }

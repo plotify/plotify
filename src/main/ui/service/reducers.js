@@ -89,13 +89,13 @@ function selected(state = {id: null, newCharacter: false}, action) {
   switch (action.type) {
     case SELECT_CHARACTER:
       return {
-        id: action.payload.id,
+        id: action.payload,
         newCharacter: false
       };
 
     case ADD_CHARACTER:
       return {
-        id: action.payload.id,
+        id: action.payload,
         newCharacter: true
       };
 

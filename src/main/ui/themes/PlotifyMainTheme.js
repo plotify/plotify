@@ -1,9 +1,4 @@
-import {
-  deepPurple500, deepPurple700,
-  purple900, purple800, purple300,
-  grey100, grey300, grey400, grey500,
-  white, darkBlack, fullBlack
-} from "material-ui/styles/colors";
+import {darkBlack, fullBlack, grey100, grey300, grey400, grey500, purple800, white} from "material-ui/styles/colors";
 import uispacing from "material-ui/styles/spacing";
 
 const PlotifyMainTheme = {

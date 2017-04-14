@@ -21,6 +21,7 @@ export const SAVE_CHARACTER = "SAVE_CHARACTER";
 export const DELETE_CHARACTER = "DELETE_CHARACTER";
 export const UNDO = "UNDO";
 export const REDO = "REDO";
+export const REQUEST_CHARACTER = "REQUEST_CHARACTER";
 
 //---- STORY
 export const REQUEST_STORY = "REQUEST_STORY";
