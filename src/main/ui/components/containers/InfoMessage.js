@@ -1,36 +1,25 @@
 import React from "react";
-import {closeMessage} from "../../service/actions";
+import {closeMessage, openStoryFileLocation} from "../../service/actions";
 import {connect} from "react-redux";
 import InfoSnackbar from "../presentational/InfoSnackbar";
 import {shell} from "electron";
 
 const mapStateToProps = (state) => {
-
-  const defaultProps = {
+  return {
     message: state.message.message,
     open: state.message.open,
     type: state.message.type,
-  };
-
-  const conditionalProps = {
+    showAction: state.message.withAction,
     action: "Speicherort öffnen",
-    handleActionTouchTap: () => {
-      // TODO Auslagern und die Action openStoryFileLocation verwenden:
-      shell.showItemInFolder(state.story);
-    }
   };
-  let props = {};
-  if (state.message.withAction) {
-    props = Object.assign(conditionalProps, defaultProps);
-  } else {
-    props = defaultProps;
-  }
-  return props;
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleRequestClose: () => {
+    onOpenStoryLocation: () => {
+      dispatch(openStoryFileLocation());
+    },
+    onCloseMessage: () => {
       dispatch(closeMessage());
     }
   };

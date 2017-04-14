@@ -9,12 +9,6 @@ export default class InfoSnackbar extends React.Component {
     };
   }
 
-  handleRequestClose() {
-    this.setState({
-      open: false,
-    });
-  }
-
   render() {
 
     return (
@@ -22,9 +16,9 @@ export default class InfoSnackbar extends React.Component {
         open={this.props.open}
         message={this.props.message}
         autoHideDuration={this.state.autoHideDuration}
-        onRequestClose={this.props.handleRequestClose}
-        onActionTouchTap={this.props.handleActionTouchTap}
-        action={this.props.action}
+        onRequestClose={this.props.onCloseMessage}
+        onActionTouchTap={this.props.onOpenStoryLocation}
+        action={this.props.showAction && this.props.action}
       />
     );
   }
