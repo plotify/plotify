@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import CharacterList from "../presentational/CharacterList";
-import {deselectCharacter, findCharacters, selectCharacter, setFilter} from "../../service/actions";
+import {createCharacter, deselectCharacter, findCharacters, selectCharacter, setFilter} from "../../service/actions";
 
 const getEmptyMessage = (characters, filter) => {
   let emptyMessage = "Erstelle deinen ersten Charakter, indem du auf das Plus drückst.";
@@ -24,7 +24,7 @@ const mapStateToProps = (state) => {
     emptyMessage: getEmptyMessage(state.characters, state.filter),
     filter: state.filter,
     selectedCharacterId: state.selected.id,
-  }
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -36,12 +36,15 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(deselectCharacter());
     },
     onSetFilter: (filter) => {
-      dispatch(setFilter(filter))
+      dispatch(setFilter(filter));
     },
     onFindCharacters: () => {
-      dispatch(findCharacters())
-    }
-  }
+      dispatch(findCharacters());
+    },
+    onAddCharacter: () => {
+      dispatch(createCharacter());
+    },
+  };
 };
 
 const VisibleCharacterList = connect(

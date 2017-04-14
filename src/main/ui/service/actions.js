@@ -4,18 +4,20 @@ import {
   DESELECT_CHARACTER,
   RECEIVE_CHARACTERS,
   RECEIVE_STORY,
+  REQUEST_CHARACTER,
   REQUEST_CHARACTERS,
   REQUEST_STORY,
   SELECT_CHARACTER,
   SHOW_ERROR_MSG,
-  SHOW_MSG, SHOW_SUCCESS_MSG
+  SHOW_MSG,
+  SHOW_SUCCESS_MSG
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
 import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER} from "../../shared/characters/ipc-channels";
 import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
 import Sections from "../constants/sections";
 import path from "path";
-import { shell } from "electron";
+import {shell} from "electron";
 
 // Communication State
 export function sectionIsLoading(trueOrFalse) {
@@ -87,8 +89,28 @@ export function setFilter(filter) {
   };
 }
 
-export function addCharacter() {
+export function requestCharacter(uuid = "") {
+  return {
+    type: REQUEST_CHARACTER,
+    payload: uuid
+  };
+}
 
+export function createCharacter() {
+  return function (dispatch) {
+    dispatch(requestCharacter());
+    return sendToModel(CREATE_CHARACTER)
+      .then((uuid) => sendToModel(UPDATE_CHARACTER,
+        {id: uuid, name: "Neuer Charakter", deleted: false}))
+      .then((uuid) => {
+        const msg = "Charakter erfolgreich erstellt";
+        console.log(msg, uuid);
+        dispatch(showMessage(msg));
+        dispatch(findCharacters());
+        dispatch(selectCharacter(uuid));
+      })
+      .catch((error) => console.log(error));
+  };
 }
 
 export function requestCharacters() {
@@ -159,6 +181,7 @@ export function createStory() {
 export function openStory(file) {
   return function (dispatch) {
     dispatch(requestStory(file));
+    dispatch(deselectCharacter());
     return sendToModel(CLOSE_STORY)
       .then(() => sendToModel(OPEN_STORY, file))
       .then((file) => {
@@ -201,16 +224,6 @@ export function openStoryDialog() {
         }
         console.log(message);
         dispatch(showMessage(message));
-      });
-  };
-}
-
-export function closeStory() {
-  return (dispatch) => {
-    return sendToModel(CLOSE_STORY)
-      .then(() => dispatch(changeSection(Sections.WELCOME)))
-      .catch((error) => {
-        dispatch(showErrorMessage());
       });
   };
 }

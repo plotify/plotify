@@ -27,7 +27,6 @@ const styles = {
 
 export default class CharacterList extends React.Component {
   render() {
-    console.log(this.props.characters);
     return (
       <div id="CharacterList" style={styles.list}>
         <SearchBar
@@ -51,7 +50,9 @@ export default class CharacterList extends React.Component {
             })
           }
         </List>
-        <FloatingActionButton style={styles.addButton}>
+        <FloatingActionButton
+          style={styles.addButton}
+          onTouchTap={this.props.onAddCharacter}>
           <ContentAdd/>
         </FloatingActionButton>
       </div>
