@@ -13,9 +13,9 @@ export function updateCharacter(characterId, type, typeId, changes) {
 
     const historyId = UUID.random().toString();
 
-    let sql = " INSERT INTO " + getTypeHistoryTable(type) + " (";
-    let valuesSql = "";
-    let params = [];
+    let sql = " INSERT INTO " + getTypeHistoryTable(type) + " (id, ";
+    let valuesSql = "?, ";
+    let params = [historyId];
 
     for (let property in changes) {
       if (changes.hasOwnProperty(property)) {
@@ -35,7 +35,7 @@ export function updateCharacter(characterId, type, typeId, changes) {
     sql = sql.slice(0, -2) + ") VALUES (" + valuesSql + ")";
 
     db.run(sql, params, (err) => {
-
+      
       if (err) {
         reject(err);
         return;
