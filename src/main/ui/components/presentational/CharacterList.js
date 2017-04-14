@@ -12,10 +12,20 @@ const styles = {
     position: "relative",
     height: "100%",
     backgroundColor: "white",
+    overflowY: "auto",
   },
   characterItem: {
     letterAvatar: {
       margin: 5
+    },
+    selected: {
+      backgroundColor: palette.primary2Color,
+      color: palette.alternateTextColor,
+      letterAvatar: {
+        margin: 5,
+        backgroundColor: palette.primary1Color,
+        color: palette.alternateTextColor
+      },
     }
   },
   addButton: {
@@ -77,13 +87,14 @@ class CharacterListItem extends React.Component {
   render() {
     return (
       <ListItem
+        style={this.props.selectedCharacter ? styles.characterItem.selected : {}}
         onTouchTap={this.handleClick}
         hoverColor={palette.accent2Color}
         primaryText={this.props.name}
         leftAvatar={
           <Avatar
             size={30}
-            style={styles.characterItem.letterAvatar}>
+            style={this.props.selectedCharacter ? styles.characterItem.selected.letterAvatar : styles.characterItem.letterAvatar}>
             {this.props.name.charAt(0)}
           </Avatar>
         }
