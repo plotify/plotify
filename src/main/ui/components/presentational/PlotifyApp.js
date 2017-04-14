@@ -100,7 +100,7 @@ export default class PlotifyApp extends React.Component {
         content = <CharacterSection />;
         break;
       case Sections.TRASH:
-        content = <TrashSection />;
+        content = <TrashSection/>;
         break;
       default:
         content = <WelcomeSection />;

@@ -8,6 +8,7 @@ import {
   REQUEST_CHARACTERS,
   REQUEST_STORY,
   SELECT_CHARACTER,
+  SET_FILTER,
   SHOW_ERROR_MSG,
   SHOW_MSG,
   SHOW_SUCCESS_MSG
@@ -84,7 +85,7 @@ export function deselectCharacter() {
 
 export function setFilter(filter) {
   return {
-    type: "FILTER",
+    type: SET_FILTER,
     payload: filter
   };
 }
@@ -127,11 +128,11 @@ export function receiveCharacters(characters) {
   };
 }
 
-export function findCharacters() {
+export function findCharacters(filter = "") {
   console.log("findCharacters()");
   return function (dispatch) {
     dispatch(requestCharacters());
-    return sendToModel(FIND_CHARACTERS, {deleted: false})
+    return sendToModel(FIND_CHARACTERS, {deleted: false, filter})
       .then(characters => {
         console.log("FOUND CHARACTERS", characters);
         dispatch(receiveCharacters(characters));

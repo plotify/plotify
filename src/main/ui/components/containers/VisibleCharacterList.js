@@ -3,25 +3,18 @@ import {connect} from "react-redux";
 import CharacterList from "../presentational/CharacterList";
 import {createCharacter, deselectCharacter, findCharacters, selectCharacter, setFilter} from "../../service/actions";
 
-const getEmptyMessage = (characters, filter) => {
+const getEmptyMessage = (filter) => {
   let emptyMessage = "Erstelle deinen ersten Charakter, indem du auf das Plus drückst.";
-  if (filter && characters.length > 0) {
+  if (filter) {
     emptyMessage = "Keine Charaktere gefunden.";
   }
   return emptyMessage;
 };
 
-const getVisibleCharacters = (characters, filter) => {
-  return characters.filter((character) => {
-    return character.name.toLowerCase().includes(filter.toLowerCase());
-  });
-};
-
 const mapStateToProps = (state) => {
-  console.log("CHAR LIST STATE ", state);
   return {
-    characters: getVisibleCharacters(state.characters, state.filter),
-    emptyMessage: getEmptyMessage(state.characters, state.filter),
+    characters: state.characters,
+    emptyMessage: getEmptyMessage(state.filter),
     filter: state.filter,
     selectedCharacterId: state.selected.id,
   };
@@ -37,9 +30,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSetFilter: (filter) => {
       dispatch(setFilter(filter));
-    },
-    onFindCharacters: () => {
-      dispatch(findCharacters());
+      dispatch(findCharacters(filter));
     },
     onAddCharacter: () => {
       dispatch(createCharacter());

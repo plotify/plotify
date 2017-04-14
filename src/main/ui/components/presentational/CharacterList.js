@@ -4,7 +4,7 @@ import Avatar from "material-ui/Avatar";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import SearchBar from "./SearchBar";
-import {palette, spacing} from "../../themes/PlotifyMainTheme";
+import PlotifyMainTheme, {palette, spacing} from "../../themes/PlotifyMainTheme";
 
 const styles = {
   list: {
@@ -40,12 +40,18 @@ export default class CharacterList extends React.Component {
     return (
       <div id="CharacterList" style={styles.list}>
         <SearchBar
-          onSetFilter={this.props.onSetFilter}
+          onSetFilter={(filter) => this.props.onSetFilter(filter)}
         />
-        {
-          this.props.characters.size === 0 && this.props.emptyMessage
-        }
+
         <List>
+          {
+            this.props.characters.length === 0 &&
+            <ListItem
+              primaryText={this.props.emptyMessage}
+              disabled={true}
+              style={{fontFamily: PlotifyMainTheme.fontFamily, textAlign: "center"}}
+            />
+          }
           {
             this.props.characters.map((character) => {
               return (
