@@ -70,8 +70,7 @@ function handleFutureQueue(id, characterId, type, prevHistoryId, resolve, reject
     if (rows.length === 0) {
       handleNoFuture(id, characterId, type, prevHistoryId, resolve, reject);
     } else {
-      // TODO Implementieren
-      throw new Error("Unsupported operation.");
+      handleFuture(id, characterId, type, prevHistoryId, resolve, reject);
     }
 
   });
@@ -91,18 +90,13 @@ function handleNoFuture(id, characterId, type, prevHistoryId, resolve, reject) {
       return;
     }
 
-    let maxPosition = row.maxPosition;
     let position;
-
-    console.log("max position: " + maxPosition);
-
-    if (maxPosition === null) {
+    
+    if (row.maxPosition === null) {
       position = 0;
     } else {
-      position = maxPosition + 1;
+      position = row.maxPosition + 1;
     }
-
-    console.log("next position: " + position);
 
     addToPast(id, position, characterId, type, prevHistoryId, resolve, reject);
 
@@ -119,12 +113,14 @@ function addToPast(id, position, characterId, type, prevHistoryId, resolve, reje
 
   getConnection().run(sql, params, (error) => {
     if (error) {
-      console.log(error.message);
       reject(error);
     } else {
-      console.log("Change added.");
       resolve();
     }
   });
+
+}
+
+function handleFuture(id, characterId, type, prevHistoryId, resolve, reject) {
 
 }

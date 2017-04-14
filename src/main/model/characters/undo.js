@@ -143,6 +143,7 @@ function addToFutureStack(previousPresence) {
       }
 
       let position;
+      
       if (row.maxPosition === null) {
         position = 0;
       } else {
@@ -175,7 +176,7 @@ function getPresenceContent(presence) {
                 " WHERE t.id = ? AND t.presence_history_id = h.id       ";
 
     getConnection().get(sql, [presence.typeId], (error, row) => {
-      
+
       if (error) {
         reject(error);
         return;
