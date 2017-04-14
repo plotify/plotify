@@ -236,53 +236,54 @@ gulp.task("installer:linux", shell.task([
         "--config linux-package.json"
 ]));
 
-// TODO split: package:windows and installer:windows
 gulp.task("package:windows", () => {
+  return new Promise((resolve, reject) => {
 
-  const options = {
-    dir: paths.build.app.main,
-    arch: "x64",
-    electronVersion: electronVersion,
-    icon: paths.icons + "/64.ico",
-    name: packageJson.name,
-    platform: "win32",
-    overwrite: true,
-    out: paths.build.packaged,
-    appCopyright: "Copyright (C) 2017 Sebastian Schmidt und Jasper Meyer",
-    win32metadata: {
-      CompanyName: "Sebastian Schmidt und Jasper Meyer",
-      FileDescription: packageJson.productDescription,
-      ProductName: packageJson.productName,
-      OriginalFilename: packageJson.productName + ".exe"
-    }
-  };
-
-  winPackager(options, (err, appPaths) => {
-    if (err) {
-      console.log("Error packaging: " + err);
-    } else {
-      console.log("Successfully packaged (" + __dirname + "/" + appPaths + ")");
-
-      console.log("Creating Windows Installer...");
-      let result = electronInstaller.createWindowsInstaller({
-        appDirectory: paths.build.packaged + "/plotify-win32-x64",
-        outputDirectory: paths.installers + "/windows",
-        authors: "alpha",
-        exe: "Plotify.exe",
-        noMsi: true,
-        icon: paths.icons + "/64.ico",
-        setupIcon: paths.icons + "/64.ico",
-        iconUrl: "https://alpha.suhail.uberspace.de/releases/assets/64.ico"
-      });
-      return result.then(() => {
-        console.log("Successfully created Windows Installer!");
-      }, (e) => {
-        console.log(`No dice: ${e.message}`);
+    const options = {
+      dir: paths.build.app.main,
+      arch: "x64",
+      electronVersion: electronVersion,
+      icon: paths.icons + "/64.ico",
+      name: packageJson.name,
+      platform: "win32",
+      overwrite: true,
+      out: paths.build.packaged,
+      appCopyright: "Copyright (C) 2017 Sebastian Schmidt und Jasper Meyer",
+      win32metadata: {
+        CompanyName: "Sebastian Schmidt und Jasper Meyer",
+        FileDescription: packageJson.productDescription,
+        ProductName: packageJson.productName,
+        OriginalFilename: packageJson.productName + ".exe"
       }
-    );
-    }
-  });
+    };
 
+    winPackager(options, (error, appPaths) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+
+  });
+});
+
+gulp.task("installer:windows", () => {
+  let result = electronInstaller.createWindowsInstaller({
+    appDirectory: paths.build.packaged + "/plotify-win32-x64",
+    outputDirectory: paths.installers + "/windows",
+    authors: "alpha",
+    exe: "Plotify.exe",
+    noMsi: true,
+    icon: paths.icons + "/64.ico",
+    setupIcon: paths.icons + "/64.ico",
+    iconUrl: "https://alpha.suhail.uberspace.de/releases/assets/64.ico"
+  });
+  return result.then(() => {
+    console.log("Successfully created Windows Installer!");
+  }, (e) => {
+    console.log(`No dice: ${e.message}`);
+  });
 });
 
 gulp.task("package:macos", shell.task([
@@ -323,15 +324,16 @@ gulp.task("distribution:linux", () => {
               "installer:linux");
 });
 
-// TODO package:add-license-file-to-packages
 gulp.task("distribution:windows", () => {
   runSequence(preparationTasks,
               buildTasks,
               testsTasks,
               "install-production-dependencies",
               "rebuild-production-dependencies",
+              "package:windows",
               "package:generate-license-file",
-              "package:windows");
+              "package:add-license-file-to-packages",
+              "installer:windows");
 });
 
 gulp.task("distribution:macos", () => {
@@ -340,7 +342,7 @@ gulp.task("distribution:macos", () => {
               testsTasks,
               "install-production-dependencies",
               "rebuild-production-dependencies",
-              "generate-license-file",
-              "add-license-file-to-packages",
-              "package-macos");
+              "package:macos",
+              "package:generate-license-file",
+              "package:add-license-file-to-packages");
 });
