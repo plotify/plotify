@@ -3,16 +3,6 @@ import TextField from "material-ui/TextField";
 import Paper from "material-ui/Paper";
 import {palette, spacing} from "../../themes/PlotifyMainTheme";
 
-/* Beispiel für das Erstellen und Öffnen einer neuen Geschichte:
- import { sendToModel } from "../shared/commons/ipc";
- import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
- sendToModel(CREATE_STORY)
- .then(file => sendToModel(OPEN_STORY, file))
- .then(file => console.log("Story created and opened: " + file))
- .catch(error => console.log("Could not create or open story: " + error));
- */
-
-
 const styles = {
   position: "absolute",
   top: 0,
@@ -53,6 +43,16 @@ const styles = {
 };
 
 export default class Profile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleCharacterNameChange = this.handleCharacterNameChange.bind(this);
+  }
+
+  handleCharacterNameChange(event) {
+    const value = event.target.value;
+    this.props.onUpdateSelectedCharacter({id: this.props.character.id, name: value});
+  }
+
   render() {
     return (
       <div id="CharacterDetails" style={styles}>
@@ -103,7 +103,8 @@ export default class Profile extends React.Component {
         <Paper style={styles.toolbar} zDepth={2} rounded={false}>
           <TextField
             floatingLabelText="Name"
-            defaultValue="Mycroft Holmes"
+            value={this.props.character.name}
+            onChange={this.handleCharacterNameChange}
             style={styles.toolbar.textField}
             floatingLabelStyle={styles.toolbar.textField.colors}
             floatingLabelFocusStyle={styles.toolbar.textField.colors}

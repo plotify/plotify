@@ -1,9 +1,13 @@
 import React from "react";
 import VisibleCharacterList from "./VisibleCharacterList";
 import VisibleProfile from "./VisibleProfile";
-import {deselectCharacter, findCharacters, selectCharacter, setFilter} from "../../service/actions";
+import {
+  deselectCharacter, findCharacters, selectCharacter, setFilter,
+  updateSelectedCharacter
+} from "../../service/actions";
 import {connect} from "react-redux";
 import {palette} from "../../themes/PlotifyMainTheme";
+import Profile from "../presentational/Profile";
 
 const styles = {
   columns: {
@@ -33,10 +37,13 @@ class MixedCharacterSection extends React.Component {
             onSelect={this.props.onSelect}
             onDeselect={this.props.onDeselect}
             onSetFilter={this.props.onSetFilter}
+            selectedCharacter={this.props.selectCharacter}
           />
         </div>
         <div style={styles.columns.col3}>
-          <VisibleProfile />
+          <VisibleProfile
+            character={this.props.selectCharacter}
+            onUpdateSelectedCharacter={this.props.onUpdateSelectedCharacter}/>
         </div>
       </span>
     );
@@ -45,23 +52,25 @@ class MixedCharacterSection extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isLoading: state.isLoading
+    isLoading: state.isLoading,
+    selectCharacter: state.selectedCharacter,
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSelect: (id) => {
-      dispatch(selectCharacter(id));
+    onSelect: (character) => {
+      dispatch(selectCharacter(character));
     },
     onDeselect: () => {
       dispatch(deselectCharacter());
     },
     onSetFilter: (filter) => {
       dispatch(setFilter(filter));
+      dispatch(findCharacters(filter));
     },
-    onFindCharacters: () => {
-      dispatch(findCharacters());
+    onUpdateSelectedCharacter: (updatedCharacter) => {
+      dispatch(updateSelectedCharacter(updatedCharacter));
     }
   }
 };

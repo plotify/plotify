@@ -3,9 +3,7 @@ import Profile from "../presentational/Profile";
 import {connect} from "react-redux";
 
 const mapStateToProps = (state) => {
-  return {
-    characterId: state.characters.selectedCharacterId,
-  }
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -15,7 +13,7 @@ const mapDispatchToProps = (dispatch) => {
      dispatch(saveCharacter(character))
      }
      */
-  }
+  };
 };
 
 const VisibleProfile = connect(

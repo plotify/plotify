@@ -14,8 +14,9 @@ import {
   SHOW_SUCCESS_MSG
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
-import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER, CAN_UNDO_CHARACTER_CHANGE, UNDO_CHARACTER_CHANGE} from "../../shared/characters/ipc-channels";
+import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER} from "../../shared/characters/ipc-channels";
 import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
+import ChangeType from "../../shared/characters/change-type";
 import Sections from "../constants/sections";
 import path from "path";
 import {shell} from "electron";
@@ -69,10 +70,10 @@ export function changeSection(section) {
 }
 
 // CHARACTER
-export function selectCharacter(uuid) {
+export function selectCharacter(character) {
   return {
     type: SELECT_CHARACTER,
-    payload: uuid
+    payload: character
   };
 }
 
@@ -97,18 +98,34 @@ export function requestCharacter(uuid = "") {
   };
 }
 
+export function updateSelectedCharacter(character) {
+  return {
+    type: "UPDATE_CHARACTER",
+    payload: character
+  };
+}
+
 export function createCharacter() {
   return function (dispatch) {
     dispatch(requestCharacter());
     return sendToModel(CREATE_CHARACTER)
       .then((uuid) => sendToModel(UPDATE_CHARACTER,
-        {id: uuid, name: "Neuer Charakter", deleted: false}))
+        {
+          characterId: uuid,
+          type: ChangeType.CHARACTER,
+          typeId: uuid,
+          changes: {
+            name: "Neuer Charakter"
+          }
+        }))
+      // {id: uuid, name: "Neuer Charakter", deleted: false}))
       .then((uuid) => {
         const msg = "Charakter erfolgreich erstellt";
         console.log(msg, uuid);
         dispatch(showMessage(msg));
         dispatch(findCharacters());
-        dispatch(selectCharacter(uuid));
+        // dispatch(selectCharacter(uuid));
+        // dispatch(getCharacterById(uuid));
       })
       .catch((error) => console.log(error));
   };
@@ -169,10 +186,24 @@ export function createStory() {
         dispatch(showSuccessMessage(scsMessage, true));
         dispatch(openStory(file))
           .then(() => sendToModel(CREATE_CHARACTER))
-          .then(characterId => sendToModel(UPDATE_CHARACTER,
-            { id: characterId, name: "Erika", deleted: false }))
-          .then(characterId => sendToModel(UPDATE_CHARACTER,
-            { id: characterId, name: "Erika Musterfrau", deleted: false }))
+          .then(uuid => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: uuid,
+              type: ChangeType.CHARACTER,
+              typeId: uuid,
+              changes: {
+                name: "Erika"
+              }
+            }))
+          .then(uuid => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: uuid,
+              type: ChangeType.CHARACTER,
+              typeId: uuid,
+              changes: {
+                name: "Erika Musterfrau"
+              }
+            }))
           //.then(characterId => sendToModel(UNDO_CHARACTER_CHANGE, characterId))
           //.then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
           //.then(content => console.log(content))

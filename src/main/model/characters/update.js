@@ -35,7 +35,7 @@ export function updateCharacter(characterId, type, typeId, changes) {
     sql = sql.slice(0, -2) + ") VALUES (" + valuesSql + ")";
 
     db.run(sql, params, (err) => {
-      
+
       if (err) {
         reject(err);
         return;

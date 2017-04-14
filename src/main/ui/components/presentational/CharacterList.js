@@ -58,8 +58,11 @@ export default class CharacterList extends React.Component {
                 <CharacterListItem
                   name={character.name}
                   key={character.id}
-                  selectedCharacter={this.props.selectedCharacterId === character.id}
-                  onSelect={() => this.props.onSelect(character.id) }
+                  selectedCharacter={
+                    this.props.selectedCharacter !== null &&
+                    this.props.selectedCharacter.id === character.id
+                  }
+                  onSelect={() => this.props.onSelect(character) }
                   onDeselect={() => this.props.onDeselect() }
                 />
               );
@@ -96,7 +99,7 @@ class CharacterListItem extends React.Component {
         style={this.props.selectedCharacter ? styles.characterItem.selected : {}}
         onTouchTap={this.handleClick}
         hoverColor={palette.accent2Color}
-        primaryText={this.props.name}
+        primaryText={this.props.name || "Kein Name"}
         leftAvatar={
           <Avatar
             size={30}

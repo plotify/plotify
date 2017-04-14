@@ -1,6 +1,7 @@
 import {
   ADD_CHARACTER,
-  CHANGE_SECTION, CLOSE_MSG,
+  CHANGE_SECTION,
+  CLOSE_MSG,
   DESELECT_CHARACTER,
   RECEIVE_CHARACTERS,
   RECEIVE_STORY,
@@ -76,8 +77,8 @@ function filter(state = "", action) {
 
 function characters(state = [], action) {
   switch (action.type) {
-    case ADD_CHARACTER:
-      return {};
+    case "CHANGE_CHARACTER":
+      return Object.assign(state, action.payload);
     case RECEIVE_CHARACTERS:
       return action.payload;
     default:
@@ -85,26 +86,15 @@ function characters(state = [], action) {
   }
 }
 
-function selected(state = {id: null, newCharacter: false}, action) {
+function selectedCharacter(state = {id: null, newCharacter: false}, action) {
   switch (action.type) {
     case SELECT_CHARACTER:
-      return {
-        id: action.payload,
-        newCharacter: false
-      };
-
+    case "UPDATE_CHARACTER":
+      return Object.assign(action.payload, {newCharacter: false});
     case ADD_CHARACTER:
-      return {
-        id: action.payload,
-        newCharacter: true
-      };
-
+      return Object.assign(action.payload, {newCharacter: true});
     case DESELECT_CHARACTER:
-      return {
-        id: null,
-        newCharacter: false
-      };
-
+      return Object.assign({}, {newCharacter: false});
     default:
       return state;
 
@@ -127,6 +117,6 @@ export const combinedReducer = combineReducers({
   filter,
   story,
   sectionIsLoading,
-  selected,
+  selectedCharacter,
   message
 });
