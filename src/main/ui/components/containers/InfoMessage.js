@@ -9,7 +9,7 @@ const mapStateToProps = (state) => {
     message: state.message.message,
     open: state.message.open,
     type: state.message.type,
-    storyOpen: state.story !== "",
+    showAction: state.message.withAction,
     action: "Speicherort öffnen",
   };
 };
