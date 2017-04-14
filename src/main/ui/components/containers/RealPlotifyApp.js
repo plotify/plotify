@@ -7,6 +7,7 @@ const mapStateToProps = (state) => {
     currentSection: state.currentSection,
     storyName: state.story,
     sectionIsLoading: state.sectionIsLoading,
+    savingType: state.communications.savingType,
   };
 };
 

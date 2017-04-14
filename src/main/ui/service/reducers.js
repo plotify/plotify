@@ -10,12 +10,21 @@ import {
   SET_FILTER,
   SHOW_ERROR_MSG,
   SHOW_MSG,
-  SHOW_SUCCESS_MSG
+  SHOW_SUCCESS_MSG,
+  SET_SAVING_TYPE
 } from "./action-types";
 import {combineReducers} from "redux";
 import Pages from "../constants/sections";
 import {ERROR, INFO, SUCCESS} from "../constants/MessageTypes";
 
+function communications(state = {savingType: false}, action) {
+  switch (action.type) {
+    case SET_SAVING_TYPE:
+      return {savingType: action.payload};
+    default:
+      return state;
+  }
+}
 
 function sectionIsLoading(state = false, action) {
   switch (action.type) {
@@ -117,6 +126,7 @@ export const combinedReducer = combineReducers({
   filter,
   story,
   sectionIsLoading,
+  communications,
   selectedCharacter,
-  message
+  message,
 });

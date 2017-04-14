@@ -10,6 +10,7 @@ export const SHOW_MSG = "SHOW_MSG";
 export const SHOW_ERROR_MSG = "SHOW_ERROR_MSG";
 export const SHOW_SUCCESS_MSG = "SHOW_SUCCESS_MSG";
 export const CLOSE_MSG = "CLOSE_MSG";
+export const SET_SAVING_TYPE = "SET_SAVING_TYPE";
 
 // MODEL ACTIONS
 //---- CHARACTER

@@ -2,6 +2,7 @@ import React from "react";
 import TextField from "material-ui/TextField";
 import Paper from "material-ui/Paper";
 import {palette, spacing} from "../../themes/PlotifyMainTheme";
+import SavingTextField from "../containers/mixed/SavingTextField";
 
 const styles = {
   position: "absolute",
@@ -101,7 +102,7 @@ export default class Profile extends React.Component {
         </div>
 
         <Paper style={styles.toolbar} zDepth={2} rounded={false}>
-          <TextField
+          <SavingTextField
             floatingLabelText="Name"
             value={this.props.character.name}
             onChange={this.handleCharacterNameChange}

@@ -121,6 +121,9 @@ export default class PlotifyApp extends React.Component {
 
           <Toolbar style={styles.appBar.toolbar}>
             <ToolbarGroup>
+              {this.props.savingType.display}
+            </ToolbarGroup>
+            <ToolbarGroup>
               <IconButton tooltip="Rückgängig">
                 <ContentUndo color="white"/>
               </IconButton>

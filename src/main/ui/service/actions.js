@@ -11,7 +11,7 @@ import {
   SET_FILTER,
   SHOW_ERROR_MSG,
   SHOW_MSG,
-  SHOW_SUCCESS_MSG
+  SHOW_SUCCESS_MSG, SET_SAVING_TYPE
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
 import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER} from "../../shared/characters/ipc-channels";
@@ -20,12 +20,20 @@ import ChangeType from "../../shared/characters/change-type";
 import Sections from "../constants/sections";
 import path from "path";
 import {shell} from "electron";
+import SavingType from "../constants/SavingType";
 
 // Communication State
 export function sectionIsLoading(trueOrFalse) {
   return {
     type: "TOGGLE_SECTION_LOADING",
     payload: trueOrFalse
+  };
+}
+
+export function setSavingType(savingType) {
+  return {
+    type: SET_SAVING_TYPE,
+    payload: savingType,
   };
 }
 
@@ -124,10 +132,29 @@ export function createCharacter() {
         console.log(msg, uuid);
         dispatch(showMessage(msg));
         dispatch(findCharacters());
-        // dispatch(selectCharacter(uuid));
+        dispatch(selectCharacter({id: uuid}));
         // dispatch(getCharacterById(uuid));
       })
       .catch((error) => console.log(error));
+  };
+}
+
+export function updateCharacter(characterId, changeType, typeId, name) {
+  return function (dispatch) {
+    dispatch(requestCharacter());
+    dispatch(setSavingType(SavingType.ACTIVE));
+    return sendToModel(UPDATE_CHARACTER,
+      {
+        characterId: characterId,
+        type: changeType,
+        typeId: typeId,
+        changes: {
+          name: name
+        }
+      })
+      .then(typeId => (console.log("Typ erfolgreich geändert", typeId)))
+      .then(dispatch(showMessage("Charakter erfolgreich geändert")))
+      .then(dispatch(setSavingType(SavingType.SUCCESS)));
   };
 }
 
