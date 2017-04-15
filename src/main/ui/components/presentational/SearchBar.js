@@ -53,14 +53,14 @@ export default class SearchBar extends React.Component {
   }
 
   focus() {
-    this.refs.input.focus();
+    this.input.focus();
     this.setState({
       active: true
     });
   }
 
   blur() {
-    this.refs.input.blur();
+    this.input.blur();
     this.setState({
       active: this.state.value !== ""
     });
