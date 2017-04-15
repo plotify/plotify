@@ -197,11 +197,14 @@ function addTopToBottomFutureToPast(futureStack, position) {
             nextPosition++;
           }
 
-          resolve();
+          resolve(statement);
 
         });
       }))
-      .then(() => resolve(nextPosition))
+      .then(statement => {
+        statement.finalize();
+        resolve(nextPosition);
+      })
       .catch(error => reject(error));
 
   });
