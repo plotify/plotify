@@ -6,6 +6,7 @@ import {canUndoCharacterChange, updateCharacter} from "../../../service/actions"
 const mapStateToProps = (state) => {
   return {
     characterId: state.selectedCharacter.id,
+    initialValue: state.selectedCharacter.name,
   };
 };
 
@@ -23,7 +24,11 @@ const mapDispatchToProps = (dispatch) => {
 class SavingTextField extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      initialValue: ""
+    };
     this.blur = this.blur.bind(this);
+    this.focus = this.focus.bind(this);
   }
 
   componentDidMount() {
@@ -32,13 +37,20 @@ class SavingTextField extends React.Component {
     }
   }
 
+  focus() {
+    const inV = this.props.initialValue;
+    this.setState({initialValue: inV});
+  }
+
   blur() {
     this.input.blur();
-    this.props.onSave(
-      this.props.characterId,
-      this.props.changeType,
-      this.props.typeId,
-      this.props.value);
+    if (this.state.initialValue !== this.props.value) {
+      this.props.onSave(
+        this.props.characterId,
+        this.props.changeType,
+        this.props.typeId,
+        this.props.value);
+    }
     this.props.onCanUndo(this.props.characterId);
   }
 
@@ -46,7 +58,9 @@ class SavingTextField extends React.Component {
 
     return (
       <TextField
-        ref={(input) => {this.input = input}}
+        ref={(input) => {
+          this.input = input
+        }}
         floatingLabelText={this.props.floatingLabelText}
         value={this.props.value}
         onChange={this.props.onChange}
@@ -58,6 +72,7 @@ class SavingTextField extends React.Component {
         hintStyle={this.props.hintStyle}
         inputStyle={this.props.inputStyle}
         onBlur={this.blur}
+        onFocus={this.focus}
       />
     );
   }
@@ -69,14 +84,3 @@ const AutoSavingTextField = connect(
 )(SavingTextField);
 
 export default AutoSavingTextField;
-
-// SavingTextField.propTypes = {
-//   characterId: ,
-//   typeId: PropTypes.text.isRequired,
-//   changeType: ChangeType,
-//   value:,
-//   key:,
-// };
-
-// let changes = {};
-// changes[key] = value;
