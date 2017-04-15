@@ -248,6 +248,7 @@ gulp.task("package:windows", () => {
       platform: "win32",
       overwrite: true,
       out: paths.build.packaged,
+      asar: true,
       appCopyright: "Copyright (C) 2017 Sebastian Schmidt und Jasper Meyer",
       win32metadata: {
         CompanyName: "Sebastian Schmidt und Jasper Meyer",
