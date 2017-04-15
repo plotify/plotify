@@ -40,7 +40,7 @@ function getGroupWithEntries(characterId, groupRow) {
 
     const db = getConnection();
 
-    const entriesSql = " SELECT h.id, h.title, h.value, h.deleted                      " +
+    const entriesSql = " SELECT e.id, h.title, h.value, h.deleted                      " +
                        " FROM entry AS e, entry_history AS h                           " +
                        " WHERE e.character_id = ? AND e.presence_history_id = h.id AND " +
                        "       h.group_id = ?                                          " +
