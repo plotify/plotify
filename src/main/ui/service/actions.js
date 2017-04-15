@@ -29,7 +29,8 @@ import {
   FIND_CHARACTERS,
   REDO_CHARACTER_CHANGE,
   UNDO_CHARACTER_CHANGE,
-  UPDATE_CHARACTER
+  UPDATE_CHARACTER,
+  GET_CHARACTER_PROFILE
 } from "../../shared/characters/ipc-channels";
 import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
 import Sections from "../constants/sections";
@@ -145,6 +146,8 @@ export function createCharacter() {
         dispatch(selectCharacter({id: uuid, name: ""}));
         return Promise.resolve(uuid);
       })
+      //.then(uuid => sendToModel(GET_CHARACTER_PROFILE, uuid))
+      //.then(profile => console.log(profile))
       .catch((error) => console.log(error));
   };
 }

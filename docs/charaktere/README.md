@@ -24,13 +24,8 @@ Ein Charakter im JSON-Format könnte beispielsweise folgendermaßen aussehen:
 ```
 
 Jedem Charakter ist ein Steckbrief zugeordnet, der aus einer Reihe von
-gruppierten Key-Value-Paaren besteht. Jeder Steckbrief hat die folgenden
-Attribute:
-
-| Name        | Datentyp | Beschreibung                                                     |
-|-------------|----------|------------------------------------------------------------------|
-| characterId | String   | Die ID des Charakters, dem dieser Steckbrief zugeorndet ist.     |
-| groups      | Group[]  | Ein Array mit den Gruppen des Steckbriefs.                       |
+gruppierten Key-Value-Paaren besteht. Jeder Steckbrief wird durch ein
+Array aus Gruppen dargestellt.
 
 Jede Gruppe hat die folgenden Attribute:
 
@@ -39,6 +34,7 @@ Jede Gruppe hat die folgenden Attribute:
 | id          | String   | Die ID der Gruppe.                                               |
 | title       | String   | Der Titel der Gruppe.                                            |
 | entries     | Entry[]  | Ein Array mit den Einträgen in der Gruppe.                       |
+| deleted     | boolean  | Wurde die Gruppe gelöscht?                                       |
 
 Jeder Eintrag hat die folgenden Attribute:
 
@@ -47,6 +43,7 @@ Jeder Eintrag hat die folgenden Attribute:
 | id          | String   | Die ID des Eintrags.                                             |
 | title       | String   | Der Titel des Eintrags.                                          |
 | value       | String   | Der Wert des Eintrags.                                           |
+| deleted     | boolean  | Wurde der Eintrag gelöscht?                                      |
 
 Ein Steckbrief im JSON-Format könnte beispielsweise folgendermaßen aussehen:
 
