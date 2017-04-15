@@ -2,7 +2,7 @@ import UUID from "../../shared/commons/uuid";
 import { sendCallback } from "../../shared/commons/ipc";
 import { UPDATE_CHARACTER } from "../../shared/characters/ipc-channels";
 import ChangeType from "../../shared/characters/change-type";
-import { getTypeTable, getTypeHistoryTable, Queue } from "./changes-sequence";
+import { getTypeTable, getTypeHistoryTable } from "./changes-sequence";
 import { getConnection } from "../stories/connection";
 import { addChange } from "./add-change";
 

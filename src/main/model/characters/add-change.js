@@ -1,7 +1,7 @@
 import { getConnection } from "../stories/connection";
 import { run, get, all, prepare } from "../shared/sqlite";
 import ChangeType from "../../shared/characters/change-type";
-import { getTypeTable, Queue } from "./changes-sequence";
+import { getTypeTable, Stack } from "./changes-sequence";
 
 export function addChange(id, characterId, type, newHistoryId) {
   return new Promise((resolve, reject) => {
@@ -43,20 +43,20 @@ function updatePresenceHistoryId(id, characterId, type, newHistoryId, prevHistor
       return;
     }
 
-    handleFutureQueue(id, characterId, type, prevHistoryId, resolve, reject);
+    handleFutureStack(id, characterId, type, prevHistoryId, resolve, reject);
 
   });
 
 }
 
-function handleFutureQueue(id, characterId, type, prevHistoryId, resolve, reject) {
+function handleFutureStack(id, characterId, type, prevHistoryId, resolve, reject) {
 
-  const sql = " SELECT character_id AS characterId, queue, position, type, " +
+  const sql = " SELECT character_id AS characterId, stack, position, type, " +
               "        type_id AS typeId, history_id AS historyId          " +
               " FROM character_changes_sequence                            " +
-              " WHERE characterId = ? AND queue = ?                        " +
+              " WHERE characterId = ? AND stack = ?                        " +
               " ORDER BY position ASC                                      ";
-  const params = [characterId, Queue.FUTURE];
+  const params = [characterId, Stack.FUTURE];
 
   getConnection().all(sql, params, (error, rows) => {
 
@@ -79,9 +79,9 @@ function handleNoFuture(id, characterId, type, prevHistoryId, resolve, reject) {
 
   const sql = " SELECT max(position) AS maxPosition  " +
               " FROM character_changes_sequence      " +
-              " WHERE character_id = ? AND queue = ? ";
+              " WHERE character_id = ? AND stack = ? ";
 
-  getConnection().get(sql, [characterId, Queue.PAST], (error, row) => {
+  getConnection().get(sql, [characterId, Stack.PAST], (error, row) => {
 
     if (error) {
       reject(error);
@@ -105,9 +105,9 @@ function handleNoFuture(id, characterId, type, prevHistoryId, resolve, reject) {
 function addToPast(id, position, characterId, type, prevHistoryId, resolve, reject) {
 
   const sql = " INSERT INTO character_changes_sequence                     " +
-              " (position, character_id, type, type_id, history_id, queue) " +
+              " (position, character_id, type, type_id, history_id, stack) " +
               " VALUES (?, ?, ?, ?, ?, ?)                                  ";
-  const params = [position, characterId, type, id, prevHistoryId, Queue.PAST];
+  const params = [position, characterId, type, id, prevHistoryId, Stack.PAST];
 
   getConnection().run(sql, params, (error) => {
     if (error) {
@@ -136,8 +136,8 @@ function getNextPastPosition(characterId) {
 
     const sql = " SELECT max(position) AS maxPosition  " +
                 " FROM character_changes_sequence      " +
-                " WHERE character_id = ? AND queue = ? ";
-    const params = [characterId, Queue.PAST];
+                " WHERE character_id = ? AND stack = ? ";
+    const params = [characterId, Stack.PAST];
 
     get(sql, params).then(row => {
 
@@ -160,9 +160,9 @@ function addPrevPresenceToPast(id, characterId, type, prevHistoryId, position) {
   return new Promise((resolve, reject) => {
 
     const sql = " INSERT INTO character_changes_sequence                    " +
-                " (character_id, queue, position, type, type_id, history_id) " +
+                " (character_id, stack, position, type, type_id, history_id) " +
                 " VALUES (?, ?, ?, ?, ?, ?)";
-    const params = [characterId, Queue.PAST, position, type, id, prevHistoryId];
+    const params = [characterId, Stack.PAST, position, type, id, prevHistoryId];
 
     run(sql, params)
       .then(() => resolve(position + 1))
@@ -175,7 +175,7 @@ function addTopToBottomFutureToPast(futureStack, position) {
   return new Promise((resolve, reject) => {
 
     const sql = " INSERT INTO character_changes_sequence                    " +
-                " (character_id, queue, position, type, type_id, history_id) " +
+                " (character_id, stack, position, type, type_id, history_id) " +
                 " VALUES (?, ?, ?, ?, ?, ?)";
 
     const length = futureStack.length;
@@ -191,7 +191,7 @@ function addTopToBottomFutureToPast(futureStack, position) {
 
           for (let index = length - 1; index >= 0; index--) {
             const row = futureStack[index];
-            const params = [row.characterId, Queue.PAST, nextPosition, row.type, row.typeId,
+            const params = [row.characterId, Stack.PAST, nextPosition, row.type, row.typeId,
                             row.historyId];
             statement.run(params, runCallback);
             nextPosition++;
@@ -212,7 +212,7 @@ function addSecondFromBottomToTopFutureToPast(futureStack, position) {
   return new Promise((resolve, reject) => {
 
     const sql = " INSERT INTO character_changes_sequence                    " +
-                " (character_id, queue, position, type, type_id, history_id) " +
+                " (character_id, stack, position, type, type_id, history_id) " +
                 " VALUES (?, ?, ?, ?, ?, ?)";
 
     const length = futureStack.length;
@@ -233,7 +233,7 @@ function addSecondFromBottomToTopFutureToPast(futureStack, position) {
 
           for (let index = 1; index < length; index++) {
             const row = futureStack[index];
-            const params = [row.characterId, Queue.PAST, nextPosition, row.type, row.typeId,
+            const params = [row.characterId, Stack.PAST, nextPosition, row.type, row.typeId,
                             row.historyId];
             statement.run(params, runCallback);
             nextPosition++;
@@ -253,8 +253,8 @@ function deleteFutureStack(characterId) {
   return new Promise((resolve, reject) => {
 
     const sql = " DELETE FROM character_changes_sequence " +
-                " WHERE character_id = ? AND queue = ?   ";
-    const params = [characterId, Queue.FUTURE];
+                " WHERE character_id = ? AND stack = ?   ";
+    const params = [characterId, Stack.FUTURE];
 
     run(sql, params)
       .then(() => resolve())

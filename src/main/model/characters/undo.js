@@ -1,11 +1,11 @@
-import { Queue } from "./changes-sequence";
 import {
+  Stack,
   getStackTop,
   removeFromStack,
   setNewPresence,
   addToStack,
   getPresenceContent
-} from "./undo-redo";
+} from "./changes-sequence";
 
 import { sendCallback } from "../../shared/commons/ipc";
 import {
@@ -20,7 +20,7 @@ export function canUndoCharacterChange(id) {
       throw new Error("No character id was passed.");
     }
 
-    getStackTop(id, Queue.PAST)
+    getStackTop(id, Stack.PAST)
       .then(entry => resolve(entry !== null))
       .catch(error => reject(error));
 
@@ -35,10 +35,10 @@ export function undoCharacterChange(id) {
     }
 
     let newPresence;
-    getStackTop(id, Queue.PAST)
+    getStackTop(id, Stack.PAST)
       .then(entry => { newPresence = entry; return removeFromStack(entry); })
       .then(() => setNewPresence(newPresence))
-      .then(previousPresence => addToStack(previousPresence, Queue.FUTURE))
+      .then(previousPresence => addToStack(previousPresence, Stack.FUTURE))
       .then(() => getPresenceContent(newPresence))
       .then(content => resolve(content))
       .catch(error => reject(error));

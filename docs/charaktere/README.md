@@ -100,7 +100,7 @@ SQLite-Datenbank abgelegt.
 
 - Alle Texte werden in der Zeichenkodierung UTF-8 gespeichert.
 - Die IDs sind die 16 Bytes einer UUID.
-- Die Spalte `queue` der Tabelle `character_changes_sequence` kann die folgenden
+- Die Spalte `stack` der Tabelle `character_changes_sequence` kann die folgenden
   Werte enthalten: 0 = past, 1 = future.
 - Die Spalte `type` der Tabelle `character_changes_sequence` kann die folgenden
   Werte enthalten: 0 = character, 1 = entry_group, 2 = entry.
@@ -122,7 +122,7 @@ CREATE TABLE `character_history` (
 
 CREATE TABLE `character_changes_sequence` (
   `character_id` TEXT    NOT NULL,
-  `queue`        INTEGER NOT NULL CHECK(queue = 0 OR queue = 1),
+  `stack`        INTEGER NOT NULL CHECK(stack = 0 OR stack = 1),
   `position`     INTEGER NOT NULL CHECK(position >= 0),
   `type`         INTEGER NOT NULL CHECK(type = 0 OR type = 1 OR type = 2),
   `type_id`      TEXT NOT NULL,
