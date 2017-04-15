@@ -1,3 +1,4 @@
+PRAGMA application_id = 80767984;
 PRAGMA user_version = 1;
 
 CREATE TABLE `character` (
