@@ -1,25 +1,28 @@
 import {
   CHANGE_SECTION,
+  CLEAR_CHARACTERS,
   CLOSE_MSG,
   DESELECT_CHARACTER,
   RECEIVE_CAN_REDO,
   RECEIVE_CAN_UNDO,
-  RECEIVE_CHARACTERS, RECEIVE_PROFILE,
+  RECEIVE_CHARACTERS,
+  RECEIVE_PROFILE,
   RECEIVE_REDO,
   RECEIVE_STORY,
   RECEIVE_UNDO,
   REQUEST_CAN_REDO,
   REQUEST_CAN_UNDO,
   REQUEST_CHARACTER,
-  REQUEST_CHARACTERS, REQUEST_PROFILE,
+  REQUEST_CHARACTERS,
+  REQUEST_PROFILE,
   REQUEST_REDO,
   REQUEST_STORY,
   REQUEST_UNDO,
   SELECT_CHARACTER,
   SET_FILTER,
-  SET_SAVING_TYPE,
   SHOW_MSG,
-  SHOW_SUCCESS_MSG, UPDATE_UI_PROFILE
+  SHOW_SUCCESS_MSG,
+  UPDATE_UI_PROFILE
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
 import {
@@ -27,10 +30,10 @@ import {
   CAN_UNDO_CHARACTER_CHANGE,
   CREATE_CHARACTER,
   FIND_CHARACTERS,
+  GET_CHARACTER_PROFILE,
   REDO_CHARACTER_CHANGE,
   UNDO_CHARACTER_CHANGE,
-  UPDATE_CHARACTER,
-  GET_CHARACTER_PROFILE
+  UPDATE_CHARACTER
 } from "../../shared/characters/ipc-channels";
 import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
 import Sections from "../constants/sections";
@@ -395,6 +398,7 @@ export function openStory(file) {
         dispatch(receiveStory(file));
         /* jslint browser: true */
         document.title = path.basename(file, ".story") + " - Plotify";
+        dispatch(findCharacters());
       })
       .catch(error => {
         dispatch(sectionIsLoading(false));
@@ -410,7 +414,6 @@ export function openStoryDialog() {
     return sendToModel(OPEN_STORY_DIALOG)
       .then((file) => {
         dispatch(openStory(file))
-          .then(() => dispatch(findCharacters()))
           .then(() => dispatch(changeSection(Sections.CHARACTER)))
           .then(dispatch(sectionIsLoading(false)));
       })
