@@ -48,7 +48,7 @@ function getGroupWithEntries(characterId, groupRow) {
     const entriesParams = [characterId, groupRow.id];
 
     db.all(entriesSql, entriesParams, (error, rows) => {
-
+      
       if (error) {
         reject(error);
         return;

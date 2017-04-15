@@ -18,16 +18,26 @@ export function createCharacter() {
     const insertCharacterSql = "INSERT INTO character (id, presence_history_id) VALUES (?, ?)";
     const insertCharacterParams = [characterId, historyId];
 
-    run(insertHistorySql, insertHistoryParams)
+    beginTransaction()
+      .then(() => run(insertHistorySql, insertHistoryParams))
       .then(() => run(insertCharacterSql, insertCharacterParams))
       .then(() => createDefaultProfile(characterId))
+      .then(() => endTransaction())
       .then(() => resolve(characterId))
-      .catch(error => reject(error));
+      .catch(error => {
+        rollbackTransaction()
+          .then(() => reject(error))
+          .catch(() => reject(error));
+      });
 
   });
 }
 
 const defaultProfile = [
+  {
+    title: "Name",
+    entries: ["Namensbedeutung", "Weitere Namen"]
+  },
   {
     title: "Physis",
     entries: ["Alter", "Größe", "Gewicht", "Körperbau", "Gesicht"]
@@ -55,149 +65,152 @@ const defaultProfile = [
   {
     title: "Gesellschaft",
     entries: ["Herkunft", "Sprache", "Wohnort", "Beruf", "Stand"]
+  },
+  {
+    title: "Veränderungen",
+    entries: ["Kindheit", "Jugend", "Erwachsenenalter"]
+  },
+  {
+    title: "Fähigkeiten",
+    entries: ["Beschreibung"]
+  },
+  {
+    title: "Sonstiges",
+    entries: ["Anmerkungen"]
   }
 ];
 
 export function createDefaultProfile(characterId) {
   return new Promise((resolve, reject) => {
 
-    const db = getConnection();
+    let promises = [];
 
-    const insertGroupHistorySql = " INSERT INTO entry_group_history                 " +
-                                  " (id, title, position, deleted)                  " +
-                                  " VALUES (?, ?, ?, ?)                             ";
-    const insertGroupSql =        " INSERT INTO entry_group                         " +
-                                  " (character_id, id, presence_history_id)         " +
-                                  " VALUES (?, ?, ?)                                ";
+    for (let position = 0; position < defaultProfile.length; position++) {
+      const group = defaultProfile[position];
+      promises.push(handleGroup(characterId, group.title, group.entries, position));
+    }
 
-    const insertEntryHistorySql = " INSERT INTO entry_history                       " +
-                                  " (id, group_id, title, value, position, deleted) " +
-                                  " VALUES (?, ?, ?, ?, ?, ?)                       ";
-    const insertEntrySql =        " INSERT INTO entry                               " +
-                                  " (character_id, id, presence_history_id)         " +
-                                  " VALUES (?, ?, ?)                                ";
+    Promise.all(promises)
+      .then(() => resolve())
+      .catch(error => reject(error));
 
-    let insertGroupHistoryStmt;
-    let insertGroupStmt;
-    let insertEntryHistoryStmt;
-    let insertEntryStmt;
+  });
+}
 
-    beginTransaction()
-      .then(() => new Promise((resolve, reject) => {
+function handleGroup(characterId, title, entries, position) {
+  return new Promise((resolve, reject) => {
+    insertGroupHistory(title, entries, position)
+      .then(historyId => insertGroup(characterId, historyId))
+      .then(groupId => handleEntries(characterId, groupId, entries))
+      .then(() => resolve())
+      .catch(error => reject(error));
+  });
+}
 
-        insertGroupHistoryStmt = db.prepare(insertGroupHistorySql);
-        insertGroupStmt = db.prepare(insertGroupSql);
-        insertEntryHistoryStmt = db.prepare(insertEntryHistorySql);
-        insertEntryStmt = db.prepare(insertEntrySql);
+function insertGroupHistory(title, entries, position) {
+  return new Promise((resolve, reject) => {
 
-        for (let index = 0; index < defaultProfile.length; index++) {
-          handleGroup(characterId, defaultProfile[index], index,
-            insertGroupHistoryStmt, insertGroupStmt, insertEntryHistoryStmt, insertEntryStmt,
-            resolve, reject);
-        }
+    const historyId = UUID.random().toString();
 
-      }))
-      .then(() => endTransaction())
-      .then(() => {
-        insertGroupHistoryStmt.finalize();
-        insertGroupStmt.finalize();
-        insertEntryHistoryStmt.finalize();
-        insertEntryStmt.finalize();
+    const sql = " INSERT INTO entry_group_history " +
+                " (id, title, position, deleted)  " +
+                " VALUES (?, ?, ?, ?)             ";
+    const params = [historyId, title, position, 0];
+
+    getConnection().run(sql, params, (error) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(historyId);
+      }
+    });
+
+  });
+}
+
+function insertGroup(characterId, historyId) {
+  return new Promise((resolve, reject) => {
+
+    const id = UUID.random().toString();
+
+    const sql = " INSERT INTO entry_group                 " +
+                " (character_id, id, presence_history_id) " +
+                " VALUES (?, ?, ?)                        ";
+    const params = [characterId, id, historyId];
+
+    getConnection().run(sql, params, (error) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(id);
+      }
+    });
+
+  });
+}
+
+function handleEntries(characterId, groupId, entries) {
+  return new Promise((resolve, reject) => {
+
+    let promises = [];
+
+    for (let position = 0; position < entries.length; position++) {
+      const title = entries[position];
+      promises.push(handleEntry(characterId, groupId, title, position));
+    }
+
+    Promise.all(promises)
+      .then(() => resolve())
+      .catch(error => reject(error));
+
+  });
+}
+
+function handleEntry(characterId, groupId, title, position) {
+  return new Promise((resolve, reject) => {
+    insertEntryHistory(groupId, title, position)
+      .then(historyId => insertEntry(characterId, historyId))
+      .then(() => resolve())
+      .catch(error => reject(error));
+  });
+}
+
+function insertEntryHistory(groupId, title, position) {
+  return new Promise((resolve, reject) => {
+
+    const historyId = UUID.random().toString();
+
+    const sql = " INSERT INTO entry_history                       " +
+                " (id, group_id, title, value, position, deleted) " +
+                " VALUES (?, ?, ?, ?, ?, ?)                       ";
+    const params = [historyId, groupId, title, "", position, 0];
+
+    getConnection().run(sql, params, (error) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(historyId);
+      }
+    });
+
+  });
+}
+
+function insertEntry(characterId, historyId) {
+  return new Promise((resolve, reject) => {
+
+    const id = UUID.random().toString();
+
+    const sql = " INSERT INTO entry                       " +
+                " (character_id, id, presence_history_id) " +
+                " VALUES (?, ?, ?)                        ";
+    const params = [characterId, id, historyId];
+
+    getConnection().run(sql, params, (error) => {
+      if (error) {
+        reject(error);
+      } else {
         resolve();
-      })
-      .catch(error => {
-        rollbackTransaction()
-          .then(() => reject(error))
-          .catch(() => reject(error));
-      });
-
-  });
-}
-
-function handleGroup(characterId, group, position, insertGroupHistoryStmt, insertGroupStmt,
-                     insertEntryHistoryStmt, insertEntryStmt, resolve, reject) {
-  insertGroupHistory(insertGroupHistoryStmt, group, position)
-    .then(historyId => insertGroup(insertGroupStmt, characterId, historyId))
-    .then(groupId => new Promise((resolve, reject) => {
-      for (let position = 0; position < group.entries.length; position++) {
-        handleEntry(characterId, groupId, group.entries[position], position, insertEntryHistoryStmt,
-          insertEntryStmt, resolve, reject);
-      }
-    }))
-    .then(() => resolve())
-    .catch(error => reject(error));
-}
-
-function handleEntry(characterId, groupId, entry, position, insertEntryHistoryStmt, insertEntryStmt,
-                    resolve, reject) {
-  insertEntryHistory(insertEntryHistoryStmt, groupId, entry, position)
-    .then(historyId => insertEntry(insertEntryStmt, characterId, historyId))
-    .then(() => resolve())
-    .catch(error => reject(error));
-}
-
-function insertGroupHistory(statement, group, position) {
-  return new Promise((resolve, reject) => {
-
-    const historyId = UUID.random().toString();
-    const params = [historyId, group.title, position, 0];
-
-    statement.run(params, error => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(historyId);
-      }
-    });
-
-  });
-}
-
-function insertGroup(statement, characterId, historyId) {
-  return new Promise((resolve, reject) => {
-
-    const groupId = UUID.random().toString();
-    const params = [characterId, groupId, historyId];
-
-    statement.run(params, error => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(groupId);
-      }
-    });
-
-  });
-}
-
-function insertEntryHistory(statement, groupId, entry, position) {
-  return new Promise((resolve, reject) => {
-
-    const historyId = UUID.random().toString();
-    const params = [historyId, groupId, entry, "", position, 0];
-
-    statement.run(params, error => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(historyId);
-      }
-    });
-
-  });
-}
-
-function insertEntry(statement, characterId, historyId) {
-  return new Promise((resolve, reject) => {
-
-    const entryId = UUID.random().toString();
-    const params = [characterId, entryId, historyId];
-
-    statement.run(params, error => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(entryId);
       }
     });
 
