@@ -27,6 +27,10 @@ export const REQUEST_UNDO = "REQUEST_UNDO";
 export const RECEIVE_UNDO = "RECEIVE_UNDO";
 export const REQUEST_CAN_UNDO = "REQUEST_CAN_UNDO";
 export const RECEIVE_CAN_UNDO = "RECEIVE_CAN_UNDO";
+export const RECEIVE_CAN_REDO = "RECEIVE_CAN_REDO";
+export const REQUEST_CAN_REDO = "REQUEST_CAN_REDO";
+export const REQUEST_REDO = "REQUEST_REDO";
+export const RECEIVE_REDO = "RECEIVE_REDO";
 
 //---- STORY
 export const REQUEST_STORY = "REQUEST_STORY";

@@ -2,13 +2,16 @@ import React from "react";
 import VisibleCharacterList from "./VisibleCharacterList";
 import VisibleProfile from "./VisibleProfile";
 import {
+  canRedoCharacterChange,
   canUndoCharacterChange,
-  deselectCharacter, findCharacters, selectCharacter, setFilter,
+  deselectCharacter,
+  findCharacters,
+  selectCharacter,
+  setFilter,
   updateSelectedCharacter
 } from "../../service/actions";
 import {connect} from "react-redux";
 import {palette} from "../../themes/PlotifyMainTheme";
-import Profile from "../presentational/Profile";
 
 const styles = {
   columns: {
@@ -63,6 +66,7 @@ const mapDispatchToProps = (dispatch) => {
     onSelect: (character) => {
       dispatch(selectCharacter(character));
       dispatch(canUndoCharacterChange(character.id));
+      dispatch(canRedoCharacterChange(character.id));
     },
     onDeselect: () => {
       dispatch(deselectCharacter());

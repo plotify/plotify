@@ -1,7 +1,8 @@
 import React from "react";
 import TextField from "material-ui/TextField";
 import {connect} from "react-redux";
-import {canUndoCharacterChange, updateCharacter} from "../../../service/actions";
+import {canRedoCharacterChange, canUndoCharacterChange, updateCharacter} from "../../../service/actions";
+import {palette} from "../../../themes/PlotifyMainTheme";
 
 const mapStateToProps = (state) => {
   return {
@@ -14,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onCanUndo: (id) => {
       dispatch(canUndoCharacterChange(id));
+    },
+    onCanRedo: (id) => {
+      dispatch(canRedoCharacterChange(id));
     },
     onSave: (characterId, changeType, typeId, name) => {
       dispatch(updateCharacter(characterId, changeType, typeId, name));
@@ -50,12 +54,12 @@ class SavingTextField extends React.Component {
         this.props.changeType,
         this.props.typeId,
         this.props.value);
+      this.props.onCanUndo(this.props.characterId);
+      this.props.onCanRedo(this.props.characterId);
     }
-    this.props.onCanUndo(this.props.characterId);
   }
 
   render() {
-
     return (
       <TextField
         ref={(input) => {
@@ -65,12 +69,13 @@ class SavingTextField extends React.Component {
         value={this.props.value}
         onChange={this.props.onChange}
         style={this.props.style}
-        floatingLabelStyle={this.props.floatingLabelStyle}
+        floatingLabelStyle={this.props.floatingLabelStyle || {color: palette.primary2Color}}
         floatingLabelFocusStyle={this.props.floatingLabelFocusStyle}
         underlineFocusStyle={this.props.underlineFocusStyle}
         underlineStyle={this.props.underlineStyle}
         hintStyle={this.props.hintStyle}
         inputStyle={this.props.inputStyle}
+        fullWidth={this.props.fullWidth}
         onBlur={this.blur}
         onFocus={this.focus}
       />

@@ -126,7 +126,9 @@ export default class PlotifyApp extends React.Component {
                 onTouchTap={() => this.props.onUndoCharacterChange(this.props.characterId)}>
                 <ContentUndo color="white"/>
               </IconButton>
-              <IconButton tooltip="Wiederherstellen">
+              <IconButton tooltip="Wiederherstellen"
+                          disabled={!this.props.canRedo}
+                          onTouchTap={() => this.props.onRedoCharacterChange(this.props.characterId)}>
                 <ContentRedo color="white"/>
               </IconButton>
               <IconButton tooltip="Löschen">

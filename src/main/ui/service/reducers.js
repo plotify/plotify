@@ -3,11 +3,15 @@ import {
   CHANGE_SECTION,
   CLOSE_MSG,
   DESELECT_CHARACTER,
+  RECEIVE_CAN_REDO,
   RECEIVE_CAN_UNDO,
   RECEIVE_CHARACTERS,
+  RECEIVE_REDO,
   RECEIVE_STORY,
   RECEIVE_UNDO,
+  REQUEST_CAN_REDO,
   REQUEST_CAN_UNDO,
+  REQUEST_REDO,
   REQUEST_STORY,
   REQUEST_UNDO,
   SELECT_CHARACTER,
@@ -124,8 +128,20 @@ function story(state = "", action) {
   }
 }
 
-function history(state = {undo: {isAvailable: false, changes: {}}}, action) {
+function history(state = {
+                   undo: {isAvailable: false, changes: {}},
+                   redo: {isAvailable: false, changes: {}},
+                 }, action) {
   switch (action.type) {
+
+    case REQUEST_CAN_REDO:
+      return state;
+    case RECEIVE_CAN_REDO:
+      return Object.assign(state, {redo: {isAvailable: action.payload}});
+    case RECEIVE_REDO:
+      return Object.assign(state, {redo: {changes: action.payload}});
+    case REQUEST_REDO:
+      return state;
     case REQUEST_CAN_UNDO:
       return state;
     case RECEIVE_CAN_UNDO:
