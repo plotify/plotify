@@ -10,14 +10,25 @@ import {
 
 export function canUndoCharacterChange(id) {
   return new Promise((resolve, reject) => {
+
+    if (!id) {
+      throw new Error("No character id was passed.");
+    }
+
     getPastStackTop(id)
       .then(entry => resolve(entry !== null))
       .catch(error => reject(error));
+
   });
 }
 
 export function undoCharacterChange(id) {
   return new Promise((resolve, reject) => {
+
+    if (!id) {
+      throw new Error("No character id was passed.");
+    }
+
     let newPresence;
     getPastStackTop(id)
       .then(entry => { newPresence = entry; return removeFromStack(entry); })
@@ -26,6 +37,7 @@ export function undoCharacterChange(id) {
       .then(() => getPresenceContent(newPresence))
       .then(content => resolve(content))
       .catch(error => reject(error));
+      
   });
 }
 
@@ -143,7 +155,7 @@ function addToFutureStack(previousPresence) {
       }
 
       let position;
-      
+
       if (row.maxPosition === null) {
         position = 0;
       } else {
