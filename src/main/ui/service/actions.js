@@ -152,7 +152,6 @@ export function createCharacter() {
 export function updateCharacter(characterId, changeType, typeId, name) {
   return function (dispatch) {
     dispatch(requestCharacter());
-    dispatch(setSavingType(SavingType.ACTIVE));
     return sendToModel(UPDATE_CHARACTER,
       {
         characterId: characterId,
@@ -162,7 +161,6 @@ export function updateCharacter(characterId, changeType, typeId, name) {
           name: name
         }
       })
-      .then(uuid => (console.log("Typ erfolgreich geändert", uuid)))
       .then(uuid => {
         dispatch(canUndoCharacterChange(uuid));
         return Promise.resolve(uuid);
@@ -171,8 +169,14 @@ export function updateCharacter(characterId, changeType, typeId, name) {
         dispatch(canRedoCharacterChange(uuid));
         return Promise.resolve(uuid);
       })
-      .then(() => dispatch(showMessage("Charakter erfolgreich geändert")))
-      .then(() => dispatch(setSavingType(SavingType.SUCCESS)));
+      .then((uuid) => {
+        dispatch(showMessage("Charakter erfolgreich geändert"));
+        return Promise.resolve(uuid);
+      })
+      .then(uuid => {
+        dispatch(findCharacters());
+        return Promise.resolve(uuid);
+      });
   };
 }
 
@@ -201,14 +205,12 @@ export function findCharacters(filter = "") {
 
 // undo redo
 export function requestCanUndo() {
-  console.log("REQUESTING: UNDO ");
   return {
     type: REQUEST_CAN_UNDO,
   };
 }
 
 export function requestCanRedo() {
-  console.log("REQUESTING: UNDO ");
   return {
     type: REQUEST_CAN_REDO,
   };

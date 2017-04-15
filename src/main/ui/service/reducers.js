@@ -106,6 +106,7 @@ function characters(state = [], action) {
 function selectedCharacter(state = {id: null, newCharacter: false}, action) {
   switch (action.type) {
     case SELECT_CHARACTER:
+      return Object.assign({}, action.payload, {newCharacter: false});
     case "UPDATE_CHARACTER":
       return Object.assign({}, action.payload, {newCharacter: false});
     case ADD_CHARACTER:
