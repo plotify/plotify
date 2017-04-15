@@ -14,8 +14,21 @@ import {
   SHOW_SUCCESS_MSG, SET_SAVING_TYPE
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
-import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER, UNDO_CHARACTER_CHANGE, CAN_REDO_CHARACTER_CHANGE, REDO_CHARACTER_CHANGE} from "../../shared/characters/ipc-channels";
-import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
+import {
+  CREATE_CHARACTER,
+  FIND_CHARACTERS,
+  UPDATE_CHARACTER,
+  CAN_UNDO_CHARACTER_CHANGE,
+  UNDO_CHARACTER_CHANGE,
+  CAN_REDO_CHARACTER_CHANGE,
+  REDO_CHARACTER_CHANGE
+} from "../../shared/characters/ipc-channels";
+import {
+  CLOSE_STORY,
+  CREATE_STORY,
+  OPEN_STORY,
+  OPEN_STORY_DIALOG
+} from "../../shared/stories/ipc-channels";
 import ChangeType from "../../shared/characters/change-type";
 import Sections from "../constants/sections";
 import path from "path";
@@ -232,8 +245,23 @@ export function createStory() {
                 name: "Erika Musterfrau"
               }
             }))
-          //.then(characterId => sendToModel(UNDO_CHARACTER_CHANGE, characterId))
-          //.then(content => sendToModel(CAN_REDO_CHARACTER_CHANGE, content.id))
+          /*.then(uuid => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: uuid,
+              type: ChangeType.CHARACTER,
+              typeId: uuid,
+              changes: {
+                name: "Erika Mustermann"
+              }
+            }))
+          .then(characterId => sendToModel(UNDO_CHARACTER_CHANGE, characterId))
+          .then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
+          .then(content => sendToModel(REDO_CHARACTER_CHANGE, content.id))
+          .then(content => sendToModel(REDO_CHARACTER_CHANGE, content.id))*/
+          //.then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
+          //.then(content => sendToModel(REDO_CHARACTER_CHANGE, content.id))
+          //.then(content => sendToModel(REDO_CHARACTER_CHANGE, content.id))
+          .catch(error => console.log(error))
           //.then(canRedo => console.log("can redo? " + canRedo))
           /*.then(uuid => sendToModel(UPDATE_CHARACTER,
             {

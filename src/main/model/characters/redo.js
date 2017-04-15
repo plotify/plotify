@@ -1,6 +1,11 @@
-import { getConnection } from "../stories/connection";
-import ChangeType from "../../shared/characters/change-type";
-import { getTypeTable, getTypeHistoryTable, Queue } from "./changes-sequence";
+import { Queue } from "./changes-sequence";
+import {
+  getStackTop,
+  removeFromStack,
+  setNewPresence,
+  addToStack,
+  getPresenceContent
+} from "./undo-redo";
 
 import { sendCallback } from "../../shared/commons/ipc";
 import {
@@ -15,7 +20,7 @@ export function canRedoCharacterChange(id) {
       throw new Error("No character id was passed.");
     }
 
-    getFutureStackTop(id)
+    getStackTop(id, Queue.FUTURE)
       .then(entry => resolve(entry !== null))
       .catch(error => reject(error));
 
@@ -29,34 +34,14 @@ export function redoCharacterChange(id) {
       throw new Error("No character id was passed.");
     }
 
-    // TODO Implementieren
-    throw new Error("Unsupported operation.");
-
-  });
-}
-
-function getFutureStackTop(characterId) {
-  return new Promise((resolve, reject) => {
-
-    const sql = " SELECT character_id AS characterId, queue, position, type, " +
-                "        type_id AS typeId, history_id AS historyId          " +
-                " FROM character_changes_sequence                            " +
-                " WHERE character_id = ? AND queue = ? AND position = (      " +
-                "   SELECT max(position)                                     " +
-                "   FROM character_changes_sequence                          " +
-                "   WHERE character_id = ?                                   " +
-                " )                                                          ";
-
-    getConnection().get(sql, [characterId, Queue.FUTURE, characterId], (error, row) => {
-
-      if (error) {
-        reject(error);
-      } else if (row) {
-        resolve(row);
-      } else {
-        resolve(null);
-      }
-    });
+    let newPresence;
+    getStackTop(id, Queue.FUTURE)
+      .then(entry => { newPresence = entry; return removeFromStack(entry); })
+      .then(() => setNewPresence(newPresence))
+      .then(previousPresence => addToStack(previousPresence, Queue.PAST))
+      .then(() => getPresenceContent(newPresence))
+      .then(content => resolve(content))
+      .catch(error => reject(error));
 
   });
 }
