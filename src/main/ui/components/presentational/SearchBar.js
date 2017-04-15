@@ -1,6 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
-
 //---- MATERIAL UI WELCOME
 //------ COMPONENTS WELCOME
 import {Toolbar, ToolbarGroup, ToolbarTitle} from "material-ui/Toolbar";

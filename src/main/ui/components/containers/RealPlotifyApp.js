@@ -1,7 +1,10 @@
 import React from "react";
 import {connect} from "react-redux";
 import PlotifyApp from "../presentational/PlotifyApp";
-import {canUndoCharacterChange, undoCharacterChange} from "../../service/actions";
+import {
+  canRedoCharacterChange, canUndoCharacterChange, redoCharacterChange,
+  undoCharacterChange
+} from "../../service/actions";
 
 const mapStateToProps = (state) => {
   return {
@@ -10,6 +13,7 @@ const mapStateToProps = (state) => {
     sectionIsLoading: state.sectionIsLoading,
     savingType: state.communications.savingType,
     canUndo: state.history.undo.isAvailable,
+    canRedo: state.history.redo.isAvailable,
     undo: state.history.undo.changes,
     characterId: state.selectedCharacter.id,
   };
@@ -19,6 +23,13 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onUndoCharacterChange: (id) => {
       dispatch(undoCharacterChange(id));
+      dispatch(canUndoCharacterChange(id));
+      dispatch(canRedoCharacterChange(id));
+    },
+    onRedoCharacterChange: (id) => {
+      dispatch(redoCharacterChange(id));
+      dispatch(canUndoCharacterChange(id));
+      dispatch(canRedoCharacterChange(id));
     }
   };
 };

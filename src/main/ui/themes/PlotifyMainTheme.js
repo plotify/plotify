@@ -1,5 +1,6 @@
 import {darkBlack, fullBlack, grey100, grey300, grey400, grey500, purple800, white} from "material-ui/styles/colors";
 import uispacing from "material-ui/styles/spacing";
+import {fade} from "material-ui/utils/colorManipulator";
 
 const PlotifyMainTheme = {
   spacing: uispacing,
@@ -12,13 +13,13 @@ const PlotifyMainTheme = {
     accent2Color: grey100,
     accent3Color: grey500,
     textColor: darkBlack,
-    // secondaryTextColor: fade(darkBlack, 0.54),
+    secondaryTextColor: fade(darkBlack, 0.54),
     alternateTextColor: white,
     canvasColor: white,
     borderColor: grey300,
-    // disabledColor: fade(darkBlack, 0.3),
+    disabledColor: fade(darkBlack, 0.3),
     pickerHeaderColor: purple800,
-    // clockCircleColor: fade(darkBlack, 0.07),
+    clockCircleColor: fade(darkBlack, 0.07),
     shadowColor: fullBlack,
   }
 };

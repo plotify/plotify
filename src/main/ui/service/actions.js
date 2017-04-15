@@ -2,27 +2,32 @@ import {
   CHANGE_SECTION,
   CLOSE_MSG,
   DESELECT_CHARACTER,
+  RECEIVE_CAN_REDO,
   RECEIVE_CAN_UNDO,
   RECEIVE_CHARACTERS,
+  RECEIVE_REDO,
   RECEIVE_STORY,
   RECEIVE_UNDO,
+  REQUEST_CAN_REDO,
   REQUEST_CAN_UNDO,
   REQUEST_CHARACTER,
   REQUEST_CHARACTERS,
+  REQUEST_REDO,
   REQUEST_STORY,
   REQUEST_UNDO,
   SELECT_CHARACTER,
   SET_FILTER,
   SET_SAVING_TYPE,
-  SHOW_ERROR_MSG,
   SHOW_MSG,
   SHOW_SUCCESS_MSG
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
 import {
+  CAN_REDO_CHARACTER_CHANGE,
   CAN_UNDO_CHARACTER_CHANGE,
   CREATE_CHARACTER,
   FIND_CHARACTERS,
+  REDO_CHARACTER_CHANGE,
   UNDO_CHARACTER_CHANGE,
   UPDATE_CHARACTER
 } from "../../shared/characters/ipc-channels";
@@ -53,13 +58,6 @@ export function setSavingType(savingType) {
 export function showMessage(message) {
   return {
     type: SHOW_MSG,
-    payload: {message}
-  };
-}
-
-export function showErrorMessage(message = "Fehler") {
-  return {
-    type: SHOW_ERROR_MSG,
     payload: {message}
   };
 }
@@ -141,6 +139,10 @@ export function createCharacter() {
         return Promise.resolve(uuid);
       })
       .then(uuid => {
+        dispatch(canRedoCharacterChange(uuid));
+        return Promise.resolve(uuid);
+      })
+      .then(uuid => {
         dispatch(selectCharacter({id: uuid, name: ""}));
         return Promise.resolve(uuid);
       })
@@ -161,7 +163,15 @@ export function updateCharacter(characterId, changeType, typeId, name) {
           name: name
         }
       })
-      .then(typeId => (console.log("Typ erfolgreich geändert", typeId)))
+      .then(uuid => (console.log("Typ erfolgreich geändert", uuid)))
+      .then(uuid => {
+        dispatch(canUndoCharacterChange(uuid));
+        return Promise.resolve(uuid);
+      })
+      .then(uuid => {
+        dispatch(canRedoCharacterChange(uuid));
+        return Promise.resolve(uuid);
+      })
       .then(() => dispatch(showMessage("Charakter erfolgreich geändert")))
       .then(() => dispatch(setSavingType(SavingType.SUCCESS)));
   };
@@ -190,10 +200,18 @@ export function findCharacters(filter = "") {
   };
 }
 
+// undo redo
 export function requestCanUndo() {
   console.log("REQUESTING: UNDO ");
   return {
     type: REQUEST_CAN_UNDO,
+  };
+}
+
+export function requestCanRedo() {
+  console.log("REQUESTING: UNDO ");
+  return {
+    type: REQUEST_CAN_REDO,
   };
 }
 
@@ -204,18 +222,39 @@ export function receiveCanUndo(canUndo) {
   };
 }
 
+export function receiveCanRedo(canRedo) {
+  return {
+    type: RECEIVE_CAN_REDO,
+    payload: canRedo
+  };
+}
+
 export function canUndoCharacterChange(id = "") {
   return function (dispatch) {
     dispatch(requestCanUndo());
     return sendToModel(CAN_UNDO_CHARACTER_CHANGE, id)
-      .then(canUndo => dispatch(receiveCanUndo(canUndo)))
-      .then(canUndo => console.log("can undo?", canUndo, "for", id));
+      .then(canUndo => dispatch(receiveCanUndo(canUndo)));
+  };
+}
+
+export function canRedoCharacterChange(id = "") {
+  return function (dispatch) {
+    dispatch(requestCanRedo());
+    return sendToModel(CAN_REDO_CHARACTER_CHANGE, id)
+      .then(canRedo => dispatch(receiveCanRedo(canRedo)));
   };
 }
 
 export function requestUndo() {
   return {
     type: REQUEST_UNDO
+  };
+}
+
+
+export function requestRedo() {
+  return {
+    type: REQUEST_REDO
   };
 }
 
@@ -226,15 +265,46 @@ export function receiveUndo(changes) {
   };
 }
 
+export function receiveRedo(changes) {
+  return {
+    type: RECEIVE_REDO,
+    payload: changes,
+  };
+}
+
 export function undoCharacterChange(id = "") {
   console.log("UNDOING CHANGES FOR ", id);
   return (dispatch) => {
     dispatch(requestUndo());
     return sendToModel(UNDO_CHARACTER_CHANGE, id)
-      .then(changes => dispatch(updateSelectedCharacter(changes)))
-      .then(changes => dispatch(canUndoCharacterChange(id)))
+      .then(changes => {
+        dispatch(updateSelectedCharacter(changes));
+        return Promise.resolve(changes);
+      })
+      .then(changes => {
+        dispatch(canUndoCharacterChange(id));
+        return Promise.resolve(changes);
+      })
       .then(changes => dispatch(receiveUndo(changes)))
       .catch(error => console.log("error undoing", error));
+  };
+}
+
+export function redoCharacterChange(id = "") {
+  console.log("REDOING CHANGES FOR ", id);
+  return (dispatch) => {
+    dispatch(requestRedo());
+    return sendToModel(REDO_CHARACTER_CHANGE, id)
+      .then(changes => {
+        dispatch(updateSelectedCharacter(changes));
+        return Promise.resolve(changes);
+      })
+      .then(changes => {
+        dispatch(canRedoCharacterChange(id));
+        return Promise.resolve(changes);
+      })
+      .then(changes => dispatch(receiveRedo(changes)))
+      .catch(error => console.log("error redoing", error));
   };
 }
 
