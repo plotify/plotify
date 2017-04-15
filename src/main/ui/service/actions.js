@@ -281,6 +281,10 @@ export function undoCharacterChange(id = "") {
         return Promise.resolve(changes);
       })
       .then(changes => {
+        dispatch(canRedoCharacterChange(id));
+        return Promise.resolve(changes);
+      })
+      .then(changes => {
         dispatch(canUndoCharacterChange(id));
         return Promise.resolve(changes);
       })
@@ -300,6 +304,10 @@ export function redoCharacterChange(id = "") {
       })
       .then(changes => {
         dispatch(canRedoCharacterChange(id));
+        return Promise.resolve(changes);
+      })
+      .then(changes => {
+        dispatch(canUndoCharacterChange(id));
         return Promise.resolve(changes);
       })
       .then(changes => dispatch(receiveRedo(changes)))

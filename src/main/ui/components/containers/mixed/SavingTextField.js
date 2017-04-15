@@ -54,8 +54,6 @@ class SavingTextField extends React.Component {
         this.props.changeType,
         this.props.typeId,
         this.props.value);
-      this.props.onCanUndo(this.props.characterId);
-      this.props.onCanRedo(this.props.characterId);
     }
   }
 

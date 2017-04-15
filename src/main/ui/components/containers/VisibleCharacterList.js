@@ -17,7 +17,7 @@ const getCharacters = (characters, selectedCharacter) => {
   }
   return characters.map((character) => {
     if (character.id === selectedCharacter.id) {
-      return Object.assign(character, selectedCharacter);
+      return Object.assign({}, character, selectedCharacter);
     }
     return character;
   });

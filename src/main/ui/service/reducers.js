@@ -95,7 +95,7 @@ function filter(state = "", action) {
 function characters(state = [], action) {
   switch (action.type) {
     case "CHANGE_CHARACTER":
-      return Object.assign(state, action.payload);
+      return Object.assign({}, state, action.payload);
     case RECEIVE_CHARACTERS:
       return action.payload;
     default:
@@ -107,9 +107,9 @@ function selectedCharacter(state = {id: null, newCharacter: false}, action) {
   switch (action.type) {
     case SELECT_CHARACTER:
     case "UPDATE_CHARACTER":
-      return Object.assign(action.payload, {newCharacter: false});
+      return Object.assign({}, action.payload, {newCharacter: false});
     case ADD_CHARACTER:
-      return Object.assign(action.payload, {newCharacter: true});
+      return Object.assign({}, action.payload, {newCharacter: true});
     case DESELECT_CHARACTER:
       return Object.assign({}, {newCharacter: false});
     default:
@@ -137,17 +137,17 @@ function history(state = {
     case REQUEST_CAN_REDO:
       return state;
     case RECEIVE_CAN_REDO:
-      return Object.assign(state, {redo: {isAvailable: action.payload}});
+      return Object.assign({}, state, {redo: {isAvailable: action.payload}});
     case RECEIVE_REDO:
-      return Object.assign(state, {redo: {changes: action.payload}});
+      return Object.assign({}, state, {redo: {changes: action.payload}});
     case REQUEST_REDO:
       return state;
     case REQUEST_CAN_UNDO:
       return state;
     case RECEIVE_CAN_UNDO:
-      return Object.assign(state, {undo: {isAvailable: action.payload}});
+      return Object.assign({}, state, {undo: {isAvailable: action.payload}});
     case RECEIVE_UNDO:
-      return Object.assign(state, {undo: {changes: action.payload}});
+      return Object.assign({}, state, {undo: {changes: action.payload}});
     case REQUEST_UNDO:
       return state;
     default:
