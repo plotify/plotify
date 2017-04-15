@@ -5,12 +5,12 @@ import {
   DESELECT_CHARACTER,
   RECEIVE_CAN_REDO,
   RECEIVE_CAN_UNDO,
-  RECEIVE_CHARACTERS,
+  RECEIVE_CHARACTERS, RECEIVE_PROFILE,
   RECEIVE_REDO,
   RECEIVE_STORY,
   RECEIVE_UNDO,
   REQUEST_CAN_REDO,
-  REQUEST_CAN_UNDO,
+  REQUEST_CAN_UNDO, REQUEST_PROFILE,
   REQUEST_REDO,
   REQUEST_STORY,
   REQUEST_UNDO,
@@ -19,7 +19,7 @@ import {
   SET_SAVING_TYPE,
   SHOW_ERROR_MSG,
   SHOW_MSG,
-  SHOW_SUCCESS_MSG
+  SHOW_SUCCESS_MSG, UPDATE_UI_PROFILE
 } from "./action-types";
 import {combineReducers} from "redux";
 import Pages from "../constants/sections";
@@ -97,7 +97,7 @@ function characters(state = [], action) {
     case "CHANGE_CHARACTER":
       return Object.assign({}, state, action.payload);
     case RECEIVE_CHARACTERS:
-      return action.payload;
+      return Object.assign([], state, action.payload);
     default:
       return state;
   }
@@ -105,12 +105,23 @@ function characters(state = [], action) {
 
 function selectedCharacter(state = {id: null, newCharacter: false}, action) {
   switch (action.type) {
+    case UPDATE_UI_PROFILE:
+      let stateCopy = Object.assign({}, state);
+      stateCopy.profile[action.payload.groupIndex]
+        .entries[action.payload.entryIndex]
+        .value = action.payload.value;
+      return stateCopy;
+    case REQUEST_PROFILE:
+      return Object.assign({}, state);
+    case RECEIVE_PROFILE:
+      return Object.assign({}, state, {profile: action.payload})
+
     case SELECT_CHARACTER:
-      return Object.assign({}, action.payload, {newCharacter: false});
+      return Object.assign({}, state, action.payload, {newCharacter: false});
     case "UPDATE_CHARACTER":
-      return Object.assign({}, action.payload, {newCharacter: false});
+      return Object.assign({}, state, action.payload, {newCharacter: false});
     case ADD_CHARACTER:
-      return Object.assign({}, action.payload, {newCharacter: true});
+      return Object.assign({}, state, action.payload, {newCharacter: true});
     case DESELECT_CHARACTER:
       return Object.assign({}, {newCharacter: false});
     default:
@@ -118,6 +129,7 @@ function selectedCharacter(state = {id: null, newCharacter: false}, action) {
 
   }
 }
+
 
 function story(state = "", action) {
   switch (action.type) {

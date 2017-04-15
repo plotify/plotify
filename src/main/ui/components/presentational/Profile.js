@@ -55,25 +55,41 @@ export default class Profile extends React.Component {
     this.props.onUpdateSelectedCharacter({id: this.props.character.id, name: value});
   }
 
+  handleProfileEntryChange(entryId, value, groupIndex, entryIndex) {
+    console.log("CHANGING PROFILE:", entryId, value);
+    this.props.onUpdateProfileEntry({id: entryId, value, groupIndex, entryIndex});
+  }
+
   render() {
     return (
       <div id="CharacterDetails" style={styles}>
         {this.props.character.id &&
         <div>
           <div id="Attributes" style={styles.attributes}>
+            {
+              this.props.character.profile && this.props.character.profile.map((group, groupIndex) => {
+                return <Paper style={styles.panel} zDepth={1} key={group.id}>
+                  <h1>{group.title}</h1>
+                  {group.entries.map((entry, entryIndex) => {
+                    return <SavingTextField
+                      key={entry.id}
+                      initialValue={entry.value}
+                      changeType={ChangeType.ENTRY}
+                      onChange={(event) => this.handleProfileEntryChange(entry.id, event.target.value, groupIndex, entryIndex)}
+                      typeId={entry.id}
+                      hintText=""
+                      floatingLabelText={entry.title}
+                      value={entry.value}
+                      fullWidth={true}
+                      multiLine={true}
+                    />;
+                  })}
 
-            <Paper style={styles.panel} zDepth={1}>
-              <TextField
-                hintText=""
-                floatingLabelText="Hello World"
-                fullWidth={true}
-              />
-              <TextField
-                hintText=""
-                floatingLabelText="Lorem Ipsum"
-                fullWidth={true}
-              />
-            </Paper>
+                </Paper>;
+
+              })
+            }
+
           </div>
 
           <Paper style={styles.toolbar} zDepth={2} rounded={false}>
@@ -91,6 +107,7 @@ export default class Profile extends React.Component {
               underlineStyle={styles.toolbar.textField.colors}
               hintStyle={styles.toolbar.textField.colors}
               inputStyle={styles.toolbar.textField.colors}
+              initialValue={this.props.character.name}
             />
           </Paper>
         </div>

@@ -1,17 +1,19 @@
 import React from "react";
 import VisibleCharacterList from "./VisibleCharacterList";
-import VisibleProfile from "./VisibleProfile";
 import {
   canRedoCharacterChange,
   canUndoCharacterChange,
   deselectCharacter,
   findCharacters,
+  getCharacterProfile,
   selectCharacter,
   setFilter,
-  updateSelectedCharacter
+  updateSelectedCharacter,
+  updateUiProfile
 } from "../../service/actions";
 import {connect} from "react-redux";
 import {palette} from "../../themes/PlotifyMainTheme";
+import Profile from "../presentational/Profile";
 
 const styles = {
   columns: {
@@ -45,9 +47,10 @@ class MixedCharacterSection extends React.Component {
           />
         </div>
         <div style={styles.columns.col3}>
-          <VisibleProfile
+          <Profile
             character={this.props.selectCharacter}
-            onUpdateSelectedCharacter={this.props.onUpdateSelectedCharacter}/>
+            onUpdateSelectedCharacter={this.props.onUpdateSelectedCharacter}
+            onUpdateProfileEntry={this.props.onUpdateProfileEntry}/>
         </div>
       </span>
     );
@@ -64,6 +67,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onSelect: (character) => {
+      dispatch(getCharacterProfile(character.id));
       dispatch(selectCharacter(character));
       dispatch(canUndoCharacterChange(character.id));
       dispatch(canRedoCharacterChange(character.id));
@@ -77,6 +81,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onUpdateSelectedCharacter: (updatedCharacter) => {
       dispatch(updateSelectedCharacter(updatedCharacter));
+    },
+    onUpdateProfileEntry: (profileChanges) => {
+      dispatch(updateUiProfile(profileChanges));
     }
   }
 };

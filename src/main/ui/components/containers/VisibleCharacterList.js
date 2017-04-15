@@ -12,6 +12,7 @@ const getEmptyMessage = (filter) => {
 };
 
 const getCharacters = (characters, selectedCharacter) => {
+  console.log("CHARACTERS WHAT", characters, Array.isArray(characters));
   if (selectedCharacter === undefined) {
     return characters;
   }

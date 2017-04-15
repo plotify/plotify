@@ -3,11 +3,11 @@ import TextField from "material-ui/TextField";
 import {connect} from "react-redux";
 import {canRedoCharacterChange, canUndoCharacterChange, updateCharacter} from "../../../service/actions";
 import {palette} from "../../../themes/PlotifyMainTheme";
+import ChangeTypes from "../../../../shared/characters/change-type";
 
 const mapStateToProps = (state) => {
   return {
     characterId: state.selectedCharacter.id,
-    initialValue: state.selectedCharacter.name,
   };
 };
 
@@ -19,8 +19,8 @@ const mapDispatchToProps = (dispatch) => {
     onCanRedo: (id) => {
       dispatch(canRedoCharacterChange(id));
     },
-    onSave: (characterId, changeType, typeId, name) => {
-      dispatch(updateCharacter(characterId, changeType, typeId, name));
+    onSave: (characterId, changeType, typeId, changes) => {
+      dispatch(updateCharacter(characterId, changeType, typeId, changes));
     }
   };
 };
@@ -49,11 +49,18 @@ class SavingTextField extends React.Component {
   blur() {
     this.input.blur();
     if (this.state.initialValue !== this.props.value) {
+      let changes;
+      if (this.props.changeType === ChangeTypes.CHARACTER) {
+        changes = {name: this.props.value};
+      } else {
+        changes = {value: this.props.value};
+      }
+
       this.props.onSave(
         this.props.characterId,
         this.props.changeType,
         this.props.typeId,
-        this.props.value);
+        changes);
     }
   }
 
@@ -74,6 +81,7 @@ class SavingTextField extends React.Component {
         hintStyle={this.props.hintStyle}
         inputStyle={this.props.inputStyle}
         fullWidth={this.props.fullWidth}
+        multiLine={this.props.multiLine}
         onBlur={this.blur}
         onFocus={this.focus}
       />

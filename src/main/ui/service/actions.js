@@ -4,14 +4,14 @@ import {
   DESELECT_CHARACTER,
   RECEIVE_CAN_REDO,
   RECEIVE_CAN_UNDO,
-  RECEIVE_CHARACTERS,
+  RECEIVE_CHARACTERS, RECEIVE_PROFILE,
   RECEIVE_REDO,
   RECEIVE_STORY,
   RECEIVE_UNDO,
   REQUEST_CAN_REDO,
   REQUEST_CAN_UNDO,
   REQUEST_CHARACTER,
-  REQUEST_CHARACTERS,
+  REQUEST_CHARACTERS, REQUEST_PROFILE,
   REQUEST_REDO,
   REQUEST_STORY,
   REQUEST_UNDO,
@@ -19,7 +19,7 @@ import {
   SET_FILTER,
   SET_SAVING_TYPE,
   SHOW_MSG,
-  SHOW_SUCCESS_MSG
+  SHOW_SUCCESS_MSG, UPDATE_UI_PROFILE
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
 import {
@@ -42,13 +42,6 @@ export function sectionIsLoading(trueOrFalse) {
   return {
     type: "TOGGLE_SECTION_LOADING",
     payload: trueOrFalse
-  };
-}
-
-export function setSavingType(savingType) {
-  return {
-    type: SET_SAVING_TYPE,
-    payload: savingType,
   };
 }
 
@@ -100,7 +93,7 @@ export function deselectCharacter() {
   };
 }
 
-export function setFilter(filter) {
+export function setFilter(filter = "") {
   return {
     type: SET_FILTER,
     payload: filter
@@ -118,6 +111,14 @@ export function updateSelectedCharacter(character) {
   return {
     type: "UPDATE_CHARACTER",
     payload: character
+  };
+}
+
+// TODO
+export function updateUiProfile(profileChanges) {
+  return {
+    type: UPDATE_UI_PROFILE,
+    payload: profileChanges
   };
 }
 
@@ -141,27 +142,46 @@ export function createCharacter() {
         dispatch(canRedoCharacterChange(uuid));
         return Promise.resolve(uuid);
       })
+      .then(uuid=> {
+        dispatch(getCharacterProfile(uuid));
+        return Promise.resolve(uuid);
+      })
       .then(uuid => {
         dispatch(selectCharacter({id: uuid, name: ""}));
         return Promise.resolve(uuid);
       })
-      //.then(uuid => sendToModel(GET_CHARACTER_PROFILE, uuid))
-      //.then(profile => console.log(profile))
       .catch((error) => console.log(error));
   };
 }
 
-export function updateCharacter(characterId, changeType, typeId, name) {
+export function requestCharacterProfile() {
+  return {
+    type: REQUEST_PROFILE,
+  };
+}
+
+export function getCharacterProfile(uuid = "") {
+  return (dispatch) => {
+    dispatch(requestCharacterProfile());
+    return sendToModel(GET_CHARACTER_PROFILE, uuid)
+      .then(profile => {
+        dispatch(receiveCharacterProfile(profile));
+        return Promise.resolve(profile);
+      })
+      .catch(error => console.log(error));
+  };
+}
+
+export function updateCharacter(characterId, changeType, typeId, changes) {
   return function (dispatch) {
     dispatch(requestCharacter());
+    console.log("CHANGES", characterId, changeType, typeId, changes);
     return sendToModel(UPDATE_CHARACTER,
       {
         characterId: characterId,
         type: changeType,
         typeId: typeId,
-        changes: {
-          name: name
-        }
+        changes
       })
       .then(uuid => {
         dispatch(canUndoCharacterChange(uuid));
@@ -275,13 +295,22 @@ export function receiveRedo(changes) {
   };
 }
 
+export function receiveCharacterProfile(profile) {
+  return {
+    type: RECEIVE_PROFILE,
+    payload: profile
+  };
+}
+
 export function undoCharacterChange(id = "") {
-  console.log("UNDOING CHANGES FOR ", id);
   return (dispatch) => {
     dispatch(requestUndo());
     return sendToModel(UNDO_CHARACTER_CHANGE, id)
       .then(changes => {
+        // if changes.isCharacter
         dispatch(updateSelectedCharacter(changes));
+        // else
+        // dispatch(updateUiProfile(changes));
         return Promise.resolve(changes);
       })
       .then(changes => {
