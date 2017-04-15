@@ -1,21 +1,23 @@
 import React from "react";
-import FolderOpen from "material-ui/svg-icons/file/folder-open";
-import AvNewReleases from "material-ui/svg-icons/av/new-releases";
 import HoveringPaper from "../../presentational/HoveringPaper";
 import {connect} from "react-redux";
 import {createStory, openStoryDialog} from "../../../service/actions";
+import PlotifyMainTheme, {spacing} from "../../../themes/PlotifyMainTheme";
 
 const styles = {
   wrapper: {
-    float: "left",
+    position: "fixed",
     height: "100%",
-    maxWidth: "95%",
-    minWidth: 400,
+    width: "100%",
+    background: "white",
+    textAlign: "center",
+    align: "center",
   },
   paperWrapper: {
     position: "absolute",
-    height: "100%",
     width: "100%",
+    left: "50%",
+    marginLeft: -450,
   },
   icons: {
     height: 60,
@@ -45,17 +47,22 @@ class MixedWelcomeSection extends React.Component {
   render() {
     return (
       <div style={styles.wrapper}>
+
+        <div style={{fontFamily: PlotifyMainTheme.fontFamily, padding: spacing.iconSize}}>
+          <h1>Schreibe eine wundervolle Geschichte</h1>
+        </div>
+
         <div style={styles.paperWrapper}>
+
           <HoveringPaper
-            onTouchTap={this.createStory}>
-            <AvNewReleases style={styles.icons}/>
-            Neue Geschichte erstellen
-          </HoveringPaper>
+            onTouchTap={this.createStory}
+            background="resources/icons/material-new.png"
+            title="Neue Geschichte erstellen"/>
           <HoveringPaper
-            onTouchTap={this.props.onOpenStory}>
-            <FolderOpen style={styles.icons}/>
-            Geschichte öffnen
-          </HoveringPaper>
+            onTouchTap={this.props.onOpenStory}
+            background="resources/icons/material-open.png"
+            title="Geschichte öffnen"/>
+
         </div>
       </div>
     );

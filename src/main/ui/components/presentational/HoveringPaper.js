@@ -1,14 +1,13 @@
 import React from "react";
 import Paper from "material-ui/Paper";
+import PlotifyMainTheme, {spacing} from "../../themes/PlotifyMainTheme";
 
 const hoveringPaperStyles = {
-  position: "relative",
-  height: 200,
-  width: "80%",
-  left: "50%",
-  marginLeft: "-42%",
-  marginTop: 50,
+  float: "left",
+  width: 350,
+  margin: 50,
   cursor: "pointer",
+  fontFamily: PlotifyMainTheme.fontFamily,
 };
 
 export default class HoveringPaper extends React.Component {
@@ -41,7 +40,10 @@ export default class HoveringPaper extends React.Component {
         zDepth={this.state.height}
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseOut}>
-        {this.props.children}
+        <img src={this.props.background} style={ {width: "100%"}}/>
+        <div style={{height: "auto", width: "100%", padding: spacing.desktopGutterMini, fontSize: spacing.iconSize}}>
+          {this.props.title}
+        </div>
       </Paper>
     );
   }

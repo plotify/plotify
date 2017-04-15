@@ -32,7 +32,6 @@ import {
   UPDATE_CHARACTER
 } from "../../shared/characters/ipc-channels";
 import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
-import ChangeType from "../../shared/characters/change-type";
 import Sections from "../constants/sections";
 import path from "path";
 import {shell} from "electron";
