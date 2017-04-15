@@ -1,16 +1,20 @@
 import {
   ADD_CHARACTER,
   CHANGE_SECTION,
+  CLEAR_CHARACTERS,
   CLOSE_MSG,
   DESELECT_CHARACTER,
   RECEIVE_CAN_REDO,
   RECEIVE_CAN_UNDO,
-  RECEIVE_CHARACTERS, RECEIVE_PROFILE,
+  RECEIVE_CHARACTERS,
+  RECEIVE_PROFILE,
   RECEIVE_REDO,
   RECEIVE_STORY,
   RECEIVE_UNDO,
   REQUEST_CAN_REDO,
-  REQUEST_CAN_UNDO, REQUEST_PROFILE,
+  REQUEST_CAN_UNDO,
+  REQUEST_CHARACTERS,
+  REQUEST_PROFILE,
   REQUEST_REDO,
   REQUEST_STORY,
   REQUEST_UNDO,
@@ -19,7 +23,8 @@ import {
   SET_SAVING_TYPE,
   SHOW_ERROR_MSG,
   SHOW_MSG,
-  SHOW_SUCCESS_MSG, UPDATE_UI_PROFILE
+  SHOW_SUCCESS_MSG,
+  UPDATE_UI_PROFILE
 } from "./action-types";
 import {combineReducers} from "redux";
 import Pages from "../constants/sections";
@@ -98,6 +103,8 @@ function characters(state = [], action) {
       return Object.assign({}, state, action.payload);
     case RECEIVE_CHARACTERS:
       return Object.assign([], state, action.payload);
+    case REQUEST_CHARACTERS:
+      return [];
     default:
       return state;
   }
