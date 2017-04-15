@@ -211,9 +211,9 @@ function addTopToBottomFutureToPast(futureStack, position) {
 function addSecondFromBottomToTopFutureToPast(futureStack, position) {
   return new Promise((resolve, reject) => {
 
-    const sql = " INSERT INTO character_changes_sequence                    " +
+    const sql = " INSERT INTO character_changes_sequence                     " +
                 " (character_id, stack, position, type, type_id, history_id) " +
-                " VALUES (?, ?, ?, ?, ?, ?)";
+                " VALUES (?, ?, ?, ?, ?, ?)                                  ";
 
     const length = futureStack.length;
     let nextPosition = position;
