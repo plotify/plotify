@@ -8,6 +8,7 @@ Eine erste Testversion wird bald veröffentlicht.
 
 ![Screenshot von Plotify](docs/screenshot.png)
 
+
 ## Lizenz
 
 Plotify ist eine freie Software. Jeder darf die Software kostenlos verwenden,

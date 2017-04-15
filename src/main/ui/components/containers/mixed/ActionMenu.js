@@ -8,9 +8,9 @@ import ActionSettings from "material-ui/svg-icons/action/settings";
 import FolderOpen from "material-ui/svg-icons/file/folder-open";
 import FileFolder from "material-ui/svg-icons/file/folder";
 import AvNewReleases from "material-ui/svg-icons/av/new-releases";
-import {createStory, openStoryDialog, openStoryFileLocation} from "../../../service/actions";
-import {connect} from "react-redux";
-
+import { createStory, openStoryDialog, openStoryFileLocation } from "../../../service/actions";
+import { connect } from "react-redux";
+import { shell } from "electron";
 
 class CustomMenu extends React.Component {
   constructor(props) {
@@ -37,6 +37,7 @@ class CustomMenu extends React.Component {
   }
 
   handleAbout(event) {
+    shell.openExternal("https://github.com/SebastianSchmidt/plotify#readme");
     this.props.onRequestClose();
   }
 
