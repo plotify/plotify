@@ -29,6 +29,18 @@ const styles = {
   }
 };
 
+/*
+<MenuItem
+  disabled={this.props.disabled}
+  style={ currentSection === Section.TRASH ? styles.trashActive : styles.trash }
+  leftIcon={
+    <ActionDelete
+      color={ currentSection === Section.TRASH ? styles.iconActive.color : "" }
+    />
+  }
+  onTouchTap={this.goToTrash}/>
+*/
+
 export default class Navigation extends React.Component {
   constructor(props) {
     super(props);
@@ -57,15 +69,6 @@ export default class Navigation extends React.Component {
             />
           }
           onTouchTap={this.goToCharacters}/>
-        <MenuItem
-          disabled={this.props.disabled}
-          style={ currentSection === Section.TRASH ? styles.trashActive : styles.trash }
-          leftIcon={
-            <ActionDelete
-              color={ currentSection === Section.TRASH ? styles.iconActive.color : "" }
-            />
-          }
-          onTouchTap={this.goToTrash}/>
       </div>
     );
   }

@@ -63,6 +63,12 @@ const styles = {
   },
 };
 
+/*
+<IconButton tooltip="Löschen">
+  <ActionDelete color="white"/>
+</IconButton>
+*/
+
 export default class PlotifyApp extends React.Component {
   constructor(props) {
     super(props);
@@ -128,11 +134,9 @@ export default class PlotifyApp extends React.Component {
               </IconButton>
               <IconButton tooltip="Wiederherstellen"
                           disabled={!this.props.canRedo}
-                          onTouchTap={() => this.props.onRedoCharacterChange(this.props.characterId)}>
+                          onTouchTap={
+                            () => this.props.onRedoCharacterChange(this.props.characterId)}>
                 <ContentRedo color="white"/>
-              </IconButton>
-              <IconButton tooltip="Löschen">
-                <ActionDelete color="white"/>
               </IconButton>
             </ToolbarGroup>
           </Toolbar>
