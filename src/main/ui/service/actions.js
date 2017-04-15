@@ -14,7 +14,7 @@ import {
   SHOW_SUCCESS_MSG, SET_SAVING_TYPE
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
-import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER} from "../../shared/characters/ipc-channels";
+import {CREATE_CHARACTER, FIND_CHARACTERS, UPDATE_CHARACTER, UNDO_CHARACTER_CHANGE} from "../../shared/characters/ipc-channels";
 import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
 import ChangeType from "../../shared/characters/change-type";
 import Sections from "../constants/sections";
@@ -222,6 +222,72 @@ export function createStory() {
                 name: "Erika"
               }
             }))
+          /*.then(uuid => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: uuid,
+              type: ChangeType.CHARACTER,
+              typeId: uuid,
+              changes: {
+                name: "Max"
+              }
+            }))
+          .then(uuid => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: uuid,
+              type: ChangeType.CHARACTER,
+              typeId: uuid,
+              changes: {
+                name: "Maxmilian"
+              }
+            }))
+          .then(uuid => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: uuid,
+              type: ChangeType.CHARACTER,
+              typeId: uuid,
+              changes: {
+                name: "Maxmilian Mustermann"
+              }
+            }))
+          .then(uuid => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: uuid,
+              type: ChangeType.CHARACTER,
+              typeId: uuid,
+              changes: {
+                name: "Maxmilian von Mustermann"
+              }
+            }))
+          .then(uuid => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: uuid,
+              type: ChangeType.CHARACTER,
+              typeId: uuid,
+              changes: {
+                name: "Maxmilian von Müller"
+              }
+            }))
+          .then(characterId => sendToModel(UNDO_CHARACTER_CHANGE, characterId))
+          .then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
+          .then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
+          .then(content => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: content.id,
+              type: ChangeType.CHARACTER,
+              typeId: content.id,
+              changes: {
+                name: "Maxmilian Meier"
+              }
+            }))*/
+          /*.then(uuid => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: uuid,
+              type: ChangeType.CHARACTER,
+              typeId: uuid,
+              changes: {
+                name: "Erika"
+              }
+            }))
           .then(uuid => sendToModel(UPDATE_CHARACTER,
             {
               characterId: uuid,
@@ -231,7 +297,16 @@ export function createStory() {
                 name: "Erika Musterfrau"
               }
             }))
-          //.then(characterId => sendToModel(UNDO_CHARACTER_CHANGE, characterId))
+          .then(characterId => sendToModel(UNDO_CHARACTER_CHANGE, characterId))
+          .then(content => sendToModel(UPDATE_CHARACTER,
+            {
+              characterId: content.id,
+              type: ChangeType.CHARACTER,
+              typeId: content.id,
+              changes: {
+                name: "Erika Müller"
+              }
+            }))*/
           //.then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
           //.then(content => console.log(content))
           //.then(characterId => sendToModel(CAN_UNDO_CHARACTER_CHANGE, characterId))
