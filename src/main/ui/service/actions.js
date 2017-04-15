@@ -35,7 +35,6 @@ import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../sh
 import Sections from "../constants/sections";
 import path from "path";
 import {shell} from "electron";
-import SavingType from "../constants/SavingType";
 
 // Communication State
 export function sectionIsLoading(trueOrFalse) {
@@ -291,7 +290,9 @@ export function undoCharacterChange(id = "") {
         return Promise.resolve(changes);
       })
       .then(changes => dispatch(receiveUndo(changes)))
-      .catch(error => console.log("error undoing", error));
+      .then(changes => dispatch(receiveRedo(changes)))
+      .catch(error => console.log("error undoing", error))
+      .then(() => dispatch(findCharacters()));
   };
 }
 
@@ -313,7 +314,9 @@ export function redoCharacterChange(id = "") {
         return Promise.resolve(changes);
       })
       .then(changes => dispatch(receiveRedo(changes)))
-      .catch(error => console.log("error redoing", error));
+      .then(changes => dispatch(receiveUndo(changes)))
+      .catch(error => console.log("error redoing", error))
+      .then(() => dispatch(findCharacters()));
   };
 }
 
