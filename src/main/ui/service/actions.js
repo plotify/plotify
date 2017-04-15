@@ -126,7 +126,7 @@ export function createCharacter() {
     dispatch(requestCharacter());
     return sendToModel(CREATE_CHARACTER)
       .then(uuid => {
-        dispatch(showMessage("Charakter erfolgreich erstellt"));
+        dispatch(showMessage("Neuer Charakter erfolgreich erstellt."));
         return Promise.resolve(uuid);
       })
       .then(uuid => {
@@ -172,7 +172,7 @@ export function updateCharacter(characterId, changeType, typeId, name) {
         return Promise.resolve(uuid);
       })
       .then((uuid) => {
-        dispatch(showMessage("Charakter erfolgreich geändert"));
+        dispatch(showMessage("Änderungen erfolgreich gespeichert."));
         return Promise.resolve(uuid);
       })
       .then(uuid => {
