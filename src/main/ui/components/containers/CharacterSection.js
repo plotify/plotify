@@ -2,6 +2,7 @@ import React from "react";
 import VisibleCharacterList from "./VisibleCharacterList";
 import VisibleProfile from "./VisibleProfile";
 import {
+  canUndoCharacterChange,
   deselectCharacter, findCharacters, selectCharacter, setFilter,
   updateSelectedCharacter
 } from "../../service/actions";
@@ -61,6 +62,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onSelect: (character) => {
       dispatch(selectCharacter(character));
+      dispatch(canUndoCharacterChange(character.id));
     },
     onDeselect: () => {
       dispatch(deselectCharacter());

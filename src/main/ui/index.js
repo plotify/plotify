@@ -86,7 +86,7 @@ injectTapEventPlugin();
 let middleware;
 
 if (isDev) {
-  middleware = applyMiddleware(thunkMiddleware);
+  middleware = applyMiddleware(thunkMiddleware, logger);
 } else {
   middleware = applyMiddleware(thunkMiddleware);
 }

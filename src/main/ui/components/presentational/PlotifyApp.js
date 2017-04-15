@@ -107,7 +107,6 @@ export default class PlotifyApp extends React.Component {
         break;
     }
 
-
     return (
       <div id="PlotifyApp">
         <AppBar
@@ -121,7 +120,10 @@ export default class PlotifyApp extends React.Component {
 
           <Toolbar style={styles.appBar.toolbar}>
             <ToolbarGroup>
-              <IconButton tooltip="Rückgängig">
+              <IconButton
+                tooltip="Rückgängig"
+                disabled={!this.props.canUndo}
+                onTouchTap={() => this.props.onUndoCharacterChange(this.props.characterId)}>
                 <ContentUndo color="white"/>
               </IconButton>
               <IconButton tooltip="Wiederherstellen">

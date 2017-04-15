@@ -23,6 +23,10 @@ export const DELETE_CHARACTER = "DELETE_CHARACTER";
 export const UNDO = "UNDO";
 export const REDO = "REDO";
 export const REQUEST_CHARACTER = "REQUEST_CHARACTER";
+export const REQUEST_UNDO = "REQUEST_UNDO";
+export const RECEIVE_UNDO = "RECEIVE_UNDO";
+export const REQUEST_CAN_UNDO = "REQUEST_CAN_UNDO";
+export const RECEIVE_CAN_UNDO = "RECEIVE_CAN_UNDO";
 
 //---- STORY
 export const REQUEST_STORY = "REQUEST_STORY";

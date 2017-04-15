@@ -2,33 +2,31 @@ import {
   CHANGE_SECTION,
   CLOSE_MSG,
   DESELECT_CHARACTER,
+  RECEIVE_CAN_UNDO,
   RECEIVE_CHARACTERS,
   RECEIVE_STORY,
+  RECEIVE_UNDO,
+  REQUEST_CAN_UNDO,
   REQUEST_CHARACTER,
   REQUEST_CHARACTERS,
   REQUEST_STORY,
+  REQUEST_UNDO,
   SELECT_CHARACTER,
   SET_FILTER,
+  SET_SAVING_TYPE,
   SHOW_ERROR_MSG,
   SHOW_MSG,
-  SHOW_SUCCESS_MSG, SET_SAVING_TYPE
+  SHOW_SUCCESS_MSG
 } from "./action-types";
 import {sendToModel} from "../../shared/commons/ipc";
 import {
+  CAN_UNDO_CHARACTER_CHANGE,
   CREATE_CHARACTER,
   FIND_CHARACTERS,
-  UPDATE_CHARACTER,
-  CAN_UNDO_CHARACTER_CHANGE,
   UNDO_CHARACTER_CHANGE,
-  CAN_REDO_CHARACTER_CHANGE,
-  REDO_CHARACTER_CHANGE
+  UPDATE_CHARACTER
 } from "../../shared/characters/ipc-channels";
-import {
-  CLOSE_STORY,
-  CREATE_STORY,
-  OPEN_STORY,
-  OPEN_STORY_DIALOG
-} from "../../shared/stories/ipc-channels";
+import {CLOSE_STORY, CREATE_STORY, OPEN_STORY, OPEN_STORY_DIALOG} from "../../shared/stories/ipc-channels";
 import ChangeType from "../../shared/characters/change-type";
 import Sections from "../constants/sections";
 import path from "path";
@@ -131,7 +129,7 @@ export function createCharacter() {
     const defaultName = "";
     dispatch(requestCharacter());
     return sendToModel(CREATE_CHARACTER)
-      .then((uuid) => sendToModel(UPDATE_CHARACTER,
+      .then(uuid => sendToModel(UPDATE_CHARACTER,
         {
           characterId: uuid,
           type: ChangeType.CHARACTER,
@@ -140,14 +138,21 @@ export function createCharacter() {
             name: defaultName
           }
         }))
-      // {id: uuid, name: "Neuer Charakter", deleted: false}))
-      .then((uuid) => {
-        const msg = "Charakter erfolgreich erstellt";
-        console.log(msg, uuid);
-        dispatch(showMessage(msg));
+      .then(uuid => {
+        dispatch(showMessage("Charakter erfolgreich erstellt"));
+        return Promise.resolve(uuid);
+      })
+      .then(uuid => {
         dispatch(findCharacters());
+        return Promise.resolve(uuid);
+      })
+      .then(uuid => {
+        dispatch(canUndoCharacterChange(uuid));
+        return Promise.resolve(uuid);
+      })
+      .then(uuid => {
         dispatch(selectCharacter({id: uuid, name: defaultName}));
-        // dispatch(getCharacterById(uuid));
+        return Promise.resolve(uuid);
       })
       .catch((error) => console.log(error));
   };
@@ -167,8 +172,8 @@ export function updateCharacter(characterId, changeType, typeId, name) {
         }
       })
       .then(typeId => (console.log("Typ erfolgreich geändert", typeId)))
-      .then(dispatch(showMessage("Charakter erfolgreich geändert")))
-      .then(dispatch(setSavingType(SavingType.SUCCESS)));
+      .then(() => dispatch(showMessage("Charakter erfolgreich geändert")))
+      .then(() => dispatch(setSavingType(SavingType.SUCCESS)));
   };
 }
 
@@ -187,17 +192,59 @@ export function receiveCharacters(characters) {
 }
 
 export function findCharacters(filter = "") {
-  console.log("findCharacters()");
   return function (dispatch) {
     dispatch(requestCharacters());
     return sendToModel(FIND_CHARACTERS, {deleted: false, filter})
-      .then(characters => {
-        console.log("FOUND CHARACTERS", characters);
-        dispatch(receiveCharacters(characters));
-      }).catch(error => {
-          console.log("Could not find characters: ", error);
-        }
-      );
+      .then(characters => dispatch(receiveCharacters(characters)))
+      .catch(error => console.log("Could not find characters: ", error));
+  };
+}
+
+export function requestCanUndo() {
+  console.log("REQUESTING: UNDO ");
+  return {
+    type: REQUEST_CAN_UNDO,
+  };
+}
+
+export function receiveCanUndo(canUndo) {
+  return {
+    type: RECEIVE_CAN_UNDO,
+    payload: canUndo
+  };
+}
+
+export function canUndoCharacterChange(id = "") {
+  return function (dispatch) {
+    dispatch(requestCanUndo());
+    return sendToModel(CAN_UNDO_CHARACTER_CHANGE, id)
+      .then(canUndo => dispatch(receiveCanUndo(canUndo)))
+      .then(canUndo => console.log("can undo?", canUndo, "for", id));
+  };
+}
+
+export function requestUndo() {
+  return {
+    type: REQUEST_UNDO
+  };
+}
+
+export function receiveUndo(changes) {
+  return {
+    type: RECEIVE_UNDO,
+    payload: changes,
+  };
+}
+
+export function undoCharacterChange(id = "") {
+  console.log("UNDOING CHANGES FOR ", id);
+  return (dispatch) => {
+    dispatch(requestUndo());
+    return sendToModel(UNDO_CHARACTER_CHANGE, id)
+      .then(changes => dispatch(updateSelectedCharacter(changes)))
+      .then(changes => dispatch(canUndoCharacterChange(id)))
+      .then(changes => dispatch(receiveUndo(changes)))
+      .catch(error => console.log("error undoing", error));
   };
 }
 
@@ -226,136 +273,10 @@ export function createStory() {
         const scsMessage = "Deine Geschichte wurde erfolgreich erstellt. ";
         dispatch(showSuccessMessage(scsMessage, true));
         dispatch(openStory(file))
-          .then(() => sendToModel(CREATE_CHARACTER))
-          .then(uuid => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: uuid,
-              type: ChangeType.CHARACTER,
-              typeId: uuid,
-              changes: {
-                name: "Erika"
-              }
-            }))
-          .then(uuid => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: uuid,
-              type: ChangeType.CHARACTER,
-              typeId: uuid,
-              changes: {
-                name: "Erika Musterfrau"
-              }
-            }))
-          /*.then(uuid => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: uuid,
-              type: ChangeType.CHARACTER,
-              typeId: uuid,
-              changes: {
-                name: "Erika Mustermann"
-              }
-            }))
-          .then(characterId => sendToModel(UNDO_CHARACTER_CHANGE, characterId))
-          .then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
-          .then(content => sendToModel(REDO_CHARACTER_CHANGE, content.id))
-          .then(content => sendToModel(REDO_CHARACTER_CHANGE, content.id))*/
-          //.then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
-          //.then(content => sendToModel(REDO_CHARACTER_CHANGE, content.id))
-          //.then(content => sendToModel(REDO_CHARACTER_CHANGE, content.id))
-          .catch(error => console.log(error))
-          //.then(canRedo => console.log("can redo? " + canRedo))
-          /*.then(uuid => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: uuid,
-              type: ChangeType.CHARACTER,
-              typeId: uuid,
-              changes: {
-                name: "Max"
-              }
-            }))
-          .then(uuid => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: uuid,
-              type: ChangeType.CHARACTER,
-              typeId: uuid,
-              changes: {
-                name: "Maxmilian"
-              }
-            }))
-          .then(uuid => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: uuid,
-              type: ChangeType.CHARACTER,
-              typeId: uuid,
-              changes: {
-                name: "Maxmilian Mustermann"
-              }
-            }))
-          .then(uuid => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: uuid,
-              type: ChangeType.CHARACTER,
-              typeId: uuid,
-              changes: {
-                name: "Maxmilian von Mustermann"
-              }
-            }))
-          .then(uuid => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: uuid,
-              type: ChangeType.CHARACTER,
-              typeId: uuid,
-              changes: {
-                name: "Maxmilian von Müller"
-              }
-            }))
-          .then(characterId => sendToModel(UNDO_CHARACTER_CHANGE, characterId))
-          .then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
-          .then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
-          .then(content => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: content.id,
-              type: ChangeType.CHARACTER,
-              typeId: content.id,
-              changes: {
-                name: "Maxmilian Meier"
-              }
-            }))*/
-          /*.then(uuid => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: uuid,
-              type: ChangeType.CHARACTER,
-              typeId: uuid,
-              changes: {
-                name: "Erika"
-              }
-            }))
-          .then(uuid => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: uuid,
-              type: ChangeType.CHARACTER,
-              typeId: uuid,
-              changes: {
-                name: "Erika Musterfrau"
-              }
-            }))
-          .then(characterId => sendToModel(UNDO_CHARACTER_CHANGE, characterId))
-          .then(content => sendToModel(UPDATE_CHARACTER,
-            {
-              characterId: content.id,
-              type: ChangeType.CHARACTER,
-              typeId: content.id,
-              changes: {
-                name: "Erika Müller"
-              }
-            }))*/
-          //.then(content => sendToModel(UNDO_CHARACTER_CHANGE, content.id))
-          //.then(content => console.log(content))
-          //.then(characterId => sendToModel(CAN_UNDO_CHARACTER_CHANGE, characterId))
-          //.then(canUndo => console.log("can undo? " + canUndo))
           .then(() => console.log("Opened and character created."))
           .then(() => dispatch(findCharacters()))
           .then(() => dispatch(changeSection(Sections.CHARACTER)))
-          .then(dispatch(sectionIsLoading(false)));
+          .then(() => dispatch(sectionIsLoading(false)));
       });
   };
 }
@@ -367,19 +288,14 @@ export function openStory(file) {
     return sendToModel(CLOSE_STORY)
       .then(() => sendToModel(OPEN_STORY, file))
       .then((file) => {
-
-        console.log("Story opened: ", file);
         dispatch(receiveStory(file));
-
         /* jslint browser: true */
         document.title = path.basename(file, ".story") + " - Plotify";
-
       })
       .catch(error => {
         dispatch(sectionIsLoading(false));
         const message = "Could not create or open story: " + error;
-        console.log(message);
-        dispatch(showErrorMessage(message));
+        dispatch(showMessage(message));
       });
   };
 }

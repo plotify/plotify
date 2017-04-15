@@ -3,15 +3,19 @@ import {
   CHANGE_SECTION,
   CLOSE_MSG,
   DESELECT_CHARACTER,
+  RECEIVE_CAN_UNDO,
   RECEIVE_CHARACTERS,
   RECEIVE_STORY,
+  RECEIVE_UNDO,
+  REQUEST_CAN_UNDO,
   REQUEST_STORY,
+  REQUEST_UNDO,
   SELECT_CHARACTER,
   SET_FILTER,
+  SET_SAVING_TYPE,
   SHOW_ERROR_MSG,
   SHOW_MSG,
-  SHOW_SUCCESS_MSG,
-  SET_SAVING_TYPE
+  SHOW_SUCCESS_MSG
 } from "./action-types";
 import {combineReducers} from "redux";
 import Pages from "../constants/sections";
@@ -120,6 +124,21 @@ function story(state = "", action) {
   }
 }
 
+function history(state = {undo: {isAvailable: false, changes: {}}}, action) {
+  switch (action.type) {
+    case REQUEST_CAN_UNDO:
+      return state;
+    case RECEIVE_CAN_UNDO:
+      return Object.assign(state, {undo: {isAvailable: action.payload}});
+    case RECEIVE_UNDO:
+      return Object.assign(state, {undo: {changes: action.payload}});
+    case REQUEST_UNDO:
+      return state;
+    default:
+      return state;
+  }
+}
+
 export const combinedReducer = combineReducers({
   currentSection,
   characters,
@@ -129,4 +148,5 @@ export const combinedReducer = combineReducers({
   communications,
   selectedCharacter,
   message,
+  history,
 });

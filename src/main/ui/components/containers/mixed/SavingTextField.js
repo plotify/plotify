@@ -1,12 +1,8 @@
-import React, {PropTypes} from "react";
+import React from "react";
 import TextField from "material-ui/TextField";
-import Paper from "material-ui/Paper";
-import {palette, spacing} from "../../../themes/PlotifyMainTheme";
-import ChangeType from "../../../../shared/characters/change-type";
 import {connect} from "react-redux";
-import {updateCharacter} from "../../../service/actions";
+import {canUndoCharacterChange, updateCharacter} from "../../../service/actions";
 
-// TODO in übergelagerte Komponente auslagern
 const mapStateToProps = (state) => {
   return {
     characterId: state.selectedCharacter.id,
@@ -15,6 +11,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onCanUndo: (id) => {
+      dispatch(canUndoCharacterChange(id));
+    },
     onSave: (characterId, changeType, typeId, name) => {
       dispatch(updateCharacter(characterId, changeType, typeId, name));
     }
@@ -28,7 +27,6 @@ class SavingTextField extends React.Component {
   }
 
   componentDidMount() {
-    console.log("FIELD UPDATE FOCUSSED?", this.props.focussed);
     if (this.props.focussed) {
       this.input.focus();
     }
@@ -41,6 +39,7 @@ class SavingTextField extends React.Component {
       this.props.changeType,
       this.props.typeId,
       this.props.value);
+    this.props.onCanUndo(this.props.characterId);
   }
 
   render() {
