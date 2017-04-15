@@ -3,6 +3,7 @@ import TextField from "material-ui/TextField";
 import Paper from "material-ui/Paper";
 import {palette, spacing} from "../../themes/PlotifyMainTheme";
 import SavingTextField from "../containers/mixed/SavingTextField";
+import ChangeType from "../../../shared/characters/change-type";
 
 const styles = {
   position: "absolute",
@@ -57,66 +58,45 @@ export default class Profile extends React.Component {
   render() {
     return (
       <div id="CharacterDetails" style={styles}>
-        <div id="Attributes" style={styles.attributes}>
+        {this.props.character.id &&
+        <div>
+          <div id="Attributes" style={styles.attributes}>
 
-          <Paper style={styles.panel} zDepth={1}>
-            <TextField
-              floatingLabelText="Alter"
-              defaultValue="37"
-              fullWidth={true}
-            />
-            <TextField
-              floatingLabelText="Größe"
-              defaultValue="1,80 m"
-              fullWidth={true}
-            />
-            <TextField
-              floatingLabelText="Gewicht"
-              defaultValue="95 kg"
-              fullWidth={true}
-            />
-            <TextField
-              floatingLabelText="Körperbau"
-              defaultValue="Füllig"
-              fullWidth={true}
-            />
-            <TextField
-              floatingLabelText="Gesicht"
-              defaultValue="Ernster Blick, kantige Gesichtszüge"
-              fullWidth={true}
-            />
-          </Paper>
+            <Paper style={styles.panel} zDepth={1}>
+              <TextField
+                hintText=""
+                floatingLabelText="Hello World"
+                fullWidth={true}
+              />
+              <TextField
+                hintText=""
+                floatingLabelText="Lorem Ipsum"
+                fullWidth={true}
+              />
+            </Paper>
+          </div>
 
-          <Paper style={styles.panel} zDepth={1}>
-            <TextField
-              hintText=""
-              floatingLabelText="Hello World"
-              fullWidth={true}
-            />
-            <TextField
-              hintText=""
-              floatingLabelText="Lorem Ipsum"
-              fullWidth={true}
+          <Paper style={styles.toolbar} zDepth={2} rounded={false}>
+            <SavingTextField
+              focussed={true}
+              changeType={ChangeType.CHARACTER}
+              typeId={this.props.character.id}
+              floatingLabelText="Name"
+              value={this.props.character.name}
+              onChange={this.handleCharacterNameChange}
+              style={styles.toolbar.textField}
+              floatingLabelStyle={styles.toolbar.textField.colors}
+              floatingLabelFocusStyle={styles.toolbar.textField.colors}
+              underlineFocusStyle={styles.toolbar.textField.colors}
+              underlineStyle={styles.toolbar.textField.colors}
+              hintStyle={styles.toolbar.textField.colors}
+              inputStyle={styles.toolbar.textField.colors}
             />
           </Paper>
         </div>
-
-        <Paper style={styles.toolbar} zDepth={2} rounded={false}>
-          <SavingTextField
-            floatingLabelText="Name"
-            value={this.props.character.name}
-            onChange={this.handleCharacterNameChange}
-            style={styles.toolbar.textField}
-            floatingLabelStyle={styles.toolbar.textField.colors}
-            floatingLabelFocusStyle={styles.toolbar.textField.colors}
-            underlineFocusStyle={styles.toolbar.textField.colors}
-            underlineStyle={styles.toolbar.textField.colors}
-            hintStyle={styles.toolbar.textField.colors}
-            inputStyle={styles.toolbar.textField.colors}
-          />
-        </Paper>
-
+        }
       </div>
+
     );
   }
 }

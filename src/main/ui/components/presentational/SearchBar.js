@@ -94,7 +94,7 @@ export default class SearchBar extends React.Component {
           />
           <TextField
             className="marginTransition"
-            ref="input"
+            ref={(input) => {this.input = input}}
             hintText="Suche"
             onFocus={this.focus}
             onBlur={this.blur}

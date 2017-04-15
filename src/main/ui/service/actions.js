@@ -115,6 +115,7 @@ export function updateSelectedCharacter(character) {
 
 export function createCharacter() {
   return function (dispatch) {
+    const defaultName = "";
     dispatch(requestCharacter());
     return sendToModel(CREATE_CHARACTER)
       .then((uuid) => sendToModel(UPDATE_CHARACTER,
@@ -123,7 +124,7 @@ export function createCharacter() {
           type: ChangeType.CHARACTER,
           typeId: uuid,
           changes: {
-            name: "Neuer Charakter"
+            name: defaultName
           }
         }))
       // {id: uuid, name: "Neuer Charakter", deleted: false}))
@@ -132,7 +133,7 @@ export function createCharacter() {
         console.log(msg, uuid);
         dispatch(showMessage(msg));
         dispatch(findCharacters());
-        dispatch(selectCharacter({id: uuid}));
+        dispatch(selectCharacter({id: uuid, name: defaultName}));
         // dispatch(getCharacterById(uuid));
       })
       .catch((error) => console.log(error));

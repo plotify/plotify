@@ -7,12 +7,16 @@ import SearchBar from "./SearchBar";
 import PlotifyMainTheme, {palette, spacing} from "../../themes/PlotifyMainTheme";
 
 const styles = {
-  list: {
+  wrapper: {
     zIndex: 3,
     position: "relative",
     height: "100%",
     backgroundColor: "white",
+  },
+  list : {
     overflowY: "auto",
+    position: "relative",
+    height: "95%",
   },
   characterItem: {
     letterAvatar: {
@@ -38,12 +42,12 @@ const styles = {
 export default class CharacterList extends React.Component {
   render() {
     return (
-      <div id="CharacterList" style={styles.list}>
+      <div id="CharacterList" style={styles.wrapper}>
         <SearchBar
           onSetFilter={(filter) => this.props.onSetFilter(filter)}
         />
 
-        <List>
+        <List style={styles.list}>
           {
             this.props.characters.length === 0 &&
             <ListItem

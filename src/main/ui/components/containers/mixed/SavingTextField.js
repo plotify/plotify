@@ -27,19 +27,27 @@ class SavingTextField extends React.Component {
     this.blur = this.blur.bind(this);
   }
 
+  componentDidMount() {
+    console.log("FIELD UPDATE FOCUSSED?", this.props.focussed);
+    if (this.props.focussed) {
+      this.input.focus();
+    }
+  }
+
   blur() {
-    this.refs.input.blur();
+    this.input.blur();
     this.props.onSave(
       this.props.characterId,
-      ChangeType.CHARACTER,
-      this.props.characterId,
+      this.props.changeType,
+      this.props.typeId,
       this.props.value);
   }
 
   render() {
+
     return (
       <TextField
-        ref="input"
+        ref={(input) => {this.input = input}}
         floatingLabelText={this.props.floatingLabelText}
         value={this.props.value}
         onChange={this.props.onChange}
