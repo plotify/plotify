@@ -10,7 +10,7 @@ export function getTypeTable(type) {
     case ChangeType.ENTRY:
       return "entry";
     default:
-      throw new Error("Unknown type.");
+      throw new Error("Unknown type: " + type);
   }
 }
 
@@ -23,7 +23,7 @@ export function getTypeHistoryTable(type) {
     case ChangeType.ENTRY:
       return "entry_history";
     default:
-      throw new Error("Unknown type.");
+      throw new Error("Unknown type: " + type);
   }
 }
 
