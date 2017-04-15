@@ -126,18 +126,8 @@ export function updateSelectedCharacter(character) {
 
 export function createCharacter() {
   return function (dispatch) {
-    const defaultName = "";
     dispatch(requestCharacter());
     return sendToModel(CREATE_CHARACTER)
-      .then(uuid => sendToModel(UPDATE_CHARACTER,
-        {
-          characterId: uuid,
-          type: ChangeType.CHARACTER,
-          typeId: uuid,
-          changes: {
-            name: defaultName
-          }
-        }))
       .then(uuid => {
         dispatch(showMessage("Charakter erfolgreich erstellt"));
         return Promise.resolve(uuid);
@@ -151,7 +141,7 @@ export function createCharacter() {
         return Promise.resolve(uuid);
       })
       .then(uuid => {
-        dispatch(selectCharacter({id: uuid, name: defaultName}));
+        dispatch(selectCharacter({id: uuid, name: ""}));
         return Promise.resolve(uuid);
       })
       .catch((error) => console.log(error));
