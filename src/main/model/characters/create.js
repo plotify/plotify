@@ -77,13 +77,18 @@ export function createDefaultProfile(characterId) {
                                   " (character_id, id, presence_history_id)         " +
                                   " VALUES (?, ?, ?)                                ";
 
+    let insertGroupHistoryStmt;
+    let insertGroupStmt;
+    let insertEntryHistoryStmt;
+    let insertEntryStmt;
+
     beginTransaction()
       .then(() => new Promise((resolve, reject) => {
 
-        const insertGroupHistoryStmt = db.prepare(insertGroupHistorySql);
-        const insertGroupStmt = db.prepare(insertGroupSql);
-        const insertEntryHistoryStmt = db.prepare(insertEntryHistorySql);
-        const insertEntryStmt = db.prepare(insertEntrySql);
+        insertGroupHistoryStmt = db.prepare(insertGroupHistorySql);
+        insertGroupStmt = db.prepare(insertGroupSql);
+        insertEntryHistoryStmt = db.prepare(insertEntryHistorySql);
+        insertEntryStmt = db.prepare(insertEntrySql);
 
         for (let index = 0; index < defaultProfile.length; index++) {
           handleGroup(characterId, defaultProfile[index], index,
@@ -93,7 +98,13 @@ export function createDefaultProfile(characterId) {
 
       }))
       .then(() => endTransaction())
-      .then(() => resolve())
+      .then(() => {
+        insertGroupHistoryStmt.finalize();
+        insertGroupStmt.finalize();
+        insertEntryHistoryStmt.finalize();
+        insertEntryStmt.finalize();
+        resolve();
+      })
       .catch(error => {
         rollbackTransaction()
           .then(() => reject(error))
