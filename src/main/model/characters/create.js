@@ -44,7 +44,7 @@ const defaultProfile = [
   },
   {
     title: "Aussehen",
-    entries: ["Haare", "Augen", "Kleidung", "Schmuck", "immer dabei"]
+    entries: ["Haare", "Augen", "Kleidung", "Schmuck", "Immer dabei"]
   },
   {
     title: "Auftreten",
