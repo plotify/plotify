@@ -1,4 +1,4 @@
-import electron from "electron";
+import electron, { dialog } from "electron";
 import path from "path";
 import url from "url";
 import isDev from "electron-is-dev";
@@ -59,6 +59,25 @@ function createWindow() {
       slashes: true
     }));
 
+    mainWindow.on("close", event => {
+
+      const options = {
+        type: "question",
+        title: "Plotify beenden",
+        message: "Möchtest du Plotify wirklich beenden?",
+        buttons: ["Plotify beenden", "Abbrechen"],
+        defaultId: 0,
+        cancelId: 1
+      };
+
+      const result = dialog.showMessageBox(options);
+
+      if (result !== 0) {
+        event.preventDefault();
+      }
+
+    });
+
     mainWindow.on("closed", () => {
       saveMainWindowPreferences(mainWindowBounds, mainWindowMaximized);
       mainWindow = null;
@@ -89,14 +108,31 @@ app.on("activate", () => {
   }
 });
 
+const waitInSeconds = 5;
+let quitAfterWait = false;
 app.on("will-quit", (event) => {
-  if (getConnection() !== null) {
+  if (!quitAfterWait) {
+
+    console.log("Wait ", waitInSeconds, " seconds before the application exits...");
     event.preventDefault();
-    closeStory()
-      .then(() => app.quit())
-      .catch(() => {
-        setConnection(null);
-        app.quit();
-      });
+
+    setTimeout(() => {
+
+      quitAfterWait = true;
+
+      if (getConnection() !== null) {
+        closeStory()
+          .then(() => { app.quit(); })
+          .catch(() => {
+            setConnection(null);
+            app.quit();
+          });
+      }
+
+    }, waitInSeconds * 1000);
   }
+});
+
+app.on("quit", () => {
+  console.log("Exit application.");
 });

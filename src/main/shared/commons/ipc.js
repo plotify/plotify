@@ -25,8 +25,14 @@ export function sendToModel(channel, args) {
 }
 
 export function sendCallback(originEvent, originPayload, result = undefined, successful = true) {
-  originEvent.sender.send(originPayload.callbackChannel, {
-    successful: successful,
-    result: result
-  });
+  try {
+    originEvent.sender.send(originPayload.callbackChannel, {
+      successful: successful,
+      result: result
+    });
+  } catch (error) {
+    if (error.message !== "Object has been destroyed") {
+      console.log("Could not send callback: ", error);
+    }
+  }
 }
