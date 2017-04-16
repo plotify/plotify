@@ -47,13 +47,7 @@ class MixedWelcomeSection extends React.Component {
   render() {
     return (
       <div style={styles.wrapper}>
-
-        <div style={{fontFamily: PlotifyMainTheme.fontFamily, padding: spacing.iconSize}}>
-          <h1>Schreibe eine wundervolle Geschichte</h1>
-        </div>
-
         <div style={styles.paperWrapper}>
-
           <HoveringPaper
             onTouchTap={this.createStory}
             background="resources/icons/material-new.png"
@@ -62,7 +56,6 @@ class MixedWelcomeSection extends React.Component {
             onTouchTap={this.props.onOpenStory}
             background="resources/icons/material-open.png"
             title="Geschichte öffnen"/>
-
         </div>
       </div>
     );

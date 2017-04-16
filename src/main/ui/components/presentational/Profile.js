@@ -70,7 +70,11 @@ export default class Profile extends React.Component {
             {
               this.props.profile && this.props.profile.map((group, groupIndex) => {
                 return <Paper style={styles.panel} zDepth={1} key={group.id}>
-                  <h1>{group.title}</h1>
+                  <h1 style={{
+                    fontSize: spacing.desktopGutterLess + 4,
+                    color: palette.primary1Color
+                  }}
+                  >{group.title}</h1>
                   {group.entries.map((entry, entryIndex) => {
                     return <SavingTextField
                       key={entry.id}
