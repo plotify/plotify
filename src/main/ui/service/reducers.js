@@ -1,7 +1,6 @@
 import {
   ADD_CHARACTER,
   CHANGE_SECTION,
-  CLEAR_CHARACTERS,
   CLOSE_MSG,
   DESELECT_CHARACTER,
   RECEIVE_CAN_REDO,
@@ -110,18 +109,26 @@ function characters(state = [], action) {
   }
 }
 
-function selectedCharacter(state = {id: null, newCharacter: false}, action) {
+function profile(state = [], action) {
   switch (action.type) {
     case UPDATE_UI_PROFILE:
-      let stateCopy = Object.assign({}, state);
-      stateCopy.profile[action.payload.groupIndex]
-        .entries[action.payload.entryIndex]
+      let stateCopy = Object.assign([], state);
+      stateCopy.find((profile) => {
+        return profile.id === action.payload.group_id;
+      }).entries[action.payload.position]
         .value = action.payload.value;
       return stateCopy;
     case REQUEST_PROFILE:
-      return Object.assign({}, state);
+      return Object.assign([], state);
     case RECEIVE_PROFILE:
-      return Object.assign({}, state, {profile: action.payload})
+      return action.payload;
+    default:
+      return state;
+  }
+}
+
+function selectedCharacter(state = {id: null, newCharacter: false}, action) {
+  switch (action.type) {
 
     case SELECT_CHARACTER:
       return Object.assign({}, state, action.payload, {newCharacter: false});
@@ -185,4 +192,5 @@ export const combinedReducer = combineReducers({
   selectedCharacter,
   message,
   history,
+  profile,
 });

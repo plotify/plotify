@@ -49,6 +49,7 @@ class MixedCharacterSection extends React.Component {
         <div style={styles.columns.col3}>
           <Profile
             character={this.props.selectCharacter}
+            profile={this.props.profile}
             onUpdateSelectedCharacter={this.props.onUpdateSelectedCharacter}
             onUpdateProfileEntry={this.props.onUpdateProfileEntry}/>
         </div>
@@ -61,6 +62,7 @@ const mapStateToProps = (state) => {
   return {
     isLoading: state.isLoading,
     selectCharacter: state.selectedCharacter,
+    profile: state.profile,
   }
 };
 

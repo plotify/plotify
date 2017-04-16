@@ -1,5 +1,4 @@
 import React from "react";
-import TextField from "material-ui/TextField";
 import Paper from "material-ui/Paper";
 import {palette, spacing} from "../../themes/PlotifyMainTheme";
 import SavingTextField from "../containers/mixed/SavingTextField";
@@ -55,19 +54,21 @@ export default class Profile extends React.Component {
     this.props.onUpdateSelectedCharacter({id: this.props.character.id, name: value});
   }
 
-  handleProfileEntryChange(entryId, value, groupIndex, entryIndex) {
+  handleProfileEntryChange(entryId, value, groupIndex, entryIndex, groupId) {
     console.log("CHANGING PROFILE:", entryId, value);
-    this.props.onUpdateProfileEntry({id: entryId, value, groupIndex, entryIndex});
+    this.props.onUpdateProfileEntry(
+      {id: entryId, value, groupIndex, position: entryIndex, group_id: groupId});
   }
 
   render() {
+    console.log("PROFILE", this.props.profile);
     return (
       <div id="CharacterDetails" style={styles}>
         {this.props.character.id &&
         <div>
           <div id="Attributes" style={styles.attributes}>
             {
-              this.props.character.profile && this.props.character.profile.map((group, groupIndex) => {
+              this.props.profile && this.props.profile.map((group, groupIndex) => {
                 return <Paper style={styles.panel} zDepth={1} key={group.id}>
                   <h1>{group.title}</h1>
                   {group.entries.map((entry, entryIndex) => {
@@ -75,7 +76,7 @@ export default class Profile extends React.Component {
                       key={entry.id}
                       initialValue={entry.value}
                       changeType={ChangeType.ENTRY}
-                      onChange={(event) => this.handleProfileEntryChange(entry.id, event.target.value, groupIndex, entryIndex)}
+                      onChange={(event) => this.handleProfileEntryChange(entry.id, event.target.value, groupIndex, entryIndex, group.id)}
                       typeId={entry.id}
                       hintText=""
                       floatingLabelText={entry.title}

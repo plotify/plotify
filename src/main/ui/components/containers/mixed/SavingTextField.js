@@ -53,7 +53,9 @@ class SavingTextField extends React.Component {
       if (this.props.changeType === ChangeTypes.CHARACTER) {
         changes = {name: this.props.value};
       } else {
-        changes = {value: this.props.value};
+        changes = {
+          value: this.props.value
+        };
       }
 
       this.props.onSave(
