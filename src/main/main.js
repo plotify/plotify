@@ -10,6 +10,12 @@ import { closeStory } from "./model/stories/close";
 import "./model/index";
 
 const app = electron.app;
+
+if(require("electron-squirrel-startup")) {
+  app.quit();
+}
+
+
 const BrowserWindow = electron.BrowserWindow;
 
 let mainWindow;
@@ -127,6 +133,8 @@ app.on("will-quit", (event) => {
             setConnection(null);
             app.quit();
           });
+      } else {
+        app.quit();
       }
 
     }, waitInSeconds * 1000);

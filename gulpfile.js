@@ -273,12 +273,12 @@ gulp.task("installer:windows", () => {
   let result = electronInstaller.createWindowsInstaller({
     appDirectory: paths.build.packaged + "/plotify-win32-x64",
     outputDirectory: paths.installers + "/windows",
-    authors: "alpha",
+    authors: "Sebastian Schmidt und Jasper Meyer",
     exe: "Plotify.exe",
     noMsi: true,
     icon: paths.icons + "/64.ico",
     setupIcon: paths.icons + "/64.ico",
-    iconUrl: "https://alpha.suhail.uberspace.de/releases/assets/64.ico"
+    iconUrl: "https://github.com/SebastianSchmidt/plotify/blob/master/src/main/ui/resources/app-icons/64.ico"
   });
   return result.then(() => {
     console.log("Successfully created Windows Installer!");
