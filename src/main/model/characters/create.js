@@ -40,7 +40,7 @@ const defaultProfile = [
   },
   {
     title: "Physis",
-    entries: ["Alter", "Größe", "Gewicht", "Körperbau", "Gesicht"]
+    entries: ["Alter", "Größe", "Gewicht", "Körperbau", "Gesicht", "Gesundheit"]
   },
   {
     title: "Aussehen",
