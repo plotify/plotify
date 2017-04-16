@@ -40,43 +40,34 @@ const defaultProfile = [
   },
   {
     title: "Physis",
-    entries: ["Alter", "Größe", "Gewicht", "Körperbau", "Gesicht", "Gesundheit"]
+    entries: ["Alter", "Größe", "Geschlecht", "Gewicht", "Gestalt & Körperbau", "Gesundheit",
+              "Besondere körperliche Merkmale"]
   },
   {
     title: "Aussehen",
-    entries: ["Haare", "Augen", "Kleidung", "Schmuck", "Immer dabei"]
+    entries: ["Gesicht", "Augen", "Haare", "Bart", "Kleidung", "Schmuck",
+              "Besondere äußerliche Merkmale"]
   },
   {
     title: "Auftreten",
-    entries: ["Körperhaltung", "Charakter", "Wirkung", "Rolle"]
-  },
-  {
-    title: "Innere Eigenschaften",
-    entries: ["Charakter", "Interessen", "Abneigungen", "Moral"]
-  },
-  {
-    title: "Zukunft",
-    entries: ["Träume und Wünsche", "Ziele"]
-  },
-  {
-    title: "Innerer Konflikt",
-    entries: ["Beschreibung"]
+    entries: ["Ausstrahlung", "Körperhaltung", "Stimme", "Immer dabei"]
   },
   {
     title: "Gesellschaft",
     entries: ["Herkunft", "Sprache", "Wohnort", "Beruf", "Stand"]
   },
   {
-    title: "Veränderungen",
-    entries: ["Kindheit", "Jugend", "Erwachsenenalter"]
+    title: "Innere Eigenschaften",
+    entries: ["Charakter", "Interessen", "Abneigungen", "Moral", "Träume & Wünsche", "Ziele",
+              "Innerer Konflikt"]
   },
   {
-    title: "Fähigkeiten",
-    entries: ["Beschreibung"]
+    title: "Veränderungen",
+    entries: ["Kindheit", "Jugend", "Erwachsenenalter", "Hohes Alter"]
   },
   {
     title: "Sonstiges",
-    entries: ["Anmerkungen"]
+    entries: ["Fähigkeiten", "Anmerkungen"]
   }
 ];
 
