@@ -3,10 +3,42 @@
 Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft,
 die Charaktere deiner Geschichte zu planen und zu organisieren.
 Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
-Hinweis: Plotify befindet sich noch in der ersten Entwicklungsphase.
-Eine erste Testversion wird bald veröffentlicht.
 
 ![Screenshot von Plotify](docs/screenshot.png)
+
+
+## Download
+
+Lade dir Plotify kostenlos für dein Betriebssystem herunter:
+
+<table>
+    <tr>
+        <td align="center" width="50%">
+            <a href="https://github.com/SebastianSchmidt/plotify/releases/download/v0.1.0/plotify-0.1.0-x64.exe">
+                <img src="docs/windows-logo.png" />
+            </a>
+         </td>
+        <td align="center" width="50%">
+            <a href="https://github.com/SebastianSchmidt/plotify/releases/download/v0.1.0/plotify-0.1.0-amd64.deb">
+                <img src="docs/linux-logo.png" />
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/SebastianSchmidt/plotify/releases/download/v0.1.0/plotify-0.1.0-x64.exe">
+                <b>Windows</b><br />
+                Windows 7, 8, 10
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://github.com/SebastianSchmidt/plotify/releases/download/v0.1.0/plotify-0.1.0-amd64.deb">
+                <b>Linux</b><br />
+                Ubuntu, Linux Mint, elementary OS
+            </a>
+        </td>
+    </tr>
+</table>
 
 
 ## Lizenz
