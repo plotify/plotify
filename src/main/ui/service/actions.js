@@ -409,8 +409,17 @@ export function openStory(file) {
       })
       .catch(error => {
         dispatch(sectionIsLoading(false));
-        const message = "Could not create or open story: " + error;
+
+        let message;
+
+        if (error.name === "UnsupportedFileVersionError") {
+          message = "Nicht unterstützte Dateiversion. Bitte aktualisiere Plotify.";
+        } else {
+          message = "Kann Geschichte nicht öffnen: " + error.name;
+        }
+
         dispatch(showMessage(message));
+
       });
   };
 }
@@ -426,16 +435,6 @@ export function openStoryDialog() {
       })
       .catch(error => {
         dispatch(sectionIsLoading(false));
-        let message;
-        if (error.name === "UnsupportedFileVersionError") {
-          message = "Unsupported file version!";
-        } else if (error.name === "NoStoryChosenError") {
-          message = "No story chosen. Ignore this.";
-        } else {
-          message = "Could not open story: " + error.name;
-        }
-        console.log(message);
-        dispatch(showMessage(message));
       });
   };
 }
