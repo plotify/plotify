@@ -99,7 +99,7 @@ function filter(state = "", action) {
 function characters(state = [], action) {
   switch (action.type) {
     case "CHANGE_CHARACTER":
-      return Object.assign({}, state, action.payload);
+      return Object.assign([], state, action.payload);
     case RECEIVE_CHARACTERS:
       return Object.assign([], action.payload);
     case REQUEST_CHARACTERS:
