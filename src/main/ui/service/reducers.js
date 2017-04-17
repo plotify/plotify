@@ -101,9 +101,9 @@ function characters(state = [], action) {
     case "CHANGE_CHARACTER":
       return Object.assign({}, state, action.payload);
     case RECEIVE_CHARACTERS:
-      return Object.assign([], state, action.payload);
+      return Object.assign([], action.payload);
     case REQUEST_CHARACTERS:
-      return [];
+      return state;
     default:
       return state;
   }
