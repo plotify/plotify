@@ -9,6 +9,9 @@ Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
 
 ## Download
 
+**Achtung: Plotify befindet sich noch in einer sehr frühen Entwicklungsphase.**
+**Es sollten keine Informationen ausschließlich in Plotify gespeichert werden.**
+
 Lade dir Plotify kostenlos für dein Betriebssystem herunter:
 
 <table>
