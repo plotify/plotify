@@ -22,14 +22,14 @@ Lade dir Plotify kostenlos für dein Betriebssystem herunter:
             </a>
          </td>
         <td align="center" width="50%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-windows-amd64.deb">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-windows-x64.exe">
                 <img src="docs/linux-logo.png" />
             </a>
         </td>
     </tr>
     <tr>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-linux-x64.exe">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-linux-amd64.deb">
                 <b>Windows</b><br />
                 Windows 7, 8, 10
             </a>
