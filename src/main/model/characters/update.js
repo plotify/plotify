@@ -5,6 +5,7 @@ import { getTypeTable, getTypeHistoryTable } from "./changes-sequence";
 
 import UUID from "../../shared/commons/uuid";
 import addChange from "./add-change";
+import ChangeType from "../../shared/characters/change-type";
 
 export function registerUpdateCharacterIpcChannel(ipcMain) {
   ipcMain.on(UPDATE_CHARACTER, (event, payload) => {
@@ -19,16 +20,8 @@ export function registerUpdateCharacterIpcChannel(ipcMain) {
 }
 
 export function updateCharacter(characterId, type, typeId, changes) {
-
-  if (typeof characterId !== "string") {
-    return Promise.reject(new TypeError("No character id was passed as a string."));
-  }
-
-  // TODO Validate type
-  // TODO Validate typeId
-  // TODO Validate changes
-
   return Promise.resolve()
+    .then(() => validateParameters(characterId, type, typeId, changes))
     .then(() => beginTransaction())
     .then(() => getPresenceHistoryEntry(type, typeId))
     .then(presenceHistoryEntry => addNewHistoryEntry(presenceHistoryEntry, type, changes))
@@ -38,6 +31,29 @@ export function updateCharacter(characterId, type, typeId, changes) {
       console.log("Failed to update character: ", error);
       return rollbackTransaction(error);
     });
+}
+
+function validateParameters(characterId, type, typeId, changes) {
+
+  if (typeof characterId !== "string") {
+    return Promise.reject(new TypeError("No character id was passed as a string: " + characterId));
+  }
+
+  if (type !== ChangeType.CHARACTER &&
+      type !== ChangeType.ENTRY_GROUP &&
+      type !== ChangeType.ENTRY) {
+    return Promise.reject(new TypeError("No valid type was passed: " + type));
+  }
+
+  if (typeof typeId !== "string") {
+    return Promise.reject(new TypeError("No type id was passed as a string: " + typeId));
+  }
+
+  if (typeof changes !== "object") {
+    return Promise.reject(new TypeError("No changes were passed as an object: " + changes));
+  }
+
+  return Promise.resolve();
 
 }
 
