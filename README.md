@@ -54,14 +54,14 @@ Erfahre mehr über die Bedeutung von [freier Software](https://www.gnu.org/philo
 
 ## Entwicklung
 
-[![Build status](https://img.shields.io/travis/SebastianSchmidt/plotify/master.svg)](https://travis-ci.org/SebastianSchmidt/plotify)
-[![Dependencies status](https://img.shields.io/david/SebastianSchmidt/plotify.svg)](https://david-dm.org/SebastianSchmidt/plotify)
-[![Development dependencies status](https://img.shields.io/david/dev/SebastianSchmidt/plotify.svg)](https://david-dm.org/SebastianSchmidt/plotify?type=dev)
-[![Optional dependencies status](https://img.shields.io/david/optional/SebastianSchmidt/plotify.svg)](https://david-dm.org/SebastianSchmidt/plotify?type=optional)
+[![Build status](https://img.shields.io/travis/plotify/plotify/master.svg)](https://travis-ci.org/plotify/plotify)
+[![Dependencies status](https://img.shields.io/david/plotify/plotify.svg)](https://david-dm.org/plotify/plotify)
+[![Development dependencies status](https://img.shields.io/david/dev/plotify/plotify.svg)](https://david-dm.org/plotify/plotify?type=dev)
+[![Optional dependencies status](https://img.shields.io/david/optional/plotify/plotify.svg)](https://david-dm.org/plotify/plotify?type=optional)
 
 
 ```bash
-git clone https://github.com/SebastianSchmidt/plotify.git
+git clone https://github.com/plotify/plotify.git
 cd plotify
 npm install
 npm run rebuild
