@@ -19,6 +19,11 @@ export function registerUpdateCharacterIpcChannel(ipcMain) {
 }
 
 export function updateCharacter(characterId, type, typeId, changes) {
+
+  if (typeof characterId !== "string") {
+    return Promise.reject(new TypeError());
+  }
+
   return Promise.resolve()
     .then(() => beginTransaction())
     .then(() => getPresenceHistoryEntry(type, typeId))
@@ -29,6 +34,7 @@ export function updateCharacter(characterId, type, typeId, changes) {
       console.log("Failed to update character: ", error);
       return rollbackTransaction(error);
     });
+
 }
 
 function getPresenceHistoryEntry(type, typeId) {
