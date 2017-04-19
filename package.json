@@ -17,7 +17,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git@github.com:SebastianSchmidt/plotify.git"
+    "url": "git@github.com:plotify/plotify.git"
   },
   "author": "Sebastian Schmidt <email@sebastian-schmidt.info>",
   "contributors": [
