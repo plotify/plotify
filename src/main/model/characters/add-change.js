@@ -3,7 +3,7 @@ import { run, get, all, prepare } from "../shared/sqlite";
 import ChangeType from "../../shared/characters/change-type";
 import { getTypeTable, Stack } from "./changes-sequence";
 
-export function addChange(id, characterId, type, newHistoryId) {
+export default function addChange(id, characterId, type, newHistoryId) {
   return new Promise((resolve, reject) => {
     getPrevHistoryId(id, characterId, type, newHistoryId, resolve, reject);
   });
