@@ -21,8 +21,12 @@ export function registerUpdateCharacterIpcChannel(ipcMain) {
 export function updateCharacter(characterId, type, typeId, changes) {
 
   if (typeof characterId !== "string") {
-    return Promise.reject(new TypeError());
+    return Promise.reject(new TypeError("No character id was passed as a string."));
   }
+
+  // TODO Validate type
+  // TODO Validate typeId
+  // TODO Validate changes
 
   return Promise.resolve()
     .then(() => beginTransaction())
