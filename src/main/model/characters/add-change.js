@@ -10,7 +10,6 @@ export default function addChange(id, characterId, type, newHistoryId) {
 }
 
 function getPrevHistoryId(id, characterId, type, newHistoryId, resolve, reject) {
-
   const sql = " SELECT presence_history_id as prevHistoryId " +
               " FROM " + getTypeTable(type) + "             " +
               " WHERE id = ?                                ";
@@ -36,13 +35,11 @@ function handleFutureStack(id, characterId, type, prevHistoryId) {
   const params = [characterId, Stack.FUTURE];
 
   return all(sql, params).then(rows => {
-
      if (rows.length === 0) {
        return handleEmptyFuture(id, characterId, type, prevHistoryId);
      } else {
        return handleFuture(id, characterId, type, prevHistoryId, rows);
      }
-
   });
 
 }
