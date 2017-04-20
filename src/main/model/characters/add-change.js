@@ -1,12 +1,12 @@
 import { getConnection } from "../stories/connection";
 import { run, get, all, prepare } from "../shared/sqlite";
-import ChangeType from "../../shared/characters/change-type";
 import { getTypeTable, Stack } from "./changes-sequence";
 
 export default function addChange(id, characterId, type, newHistoryId) {
-  return new Promise((resolve, reject) => {
-    getPrevHistoryId(id, characterId, type, newHistoryId, resolve, reject);
-  });
+  return Promise.resolve()
+    .then(() => getPrevHistoryId(id, characterId, type, newHistoryId))
+    .then(prevHistoryId => updatePresenceHistoryId(id, type, newHistoryId, prevHistoryId))
+    .then(prevHistoryId => handleFutureStack(id, characterId, type, prevHistoryId));
 }
 
 function getPrevHistoryId(id, characterId, type, newHistoryId, resolve, reject) {
@@ -14,42 +14,19 @@ function getPrevHistoryId(id, characterId, type, newHistoryId, resolve, reject) 
   const sql = " SELECT presence_history_id as prevHistoryId " +
               " FROM " + getTypeTable(type) + "             " +
               " WHERE id = ?                                ";
-
-  getConnection().get(sql, [id], (error, row) => {
-
-    if (error) {
-      reject(error);
-      return;
-    }
-
-    const prevHistoryId = row.prevHistoryId;
-    updatePresenceHistoryId(id, characterId, type, newHistoryId, prevHistoryId, resolve, reject);
-
-  });
-
+  const params = [id];
+  return get(sql, params).then(row => Promise.resolve(row.prevHistoryId));
 }
 
-function updatePresenceHistoryId(id, characterId, type, newHistoryId, prevHistoryId,
-                                 resolve, reject) {
-
+function updatePresenceHistoryId(id, type, newHistoryId, prevHistoryId) {
   const sql = " UPDATE " + getTypeTable(type) + " " +
               " SET presence_history_id = ?       " +
               " WHERE id = ?                      ";
-
-  getConnection().run(sql, [newHistoryId, id], (error) => {
-
-    if (error) {
-      reject(error);
-      return;
-    }
-
-    handleFutureStack(id, characterId, type, prevHistoryId, resolve, reject);
-
-  });
-
+  const params = [newHistoryId, id];
+  return run(sql, params).then(() => Promise.resolve(prevHistoryId));
 }
 
-function handleFutureStack(id, characterId, type, prevHistoryId, resolve, reject) {
+function handleFutureStack(id, characterId, type, prevHistoryId) {
 
   const sql = " SELECT character_id AS characterId, stack, position, type, " +
               "        type_id AS typeId, history_id AS historyId          " +
@@ -58,35 +35,32 @@ function handleFutureStack(id, characterId, type, prevHistoryId, resolve, reject
               " ORDER BY position ASC                                      ";
   const params = [characterId, Stack.FUTURE];
 
-  getConnection().all(sql, params, (error, rows) => {
+  return all(sql, params).then(rows => {
 
-    if (error) {
-      reject(error);
-      return;
-    }
-
-    if (rows.length === 0) {
-      handleNoFuture(id, characterId, type, prevHistoryId, resolve, reject);
-    } else {
-      handleFuture(id, characterId, type, prevHistoryId, rows, resolve, reject);
-    }
+     if (rows.length === 0) {
+       return handleEmptyFuture(id, characterId, type, prevHistoryId);
+     } else {
+       return handleFuture(id, characterId, type, prevHistoryId, rows);
+     }
 
   });
 
 }
 
-function handleNoFuture(id, characterId, type, prevHistoryId, resolve, reject) {
+function handleEmptyFuture(id, characterId, type, prevHistoryId) {
+  return Promise.resolve()
+    .then(() => getPastStackNextPosition(characterId))
+    .then(nextPosition => addToPast(id, characterId, type, prevHistoryId, nextPosition));
+}
+
+function getPastStackNextPosition(characterId) {
 
   const sql = " SELECT max(position) AS maxPosition  " +
               " FROM character_changes_sequence      " +
               " WHERE character_id = ? AND stack = ? ";
+  const params = [characterId, Stack.PAST];
 
-  getConnection().get(sql, [characterId, Stack.PAST], (error, row) => {
-
-    if (error) {
-      reject(error);
-      return;
-    }
+  return get(sql, params).then(row => {
 
     let position;
 
@@ -96,172 +70,138 @@ function handleNoFuture(id, characterId, type, prevHistoryId, resolve, reject) {
       position = row.maxPosition + 1;
     }
 
-    addToPast(id, position, characterId, type, prevHistoryId, resolve, reject);
+    return Promise.resolve(position);
 
   });
 
 }
 
-function addToPast(id, position, characterId, type, prevHistoryId, resolve, reject) {
-
+function addToPast(id, characterId, type, prevHistoryId, position) {
   const sql = " INSERT INTO character_changes_sequence                     " +
               " (position, character_id, type, type_id, history_id, stack) " +
               " VALUES (?, ?, ?, ?, ?, ?)                                  ";
   const params = [position, characterId, type, id, prevHistoryId, Stack.PAST];
-
-  getConnection().run(sql, params, (error) => {
-    if (error) {
-      reject(error);
-    } else {
-      resolve();
-    }
-  });
-
+  return run(sql, params);
 }
 
 function handleFuture(id, characterId, type, prevHistoryId, futureStack, resolve, reject) {
-
-  getNextPastPosition(characterId)
+  return Promise.resolve()
+    .then(() => getNextPastPosition(characterId))
     .then(nextPosition => addPrevPresenceToPast(id, characterId, type, prevHistoryId, nextPosition))
     .then(nextPosition => addTopToBottomFutureToPast(futureStack, nextPosition))
     .then(nextPosition => addSecondFromBottomToTopFutureToPast(futureStack, nextPosition))
     .then(nextPosition => addPrevPresenceToPast(id, characterId, type, prevHistoryId, nextPosition))
-    .then(() => deleteFutureStack(characterId))
-    .then(() => resolve())
-    .catch(error => { console.log(error); reject(error); });
+    .then(() => deleteFutureStack(characterId));
 }
 
 function getNextPastPosition(characterId) {
-  return new Promise((resolve, reject) => {
 
-    const sql = " SELECT max(position) AS maxPosition  " +
-                " FROM character_changes_sequence      " +
-                " WHERE character_id = ? AND stack = ? ";
-    const params = [characterId, Stack.PAST];
+  const sql = " SELECT max(position) AS maxPosition  " +
+              " FROM character_changes_sequence      " +
+              " WHERE character_id = ? AND stack = ? ";
+  const params = [characterId, Stack.PAST];
 
-    get(sql, params).then(row => {
+  return get(sql, params).then(row => {
 
-      let position;
+    let position;
 
-      if (row.maxPosition === null) {
-        position = 0;
-      } else {
-        position = row.maxPosition + 1;
-      }
+    if (row.maxPosition === null) {
+      position = 0;
+    } else {
+      position = row.maxPosition + 1;
+    }
 
-      resolve(position);
-
-    }).catch (error => reject(error));
+    return Promise.resolve(position);
 
   });
+
 }
 
 function addPrevPresenceToPast(id, characterId, type, prevHistoryId, position) {
-  return new Promise((resolve, reject) => {
-
-    const sql = " INSERT INTO character_changes_sequence                    " +
-                " (character_id, stack, position, type, type_id, history_id) " +
-                " VALUES (?, ?, ?, ?, ?, ?)";
-    const params = [characterId, Stack.PAST, position, type, id, prevHistoryId];
-
-    run(sql, params)
-      .then(() => resolve(position + 1))
-      .catch(error => reject(error));
-
-  });
+  const sql = " INSERT INTO character_changes_sequence                    " +
+              " (character_id, stack, position, type, type_id, history_id) " +
+              " VALUES (?, ?, ?, ?, ?, ?)";
+  const params = [characterId, Stack.PAST, position, type, id, prevHistoryId];
+  return run(sql, params).then(() => Promise.resolve(position + 1));
 }
 
 function addTopToBottomFutureToPast(futureStack, position) {
-  return new Promise((resolve, reject) => {
 
-    const sql = " INSERT INTO character_changes_sequence                    " +
-                " (character_id, stack, position, type, type_id, history_id) " +
-                " VALUES (?, ?, ?, ?, ?, ?)";
+  const sql = " INSERT INTO character_changes_sequence                    " +
+              " (character_id, stack, position, type, type_id, history_id) " +
+              " VALUES (?, ?, ?, ?, ?, ?)";
 
-    const length = futureStack.length;
-    let nextPosition = position;
+  const length = futureStack.length;
+  let nextPosition = position;
 
-    prepare(sql)
-      .then(statement => new Promise((resolve, reject) => {
-        getConnection().serialize(() => {
+  return prepare(sql).then(statement => new Promise((resolve, reject) => {
+    getConnection().serialize(() => {
 
-          const runCallback = (error) => {
-            reject(error);
-          };
+      const runCallback = (error) => {
+        reject(error);
+      };
 
-          for (let index = length - 1; index >= 0; index--) {
-            const row = futureStack[index];
-            const params = [row.characterId, Stack.PAST, nextPosition, row.type, row.typeId,
-                            row.historyId];
-            statement.run(params, runCallback);
-            nextPosition++;
-          }
+      for (let index = length - 1; index >= 0; index--) {
+        const row = futureStack[index];
+        const params = [row.characterId, Stack.PAST, nextPosition, row.type, row.typeId,
+                        row.historyId];
+        statement.run(params, runCallback);
+        nextPosition++;
+      }
 
-          resolve(statement);
+      resolve(statement);
 
-        });
-      }))
-      .then(statement => {
-        statement.finalize();
-        resolve(nextPosition);
-      })
-      .catch(error => reject(error));
-
+    });
+  }))
+  .then(statement => {
+    statement.finalize();
+    return Promise.resolve(nextPosition);
   });
 
 }
 
 function addSecondFromBottomToTopFutureToPast(futureStack, position) {
-  return new Promise((resolve, reject) => {
 
-    const sql = " INSERT INTO character_changes_sequence                     " +
-                " (character_id, stack, position, type, type_id, history_id) " +
-                " VALUES (?, ?, ?, ?, ?, ?)                                  ";
+  const sql = " INSERT INTO character_changes_sequence                     " +
+              " (character_id, stack, position, type, type_id, history_id) " +
+              " VALUES (?, ?, ?, ?, ?, ?)                                  ";
 
-    const length = futureStack.length;
-    let nextPosition = position;
+  const length = futureStack.length;
+  let nextPosition = position;
 
-    if (length === 1) {
-      resolve(nextPosition);
-      return;
-    }
+  if (length === 1) {
+    return Promise.resolve(nextPosition);
+  }
 
-    prepare(sql)
-      .then(statement => new Promise((resolve, reject) => {
-        getConnection().serialize(() => {
+  return prepare(sql).then(statement => new Promise((resolve, reject) => {
+      getConnection().serialize(() => {
 
-          const runCallback = (error) => {
-            reject(error);
-          };
+        const runCallback = (error) => {
+          reject(error);
+        };
 
-          for (let index = 1; index < length; index++) {
-            const row = futureStack[index];
-            const params = [row.characterId, Stack.PAST, nextPosition, row.type, row.typeId,
-                            row.historyId];
-            statement.run(params, runCallback);
-            nextPosition++;
-          }
+        for (let index = 1; index < length; index++) {
+          const row = futureStack[index];
+          const params = [row.characterId, Stack.PAST, nextPosition, row.type, row.typeId,
+                          row.historyId];
+          statement.run(params, runCallback);
+          nextPosition++;
+        }
 
-          resolve();
+        resolve();
 
-        });
-      }))
-      .then(() => resolve(nextPosition))
-      .catch(error => reject(error));
+      });
+    }))
+    .then(statement => {
+      statement.finalize();
+      return Promise.resolve(nextPosition);
+    });
 
-  });
 }
 
 function deleteFutureStack(characterId) {
-  return new Promise((resolve, reject) => {
-
-    const sql = " DELETE FROM character_changes_sequence " +
-                " WHERE character_id = ? AND stack = ?   ";
-    const params = [characterId, Stack.FUTURE];
-
-    run(sql, params)
-      .then(() => resolve())
-      .catch(error => reject(error));
-
-  });
+  const sql = " DELETE FROM character_changes_sequence " +
+              " WHERE character_id = ? AND stack = ?   ";
+  const params = [characterId, Stack.FUTURE];
+  return run(sql, params);
 }

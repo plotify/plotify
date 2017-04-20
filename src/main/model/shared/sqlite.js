@@ -39,6 +39,18 @@ export function all(sql, params) {
   });
 }
 
+export function prepare(sql, params) {
+  return new Promise((resolve, reject) => {
+    const statement = getConnection().prepare(sql, params, (error) => {
+      if (error) {
+        logFailedSqlStatement(sql, params, error);
+        reject(error);
+      }
+    });
+    resolve(statement);
+  });
+}
+
 export function beginTransaction() {
   return run("begin");
 }
