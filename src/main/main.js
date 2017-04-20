@@ -76,9 +76,9 @@ function createWindow() {
         cancelId: 1
       };
 
-      const result = dialog.showMessageBox(options);
-
-      if (result !== 0) {
+      const result = dialog.showMessageBox(mainWindow, options);
+      
+      if (result === 1) {
         event.preventDefault();
       }
 
