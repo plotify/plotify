@@ -7,6 +7,10 @@ import { setMainWindow } from "./model/main-window";
 import { getConnection, setConnection } from "./model/stories/connection";
 import { closeStory } from "./model/stories/close";
 
+const packageJson = require("./package.json");
+console.log("Plotify version: " + packageJson.version);
+console.log("Electron version: ", process.versions.electron);
+
 import "./model/index";
 
 const app = electron.app;
@@ -77,7 +81,7 @@ function createWindow() {
       };
 
       const result = dialog.showMessageBox(mainWindow, options);
-      
+
       if (result === 1) {
         event.preventDefault();
       }
