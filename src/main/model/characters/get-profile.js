@@ -12,6 +12,10 @@ export function registerGetCharacterProfileIpcChannel(ipcMain) {
 
 export function getCharacterProfile(characterId) {
 
+  if (typeof characterId !== "string") {
+    return Promise.reject(new TypeError("No character id was passed as a string: " + characterId));
+  }
+
   const sql = " SELECT g.id, h.title, h.deleted                           " +
               " FROM entry_group AS g, entry_group_history AS h           " +
               " WHERE g.character_id = ? AND g.presence_history_id = h.id " +
