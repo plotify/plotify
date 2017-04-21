@@ -5,7 +5,7 @@ import { getTypeTable, getTypeHistoryTable } from "./changes-sequence";
 
 import UUID from "../../shared/commons/uuid";
 import addChange from "./add-change";
-import ChangeType from "../../shared/characters/change-type";
+import { isValidChangeType } from "../../shared/characters/change-type";
 
 export function registerUpdateCharacterIpcChannel(ipcMain) {
   ipcMain.on(UPDATE_CHARACTER, (event, payload) => {
@@ -39,9 +39,7 @@ function validateParameters(characterId, type, typeId, changes) {
     return Promise.reject(new TypeError("No character id was passed as a string: " + characterId));
   }
 
-  if (type !== ChangeType.CHARACTER &&
-      type !== ChangeType.ENTRY_GROUP &&
-      type !== ChangeType.ENTRY) {
+  if (!isValidChangeType(type)) {
     return Promise.reject(new TypeError("No valid type was passed: " + type));
   }
 

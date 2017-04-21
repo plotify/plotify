@@ -1,12 +1,36 @@
 import { getConnection } from "../stories/connection";
 import { run, get, all, prepare } from "../shared/sqlite";
 import { getTypeTable, Stack } from "./changes-sequence";
+import { isValidChangeType } from "../../../main/shared/characters/change-type";
 
-export default function addChange(id, characterId, type, newHistoryId) {
+export default function addChange(typeId, characterId, type, newHistoryId) {
   return Promise.resolve()
-    .then(() => getPrevHistoryId(id, characterId, type, newHistoryId))
-    .then(prevHistoryId => updatePresenceHistoryId(id, type, newHistoryId, prevHistoryId))
-    .then(prevHistoryId => handleFutureStack(id, characterId, type, prevHistoryId));
+    .then(() => validateParameters(typeId, characterId, type, newHistoryId))
+    .then(() => getPrevHistoryId(typeId, characterId, type, newHistoryId))
+    .then(prevHistoryId => updatePresenceHistoryId(typeId, type, newHistoryId, prevHistoryId))
+    .then(prevHistoryId => handleFutureStack(typeId, characterId, type, prevHistoryId));
+}
+
+function validateParameters(typeId, characterId, type, newHistoryId) {
+
+  if (typeof typeId !== "string") {
+    return Promise.reject(new TypeError("No type id was passed as a string: " + typeId));
+  }
+
+  if (typeof characterId !== "string") {
+    return Promise.reject(new TypeError("No character id was passed as a string: " + characterId));
+  }
+
+  if (!isValidChangeType(type)) {
+    return Promise.reject(new TypeError("No valid type was passed: " + type));
+  }
+
+  if (typeof newHistoryId !== "string") {
+    return Promise.reject(new TypeError("No history id was passed as a string: " + newHistoryId));
+  }
+
+  return Promise.resolve();
+
 }
 
 function getPrevHistoryId(id, characterId, type, newHistoryId, resolve, reject) {
