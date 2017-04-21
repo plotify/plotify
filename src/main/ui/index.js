@@ -4,17 +4,48 @@ import isDev from "electron-is-dev";
 
 import React from "react";
 import ReactDOM from "react-dom";
+import injectTapEventPlugin from "react-tap-event-plugin";
+injectTapEventPlugin();
+
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import thunkMiddleware from "redux-thunk";
 import logger from "redux-logger";
 
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import getMuiTheme from "material-ui/styles/getMuiTheme";
-import RealPlotifyApp from "./components/containers/RealPlotifyApp";
+import rootReducer from "./rootReducer";
 
-import {combinedReducer} from "./service/reducers";
+let middleware;
 
-import PlotifyMainTheme from "./themes/PlotifyMainTheme";
+if (isDev) {
+  middleware = applyMiddleware(thunkMiddleware, logger);
+} else {
+  middleware = applyMiddleware(thunkMiddleware);
+}
 
-import injectTapEventPlugin from "react-tap-event-plugin";
+const store = createStore(rootReducer, middleware);
+
+class App extends React.Component {
+  render() {
+    return (
+      <h1>Hello world!</h1>
+    );
+  }
+}
+
+window.onload = () => {
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById("root")
+  );
+};
+
+// Test: Öffne Geschichte:
+import { openStory } from "./story/actions";
+store.dispatch(openStory("/home/schmidt/Dokumente/Neue Geschichte.story"));
+
+
 /* Beispiel:
 import { sendToModel } from "../shared/commons/ipc";
 import { CREATE_STORY, OPEN_STORY } from "../shared/stories/ipc-channels";
@@ -75,6 +106,7 @@ sendToModel(OPEN_STORY_DIALOG)
     }
   });*/
 
+/*
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";
 import thunkMiddleware from "redux-thunk";
@@ -111,3 +143,4 @@ window.onload = () => {
     document.getElementById("root")
   );
 };
+*/
