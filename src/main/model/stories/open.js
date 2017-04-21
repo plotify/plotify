@@ -22,7 +22,7 @@ export function openStory(filePath) {
     const connection = new sqlite3.Database(filePath, mode, (error) => {
 
       if (error) {
-        console.log("Could not open story: Open connection failed: ", error);
+        console.log("Could not open story: Open connection failed:", error);
         reject(error);
         return;
       }
@@ -30,7 +30,7 @@ export function openStory(filePath) {
       connection.get("PRAGMA user_version;", (error, row) => {
 
         if (error) {
-          console.log("Could not open story: Check user_version failed: ", error);
+          console.log("Could not open story: Check user_version failed:", error);
           reject(error);
           return;
         }

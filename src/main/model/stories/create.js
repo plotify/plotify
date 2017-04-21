@@ -17,12 +17,14 @@ export function createNewStory() {
     const db = new sqlite3.Database(filePath, mode, (error) => {
 
       if (error) {
+        console.log("Could not create new story:", error);
         return reject(error);
       }
 
       db.exec(newStorySqlStatements, (error) => {
 
         if (error) {
+          console.log("Could not create tables for the new story:", error);
           return reject(error);
         }
 

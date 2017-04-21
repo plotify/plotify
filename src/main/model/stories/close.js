@@ -17,7 +17,7 @@ export function closeStory() {
         setConnection(null);
         resolve();
       } else {
-        console.log("Could not close story: ", error);
+        console.log("Could not close story:", error);
         reject(new CouldNotCloseStoryError(error.message));
       }
     });

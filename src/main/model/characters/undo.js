@@ -46,7 +46,7 @@ export function undoCharacterChange(characterId) {
     .then(() => getPresenceContent(newPresence))
     .then(content => endTransaction(content))
     .catch(error => {
-      console.log("Failed to undo character change: ", error);
+      console.log("Failed to undo character change:", error);
       return rollbackTransaction(error);
     });
 }

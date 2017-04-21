@@ -21,7 +21,7 @@ export function createCharacter() {
     .then(() => createDefaultProfile(characterId))
     .then(() => endTransaction(characterId))
     .catch(error => {
-      console.log("Failed to create a new character: ", error);
+      console.log("Failed to create a new character:", error);
       return rollbackTransaction(error);
     });
 }

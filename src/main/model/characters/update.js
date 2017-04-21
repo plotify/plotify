@@ -28,7 +28,7 @@ export function updateCharacter(characterId, type, typeId, changes) {
     .then(newHistoryId => addChange(typeId, characterId, type, newHistoryId))
     .then(() => endTransaction(typeId))
     .catch(error => {
-      console.log("Failed to update character: ", error);
+      console.log("Failed to update character:", error);
       return rollbackTransaction(error);
     });
 }
