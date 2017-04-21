@@ -12,6 +12,15 @@ export function registerFindCharactersIpcChannel(ipcMain) {
 
 export function findCharacters(deleted, filter = undefined) {
 
+  if (typeof deleted !== "boolean") {
+    return Promise.reject(
+      new TypeError("No deleted flag was passed as a boolean: " + deleted));
+  }
+
+  if (filter && typeof filter !== "string") {
+    return Promise.reject(new TypeError("Filter is not a string: " + filter));
+  }
+
   const sql = "SELECT c.id AS id, h.name AS name, h.deleted AS deleted " +
               "FROM character_history AS h, character AS c " +
               "WHERE c.presence_history_id = h.id AND h.deleted = ?;";
