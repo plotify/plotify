@@ -1,3 +1,5 @@
+BEGIN;
+
 PRAGMA application_id = 80767984;
 PRAGMA user_version = 1;
 
@@ -61,3 +63,5 @@ CREATE TABLE `entry_history` (
   PRIMARY KEY(id),
   FOREIGN KEY(`group_id`) REFERENCES entry_group(id)
 );
+
+COMMIT;
