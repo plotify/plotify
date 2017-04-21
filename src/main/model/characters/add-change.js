@@ -1,7 +1,7 @@
 import { getConnection } from "../stories/connection";
 import { run, get, all, prepare } from "../shared/sqlite";
 import { getTypeTable, Stack } from "./changes-sequence";
-import { isValidChangeType } from "../../../main/shared/characters/change-type";
+import { isValidChangeType } from "../../shared/characters/change-type";
 
 export default function addChange(typeId, characterId, type, newHistoryId) {
   return Promise.resolve()
