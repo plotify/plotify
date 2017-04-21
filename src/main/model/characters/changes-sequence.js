@@ -1,5 +1,5 @@
 import ChangeType from "../../shared/characters/change-type";
-import { getConnection } from "../stories/connection";
+import { get, run } from "../shared/sqlite";
 
 export function getTypeTable(type) {
   switch (type) {
@@ -33,117 +33,84 @@ export const Stack = Object.freeze({
 });
 
 export function getStackTop(characterId, stack) {
-  return new Promise((resolve, reject) => {
 
-    const sql = " SELECT character_id AS characterId, stack, position, type, " +
-                "        type_id AS typeId, history_id AS historyId          " +
-                " FROM character_changes_sequence                            " +
-                " WHERE character_id = ? AND stack = ? AND position = (      " +
-                "   SELECT max(position)                                     " +
-                "   FROM character_changes_sequence                          " +
-                "   WHERE character_id = ? AND stack = ?                     " +
-                " )                                                          ";
+  const sql = " SELECT character_id AS characterId, stack, position, type, " +
+              "        type_id AS typeId, history_id AS historyId          " +
+              " FROM character_changes_sequence                            " +
+              " WHERE character_id = ? AND stack = ? AND position = (      " +
+              "   SELECT max(position)                                     " +
+              "   FROM character_changes_sequence                          " +
+              "   WHERE character_id = ? AND stack = ?                     " +
+              " )                                                          ";
+  const params = [characterId, stack, characterId, stack];
 
-    getConnection().get(sql, [characterId, stack, characterId, stack], (error, row) => {
-
-      if (error) {
-        reject(error);
-      } else if (row) {
-        resolve(row);
-      } else {
-        resolve(null);
-      }
-    });
-
+  return get(sql, params).then(row => {
+    if (row) {
+      return Promise.resolve(row);
+    } else {
+      return Promise.resolve(null);
+    }
   });
+
 }
 
 export function removeFromStack(entry) {
-  return new Promise((resolve, reject) => {
 
-    if (entry === null) {
-      throw new Error("No entry to remove from stack.");
-    }
+  if (entry === null) {
+    throw new Error("No entry to remove from stack.");
+  }
 
-    const sql = "DELETE FROM character_changes_sequence                                 " +
-                "WHERE character_id = ? AND stack = ? AND position = ? AND type = ? AND " +
-                "      type_id = ? AND history_id = ?                                   ";
-    const params = [entry.characterId, entry.stack, entry.position, entry.type, entry.typeId,
-                    entry.historyId];
+  const sql = "DELETE FROM character_changes_sequence                                 " +
+              "WHERE character_id = ? AND stack = ? AND position = ? AND type = ? AND " +
+              "      type_id = ? AND history_id = ?                                   ";
+  const params = [entry.characterId, entry.stack, entry.position, entry.type, entry.typeId,
+                  entry.historyId];
+  return run(sql, params);
 
-    getConnection().run(sql, params, (error, row) => {
-
-      if (error) {
-        reject(error);
-      } else {
-        resolve();
-      }
-
-    });
-
-  });
 }
 
 export function setNewPresence(entry) {
-  return new Promise((resolve, reject) => {
 
-    const db = getConnection();
+  const lastSql   = " SELECT presence_history_id AS historyId " +
+                    " FROM " + getTypeTable(entry.type)         +
+                    " WHERE id = ?                            ";
+  const lastParams = [entry.typeId];
 
-    const lastSql   = " SELECT presence_history_id AS historyId " +
-                      " FROM " + getTypeTable(entry.type)         +
-                      " WHERE id = ?                            ";
+  const updateSql = " UPDATE " + getTypeTable(entry.type) + " " +
+                    " SET presence_history_id = ? " +
+                    " WHERE id = ?";
+  const updateParams = [entry.historyId, entry.typeId];
 
-    const updateSql = " UPDATE " + getTypeTable(entry.type) + " " +
-                      " SET presence_history_id = ? " +
-                      " WHERE id = ?";
+  let prevPresence = {
+    characterId: entry.characterId,
+    type: entry.type,
+    typeId: entry.typeId
+  };
 
-    db.get(lastSql, [entry.typeId], (error, row) => {
+  return Promise.resolve()
+    .then(() => get(lastSql, lastParams))
+    .then(row => { prevPresence.historyId = row.historyId; return Promise.resolve(); })
+    .then(() => run(updateSql, updateParams))
+    .then(() => Promise.resolve(prevPresence));
 
-      if (error) {
-        reject(error);
-        return;
-      }
-
-      const prevPresence = {
-        characterId: entry.characterId,
-        historyId: row.historyId,
-        type: entry.type,
-        typeId: entry.typeId
-      };
-
-      db.run(updateSql, [entry.historyId, entry.typeId], (error) => {
-
-        if (error) {
-          reject(error);
-        } else {
-          resolve(prevPresence);
-        }
-      });
-
-    });
-
-  });
 }
 
 export function addToStack(previousPresence, stack) {
-  return new Promise((resolve, reject) => {
 
-    const db = getConnection();
+  const maxSql = " SELECT max(position) AS maxPosition  " +
+                 " FROM character_changes_sequence      " +
+                 " WHERE character_id = ? AND stack = ? ";
+  const maxParams = [previousPresence.characterId, stack];
 
-    const maxSql = " SELECT max(position) AS maxPosition  " +
-                   " FROM character_changes_sequence      " +
-                   " WHERE character_id = ? AND stack = ? ";
+  const addSql = " INSERT INTO character_changes_sequence                     " +
+                 " (character_id, stack, type, type_id, history_id, position) " +
+                 " VALUES (?, ?, ?, ?, ?, ?)                                  ";
+  const addParams = [previousPresence.characterId, stack, previousPresence.type,
+                     previousPresence.typeId, previousPresence.historyId];
 
-    const addSql = " INSERT INTO character_changes_sequence                     " +
-                   " (character_id, stack, type, type_id, history_id, position) " +
-                   " VALUES (?, ?, ?, ?, ?, ?)                                  ";
-
-    db.get(maxSql, [previousPresence.characterId, stack], (error, row) => {
-
-      if (error) {
-        reject(error);
-        return;
-      }
+  return Promise.resolve()
+    .then(() => get(maxSql, maxParams))
+    .then(row => {
 
       let position;
 
@@ -153,43 +120,26 @@ export function addToStack(previousPresence, stack) {
         position = row.maxPosition + 1;
       }
 
-      const params = [previousPresence.characterId, stack, previousPresence.type,
-                      previousPresence.typeId, previousPresence.historyId, position];
+      addParams.push(position);
+      return Promise.resolve();
 
-      db.run(addSql, params, (error) => {
+    })
+    .then(() => run(addSql, addParams))
+    .then(() => Promise.resolve(previousPresence));
 
-        if (error) {
-          reject(error);
-        } else {
-          resolve(previousPresence);
-        }
-      });
-
-    });
-
-  });
 }
 
 export function getPresenceContent(presence) {
-  return new Promise((resolve, reject) => {
 
-    const sql = " SELECT h.*                                            " +
-                " FROM " + getTypeTable(presence.type) + "        AS t, " +
-                "      " + getTypeHistoryTable(presence.type) + " AS h  " +
-                " WHERE t.id = ? AND t.presence_history_id = h.id       ";
+  const sql = " SELECT h.*                                            " +
+              " FROM " + getTypeTable(presence.type) + "        AS t, " +
+              "      " + getTypeHistoryTable(presence.type) + " AS h  " +
+              " WHERE t.id = ? AND t.presence_history_id = h.id       ";
+  const params = [presence.typeId];
 
-    getConnection().get(sql, [presence.typeId], (error, row) => {
-
-      if (error) {
-        reject(error);
-        return;
-      }
-
-      const content = row;
-      row.id = presence.typeId;
-      resolve(content);
-
-    });
-
+  return get(sql, params).then(row => {
+    row.id = presence.typeId;
+    return Promise.resolve(row);
   });
+
 }
