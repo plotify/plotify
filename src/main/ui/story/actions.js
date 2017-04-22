@@ -7,6 +7,15 @@ import { sendToModel } from "../../shared/commons/ipc";
 // TODO ENTFERNEN: TEST:
 //import * as a from "../characters/list/actions";
 
+export function openStoryDialog() {
+  return (dispatch, getState) => {
+    return Promise.resolve()
+      .then(() => validateOpenStory(getState()))
+      .then(() => sendToModel(c.OPEN_STORY_DIALOG))
+      .then(file => dispatch(openStory(file)));
+  };
+}
+
 export function openStory(file) {
   return (dispatch, getState) => {
     return Promise.resolve()

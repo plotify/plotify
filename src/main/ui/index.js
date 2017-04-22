@@ -42,8 +42,8 @@ window.onload = () => {
 };
 
 // Test: Öffne Geschichte:
-//import { openStory } from "./story/actions";
-//store.dispatch(openStory("/home/schmidt/Dokumente/Neue Geschichte 2.story"));
+//import { openStoryDialog } from "./story/actions";
+//store.dispatch(openStoryDialog());
 
 
 /* Beispiel:
