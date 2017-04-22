@@ -33,6 +33,11 @@ export default function reducer(state = initialState, action) {
         order: []
       });
 
+    case t.SET_CHARACTERS_FILTER:
+      return Object.assign({}, state, {
+        filter: action.payload.filter
+      });
+
     default:
       return state;
 

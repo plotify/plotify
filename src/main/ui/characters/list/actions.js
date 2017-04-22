@@ -15,6 +15,14 @@ export function findCharacters() {
   };
 }
 
+export function setCharactersFilter(filter) {
+  return (dispatch) => {
+    return Promise.resolve()
+      .then(() => dispatch(setCharactersFilterRequest(filter)))
+      .then(() => dispatch(findCharacters()));
+  };
+}
+
 function findCharactersRequest() {
   return {
     type: t.FIND_CHARACTERS_REQUEST,
@@ -33,5 +41,12 @@ function findCharactersFailed(error) {
   return {
     type: t.FIND_CHARACTERS_FAILED,
     payload: { error }
+  };
+}
+
+function setCharactersFilterRequest(filter) {
+  return {
+    type: t.SET_CHARACTERS_FILTER,
+    payload: { filter }
   };
 }

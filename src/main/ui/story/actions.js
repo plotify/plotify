@@ -16,6 +16,7 @@ export function openStory(file) {
       .then(() => dispatch(openStorySuccessful()))
       // TODO ENTFERNEN: TEST:
       //.then(() => dispatch(a.findCharacters()))
+      //.then(() => dispatch(a.setCharactersFilter("Muster")))
       .catch(error => dispatch(openStoryFailed(error)));
   };
 }
