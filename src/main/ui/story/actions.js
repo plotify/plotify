@@ -4,9 +4,6 @@ import { isStoryOpen } from "./selectors";
 import * as c from "../../shared/stories/ipc-channels";
 import { sendToModel } from "../../shared/commons/ipc";
 
-// TODO ENTFERNEN: TEST:
-//import * as a from "../characters/list/actions";
-
 export function openStoryDialog() {
   return (dispatch, getState) => {
     return Promise.resolve()
@@ -23,9 +20,6 @@ export function openStory(file) {
       .then(() => dispatch(openStoryRequest(file)))
       .then(() => sendToModel(c.OPEN_STORY, file))
       .then(() => dispatch(openStorySuccessful()))
-      // TODO ENTFERNEN: TEST:
-      //.then(() => dispatch(a.findCharacters()))
-      //.then(() => dispatch(a.setCharactersFilter("Muster")))
       .catch(error => dispatch(openStoryFailed(error)));
   };
 }
