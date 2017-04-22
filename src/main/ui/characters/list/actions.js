@@ -4,6 +4,8 @@ import { getListFilter } from "./selectors";
 import * as c from "../../../shared/characters/ipc-channels";
 import { sendToModel } from "../../../shared/commons/ipc";
 
+import * as s from "./selectors";
+
 export function findCharacters() {
   return (dispatch, getState) => {
     const params = { deleted: false, filter: getListFilter(getState()) };
@@ -20,6 +22,20 @@ export function setCharactersFilter(filter) {
     return Promise.resolve()
       .then(() => dispatch(setCharactersFilterRequest(filter)))
       .then(() => dispatch(findCharacters()));
+  };
+}
+
+export function selectCharacter(id) {
+  return {
+    type: t.SELECT_CHARACTER,
+    payload: { id }
+  };
+}
+
+export function unselectCharacter() {
+  return {
+    type: t.UNSELECT_CHARACTER,
+    payload: {}
   };
 }
 

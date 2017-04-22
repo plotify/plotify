@@ -38,6 +38,16 @@ export default function reducer(state = initialState, action) {
         filter: action.payload.filter
       });
 
+    case t.SELECT_CHARACTER:
+      return Object.assign({}, state, {
+        selected: action.payload.id
+      });
+
+    case t.UNSELECT_CHARACTER:
+      return Object.assign({}, state, {
+        selected: null
+      });
+
     default:
       return state;
 
