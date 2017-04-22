@@ -1,14 +1,11 @@
 import * as t from "./actionTypes";
 
 const initialState = {
-
   loading: false,
   closing: false,
-
   open: false,
   file: null,
   error: null
-
 };
 
 export default function reducer(state = initialState, action) {
