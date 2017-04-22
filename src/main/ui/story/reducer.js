@@ -23,11 +23,13 @@ export default function reducer(state = initialState, action) {
     case t.OPEN_STORY_SUCCESSFUL:
       return Object.assign({}, state, {
         loading: false,
-        open: true
+        open: true,
+        error: null
       });
     case t.OPEN_STORY_FAILED:
       return Object.assign({}, state, {
         loading: false,
+        open: false,
         file: null,
         error: action.payload.error
       });
@@ -41,7 +43,8 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         closing: false,
         open: false,
-        file: null
+        file: null,
+        error: null
       });
     case t.CLOSE_STORY_FAILED:
       return Object.assign({}, state, {
