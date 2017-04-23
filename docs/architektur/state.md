@@ -4,6 +4,11 @@
 
 ```javascript
 {
+  page: {
+      id: "characters",
+      title: "Charaktere",
+      navigation: true
+  }
   story: {
     loading: false,
     closing: false,

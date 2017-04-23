@@ -10,7 +10,7 @@ injectTapEventPlugin();
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
-import chainedActionsMiddleware, { registerChain } from "./chained-actions";
+import chainedActionsMiddleware from "./chained-actions";
 import logger from "redux-logger";
 
 import rootReducer from "./rootReducer";
@@ -42,9 +42,6 @@ window.onload = () => {
   );
 };
 
-// Test: Öffne Geschichte und lade Charaktere:
+// Test: Öffne Geschichte:
 import story from "./story";
-import charactersList from "./characters/list";
-registerChain(story.actionTypes.OPEN_STORY_SUCCESSFUL,
-              charactersList.actions.findCharacters);
 store.dispatch(story.actions.openStoryDialog());
