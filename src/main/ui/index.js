@@ -7,14 +7,15 @@ import ReactDOM from "react-dom";
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
-import {createStore, applyMiddleware} from "redux";
-import {Provider} from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
 import thunkMiddleware from "redux-thunk";
+import { syncReduxAndTitle } from "redux-title";
 import chainedActionsMiddleware from "./chained-actions";
 import logger from "redux-logger";
 
 import App from "./page/components/App";
-import {getMuiTheme, MuiThemeProvider} from "material-ui/styles/index";
+import { getMuiTheme, MuiThemeProvider } from "material-ui/styles/index";
 import PlotifyMainTheme from "./themes/PlotifyMainTheme";
 
 import rootReducer from "./rootReducer";
@@ -28,6 +29,7 @@ if (isDev) {
 }
 
 const store = createStore(rootReducer, middleware);
+syncReduxAndTitle(store);
 
 window.onload = () => {
   ReactDOM.render(

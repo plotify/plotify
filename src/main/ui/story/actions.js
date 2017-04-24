@@ -4,6 +4,10 @@ import { isStoryOpen } from "./selectors";
 import * as c from "../../shared/stories/ipc-channels";
 import { sendToModel } from "../../shared/commons/ipc";
 
+import path from "path";
+import { updateTitle } from "redux-title";
+const productName = require("../../package.json").productName;
+
 export function openStoryDialog() {
   return dispatch => {
     return Promise.resolve()
@@ -61,6 +65,7 @@ function openStoryIfNoStoryIsOpen(file) {
       return Promise.resolve()
         .then(() => dispatch(openStoryRequest(file)))
         .then(() => sendToModel(c.OPEN_STORY, file))
+        .then(() => dispatch(updateTitle(path.basename(file, ".story") + " - " + productName)))
         .then(() => dispatch(openStorySuccessful()))
         .catch(error => dispatch(openStoryFailed(error)));
     }
