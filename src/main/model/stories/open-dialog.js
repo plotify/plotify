@@ -1,6 +1,5 @@
 import { sendCallback } from "../../shared/commons/ipc";
 import { OPEN_STORY_DIALOG } from "../../shared/stories/ipc-channels";
-import { NoStoryChosenError } from "../../shared/stories/errors";
 import { openStory } from "./open";
 
 import { getMainWindow } from "../main-window";
@@ -26,7 +25,7 @@ export function openStoryDialog() {
       if (paths) {
         resolve(paths[0]);
       } else {
-        reject(new NoStoryChosenError());
+        resolve(null);
       }
 
     });

@@ -18,15 +18,6 @@ export class UnsupportedFileVersionError extends Error {
 
 }
 
-export class NoStoryChosenError extends Error {
-
-  constructor() {
-    super("No story chosen by user.");
-    this.name = "NoStoryChosenError";
-  }
-
-}
-
 // Close:
 
 export class CouldNotCloseStoryError extends Error {

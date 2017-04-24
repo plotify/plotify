@@ -7,30 +7,32 @@ import { sendToModel } from "../../shared/commons/ipc";
 export function openStoryDialog() {
   return (dispatch, getState) => {
     return Promise.resolve()
-      .then(() => validateOpenStory(getState()))
       .then(() => sendToModel(c.OPEN_STORY_DIALOG))
-      .then(file => dispatch(openStory(file)))
-      .catch(error => dispatch(openStoryFailed(error)));
+      .then(file => {
+        if (file) {
+          return dispatch(openStory(file));
+        } else {
+          return Promise.resolve();
+        }
+      })
+      .catch(error => console.log("Fehler beim Öffnen des Dialogs:", error));
   };
 }
 
 export function openStory(file) {
   return (dispatch, getState) => {
     return Promise.resolve()
-      .then(() => validateOpenStory(getState()))
-      .then(() => dispatch(openStoryRequest(file)))
-      .then(() => sendToModel(c.OPEN_STORY, file))
-      .then(() => dispatch(openStorySuccessful()))
-      .catch(error => dispatch(openStoryFailed(error)));
+      .then(() => dispatch(closeStory()))
+      .then(() => {
+        if (!isStoryOpen(getState())) {
+          return Promise.resolve()
+            .then(() => dispatch(openStoryRequest(file)))
+            .then(() => sendToModel(c.OPEN_STORY, file))
+            .then(() => dispatch(openStorySuccessful()))
+            .catch(error => dispatch(openStoryFailed(error)));
+        }
+      });
   };
-}
-
-function validateOpenStory(state) {
-  if (isStoryOpen(state)) {
-    return Promise.reject("A story is already open.");
-  } else {
-    return Promise.resolve();
-  }
 }
 
 export function closeStory() {
