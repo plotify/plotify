@@ -3,10 +3,7 @@ export function isStoryLoading(state) {
 }
 
 export function isStoryLoadingFailed(state) {
-  return state.story.loading === false &&
-         state.story.closing === false &&
-         state.story.file === null &&
-         state.story.error !== null;
+  return state.story.loadingFailed === true;
 }
 
 export function getStoryLoadingError(state) {
@@ -22,10 +19,7 @@ export function isStoryClosing(state) {
 }
 
 export function isStoryClosingFailed(state) {
-  return state.story.loading === false &&
-         state.story.closing === false &&
-         state.story.file !== null &&
-         state.story.error !== null;
+  return state.story.closingFailed === true;
 }
 
 export function getStoryClosingError(state) {

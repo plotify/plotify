@@ -11,9 +11,11 @@
   }
   story: {
     loading: false,
+    loadingFailed: false,
     closing: false,
-    open: true,
+    closingFailed: false,
     error: null,
+    open: true,
     file: "/home/mustermann/Dokumente/Neue Geschichte.story"
   },
   characters: {
