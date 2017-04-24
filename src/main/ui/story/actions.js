@@ -9,7 +9,8 @@ export function openStoryDialog() {
     return Promise.resolve()
       .then(() => validateOpenStory(getState()))
       .then(() => sendToModel(c.OPEN_STORY_DIALOG))
-      .then(file => dispatch(openStory(file)));
+      .then(file => dispatch(openStory(file)))
+      .catch(error => dispatch(openStoryFailed(error)));
   };
 }
 

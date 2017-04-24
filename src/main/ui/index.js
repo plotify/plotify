@@ -7,11 +7,15 @@ import ReactDOM from "react-dom";
 import injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
 
-import { createStore, applyMiddleware } from "redux";
-import { Provider } from "react-redux";
+import {createStore, applyMiddleware} from "redux";
+import {Provider} from "react-redux";
 import thunkMiddleware from "redux-thunk";
 import chainedActionsMiddleware from "./chained-actions";
 import logger from "redux-logger";
+
+import App from "./page/components/App";
+import {getMuiTheme, MuiThemeProvider} from "material-ui/styles/index";
+import PlotifyMainTheme from "./themes/PlotifyMainTheme";
 
 import rootReducer from "./rootReducer";
 
@@ -25,23 +29,13 @@ if (isDev) {
 
 const store = createStore(rootReducer, middleware);
 
-class App extends React.Component {
-  render() {
-    return (
-      <h1>Hello world!</h1>
-    );
-  }
-}
-
 window.onload = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App />
+      <MuiThemeProvider muiTheme={getMuiTheme(PlotifyMainTheme)}>
+        <App/>
+      </MuiThemeProvider>
     </Provider>,
     document.getElementById("root")
   );
 };
-
-// Test: Öffne Geschichte:
-import story from "./story";
-store.dispatch(story.actions.openStoryDialog());
