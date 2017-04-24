@@ -94,9 +94,9 @@ function closeStorySuccessful() {
   };
 }
 
-function closeStoryFailed() {
+function closeStoryFailed(error) {
   return {
     type: t.CLOSE_STORY_FAILED,
-    payload: {}
+    payload: { error }
   };
 }
