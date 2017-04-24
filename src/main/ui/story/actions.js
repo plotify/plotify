@@ -31,6 +31,14 @@ export function closeStory() {
   };
 }
 
+export function createStory() {
+  return dispatch => {
+    return Promise.resolve()
+      .then(() => dispatch(closeIfStoryIsOpen()))
+      .then(() => dispatch(createStoryIfNoStoryIsOpen()));
+  };
+}
+
 function openStoryIfFileSelected(file) {
   return dispatch => {
     if (file) {
@@ -55,6 +63,21 @@ function openStoryIfNoStoryIsOpen(file) {
         .then(() => sendToModel(c.OPEN_STORY, file))
         .then(() => dispatch(openStorySuccessful()))
         .catch(error => dispatch(openStoryFailed(error)));
+    }
+  };
+}
+
+function createStoryIfNoStoryIsOpen() {
+  return (dispatch, getState) => {
+    if (!isStoryOpen(getState())) {
+      let createdFile;
+      return Promise.resolve()
+        .then(() => dispatch(createStoryRequest()))
+        .then(() => sendToModel(c.CREATE_STORY))
+        .then(file => createdFile = file)
+        .then(() => dispatch(createStorySuccessful()))
+        .then(() => dispatch(openStory(createdFile)))
+        .catch(error => dispatch(createStoryFailed(error)));
     }
   };
 }
@@ -97,6 +120,27 @@ function closeStorySuccessful() {
 function closeStoryFailed(error) {
   return {
     type: t.CLOSE_STORY_FAILED,
+    payload: { error }
+  };
+}
+
+function createStoryRequest() {
+  return {
+    type: t.CREATE_STORY_REQUEST,
+    payload: {}
+  };
+}
+
+function createStorySuccessful() {
+  return {
+    type: t.CREATE_STORY_SUCCESSFUL,
+    payload: {}
+  };
+}
+
+function createStoryFailed(error) {
+  return {
+    type: t.CREATE_STORY_FAILED,
     payload: { error }
   };
 }

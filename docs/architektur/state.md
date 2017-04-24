@@ -14,6 +14,8 @@
     loadingFailed: false,
     closing: false,
     closingFailed: false,
+    creating: false,
+    creationFailed: false,
     error: null,
     open: true,
     file: "/home/mustermann/Dokumente/Neue Geschichte.story"

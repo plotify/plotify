@@ -5,6 +5,8 @@ const initialState = {
   loadingFailed: false,
   closing: false,
   closingFailed: false,
+  creating: false,
+  creationFailed: false,
   error: null,
   open: false,
   file: null
@@ -19,6 +21,8 @@ export default function reducer(state = initialState, action) {
         loadingFailed: false,
         closing: false,
         closingFailed: false,
+        creating: false,
+        creationFailed: false,
         error: null,
         open: false,
         file: action.payload.file,
@@ -42,6 +46,8 @@ export default function reducer(state = initialState, action) {
         loadingFailed: false,
         closing: true,
         closingFailed: false,
+        creating: false,
+        creationFailed: false,
         error: null
       });
     case t.CLOSE_STORY_SUCCESSFUL:
@@ -54,6 +60,29 @@ export default function reducer(state = initialState, action) {
       return Object.assign({}, state, {
         closing: false,
         closingFailed: true,
+        error: action.payload.error
+      });
+
+    case t.CREATE_STORY_REQUEST:
+      return Object.assign({}, state, {
+        loading: false,
+        loadingFailed: false,
+        closing: false,
+        closingFailed: false,
+        creating: true,
+        creationFailed: false,
+        error: null
+      });
+
+    case t.CREATE_STORY_SUCCESSFUL:
+      return Object.assign({}, state, {
+        creating: false
+      });
+
+    case t.CREATE_STORY_FAILED:
+      return Object.assign({}, state, {
+        creating: false,
+        creationFailed: true,
         error: action.payload.error
       });
 

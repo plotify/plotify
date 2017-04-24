@@ -1,8 +1,8 @@
 import React from "react";
 import HoveringPaper from "./HoveringPaper";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import * as s from "../../story/selectors";
-import {openStoryDialog} from "../../story/actions";
+import { openStoryDialog, createStory } from "../../story/actions";
 
 const styles = {
   wrapper: {
@@ -42,14 +42,16 @@ class MixedWelcomeSection extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    loading: s.isStoryLoading(state),
+    loading: s.isStoryLoading(state) ||
+             s.isStoryClosing(state) ||
+             s.isStoryCreating(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     handleCreateStory: () => {
-      // dispatch(createStory());
+      dispatch(createStory());
     },
     handleOpenStory: () => {
       dispatch(openStoryDialog());

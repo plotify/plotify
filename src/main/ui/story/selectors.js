@@ -30,6 +30,22 @@ export function getStoryClosingError(state) {
   }
 }
 
+export function isStoryCreating(state) {
+  return state.story.creating === true;
+}
+
+export function isStoryCreationFailed(state) {
+  return state.story.creationFailed === true;
+}
+
+export function getStoryCreationError(state) {
+  if (isStoryCreationFailed(state)) {
+    return state.story.error;
+  } else {
+    return null;
+  }
+}
+
 export function isStoryOpen(state) {
   return state.story.open === true;
 }
