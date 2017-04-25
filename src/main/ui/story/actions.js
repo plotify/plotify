@@ -1,7 +1,7 @@
 import * as t from "./actionTypes";
 import { isStoryOpen } from "./selectors";
 
-import snackbar from "../snackbar";
+import { showSnackbar } from "../snackbar/actions";
 
 import * as c from "../../shared/stories/ipc-channels";
 import { sendToModel } from "../../shared/commons/ipc";
@@ -87,7 +87,7 @@ function createStoryIfNoStoryIsOpen() {
         .then(file => createdFile = file)
         .then(() => dispatch(createStorySuccessful()))
         .then(() => dispatch(openStory(createdFile)))
-        .then(() => dispatch(snackbar.actions.showSnackbar(storyCreatedMessage)))
+        .then(() => dispatch(showSnackbar(storyCreatedMessage)))
         .catch(error => dispatch(createStoryFailed(error)));
     }
   };
