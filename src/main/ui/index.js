@@ -35,7 +35,7 @@ window.onload = () => {
   ReactDOM.render(
     <Provider store={store}>
       <MuiThemeProvider muiTheme={getMuiTheme(PlotifyMainTheme)}>
-        <App/>
+        <App />
       </MuiThemeProvider>
     </Provider>,
     document.getElementById("root")

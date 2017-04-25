@@ -7,6 +7,7 @@ import CharacterPage from "../../characters/components/CharacterPage";
 import WelcomePage from "../../welcome/components/WelcomePage";
 import { connect } from "react-redux";
 import { spacing } from "../../themes/PlotifyMainTheme";
+import Snackbar from "../../snackbar/components/Snackbar";
 
 const mapStateToProps = (state) => {
   return {
@@ -29,7 +30,7 @@ const styles = {
     right: 0,
     bottom: 0,
   },
-}
+};
 
 class AppComponent extends Component {
   render() {
@@ -52,6 +53,7 @@ class AppComponent extends Component {
           {page}
         </div>
 
+        <Snackbar />
       </div>
     );
   }
