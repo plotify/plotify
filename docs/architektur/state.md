@@ -4,6 +4,14 @@
 
 ```javascript
 {
+  title: "Plotify",
+  snackbar: {
+    open: false,
+    message: "",
+    autoHideDuration: 5000,
+    actionLabel: undefined,
+    actionCreator: undefined
+  },
   page: {
       id: "characters",
       title: "Charaktere",

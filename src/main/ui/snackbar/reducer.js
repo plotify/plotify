@@ -3,7 +3,9 @@ import * as t from "./actionTypes";
 const initialState = {
   open: false,
   message: "",
-  autoHideDuration: 5000
+  autoHideDuration: 5000,
+  actionLabel: undefined,
+  actionCreator: undefined
 };
 
 export default function reducer(state = initialState, action) {
@@ -12,12 +14,16 @@ export default function reducer(state = initialState, action) {
     case t.SHOW_SNACKBAR:
       return Object.assign({}, state, {
         open: true,
-        message: action.payload.message
+        message: action.payload.message,
+        actionLabel: action.payload.actionLabel,
+        actionCreator: action.payload.actionCreator
       });
 
     case t.HIDE_SNACKBAR:
       return Object.assign({}, state, {
-        open: false
+        open: false,
+        actionLabel: undefined,
+        actionCreator: undefined
       });
 
     default:

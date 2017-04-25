@@ -1,9 +1,9 @@
 import * as t from "./actionTypes";
 
-export function showSnackbar(message) {
+export function showSnackbar(message, actionLabel, actionCreator) {
   return {
     type: t.SHOW_SNACKBAR,
-    payload: { message }
+    payload: { message, actionLabel, actionCreator }
   };
 }
 

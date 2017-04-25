@@ -1,5 +1,5 @@
 import * as t from "./actionTypes";
-import { isStoryOpen } from "./selectors";
+import { isStoryOpen, getOpenStoryFile } from "./selectors";
 
 import { showSnackbar } from "../snackbar/actions";
 
@@ -7,11 +7,14 @@ import * as c from "../../shared/stories/ipc-channels";
 import { sendToModel } from "../../shared/commons/ipc";
 
 import path from "path";
+import { shell } from "electron";
 import { updateTitle } from "redux-title";
 
 const productName = require("../../package.json").productName;
 const fileExtension = ".story";
 const storyCreatedMessage = "Deine Geschichte wurde erfolgreich erstellt.";
+const storyCreatedActionLabel = "Speicherort öffnen";
+const storyCreatedActionCreator = openStoryFileLocation;
 
 export function openStoryDialog() {
   return dispatch => {
@@ -45,6 +48,12 @@ export function createStory() {
     return Promise.resolve()
       .then(() => dispatch(closeIfStoryIsOpen()))
       .then(() => dispatch(createStoryIfNoStoryIsOpen()));
+  };
+}
+
+export function openStoryFileLocation() {
+  return (dispatch, getState) => {
+    shell.showItemInFolder(getOpenStoryFile(getState()));
   };
 }
 
@@ -87,7 +96,8 @@ function createStoryIfNoStoryIsOpen() {
         .then(file => createdFile = file)
         .then(() => dispatch(createStorySuccessful()))
         .then(() => dispatch(openStory(createdFile)))
-        .then(() => dispatch(showSnackbar(storyCreatedMessage)))
+        .then(() => dispatch(showSnackbar(
+          storyCreatedMessage, storyCreatedActionLabel, storyCreatedActionCreator)))
         .catch(error => dispatch(createStoryFailed(error)));
     }
   };
