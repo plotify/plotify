@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const styles = {
   contentWrapper: {
-    position: "fixed",
+    // position: "fixed",
     overflow: "hidden",
     top: spacing.desktopKeylineIncrement,
     left: 0,
@@ -45,7 +45,7 @@ class AppComponent extends Component {
         break;
     }
     return (
-      <div id="PlotifyApp">
+      <div id="PlotifyApp" className="container-fluid" style={{padding: 0}}>
         <PlotifyAppBar title={this.props.title}/>
 
         <div style={ styles.contentWrapper }>

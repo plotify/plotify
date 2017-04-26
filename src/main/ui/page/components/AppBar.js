@@ -5,6 +5,7 @@ import { Toolbar, ToolbarGroup } from "material-ui/Toolbar";
 import IconButton from "material-ui/IconButton";
 import ContentRedo from "material-ui/svg-icons/content/redo";
 import ContentUndo from "material-ui/svg-icons/content/undo";
+import ActionMenu from "./ActionMenu";
 
 const styles = {
   appBar: {
@@ -30,19 +31,15 @@ export default class PlotifyAppBar extends Component {
 
   closeActionMenu() {
     this.setState({
-      actionMenu: {
-        open: false
-      }
+      open: false
     });
   }
 
   toggleActionMenu(event) {
     event.preventDefault();
     this.setState({
-      actionMenu: {
-        open: !this.state.actionMenu.open,
-        anchorEl: event.currentTarget
-      }
+      open: !this.state.open,
+      anchorEl: event.currentTarget
     });
   }
 
@@ -52,11 +49,13 @@ export default class PlotifyAppBar extends Component {
         title={this.props.title}
         style={styles.appBar}
         onLeftIconButtonTouchTap={this.toggleActionMenu}>
-
+        <ActionMenu
+          open={this.state.open}
+          anchorEl={this.state.anchorEl}
+          onRequestClose={this.closeActionMenu}/>
         <Toolbar style={styles.appBar.toolbar}>
           <ToolbarGroup>
-            <IconButton
-              tooltip="Rückgängig">
+            <IconButton tooltip="Rückgängig">
               <ContentUndo color="white"/>
             </IconButton>
             <IconButton tooltip="Wiederherstellen">
