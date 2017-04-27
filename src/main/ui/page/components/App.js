@@ -6,8 +6,9 @@ import { PAGES } from "../constants";
 import CharacterPage from "../../characters/components/CharacterPage";
 import WelcomePage from "../../welcome/components/WelcomePage";
 import { connect } from "react-redux";
-import { spacing } from "../../themes/PlotifyMainTheme";
+import { palette, spacing } from "../../themes/PlotifyMainTheme";
 import Snackbar from "../../snackbar/components/Snackbar";
+import { white } from "material-ui/styles/colors";
 
 const mapStateToProps = (state) => {
   return {
@@ -22,6 +23,11 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const styles = {
+  app: {
+    background: palette.accent2Color,
+    height: "100%",
+    width: "100%",
+  },
   pageWrapper: {
     position: "fixed",
     overflow: "hidden",
@@ -55,7 +61,7 @@ class AppComponent extends Component {
         break;
     }
     return (
-      <div id="PlotifyApp">
+      <div id="PlotifyApp" style={styles.app}>
         <PlotifyAppBar title={this.props.title}/>
 
         <div style={styles.pageWrapper}>

@@ -7,6 +7,7 @@ import { white } from "material-ui/styles/colors";
 import { FloatingActionButton, Paper } from "material-ui";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import { spacing } from "../../themes/PlotifyMainTheme";
+import SearchBar from "./SearchBar";
 
 const mapStateToProps = (state) => {
   return {
@@ -15,8 +16,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-  };
+  return {};
 };
 
 const styles = {
@@ -36,11 +36,20 @@ const styles = {
   profile: {
     position: "relative",
     height: "100%",
-    flexGrow: 3,
+    flexGrow: 4,
+  },
+  addCharacterButtonLeft: {
+    position: "absolute",
+    color: white,
+    right: spacing.desktopToolbarHeight / 2,
+    top: 36,
+    /*marginLeft: "calc(50% - " + spacing.iconSize + "px)",*/
+    /*bottom: 24,*/
   },
   addCharacterButton: {
     position: "absolute",
     color: white,
+    left: spacing.desktopToolbarHeight * -1 / 2,
     marginLeft: "calc(50% - " + spacing.iconSize + "px)",
     bottom: 24,
   }
@@ -51,17 +60,20 @@ class CharacterPageComponent extends Component {
     return (
       <div id="CharacterPage" style={styles.root}>
         <Paper zDepth={1} style={styles.listWrapper}>
+          <SearchBar/>
           <CharacterList />
           <FloatingActionButton style={styles.addCharacterButton}>
             <ContentAdd  />
           </FloatingActionButton>
         </Paper>
-        {
-          this.props.isCharacterSelected &&
-          <div style={styles.profile}>
+
+        <div style={styles.profile}>
+          {
+            this.props.isCharacterSelected &&
             <CharacterProfile/>
-          </div>
-        }
+          }
+        </div>
+
       </div>
     );
   }

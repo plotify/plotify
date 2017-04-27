@@ -21,9 +21,14 @@ html, body, #root, #app {
 }
 
 ::-webkit-scrollbar-track {
-  background-color: #FFFFFF;
+  background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
+  background-color: #2D0444;
+  border-radius: 8px;
+}
+
+div:hover::-webkit-scrollbar-thumb {
   background-color: #2D0444;
 }

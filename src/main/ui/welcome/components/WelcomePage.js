@@ -4,12 +4,30 @@ import { connect } from "react-redux";
 import * as s from "../../story/selectors";
 import { createStory, openStoryDialog } from "../../story/actions";
 
+const mapStateToProps = (state) => {
+  return {
+    isLoading: s.isStoryLoading(state) ||
+    s.isStoryClosing(state) ||
+    s.isStoryCreating(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    handleCreateStory: () => {
+      dispatch(createStory());
+    },
+    handleOpenStory: () => {
+      dispatch(openStoryDialog());
+    }
+  };
+};
+
 const styles = {
   wrapper: {
     position: "fixed",
     height: "100%",
     width: "100%",
-    background: "white",
     textAlign: "center",
     align: "center",
   },
@@ -26,6 +44,7 @@ class WelcomePageComponent extends Component {
     return (
       <div style={styles.wrapper}>
         <div style={styles.paperWrapper}>
+          {this.props.isLoading && "loading..."}
           <HoveringPaper
             onTouchTap={this.props.handleCreateStory}
             background="resources/icons/material-new.png"
@@ -39,25 +58,6 @@ class WelcomePageComponent extends Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return {
-    loading: s.isStoryLoading(state) ||
-    s.isStoryClosing(state) ||
-    s.isStoryCreating(state),
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    handleCreateStory: () => {
-      dispatch(createStory());
-    },
-    handleOpenStory: () => {
-      dispatch(openStoryDialog());
-    }
-  };
-};
 
 const WelcomePage = connect(
   mapStateToProps,
