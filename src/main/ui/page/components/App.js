@@ -22,13 +22,23 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const styles = {
-  contentWrapper: {
-    // position: "fixed",
+  pageWrapper: {
+    position: "fixed",
     overflow: "hidden",
     top: spacing.desktopKeylineIncrement,
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  navigationWrapper: {
+    width: spacing.desktopToolbarHeight,
+    height: "100%",
+    float: "left",
+  },
+  pageContentWrapper: {
+    width: "calc(100% - " + spacing.desktopToolbarHeight + "px)",
+    marginLeft: spacing.desktopToolbarHeight,
+    height: "100%",
   },
 };
 
@@ -45,12 +55,18 @@ class AppComponent extends Component {
         break;
     }
     return (
-      <div id="PlotifyApp" className="container-fluid" style={{padding: 0}}>
+      <div id="PlotifyApp">
         <PlotifyAppBar title={this.props.title}/>
 
-        <div style={ styles.contentWrapper }>
-          { this.props.hasNavigation && <Navigation /> }
-          {page}
+        <div style={styles.pageWrapper}>
+          { this.props.hasNavigation &&
+          <div style={styles.navigationWrapper}>
+            <Navigation />
+          </div>
+          }
+          <div style={styles.pageContentWrapper}>
+            {page}
+          </div>
         </div>
 
         <Snackbar />

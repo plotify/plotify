@@ -9,7 +9,7 @@ import {
   white
 } from "material-ui/styles/colors";
 import uispacing from "material-ui/styles/spacing";
-import {fade} from "material-ui/utils/colorManipulator";
+import { fade } from "material-ui/utils/colorManipulator";
 
 const PlotifyMainTheme = {
   spacing: uispacing,

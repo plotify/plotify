@@ -6,13 +6,14 @@ import IconButton from "material-ui/IconButton";
 import ContentRedo from "material-ui/svg-icons/content/redo";
 import ContentUndo from "material-ui/svg-icons/content/undo";
 import ActionMenu from "./ActionMenu";
+import { white } from "material-ui/styles/colors";
 
 const styles = {
   appBar: {
-    color: palette.white,
+    color: white,
     toolbar: {
       background: palette.primary1Color,
-      color: palette.white,
+      color: white,
       marginRight: 0,
       paddingRight: 0
     }

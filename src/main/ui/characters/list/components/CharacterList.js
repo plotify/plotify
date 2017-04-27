@@ -30,11 +30,15 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+const styles = {
+  height: "100%",
+  overflowY: "auto",
+};
 
 class CharacterListComponent extends Component {
   render() {
     return (
-      <List>
+      <List style={styles}>
         {
           this.props.characters.map((character) => {
             return (
@@ -47,7 +51,6 @@ class CharacterListComponent extends Component {
             );
           })
         }
-
       </List>
     );
   }

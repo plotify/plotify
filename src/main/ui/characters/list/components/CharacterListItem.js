@@ -1,6 +1,7 @@
 import React from "react";
-import palette from "../../../themes/PlotifyMainTheme";
+import { palette } from "../../../themes/PlotifyMainTheme";
 import { Avatar, ListItem } from "material-ui";
+import { fade } from "material-ui/utils/colorManipulator";
 
 const styles = {
   letterAvatar: {
@@ -32,7 +33,7 @@ export default class CharacterListItem extends React.Component {
       <ListItem
         style={this.props.isSelected ? styles.selected : {}}
         onTouchTap={this.handleClick}
-        hoverColor={palette.accent2Color}
+        hoverColor={fade(palette.primary2Color, 0.54)}
         primaryText={this.props.name || "Kein Name"}
         leftAvatar={
           <Avatar
