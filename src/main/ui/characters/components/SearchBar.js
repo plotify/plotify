@@ -19,13 +19,15 @@ const mapDispatchToProps = (dispatch) => {
 
 const styles = {
   paper: {
-    padding: 8,
+    paddingLeft: 12,
+    paddingRight: 12,
   },
   searchIcon: {
     float: "left",
-    height: 48,
-    width: 48,
-    padding: 12,
+    height: 24,
+    width: 24,
+    marginTop: 12,
+    marginRight: 12,
   },
   textField: {
     display: "inline-block",

@@ -28,15 +28,14 @@ const styles = {
   listWrapper: {
     position: "relative",
     height: "100%",
-    flexGrow: 1,
     zIndex: 2,
     background: white,
-    //overflowY: "auto",
+    width: 350,
   },
   profile: {
     position: "relative",
     height: "100%",
-    flexGrow: 4,
+    flexGrow: 1,
   },
   addCharacterButtonLeft: {
     position: "absolute",
@@ -50,7 +49,7 @@ const styles = {
     position: "absolute",
     color: white,
     left: spacing.desktopToolbarHeight * -1 / 2,
-    marginLeft: "calc(50% - " + spacing.iconSize + "px)",
+    marginLeft: "50%",
     bottom: 24,
   }
 };
