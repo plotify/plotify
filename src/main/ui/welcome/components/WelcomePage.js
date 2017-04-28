@@ -6,9 +6,9 @@ import { createStory, openStoryDialog } from "../../story/actions";
 
 const mapStateToProps = (state) => {
   return {
-    isLoading: s.isStoryLoading(state) ||
-    s.isStoryClosing(state) ||
-    s.isStoryCreating(state),
+    isLoading: s.isStoryLoading(state),
+    isStoryClosing: s.isStoryClosing(state),
+    isStoryCreating: s.isStoryCreating(state),
   };
 };
 
@@ -28,14 +28,6 @@ const styles = {
     position: "fixed",
     height: "100%",
     width: "100%",
-    textAlign: "center",
-    align: "center",
-  },
-  paperWrapper: {
-    position: "absolute",
-    width: "100%",
-    left: "50%",
-    marginLeft: -450,
   },
 };
 
@@ -43,17 +35,19 @@ class WelcomePageComponent extends Component {
   render() {
     return (
       <div style={styles.wrapper}>
-        <div style={styles.paperWrapper}>
-          {this.props.isLoading && "loading..."}
-          <HoveringPaper
-            onTouchTap={this.props.handleCreateStory}
-            background="resources/icons/material-new.png"
-            title="Neue Geschichte erstellen"/>
-          <HoveringPaper
-            onTouchTap={this.props.handleOpenStory}
-            background="resources/icons/material-open.png"
-            title="Geschichte öffnen"/>
-        </div>
+        <HoveringPaper
+          isLoading={this.props.isStoryCreating}
+          onTouchTap={this.props.handleCreateStory}
+          background="resources/icons/material-new.png"
+          title="Neue Geschichte"
+          wrapperStyle={{ left: "10%" }}
+        />
+        <HoveringPaper
+          onTouchTap={this.props.handleOpenStory}
+          background="resources/icons/material-open.png"
+          title="Geschichte öffnen"
+          wrapperStyle={{ left: "10%" }}
+        />
       </div>
     );
   }

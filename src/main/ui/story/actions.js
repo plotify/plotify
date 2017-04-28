@@ -21,7 +21,7 @@ export function openStoryDialog() {
     return Promise.resolve()
       .then(() => sendToModel(c.OPEN_STORY_DIALOG))
       .then(file => dispatch(openStoryIfFileSelected(file)))
-      .catch(error => console.log("Fehler beim Öffnen des Dialogs:", error));
+      .catch(error => console.log("Es wurde keine Geschichte ausgewählt:", error));
   };
 }
 
@@ -60,7 +60,11 @@ export function openStoryFileLocation() {
 function openStoryIfFileSelected(file) {
   return dispatch => {
     if (file) {
-      return dispatch(openStory(file));
+      return Promise.resolve()
+        .then(() => dispatch(openStory(file)))
+        .then(() => dispatch(showSnackbar("\"" + path.basename(file, fileExtension) + "\" erfolgreich geöffnet")));
+    } else {
+      return dispatch(showSnackbar("Es wurde keine Geschichte ausgewählt"));
     }
   };
 }

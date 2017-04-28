@@ -42,8 +42,6 @@ const styles = {
     color: white,
     right: spacing.desktopToolbarHeight / 2,
     top: 36,
-    /*marginLeft: "calc(50% - " + spacing.iconSize + "px)",*/
-    /*bottom: 24,*/
   },
   addCharacterButton: {
     position: "absolute",
