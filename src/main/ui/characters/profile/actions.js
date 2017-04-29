@@ -16,6 +16,13 @@ export function loadProfile() {
   };
 }
 
+export function setCharacterName(changedName) {
+  return {
+    type: t.SET_CHARACTER_NAME,
+    payload: { changedName }
+  };
+}
+
 function loadProfileRequest(characterId, name, deleted) {
   return {
     type: t.LOAD_PROFILE_REQUEST,

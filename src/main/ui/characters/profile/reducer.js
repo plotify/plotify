@@ -6,7 +6,7 @@ export default function reducer(state = initialState, action) {
   switch (action.type) {
 
     case t.LOAD_PROFILE_REQUEST:
-      const s = Object.assign({}, state, {
+      return Object.assign({}, state, {
         characterId: action.payload.characterId,
         savedName: action.payload.name,
         changedName: action.payload.name,
@@ -21,7 +21,6 @@ export default function reducer(state = initialState, action) {
         groups: {},
         order: []
       });
-      return s;
 
     case t.LOAD_PROFILE_SUCCESSFUL:
       return Object.assign({}, state, {
@@ -45,6 +44,11 @@ export default function reducer(state = initialState, action) {
             savingFailed: false,
             error: action.payload.error
         }
+      });
+
+    case t.SET_CHARACTER_NAME:
+      return Object.assign({}, state, {
+        changedName: action.payload.changedName
       });
 
     default:
