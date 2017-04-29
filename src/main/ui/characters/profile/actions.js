@@ -1,8 +1,10 @@
 import * as t from "./actionTypes";
+import * as s from "./selectors";
 
 import list from "../list";
 
 import * as c from "../../../shared/characters/ipc-channels";
+import types from "../../../shared/characters/change-type";
 import { sendToModel } from "../../../shared/commons/ipc";
 
 export function loadProfile() {
@@ -23,6 +25,24 @@ export function setCharacterName(changedName) {
   };
 }
 
+export function saveCharacterName() {
+  return (dispatch, getState) => {
+    if (s.hasCharacterNameChanged(getState())) {
+      const params = {
+        characterId: s.getCharacterId(getState()),
+        type: types.CHARACTER,
+        typeId: s.getCharacterId(getState()),
+        changes: { name: s.getCharacterName(getState()) }
+      };
+      return Promise.resolve()
+        .then(() => dispatch(saveCharacterNameRequest()))
+        .then(() => sendToModel(c.UPDATE_CHARACTER, params))
+        .then(() => dispatch(saveCharacterNameSuccessful()))
+        .catch(error => dispatch(saveCharacterNameFailed(error)));
+    }
+  };
+}
+
 function loadProfileRequest(characterId, name, deleted) {
   return {
     type: t.LOAD_PROFILE_REQUEST,
@@ -38,9 +58,29 @@ function loadProfileSuccessful(groups) {
 }
 
 function loadProfileFailed(error) {
-  console.log(error);
   return {
     type: t.LOAD_PROFILE_FAILED,
+    payload: { error }
+  };
+}
+
+function saveCharacterNameRequest() {
+  return {
+    type: t.SAVE_CHARACTER_NAME_REQUEST,
+    payload: {}
+  };
+}
+
+function saveCharacterNameSuccessful() {
+  return {
+    type: t.SAVE_CHARACTER_NAME_SUCCESSFUL,
+    payload: {}
+  };
+}
+
+function saveCharacterNameFailed(error) {
+  return {
+    type: t.SAVE_CHARACTER_NAME_FAILED,
     payload: { error }
   };
 }

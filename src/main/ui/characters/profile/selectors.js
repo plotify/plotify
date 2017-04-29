@@ -5,11 +5,15 @@ export function isVisible(state) {
 }
 
 export function getCharacterId(state) {
-  return state.characters.profile.charactersId;
+  return state.characters.profile.characterId;
 }
 
 export function getCharacterName(state) {
   return state.characters.profile.changedName;
+}
+
+export function hasCharacterNameChanged(state) {
+  return state.characters.profile.changedName !== state.characters.profile.savedName;
 }
 
 export function isCharacterDeleted(state) {

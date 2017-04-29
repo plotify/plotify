@@ -51,6 +51,40 @@ export default function reducer(state = initialState, action) {
         changedName: action.payload.changedName
       });
 
+    case t.SAVE_CHARACTER_NAME_REQUEST:
+      return Object.assign({}, state, {
+        status: {
+            loading: false,
+            loadingFailed: false,
+            saving: true,
+            savingFailed: false,
+            error: null
+        }
+      });
+
+    case t.SAVE_CHARACTER_NAME_SUCCESSFUL:
+      return Object.assign({}, state, {
+        status: {
+            loading: false,
+            loadingFailed: false,
+            saving: false,
+            savingFailed: false,
+            error: null
+        },
+        savedName: state.changedName
+      });
+
+    case t.SAVE_CHARACTER_NAME_FAILED:
+      return Object.assign({}, state, {
+        status: {
+            loading: false,
+            loadingFailed: false,
+            saving: false,
+            savingFailed: true,
+            error: action.payload.error
+        }
+      });
+
     default:
       return state;
 
