@@ -39,6 +39,13 @@ export function unselectCharacter() {
   };
 }
 
+export function updateCharacterName(characterId, name) {
+  return {
+    type: t.UPDATE_CHARACTER_NAME,
+    payload: { characterId, name }
+  };
+}
+
 function findCharactersRequest() {
   return {
     type: t.FIND_CHARACTERS_REQUEST,
