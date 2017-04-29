@@ -1,49 +1,71 @@
 import list from "../list";
 
 export function isVisible(state) {
-  return list.selectors.isCharacterSelected(state);
+  return state.characters.profile.hasOwnProperty("characterId");
 }
 
 export function getCharacterId(state) {
-  return list.selectors.getSelectedCharacterId(state);
+  return state.characters.profile.charactersId;
 }
 
 export function getCharacterName(state) {
-  return "Erika Musterfrau";
+  return state.characters.profile.changedName;
 }
 
 export function isCharacterDeleted(state) {
-  return false;
+  return state.characters.profile.deleted;
+}
+
+export function isLoading(state) {
+  return state.characters.profile.status.loading;
+}
+
+export function isLoadingFailed(state) {
+  return state.characters.profile.status.loadingFailed;
+}
+
+export function getLoadingError(state) {
+  if (isLoadingFailed(state)) {
+    return state.characters.profile.status.error;
+  } else {
+    return null;
+  }
+}
+
+export function isSaving(state) {
+  return state.characters.profile.status.saving;
+}
+
+export function isSavingFailed(state) {
+  return state.characters.profile.status.savingFailed;
+}
+
+export function getSavingError(state) {
+  if (isSavingFailed(state)) {
+    return state.characters.profile.status.error;
+  } else {
+    return null;
+  }
 }
 
 export function getGroupsInOrder(state) {
-  return [
-    {
-      id: "ab24ccad-1b6a-4c5a-87db-ac6644dbdc0b",
-      title: "Physis",
-      entries: [
-        {
-          id: "a4b48609-525a-4fb3-ae2d-b396d2453fd9",
-          title: "Alter",
-          value: "20"
-        },
-         {
-           id: "7c7c87f6-5544-4a83-8df6-f541b2025406",
-           title: "Größe",
-           value: "Riesig"
-         }
-      ]
-    },
-    {
-      id: "571bce9a-0cdc-4b0b-9cdd-86c65058ed1c",
-      title: "Aussehen",
-      entries: [
-        {
-          id: "da714282-60c2-4347-8706-1c5b7e6e6c94",
-          title: "Gesicht",
-          value: "Rot und rund"
-        }
-      ]
-    }
-  ];
+  return state.characters.profile.order.map(id => mapToGroup(state, id));
+}
+
+function mapToGroup(state, id) {
+  const group = state.characters.profile.groups[id];
+  return {
+    id: group.id,
+    title: group.title,
+    entries: group.order.map(id => mapToEntry(group, id))
+  };
+}
+
+function mapToEntry(group, id) {
+  const entry = group.entries[id];
+  return {
+    id: entry.id,
+    title: entry.title,
+    value: entry.changedValue
+  };
 }

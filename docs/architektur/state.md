@@ -54,8 +54,16 @@
   },
   profile: {
     characterId: "1ce1ccfd-6137-48e4-a6a2-36e47f281568",
-    name: "Erika Musterfrau",
+    savedName: "Erika Musterfrau",
+    changedName: "Erika Musterfrau",
     deleted: false,
+    status: {
+        loading: false,
+        loadingFailed: false,
+        saving: false,
+        savingFailed: false,
+        error: null
+    }
     groups: {
       "ab24ccad-1b6a-4c5a-87db-ac6644dbdc0b": {
         id: "ab24ccad-1b6a-4c5a-87db-ac6644dbdc0b",
@@ -68,7 +76,7 @@
             changedValue: "20",
             status: {
               saving: false,
-              saved: false,
+              savingFailed: false,
               error: null
             }
           },
@@ -79,7 +87,7 @@
             changedValue: "Klein",
             status: {
               saving: true,
-              saved: false,
+              savingFailed: false,
               error: null
             }
           }

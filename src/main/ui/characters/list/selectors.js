@@ -26,3 +26,7 @@ export function isCharacterSelected(state) {
 export function getSelectedCharacterId(state) {
   return state.characters.list.selected;
 }
+
+export function getSelectedCharacter(state) {
+  return state.characters.list.characters[getSelectedCharacterId(state)];
+}
