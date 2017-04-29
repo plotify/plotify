@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as s from "../selectors";
+import * as a from "../actions";
 import { Paper, TextField } from "material-ui";
 import ProfileGroupComponent from "./ProfileGroup";
 import { palette, spacing } from "../../../themes/PlotifyMainTheme";
@@ -16,7 +17,10 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    handleCharacterNameChanged: (changedName) => dispatch(a.setCharacterName(changedName)),
+    saveCharacterName: () => dispatch(a.saveCharacterName()),
+  };
 };
 
 const styles = {
@@ -60,10 +64,15 @@ class CharacterProfileComponent extends Component {
   constructor(props) {
     super(props);
     this.handleCharacterChanged = this.handleCharacterChanged.bind(this);
+    this.saveCharacterName = this.saveCharacterName.bind(this);
   }
 
   handleCharacterChanged(event) {
-    console.log("Character Changed", event.target.value);
+    this.props.handleCharacterNameChanged(event.target.value);
+  }
+
+  saveCharacterName() {
+    this.props.saveCharacterName();
   }
 
   render() {
@@ -74,24 +83,27 @@ class CharacterProfileComponent extends Component {
                style={styles.nameHeader}>
           <TextField
             floatingLabelText="Name"
-            defaultValue={this.props.characterName}
+            value={this.props.characterName}
             style={styles.nameInput}
             inputStyle={styles.nameInput.inputStyle}
             floatingLabelFocusStyle={styles.nameInput.floatingLabelFocusStyle}
             floatingLabelStyle={styles.nameInput.floatingLabelStyle}
             underlineFocusStyle={styles.nameInput.underlineFocusStyle}
-            onChange={this.handleCharacterChanged}
             fullWidth={true}
+            onChange={this.handleCharacterChanged}
+            onBlur={this.saveCharacterName}
           />
         </Paper>
         <div style={entryGroupWrapperStyle} className="scrollable">
           {
             this.props.groups.map((group) => {
-              return <ProfileGroupComponent
-                key={group.id}
-                title={group.title}
-                entries={group.entries}
-              />
+              return (
+                <ProfileGroupComponent
+                  key={group.id}
+                  title={group.title}
+                  entries={group.entries}
+                />
+              )
             })
           }
         </div>

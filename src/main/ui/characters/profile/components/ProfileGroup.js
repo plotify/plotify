@@ -27,11 +27,12 @@ class ProfileGroupComponent extends Component {
             return <TextField
               key={entry.id}
               floatingLabelText={entry.title}
-              defaultValue={entry.value}
+              value={entry.value}
               fullWidth={true}
               floatingLabelStyle={styles.floatingLabelStyle}
               floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
             />
+
           })
         }
 

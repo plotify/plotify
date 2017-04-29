@@ -9,7 +9,7 @@ export default class HoveringPaper extends React.Component {
     this.state = {
       height: 2,
       isLoading: this.props.isLoading,
-      // isHovered: true,
+      isHovered: true,
     };
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseOut = this.handleMouseOut.bind(this);
@@ -18,7 +18,7 @@ export default class HoveringPaper extends React.Component {
 
   handleClick() {
     this.setState({
-      isLoading: true,
+      // isLoading: true,
     });
     this.props.onTouchTap();
   }
@@ -26,7 +26,7 @@ export default class HoveringPaper extends React.Component {
   handleMouseOver() {
     this.setState({
       height: 5,
-      isHovered: true,
+      // isHovered: true,
     });
   }
 
@@ -34,7 +34,7 @@ export default class HoveringPaper extends React.Component {
     this.setState({
       height: 2,
       isLoading: false,
-      isHovered: false,
+      // isHovered: false,
     });
   }
 

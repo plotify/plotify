@@ -23,19 +23,21 @@ const styles = {
   root: {
     width: "100%",
     height: "100%",
-    display: "flex",
   },
   listPaper: {
-    position: "relative",
+    position: "absolute",
     height: "100%",
     zIndex: 2,
     background: white,
+    minWidth: 350,
     width: 350,
+    display: "inline-block",
   },
   profile: {
-    position: "relative",
+    position: "absolute",
     height: "100%",
-    flexGrow: 1,
+    left: 406,
+    right: 0,
   },
   addCharacterButtonLeft: {
     position: "absolute",
@@ -80,6 +82,13 @@ class CharacterPageComponent extends Component {
           {
             this.props.isProfileVisible &&
             <CharacterProfile/>
+          }
+          { !this.props.isProfileVisible &&
+          <div>
+            <img
+              src="https://img.memecdn.com/sad-owl-is-sad_o_234355.webp"/>
+            <h1>Kein Charakter ausgewählt</h1>
+          </div>
           }
         </div>
 
