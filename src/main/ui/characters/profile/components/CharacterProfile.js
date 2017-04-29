@@ -8,7 +8,6 @@ import { white } from "material-ui/styles/colors";
 
 const mapStateToProps = (state) => {
   return {
-    isVisible: s.isVisible(state),
     characterId: s.getCharacterId(state),
     characterName: s.getCharacterName(state),
     isCharacterDeleted: s.isCharacterDeleted(state),
