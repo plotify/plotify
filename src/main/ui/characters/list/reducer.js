@@ -25,6 +25,16 @@ export default function reducer(state = initialState, action) {
         order: action.payload.characters.map(character => character.id)
       });
 
+    case t.UPDATE_CHARACTER_NAME:
+      if (state.characters.hasOwnProperty(action.payload.characterId)) {
+        const characters = Object.assign({}, state.characters);
+        characters[action.payload.characterId].name = action.payload.name;
+        return Object.assign({}, state, {
+          characters: characters
+        });
+      }
+      return state;
+
     case t.FIND_CHARACTERS_FAILED:
       return Object.assign({}, state, {
         loading: false,

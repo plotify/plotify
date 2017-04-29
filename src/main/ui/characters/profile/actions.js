@@ -28,18 +28,24 @@ export function setCharacterName(changedName) {
 export function saveCharacterName() {
   return (dispatch, getState) => {
     if (s.hasCharacterNameChanged(getState())) {
+
+      const characterId = s.getCharacterId(getState());
+      const changedName = s.getCharacterName(getState());
       const params = {
-        characterId: s.getCharacterId(getState()),
+        characterId: characterId,
         type: types.CHARACTER,
-        typeId: s.getCharacterId(getState()),
-        changes: { name: s.getCharacterName(getState()) }
+        typeId: characterId,
+        changes: { name: changedName }
       };
+
       return Promise.resolve()
         .then(() => dispatch(saveCharacterNameRequest()))
         .then(() => sendToModel(c.UPDATE_CHARACTER, params))
+        .then(() => dispatch(list.actions.updateCharacterName(characterId, changedName)))
         .then(() => dispatch(saveCharacterNameSuccessful()))
         .catch(error => dispatch(saveCharacterNameFailed(error)));
     }
+
   };
 }
 
