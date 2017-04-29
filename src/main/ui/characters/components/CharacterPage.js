@@ -85,8 +85,6 @@ class CharacterPageComponent extends Component {
           }
           { !this.props.isProfileVisible &&
           <div>
-            <img
-              src="https://img.memecdn.com/sad-owl-is-sad_o_234355.webp"/>
             <h1>Kein Charakter ausgewählt</h1>
           </div>
           }
