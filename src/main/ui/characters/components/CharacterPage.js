@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import CharacterList from "../list/components/CharacterList";
 import { connect } from "react-redux";
-import { isCharacterSelected } from "../list/selectors";
-import CharacterProfile from "./CharacterProfile";
+import profile from "../profile";
+import CharacterProfile from "../profile/components/CharacterProfile";
 import { white } from "material-ui/styles/colors";
 import { FloatingActionButton, Paper } from "material-ui";
 import ContentAdd from "material-ui/svg-icons/content/add";
@@ -11,7 +11,7 @@ import SearchBar from "./SearchBar";
 
 const mapStateToProps = (state) => {
   return {
-    isCharacterSelected: isCharacterSelected(state),
+    isProfileVisible: profile.selectors.isVisible(state),
   };
 };
 
@@ -78,7 +78,7 @@ class CharacterPageComponent extends Component {
 
         <div style={styles.profile}>
           {
-            this.props.isCharacterSelected &&
+            this.props.isProfileVisible &&
             <CharacterProfile/>
           }
         </div>

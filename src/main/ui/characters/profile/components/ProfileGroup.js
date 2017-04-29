@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Paper, TextField } from "material-ui";
-import { spacing } from "../../themes/PlotifyMainTheme";
+import { spacing } from "../../../themes/PlotifyMainTheme";
 
 const styles = {
   paper: {
@@ -21,14 +21,20 @@ class ProfileGroupComponent extends Component {
   render() {
     return (
       <Paper zDepth={1} style={styles.paper}>
-        <h3>Title</h3>
-        <TextField
-          floatingLabelText="Name"
-          defaultValue="Jasper"
-          fullWidth={true}
-          floatingLabelStyle={styles.floatingLabelStyle}
-          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-        />
+        <h3>{this.props.title}</h3>
+        {
+          this.props.entries.map((entry) => {
+            return <TextField
+              key={entry.id}
+              floatingLabelText={entry.title}
+              defaultValue={entry.value}
+              fullWidth={true}
+              floatingLabelStyle={styles.floatingLabelStyle}
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+            />
+          })
+        }
+
       </Paper>
     );
   }

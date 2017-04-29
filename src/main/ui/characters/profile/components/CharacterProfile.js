@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { isCharacterSelected } from "../list/selectors";
+import * as s from "../selectors";
 import { Paper, TextField } from "material-ui";
 import ProfileGroupComponent from "./ProfileGroup";
-import { palette, spacing } from "../../themes/PlotifyMainTheme";
+import { palette, spacing } from "../../../themes/PlotifyMainTheme";
 import { white } from "material-ui/styles/colors";
 
 const mapStateToProps = (state) => {
   return {
-    isCharacterSelected: isCharacterSelected(state),
+    isVisible: s.isVisible(state),
+    characterId: s.getCharacterId(state),
+    characterName: s.getCharacterName(state),
+    isCharacterDeleted: s.isCharacterDeleted(state),
+    groups: s.getGroupsInOrder(state),
   };
 };
 
@@ -17,6 +21,9 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const styles = {
+  wrapper: {
+    height: "100%"
+  },
   nameHeader: {
     zIndex: 1,
     position: "relative",
@@ -53,32 +60,41 @@ const entryGroupWrapperStyle = {
 class CharacterProfileComponent extends Component {
   constructor(props) {
     super(props);
+    this.handleCharacterChanged = this.handleCharacterChanged.bind(this);
+  }
+
+  handleCharacterChanged(event) {
+    console.log("Character Changed", event.target.value);
   }
 
   render() {
     return (
-      <div style={{ height: "100%" }}>
+      <div style={styles.wrapper}>
         <Paper rounded={false}
                zDepth={2}
                style={styles.nameHeader}>
           <TextField
             floatingLabelText="Name"
-            defaultValue="Jasper"
+            defaultValue={this.props.characterName}
             style={styles.nameInput}
             inputStyle={styles.nameInput.inputStyle}
             floatingLabelFocusStyle={styles.nameInput.floatingLabelFocusStyle}
             floatingLabelStyle={styles.nameInput.floatingLabelStyle}
             underlineFocusStyle={styles.nameInput.underlineFocusStyle}
+            onChange={this.handleCharacterChanged}
             fullWidth={true}
           />
         </Paper>
         <div style={entryGroupWrapperStyle} className="scrollable">
-          <ProfileGroupComponent />
-          <ProfileGroupComponent />
-          <ProfileGroupComponent />
-          <ProfileGroupComponent />
-          <ProfileGroupComponent />
-          <ProfileGroupComponent />
+          {
+            this.props.groups.map((group) => {
+              return <ProfileGroupComponent
+                key={group.id}
+                title={group.title}
+                entries={group.entries}
+              />
+            })
+          }
         </div>
       </div>
     );
