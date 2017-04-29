@@ -17,7 +17,8 @@ html, body, #root, #app {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 0;
+  transition: width 2s;
 }
 
 ::-webkit-scrollbar-track {
@@ -26,9 +27,34 @@ html, body, #root, #app {
 
 ::-webkit-scrollbar-thumb {
   background-color: #2D0444;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 
+/*
 div:hover::-webkit-scrollbar-thumb {
   background-color: #2D0444;
+}
+
+div:hover::-webkit-scrollbar {
+  width: 4px;
+}
+*/
+
+.scrollable {
+  -webkit-background-clip: text;
+  transition: background-color 1s;
+}
+.scrollable:hover {
+  background-color: #2D0444;
+}
+.scrollable::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.scrollable::-webkit-scrollbar-track {
+  display: none;
+}
+.scrollable::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: inherit;
 }

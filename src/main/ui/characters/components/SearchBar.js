@@ -28,6 +28,7 @@ const styles = {
     width: 24,
     marginTop: 12,
     marginRight: 12,
+    display: "inline-block",
   },
   textField: {
     display: "inline-block",

@@ -25,7 +25,7 @@ const styles = {
     height: "100%",
     display: "flex",
   },
-  listWrapper: {
+  listPaper: {
     position: "relative",
     height: "100%",
     zIndex: 2,
@@ -53,12 +53,24 @@ const styles = {
 };
 
 class CharacterPageComponent extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // TODO Try to dynamically receive the height of the SearchBar.
+      searchBarHeight: 48,
+    };
+  }
+
   render() {
     return (
       <div id="CharacterPage" style={styles.root}>
-        <Paper zDepth={1} style={styles.listWrapper}>
-          <SearchBar/>
-          <CharacterList />
+        <Paper zDepth={1} style={styles.listPaper}>
+          <SearchBar />
+          <div style={{
+            height: "calc(100% - " + this.state.searchBarHeight + "px)",
+          }}>
+            <CharacterList />
+          </div>
           <FloatingActionButton style={styles.addCharacterButton}>
             <ContentAdd  />
           </FloatingActionButton>

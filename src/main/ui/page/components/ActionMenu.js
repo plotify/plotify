@@ -9,7 +9,7 @@ import FileFolder from "material-ui/svg-icons/file/folder";
 import AvNewReleases from "material-ui/svg-icons/av/new-releases";
 import { connect } from "react-redux";
 import { shell } from "electron";
-import { createStory, openStoryDialog } from "../../story/actions";
+import { createStory, openStoryDialog, openStoryFileLocation } from "../../story/actions";
 import { isStoryOpen } from "../../story/selectors";
 
 
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(openStoryDialog());
     },
     onOpenStoryFileLocation: () => {
-      // dispatch(openStoryFileLocation());
+      dispatch(openStoryFileLocation());
     }
   };
 };
@@ -87,7 +87,7 @@ class ActionMenuComponent extends React.Component {
             primaryText="Speicherort öffnen"
             onTouchTap={this.handleOpenStoryFileLocation}
             leftIcon={<FileFolder/>}
-            disabled={this.props.noStoryOpen}
+            disabled={!this.props.noStoryOpen}
           />
           <Divider/>
           <MenuItem

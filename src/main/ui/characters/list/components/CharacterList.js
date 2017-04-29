@@ -9,7 +9,7 @@ import {
 } from "../selectors";
 import { selectCharacter } from "../actions";
 import { connect } from "react-redux";
-import { List } from "material-ui";
+import { List, ListItem } from "material-ui";
 import CharacterListItem from "./CharacterListItem";
 
 
@@ -31,14 +31,16 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const styles = {
-  height: "100%",
-  overflowY: "auto",
+  list: {
+    height: "100%",
+    overflowY: "auto",
+  }
 };
 
 class CharacterListComponent extends Component {
   render() {
     return (
-      <List style={styles}>
+      <List style={styles.list} className="scrollable">
         {
           this.props.characters.map((character) => {
             return (
@@ -51,6 +53,7 @@ class CharacterListComponent extends Component {
             );
           })
         }
+        <ListItem disabled={true} style={{ height: 8 * 8}}/>
       </List>
     );
   }

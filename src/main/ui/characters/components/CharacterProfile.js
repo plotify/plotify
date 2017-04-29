@@ -72,7 +72,7 @@ class CharacterProfileComponent extends Component {
             fullWidth={true}
           />
         </Paper>
-        <div style={entryGroupWrapperStyle}>
+        <div style={entryGroupWrapperStyle} className="scrollable">
           <ProfileGroupComponent />
           <ProfileGroupComponent />
           <ProfileGroupComponent />
