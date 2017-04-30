@@ -21,39 +21,39 @@ export function isCharacterDeleted(state) {
 }
 
 export function isLoading(state) {
-  return state.characters.profile.status.loading;
+  return state.characters.profile.loading;
 }
 
 export function isLoadingFailed(state) {
-  return state.characters.profile.status.loadingFailed;
+  return state.characters.profile.loadingFailed;
 }
 
 export function getLoadingError(state) {
   if (isLoadingFailed(state)) {
-    return state.characters.profile.status.error;
+    return state.characters.profile.error;
   } else {
     return null;
   }
 }
 
 export function isSaving(state) {
-  return state.characters.profile.status.saving;
+  return state.characters.profile.saving;
 }
 
 export function isSavingFailed(state) {
-  return state.characters.profile.status.savingFailed;
+  return state.characters.profile.savingFailed;
 }
 
 export function getSavingError(state) {
   if (isSavingFailed(state)) {
-    return state.characters.profile.status.error;
+    return state.characters.profile.error;
   } else {
     return null;
   }
 }
 
 export function getGroupsInOrder(state) {
-  return state.characters.profile.order.map(id => mapToGroup(state, id));
+  return state.characters.profile.groupsOrder.map(id => mapToGroup(state, id));
 }
 
 function mapToGroup(state, id) {
@@ -61,15 +61,25 @@ function mapToGroup(state, id) {
   return {
     id: group.id,
     title: group.title,
-    entries: group.order.map(id => mapToEntry(group, id))
+    entries: group.entriesOrder.map(id => mapToEntry(state, id))
   };
 }
 
-function mapToEntry(group, id) {
-  const entry = group.entries[id];
+function mapToEntry(state, id) {
+  const entry = state.characters.profile.entries[id];
   return {
     id: entry.id,
     title: entry.title,
     value: entry.changedValue
   };
+}
+
+export function hasEntryValueChanged(state, entryId) {
+  const entry = state.characters.profile.entries[entryId];
+  return entry.changedValue !== entry.savedValue;
+}
+
+export function getEntryValue(state, entryId) {
+  const entry = state.characters.profile.entries[entryId];
+  return entry.changedValue;
 }

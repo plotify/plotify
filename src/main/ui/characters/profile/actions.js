@@ -48,6 +48,35 @@ export function saveCharacterName() {
 
   };
 }
+export function setEntryValue(entryId, changedValue) {
+  return {
+    type: t.SET_ENTRY_VALUE,
+    payload: { entryId, changedValue }
+  };
+}
+
+export function saveEntryValue(entryId) {
+  return (dispatch, getState) => {
+    if (s.hasEntryValueChanged(getState(), entryId)) {
+
+      const characterId = s.getCharacterId(getState());
+      const changedValue = s.getEntryValue(getState(), entryId);
+      const params = {
+        characterId: characterId,
+        type: types.ENTRY,
+        typeId: entryId,
+        changes: { value: changedValue }
+      };
+
+      return Promise.resolve()
+        .then(() => dispatch(saveEntryValueRequest(entryId)))
+        .then(() => sendToModel(c.UPDATE_CHARACTER, params))
+        .then(() => dispatch(saveEntryValueSuccessful(entryId)))
+        .catch(error => dispatch(saveEntryValueFailed(entryId, error)));
+
+    }
+  };
+}
 
 function loadProfileRequest(characterId, name, deleted) {
   return {
@@ -88,5 +117,26 @@ function saveCharacterNameFailed(error) {
   return {
     type: t.SAVE_CHARACTER_NAME_FAILED,
     payload: { error }
+  };
+}
+
+function saveEntryValueRequest(entryId) {
+  return {
+    type: t.SAVE_ENTRY_VALUE_REQUEST,
+    payload: { entryId }
+  };
+}
+
+function saveEntryValueSuccessful(entryId) {
+  return {
+    type: t.SAVE_ENTRY_VALUE_SUCCESSFUL,
+    payload: { entryId }
+  };
+}
+
+function saveEntryValueFailed(entryId, error) {
+  return {
+    type: t.SAVE_ENTRY_VALUE_FAILED,
+    payload: { entryId, error }
   };
 }
