@@ -60,11 +60,7 @@ export function openStoryFileLocation() {
 function openStoryIfFileSelected(file) {
   return dispatch => {
     if (file) {
-      return Promise.resolve()
-        .then(() => dispatch(openStory(file)))
-        .then(() => dispatch(showSnackbar("\"" + path.basename(file, fileExtension) + "\" erfolgreich geöffnet")));
-    } else {
-      return dispatch(showSnackbar("Es wurde keine Geschichte ausgewählt"));
+      return dispatch(openStory(file));
     }
   };
 }
