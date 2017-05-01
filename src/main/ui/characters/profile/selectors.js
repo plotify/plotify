@@ -83,3 +83,19 @@ export function getEntryValue(state, entryId) {
   const entry = state.characters.profile.entries[entryId];
   return entry.changedValue;
 }
+
+export function isEntrySaving(state, entryId) {
+  return state.characters.profile.entries[entryId].saving;
+}
+
+export function isEntrySavingFailed(state, entryId) {
+  return state.characters.profile.entries[entryId].savingFailed;
+}
+
+export function getEntrySavingError(state, entryId) {
+  if (isEntrySavingFailed(state, entryId)) {
+    return state.characters.profile.entries[entryId].error;
+  } else {
+    return null;
+  }
+}
