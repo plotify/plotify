@@ -2,9 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
+import LicenseDialog from "./LicenseDialog";
 
 import { isAboutDialogOpen } from "../selectors";
-import { hideAboutDialog } from "../actions";
+import { showLicenseDialog, hideAboutDialog } from "../actions";
 
 import { shell } from "electron";
 
@@ -32,11 +33,17 @@ class AboutDialog extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleOpenLicense = this.handleOpenLicense.bind(this);
+    this.handleOpenHomepage = this.handleOpenHomepage.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
-  openHomepage() {
-    shell.openExternal(packageJson.homepage);
+  handleOpenLicense() {
+    this.props.onOpenLicense();
+  }
+
+  handleOpenHomepage() {
+    this.props.onOpenHomepage();
   }
 
   handleClose() {
@@ -47,9 +54,11 @@ class AboutDialog extends React.Component {
 
     const actions = [
       <FlatButton
+        label="Lizenz"
+        onTouchTap={this.handleOpenLicense} />,
+      <FlatButton
         label="Homepage"
-        onTouchTap={this.openHomepage}
-      />,
+        onTouchTap={this.handleOpenHomepage} />,
       <FlatButton
         label="Schließen"
         onTouchTap={this.handleClose} />
@@ -61,6 +70,7 @@ class AboutDialog extends React.Component {
         onRequestClose={this.handleClose}
         actions={actions}
         modal={false}>
+        <LicenseDialog />
         <img style={imgStyle} src="./resources/app-icons/128.png" />
         <div style={divStyle}>
           <h1>{packageJson.productName}</h1>
@@ -82,6 +92,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onOpenLicense: () => {
+      dispatch(showLicenseDialog());
+    },
+    onOpenHomepage: () => {
+      shell.openExternal(packageJson.homepage);
+    },
     close: () => {
       dispatch(hideAboutDialog());
     }

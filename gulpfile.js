@@ -31,8 +31,8 @@ const paths = {
       main: "./build/app/main",
       tests: "./build/app/test"
     },
+    licenseFile: "./build/app/main/LICENSE",
     packaged: "./build/packaged",
-    licenseFile: "./build/packaged/LICENSE",
     installers: "./build/installers"
   }
 };
@@ -174,12 +174,12 @@ gulp.task("package:generate-license-file", () => {
 
   const options = Object.freeze({ encoding: "utf-8" });
   const separator = "---------------------------------------------------------" +
-    "-----------------------";
+    "-----------------";
 
   const ownLicenseFileContent = fs.readFileSync(ownLicenseFile, options) + "\n\n";
   fs.appendFileSync(paths.build.licenseFile, ownLicenseFileContent, options);
 
-  checker.init({ start: "./build/app/main" }, (error, json) => {
+  checker.init({ start: paths.build.app.main }, (error, json) => {
     for (let name in json) {
 
       const p = json[name];
@@ -207,7 +207,7 @@ gulp.task("package:add-license-file-to-packages", () => {
       fs.stat(filePath, (error, stats) => {
         if (stats.isDirectory()) {
           const oldElectronLicenseFile = path.join(filePath, "LICENSE");
-          const newElectronLicenseFile= path.join(filePath, "LICENSE-electron");
+          const newElectronLicenseFile = path.join(filePath, "LICENSE-electron");
           fs.rename(oldElectronLicenseFile, newElectronLicenseFile, (error) => {
             fs.createReadStream(paths.build.licenseFile)
               .pipe(fs.createWriteStream(oldElectronLicenseFile));
@@ -319,8 +319,8 @@ gulp.task("distribution:linux", () => {
               testsTasks,
               "install-production-dependencies",
               "rebuild-production-dependencies",
-              "package:linux",
               "package:generate-license-file",
+              "package:linux",
               "package:add-license-file-to-packages",
               "installer:linux");
 });
@@ -331,8 +331,8 @@ gulp.task("distribution:windows", () => {
               testsTasks,
               "install-production-dependencies",
               "rebuild-production-dependencies",
-              "package:windows",
               "package:generate-license-file",
+              "package:windows",
               "package:add-license-file-to-packages",
               "installer:windows");
 });

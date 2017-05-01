@@ -13,7 +13,10 @@
     actionCreator: undefined
   },
   about: {
-    open: false
+    open: false,
+    openLicense: false,
+    loadingLicenseText: false,
+    licenseText: null
   },
   page: {
       id: "characters",
