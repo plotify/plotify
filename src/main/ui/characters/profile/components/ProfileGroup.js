@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Paper, TextField } from "material-ui";
 import { spacing } from "../../../themes/PlotifyMainTheme";
+import SavingTextField from "./SavingTextField";
 
 const styles = {
   paper: {
