@@ -8,6 +8,7 @@ import WelcomePage from "../../welcome/components/WelcomePage";
 import { connect } from "react-redux";
 import { palette, spacing } from "../../themes/PlotifyMainTheme";
 import Snackbar from "../../snackbar/components/Snackbar";
+import AboutDialog from "../../about/components/AboutDialog";
 import { white } from "material-ui/styles/colors";
 
 const mapStateToProps = (state) => {
@@ -62,6 +63,7 @@ class AppComponent extends Component {
     }
     return (
       <div id="PlotifyApp" style={styles.app}>
+        
         <PlotifyAppBar title={this.props.title}/>
 
         <div style={styles.pageWrapper}>
@@ -76,6 +78,8 @@ class AppComponent extends Component {
         </div>
 
         <Snackbar />
+        <AboutDialog />
+
       </div>
     );
   }

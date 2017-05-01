@@ -12,6 +12,9 @@
     actionLabel: undefined,
     actionCreator: undefined
   },
+  about: {
+    open: false
+  },
   page: {
       id: "characters",
       title: "Charaktere",

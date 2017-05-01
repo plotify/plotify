@@ -8,27 +8,29 @@ import FolderOpen from "material-ui/svg-icons/file/folder-open";
 import FileFolder from "material-ui/svg-icons/file/folder";
 import AvNewReleases from "material-ui/svg-icons/av/new-releases";
 import { connect } from "react-redux";
-import { shell } from "electron";
-import { createStory, openStoryDialog, openStoryFileLocation } from "../../story/actions";
-import { isStoryOpen } from "../../story/selectors";
 
+import story from "../../story";
+import about from "../../about";
 
 const mapStateToProps = (state) => {
   return {
-    noStoryOpen: isStoryOpen(state)
+    noStoryOpen: story.selectors.isStoryOpen(state)
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onCreateStory: () => {
-      dispatch(createStory());
+      dispatch(story.actions.createStory());
     },
     onOpenStory: () => {
-      dispatch(openStoryDialog());
+      dispatch(story.actions.openStoryDialog());
     },
     onOpenStoryFileLocation: () => {
-      dispatch(openStoryFileLocation());
+      dispatch(story.actions.openStoryFileLocation());
+    },
+    onOpenAboutDialog: () => {
+      dispatch(about.actions.showAboutDialog());
     }
   };
 };
@@ -40,7 +42,7 @@ class ActionMenuComponent extends React.Component {
     this.handleCreateStory = this.handleCreateStory.bind(this);
     this.handleOpenStory = this.handleOpenStory.bind(this);
     this.handleOpenStoryFileLocation = this.handleOpenStoryFileLocation.bind(this);
-    this.handleAbout = this.handleAbout.bind(this);
+    this.handleOpenAboutDialog = this.handleOpenAboutDialog.bind(this);
   }
 
   handleCreateStory() {
@@ -58,9 +60,9 @@ class ActionMenuComponent extends React.Component {
     this.props.onOpenStoryFileLocation();
   }
 
-  handleAbout() {
-    shell.openExternal("https://github.com/SebastianSchmidt/plotify#readme");
+  handleOpenAboutDialog() {
     this.props.onRequestClose();
+    this.props.onOpenAboutDialog();
   }
 
   render() {
@@ -92,7 +94,7 @@ class ActionMenuComponent extends React.Component {
           <Divider/>
           <MenuItem
             primaryText="Über Plotify"
-            onTouchTap={this.handleAbout}
+            onTouchTap={this.handleOpenAboutDialog}
             leftIcon={<ActionInfo/>}/>
         </Menu>
       </Popover>
