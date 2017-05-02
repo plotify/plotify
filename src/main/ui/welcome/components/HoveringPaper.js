@@ -18,7 +18,7 @@ export default class HoveringPaper extends React.Component {
 
   handleClick() {
     this.setState({
-      // isLoading: true,
+      isLoading: true,
     });
     this.props.onTouchTap();
   }
@@ -95,7 +95,7 @@ export default class HoveringPaper extends React.Component {
           circle={!this.state.isHovered}>
           {
             this.state.isLoading &&
-            <LinearProgress mode="indeterminate"/>
+            <LinearProgress mode="indeterminate" style={{ borderRadius: 0 }}/>
           }
 
         </Paper>

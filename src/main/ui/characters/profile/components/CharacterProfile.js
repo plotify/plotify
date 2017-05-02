@@ -103,7 +103,7 @@ class CharacterProfileComponent extends Component {
                   title={group.title}
                   entries={group.entries}
                 />
-              )
+              );
             })
           }
         </div>
