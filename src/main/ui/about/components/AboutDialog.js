@@ -61,6 +61,7 @@ class AboutDialog extends React.Component {
         onTouchTap={this.handleOpenHomepage} />,
       <FlatButton
         label="Schließen"
+        primary={true}
         onTouchTap={this.handleClose} />
     ];
 
@@ -74,7 +75,7 @@ class AboutDialog extends React.Component {
         <img style={imgStyle} src="./resources/app-icons/128.png" />
         <div style={divStyle}>
           <h1>{packageJson.productName}</h1>
-          <p style={versionStyle}>{packageJson.version}</p>
+          <p style={versionStyle}>Version: {packageJson.version}</p>
           <p style={descriptionStyle}>{packageJson.productDescription}</p>
         </div>
       </Dialog>
