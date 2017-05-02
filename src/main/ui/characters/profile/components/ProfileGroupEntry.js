@@ -66,7 +66,7 @@ class ProfileGroupEntryComponent extends Component {
     return(
       <StatusTextField
         floatingLabelText={this.props.title}
-        defaultValue={this.getValue()}
+        value={this.getValue()}
         fullWidth={true}
         floatingLabelStyle={styles.floatingLabelStyle}
         floatingLabelFocusStyle={styles.floatingLabelFocusStyle}

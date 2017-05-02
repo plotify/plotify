@@ -20,7 +20,9 @@ export default class StatusTextField extends Component {
     super(props);
     this.state = {
       isIconVisible: false,
+      value: this.props.value,
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   getMergedFloatingStyle() {
@@ -36,12 +38,21 @@ export default class StatusTextField extends Component {
       this.props.floatingLabelFocusStyle);
   }
 
+  handleChange(event) {
+    this.setState({
+      value: event.target.value,
+    });
+    if (this.props.onChange !== undefined) {
+      this.props.onChange(event);
+    }
+  }
+
   render() {
     return (
       <div style={{ position: "relative" }}>
         <TextField
           floatingLabelText={this.props.floatingLabelText}
-          defaultValue={this.props.defaultValue}
+          value={this.state.value}
           fullWidth={this.props.fullWidth}
           floatingLabelStyle={this.getMergedFloatingStyle()}
           floatingLabelFocusStyle={this.getMergedFloatginLabelFocusStyle()}
@@ -51,7 +62,7 @@ export default class StatusTextField extends Component {
           multiLine={this.props.multiLine}
           errorText={this.errorText}
           onBlur={this.props.onBlur}
-          onChange={this.props.onChange}
+          onChange={this.handleChange}
         />
         <div style={{ position: "absolute", top: 36, right: 0 }}>
           {
