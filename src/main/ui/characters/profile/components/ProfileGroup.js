@@ -21,7 +21,8 @@ class ProfileGroupComponent extends Component {
           this.props.entries.map((entry) => {
             return (
               <ProfileGroupEntry
-                entry={entry}
+                id={entry.id}
+                title={entry.title}
                 key={entry.id}/>
             );
           })

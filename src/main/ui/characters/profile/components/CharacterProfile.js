@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as s from "../selectors";
 import * as a from "../actions";
 import { Paper, TextField } from "material-ui";
-import ProfileGroupComponent from "./ProfileGroup";
+import ProfileGroup from "./ProfileGroup";
 import { palette, spacing } from "../../../themes/PlotifyMainTheme";
 import { white } from "material-ui/styles/colors";
 
@@ -98,7 +98,7 @@ class CharacterProfileComponent extends Component {
           {
             this.props.groups.map((group) => {
               return (
-                <ProfileGroupComponent
+                <ProfileGroup
                   key={group.id}
                   title={group.title}
                   entries={group.entries}
