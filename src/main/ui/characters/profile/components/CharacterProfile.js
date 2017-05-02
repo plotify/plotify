@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as s from "../selectors";
 import * as a from "../actions";
-import { Paper, TextField } from "material-ui";
+import { Paper, TextField, CircularProgress } from "material-ui";
 import ProfileGroup from "./ProfileGroup";
 import { palette, spacing } from "../../../themes/PlotifyMainTheme";
 import { white } from "material-ui/styles/colors";
+import StatusTextField from "./StatusTextField";
 
 const mapStateToProps = (state) => {
   return {
@@ -13,6 +14,7 @@ const mapStateToProps = (state) => {
     characterName: s.getCharacterName(state),
     isCharacterDeleted: s.isCharacterDeleted(state),
     groups: s.getGroupsInOrder(state),
+    isLoading: s.isLoading(state),
   };
 };
 
@@ -81,8 +83,9 @@ class CharacterProfileComponent extends Component {
         <Paper rounded={false}
                zDepth={2}
                style={styles.nameHeader}>
-          <TextField
+          <StatusTextField
             floatingLabelText="Name"
+            defaultValue={this.props.characterName}
             value={this.props.characterName}
             style={styles.nameInput}
             inputStyle={styles.nameInput.inputStyle}
@@ -96,6 +99,11 @@ class CharacterProfileComponent extends Component {
         </Paper>
         <div style={entryGroupWrapperStyle} className="scrollable">
           {
+            this.props.isLoading &&
+            <CircularProgress size={24}/>
+          }
+          {
+            !this.props.isLoading &&
             this.props.groups.map((group) => {
               return (
                 <ProfileGroup

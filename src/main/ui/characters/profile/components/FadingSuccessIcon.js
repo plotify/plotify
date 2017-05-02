@@ -5,6 +5,9 @@ import  ActionDone  from "material-ui/svg-icons/action/done";
 export default class FadingSuccessIcon extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      fadeoutTime: 5000,
+    };
   }
 
   render() {

@@ -3,9 +3,10 @@ import { connect } from "react-redux";
 import * as s from "../selectors";
 import * as a from "../actions";
 import { CircularProgress, RadioButton, RadioButtonGroup, TextField } from "material-ui";
-import { green500, red500 } from "material-ui/styles/colors";
+import { red500 } from "material-ui/styles/colors";
 import FadingSuccessIcon from "./FadingSuccessIcon";
 import AlertError from "material-ui/svg-icons/alert/error";
+import StatusTextField from "./StatusTextField";
 
 const mapStateToProps = (state) => {
   return {
@@ -37,12 +38,11 @@ const styles = {
 class ProfileGroupEntryComponent extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isSaving: false,
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
-  }
-
-  componentDidUpdate() {
-
   }
 
   getValue() {
@@ -54,45 +54,33 @@ class ProfileGroupEntryComponent extends Component {
   }
 
   handleChange(event) {
-    this.props.setEntryValue(this.props.id, event.target.value);
+    //this.props.setEntryValue(this.props.id, event.target.value);
   }
 
   handleBlur(event) {
+    this.props.setEntryValue(this.props.id, event.target.value);
     this.props.saveEntryValue(this.props.id);
   }
 
   render() {
     return(
-      <div style={{ position: "relative"}}>
-        <TextField
-          floatingLabelText={this.props.title}
-          defaultValue={this.getValue()}
-          fullWidth={true}
-          floatingLabelStyle={styles.floatingLabelStyle}
-          floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
-          multiLine={true}
-          errorText={this.getSavingError()}
-          onBlur={this.handleBlur}
-          onChange={this.handleChange}
-        />
-        <div style={{ position: "absolute", top: 36, right: 0 }}>
-          {
-            this.props.isSaving(this.props.id) &&
-            <CircularProgress size={24} thickness={2} key={2}/>
-          }
-          {
-            // TODO only blend in when necessary
-            !this.props.isSaving(this.props.id) &&
-            !this.props.isSavingFailed(this.props.id) &&
-            <FadingSuccessIcon key={1}/>
-          }
-          {
-            !this.props.isSaving(this.props.id) &&
-            this.props.isSavingFailed(this.props.id) &&
-            <AlertError color={red500} key={3}/>
-          }
-        </div>
-      </div>
+      <StatusTextField
+        floatingLabelText={this.props.title}
+        defaultValue={this.getValue()}
+        fullWidth={true}
+        floatingLabelStyle={styles.floatingLabelStyle}
+        floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
+        multiLine={true}
+        errorText={this.getSavingError()}
+        onBlur={this.handleBlur}
+        onChange={this.handleChange}
+        isLoading={this.props.isSaving(this.props.id)}
+        isSuccessFul={
+          !this.props.isSaving(this.props.id) &&
+          !this.props.isSavingFailed(this.props.id)
+        }
+        isError={!this.props.isSaving(this.props.id) && this.props.isSavingFailed(this.props.id)}
+      />
     );
   }
 }
