@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Paper, TextField } from "material-ui";
+import { Paper } from "material-ui";
 import { spacing } from "../../../themes/PlotifyMainTheme";
 import SavingTextField from "./SavingTextField";
 import ProfileGroupEntry from "./ProfileGroupEntry";
