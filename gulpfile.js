@@ -17,6 +17,7 @@ const winPackager = require("electron-packager");
 const checker = require("license-checker");
 const fs = require("fs");
 const ownLicenseFile = "./LICENSE";
+const robotoLicenseFile = "./src/main/ui/resources/fonts/roboto-license.txt";
 
 const packageJson = require("./package.json");
 
@@ -178,6 +179,10 @@ gulp.task("package:generate-license-file", () => {
 
   const ownLicenseFileContent = fs.readFileSync(ownLicenseFile, options) + "\n\n";
   fs.appendFileSync(paths.build.licenseFile, ownLicenseFileContent, options);
+
+  const robotoLicenseFileContent = separator + "\n\n" +
+                                   fs.readFileSync(robotoLicenseFile, options) + "\n\n";
+  fs.appendFileSync(paths.build.licenseFile, robotoLicenseFileContent, options);
 
   checker.init({ start: paths.build.app.main }, (error, json) => {
     for (let name in json) {
