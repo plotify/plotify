@@ -14,6 +14,7 @@
   },
   about: {
     open: false,
+    copyright: null,
     openLicense: false,
     loadingLicenseText: false,
     licenseText: null

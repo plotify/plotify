@@ -2,6 +2,10 @@ export function isAboutDialogOpen(state) {
   return state.about.open;
 }
 
+export function getAboutDialogCopyright(state) {
+  return state.about.copyright;
+}
+
 export function isLicenseDialogOpen(state) {
   return state.about.openLicense;
 }

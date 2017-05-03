@@ -4,7 +4,7 @@ import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import LicenseDialog from "./LicenseDialog";
 
-import { isAboutDialogOpen } from "../selectors";
+import { isAboutDialogOpen, getAboutDialogCopyright } from "../selectors";
 import { showLicenseDialog, hideAboutDialog } from "../actions";
 
 import { shell } from "electron";
@@ -20,7 +20,7 @@ const divStyle = {
   marginLeft: "152px"
 };
 
-const versionStyle = {
+const singleLineStyle = {
   marginTop: "1em"
 };
 
@@ -75,7 +75,8 @@ class AboutDialog extends React.Component {
         <img style={imgStyle} src="./resources/app-icons/128.png" />
         <div style={divStyle}>
           <h1>{packageJson.productName}</h1>
-          <p style={versionStyle}>Version: {packageJson.version}</p>
+          <p style={singleLineStyle}>Version: {packageJson.version}</p>
+          <p style={singleLineStyle}>{this.props.copyright}</p>
           <p style={descriptionStyle}>{packageJson.productDescription}</p>
         </div>
       </Dialog>
@@ -87,7 +88,8 @@ class AboutDialog extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    open: isAboutDialogOpen(state)
+    open: isAboutDialogOpen(state),
+    copyright: getAboutDialogCopyright(state)
   };
 };
 

@@ -2,6 +2,7 @@ import * as t from "./actionTypes";
 
 const initialState = {
   open: false,
+  copyright: null,
   openLicense: false,
   loadingLicenseText: false,
   licenseText: null
@@ -12,7 +13,8 @@ export default function reducer(state = initialState, action) {
 
     case t.SHOW_ABOUT_DIALOG:
       return Object.assign({}, state, {
-        open: true
+        open: true,
+        copyright: action.payload.copyright
       });
 
     case t.HIDE_ABOUT_DIALOG:
