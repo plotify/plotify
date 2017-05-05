@@ -52,6 +52,12 @@ const styles = {
       borderColor: white,
     }
   },
+  profileLoading: {
+    position: "relative",
+    left: "50%",
+    marginLeft: 12,
+    top: 50,
+  },
 };
 
 const entryGroupWrapperStyle = {
@@ -65,6 +71,9 @@ const entryGroupWrapperStyle = {
 class CharacterProfileComponent extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      groupsAreReady: false,
+    };
     this.handleCharacterChanged = this.handleCharacterChanged.bind(this);
     this.saveCharacterName = this.saveCharacterName.bind(this);
   }
@@ -98,21 +107,24 @@ class CharacterProfileComponent extends Component {
         </Paper>
         <div style={entryGroupWrapperStyle} className="scrollable">
           {
-            this.props.isLoading &&
-            <CircularProgress size={24}/>
+            (this.props.isLoading || !this.state.groupsAreReady) &&
+            <CircularProgress size={24} thickness={2} style={styles.profileLoading}/>
           }
+          <div style={this.state.groupsAreReady ? {} : { visibility: "hidden"}}>
           {
-            !this.props.isLoading &&
             this.props.groups.map((group) => {
               return (
                 <ProfileGroup
                   key={group.id}
                   title={group.title}
                   entries={group.entries}
+                  onReady={() => this.setState({groupsAreReady: true})}
                 />
               );
             })
           }
+          </div>
+
         </div>
       </div>
     );
