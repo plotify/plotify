@@ -64,10 +64,9 @@ class ProfileGroupEntryComponent extends Component {
     //this.props.setEntryValue(this.props.id, event.target.value);
   }
 
-  handleBlur(event) {
-    const eValue = event.target.value;
+  handleBlur(value) {
     Promise.resolve()
-    .then(() => this.props.setEntryValue(this.props.id, eValue))
+    .then(() => this.props.setEntryValue(this.props.id, value))
     .then(() => {
       if (this.props.hasValueChanged(this.props.id)) {
         this.setState({

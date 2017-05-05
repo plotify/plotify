@@ -55,7 +55,7 @@ const styles = {
   profileLoading: {
     position: "relative",
     left: "50%",
-    marginLeft: 12,
+    marginLeft: -12,
     top: 50,
   },
 };

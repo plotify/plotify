@@ -23,6 +23,13 @@ export default class StatusTextField extends Component {
       value: this.props.value,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
+  }
+
+  handleBlur() {
+    const { value } = this.state;
+    Promise.resolve()
+    .then(() => this.props.onBlur(value));
   }
 
   getMergedFloatingStyle() {
@@ -67,7 +74,7 @@ export default class StatusTextField extends Component {
           inputStyle={this.props.inputStyle}
           multiLine={this.props.multiLine}
           errorText={this.props.errorText}
-          onBlur={this.props.onBlur}
+          onBlur={this.handleBlur}
           onChange={this.handleChange}
         />
         {
