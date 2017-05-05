@@ -39,10 +39,17 @@ class ProfileGroupEntryComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isSaving: false,
+      iconVisible: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.onIconHideRequest = this.onIconHideRequest.bind(this);
+  }
+
+  onIconHideRequest() {
+    this.setState({
+      iconVisible: false,
+    });
   }
 
   getValue() {
@@ -58,8 +65,17 @@ class ProfileGroupEntryComponent extends Component {
   }
 
   handleBlur(event) {
-    this.props.setEntryValue(this.props.id, event.target.value);
-    this.props.saveEntryValue(this.props.id);
+    const eValue = event.target.value;
+    Promise.resolve()
+    .then(() => this.props.setEntryValue(this.props.id, eValue))
+    .then(() => {
+      if (this.props.hasValueChanged(this.props.id)) {
+        this.setState({
+          iconVisible: true,
+        });
+      }
+    })
+    .then(() => this.props.saveEntryValue(this.props.id));
   }
 
   render() {
@@ -71,7 +87,7 @@ class ProfileGroupEntryComponent extends Component {
         floatingLabelStyle={styles.floatingLabelStyle}
         floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
         multiLine={true}
-        errorText={this.getSavingError()}
+        errorText={typeof this.getSavingError() === Object ? "" : this.getSavingError()}
         onBlur={this.handleBlur}
         onChange={this.handleChange}
         isLoading={this.props.isSaving(this.props.id)}
@@ -80,6 +96,8 @@ class ProfileGroupEntryComponent extends Component {
           !this.props.isSavingFailed(this.props.id)
         }
         isError={!this.props.isSaving(this.props.id) && this.props.isSavingFailed(this.props.id)}
+        iconVisible={this.state.iconVisible}
+        iconHideRequest={this.onIconHideRequest}
       />
     );
   }

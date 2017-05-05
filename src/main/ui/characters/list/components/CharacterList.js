@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  getCharactersInOrder,
-  getLoadingError,
-  getSelectedCharacterId,
-  isCharacterSelected,
-  isLoading,
-  isLoadingFailed
-} from "../selectors";
+import * as s from "../selectors";
 import { selectCharacter } from "../actions";
 import { connect } from "react-redux";
 import { List, ListItem } from "material-ui";
@@ -15,18 +8,16 @@ import CharacterListItem from "./CharacterListItem";
 
 const mapStateToProps = (state) => {
   return {
-    characters: getCharactersInOrder(state),
-    selectedCharacterId: getSelectedCharacterId(state),
-    isLoading: isLoading(state),
-    isLoadingFailed: isLoadingFailed(state),
-    loadingError: getLoadingError(state),
-    isCharacterSelected: isCharacterSelected(state),
+    characters: s.getCharactersInOrder(state),
+    isLoading: s.isLoading(state),
+    isLoadingFailed: s.isLoadingFailed(state),
+    loadingError: s.getLoadingError(state),
+    isCharacterSelected: s.isCharacterSelected(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onSelectItem: (id) => dispatch(selectCharacter(id)),
   };
 };
 
@@ -47,8 +38,7 @@ class CharacterListComponent extends Component {
               <CharacterListItem
                 name={character.name}
                 key={character.id}
-                isSelected={this.props.selectedCharacterId === character.id}
-                onSelectItem={() => this.props.onSelectItem(character.id)}
+                characterId={character.id}
               />
             );
           })

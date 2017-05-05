@@ -2,6 +2,23 @@ import React from "react";
 import { palette } from "../../../themes/PlotifyMainTheme";
 import { Avatar, ListItem } from "material-ui";
 import { fade } from "material-ui/utils/colorManipulator";
+import * as a from "../actions";
+import * as s from "../selectors";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => {
+  return {
+    selectedCharacterId: s.getSelectedCharacterId(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSelectItem: (id) => {
+      dispatch(a.selectCharacter(id));
+    },
+  };
+};
 
 const styles = {
   letterAvatar: {
@@ -18,27 +35,30 @@ const styles = {
   }
 };
 
-export default class CharacterListItem extends React.Component {
+class CharacterListItemComponent extends React.Component {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    this.props.onSelectItem();
+    if (this.props.selectedCharacterId !== this.props.characterId) {
+      this.props.onSelectItem(this.props.characterId);
+    }
   }
 
   render() {
+    const isSelected = this.props.selectedCharacterId === this.props.characterId;
     return (
       <ListItem
-        style={this.props.isSelected ? styles.selected : {}}
+        style={isSelected ? styles.selected : {}}
         onTouchTap={this.handleClick}
         hoverColor={fade(palette.primary2Color, 0.54)}
         primaryText={this.props.name || "Kein Name"}
         leftAvatar={
           <Avatar
             size={30}
-            style={this.props.isSelected ? styles.selected.letterAvatar : styles.letterAvatar}>
+            style={isSelected ? styles.selected.letterAvatar : styles.letterAvatar}>
             {this.props.name.charAt(0)}
           </Avatar>
         }
@@ -46,3 +66,10 @@ export default class CharacterListItem extends React.Component {
     );
   }
 }
+
+const CharacterListItem = connect(
+  mapStateToProps,
+  mapDispatchToProps
+) (CharacterListItemComponent);
+
+export default CharacterListItem;

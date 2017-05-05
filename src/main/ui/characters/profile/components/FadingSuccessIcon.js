@@ -10,9 +10,15 @@ export default class FadingSuccessIcon extends Component {
     };
   }
 
+  componentDidMount() {
+    const timeoutId = setTimeout(() => {
+      this.props.handleRequestClose();
+    }, this.state.fadeoutTime);
+  }
+
   render() {
     return (
-      <ActionDone color={green500}/>
+      <ActionDone color={green500} />
     );
   }
 }
