@@ -90,6 +90,7 @@ class CharacterProfileComponent extends Component {
                style={styles.nameHeader}>
           <StatusTextField
             floatingLabelText="Name"
+            defaultValue={this.props.characterName}
             value={this.props.characterName}
             style={styles.nameInput}
             inputStyle={styles.nameInput.inputStyle}

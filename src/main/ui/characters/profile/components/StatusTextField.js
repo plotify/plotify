@@ -57,7 +57,8 @@ export default class StatusTextField extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const dirty = nextState.value !== this.state.value;
     const iconChanged = nextProps.iconVisible !== this.props.iconVisible;
-    return dirty || iconChanged;
+    const newPropsValue = nextProps.value !== this.state.value;
+    return dirty || iconChanged || newPropsValue;
   }
 
   render() {
