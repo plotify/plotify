@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as s from "../selectors";
 import * as a from "../actions";
 import { Paper, TextField, CircularProgress } from "material-ui";
-import ProfileGroup from "./ProfileGroup";
+import ProfileGroupsList from "./ProfileGroupsList";
 import { palette, spacing } from "../../../themes/PlotifyMainTheme";
 import { white } from "material-ui/styles/colors";
 import StatusTextField from "./StatusTextField";
@@ -13,7 +13,6 @@ const mapStateToProps = (state) => {
     characterId: s.getCharacterId(state),
     characterName: s.getCharacterName(state),
     isCharacterDeleted: s.isCharacterDeleted(state),
-    groups: s.getGroupsInOrder(state),
     isLoading: s.isLoading(state),
   };
 };
@@ -71,9 +70,6 @@ const entryGroupWrapperStyle = {
 class CharacterProfileComponent extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      groupsAreReady: false,
-    };
     this.handleCharacterChanged = this.handleCharacterChanged.bind(this);
     this.saveCharacterName = this.saveCharacterName.bind(this);
   }
@@ -106,25 +102,11 @@ class CharacterProfileComponent extends Component {
           />
         </Paper>
         <div style={entryGroupWrapperStyle} className="scrollable">
-          {
-            (this.props.isLoading || !this.state.groupsAreReady) &&
-            <CircularProgress size={24} thickness={2} style={styles.profileLoading}/>
-          }
-          <div style={this.state.groupsAreReady ? {} : { visibility: "hidden"}}>
-          {
-            this.props.groups.map((group) => {
-              return (
-                <ProfileGroup
-                  key={group.id}
-                  title={group.title}
-                  entries={group.entries}
-                  onReady={() => this.setState({groupsAreReady: true})}
-                />
-              );
-            })
-          }
-          </div>
-
+          <CircularProgress
+            size={24}
+            thickness={2}
+            style={this.props.isLoading ? styles.profileLoading : { display: "none" }}/>
+          <ProfileGroupsList />
         </div>
       </div>
     );

@@ -81,10 +81,13 @@ export default class SavingTextField extends Component {
             errorText={this.state.error}
           />
           <div style={{ position: "absolute", top: 36, right: 0 }}>
-            {
-              this.state.isIconVisible && this.state.saving &&
+
+            <div style={
+              this.state.isIconVisible && this.state.saving ?
+              {} : { display: "none" }
+            }>
               <CircularProgress size={24} thickness={2} key={2}/>
-            }
+            </div>
             {
               this.state.isIconVisible && !this.state.saving && !this.state.savingFailed &&
               <FadingSuccessIcon key={1}/>

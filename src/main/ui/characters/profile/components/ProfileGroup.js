@@ -13,10 +13,6 @@ const styles = {
 
 class ProfileGroupComponent extends Component {
 
-  componentDidMount() {
-    this.props.onReady();
-  }
-
   render() {
     return (
       <Paper zDepth={1} style={styles.paper}>

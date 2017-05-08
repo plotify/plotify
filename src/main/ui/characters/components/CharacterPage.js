@@ -98,6 +98,6 @@ class CharacterPageComponent extends Component {
 const CharacterPage = connect(
   mapStateToProps,
   mapDispatchToProps
-)(CharacterPageComponent)
+)(CharacterPageComponent);
 
 export default CharacterPage;
