@@ -17,7 +17,8 @@
     copyright: null,
     openLicense: false,
     loadingLicenseText: false,
-    licenseText: null
+    licenseText: null,
+    openContributors: false
   },
   page: {
       id: "characters",

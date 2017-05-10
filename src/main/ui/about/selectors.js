@@ -17,3 +17,7 @@ export function isLoadingLicenseText(state) {
 export function getLicenseText(state) {
   return state.about.licenseText;
 }
+
+export function isContributorsDialogOpen(state) {
+  return state.about.openContributors;
+}

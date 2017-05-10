@@ -5,7 +5,8 @@ const initialState = {
   copyright: null,
   openLicense: false,
   loadingLicenseText: false,
-  licenseText: null
+  licenseText: null,
+  openContributors: false
 };
 
 export default function reducer(state = initialState, action) {
@@ -45,6 +46,16 @@ export default function reducer(state = initialState, action) {
         openLicense: false,
         loadingLicenseText: false,
         licenseText: null
+      });
+
+    case t.SHOW_CONTRIBUTORS_DIALOG:
+      return Object.assign({}, state, {
+        openContributors: true
+      });
+
+    case t.HIDE_CONTRIBUTORS_DIALOG:
+      return Object.assign({}, state, {
+        openContributors: false
       });
 
     default:

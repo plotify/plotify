@@ -2,10 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
+import ContributorsDialog from "./ContributorsDialog";
 import LicenseDialog from "./LicenseDialog";
 
 import { isAboutDialogOpen, getAboutDialogCopyright } from "../selectors";
-import { showLicenseDialog, hideAboutDialog } from "../actions";
+import { showContributorsDialog, showLicenseDialog, hideAboutDialog } from "../actions";
 
 import { shell } from "electron";
 
@@ -25,7 +26,7 @@ const singleLineStyle = {
 };
 
 const descriptionStyle = {
-  marginTop: "1em",
+  marginTop: "2em",
   textAlign: "justify"
 };
 
@@ -33,9 +34,14 @@ class AboutDialog extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleOpenContributors = this.handleOpenContributors.bind(this);
     this.handleOpenLicense = this.handleOpenLicense.bind(this);
     this.handleOpenHomepage = this.handleOpenHomepage.bind(this);
     this.handleClose = this.handleClose.bind(this);
+  }
+
+  handleOpenContributors() {
+    this.props.onOpenContributors();
   }
 
   handleOpenLicense() {
@@ -57,6 +63,9 @@ class AboutDialog extends React.Component {
         label="Lizenz"
         onTouchTap={this.handleOpenLicense} />,
       <FlatButton
+        label="Mitwirkende"
+        onTouchTap={this.handleOpenContributors} />,
+      <FlatButton
         label="Homepage"
         onTouchTap={this.handleOpenHomepage} />,
       <FlatButton
@@ -71,6 +80,7 @@ class AboutDialog extends React.Component {
         onRequestClose={this.handleClose}
         actions={actions}
         modal={false}>
+        <ContributorsDialog />
         <LicenseDialog />
         <img style={imgStyle} src="./resources/app-icons/128.png" />
         <div style={divStyle}>
@@ -95,6 +105,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    onOpenContributors: () => {
+      dispatch(showContributorsDialog());
+    },
     onOpenLicense: () => {
       dispatch(showLicenseDialog());
     },
