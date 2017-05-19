@@ -5,14 +5,6 @@ import path from "path";
 import { remote } from "electron";
 import isDev from "electron-is-dev";
 
-function getLicenseFile() {
-  let licenseFile = path.join(remote.app.getAppPath(), "./LICENSE");
-  if (isDev) {
-    licenseFile = "./LICENSE";
-  }
-  return licenseFile;
-}
-
 export function showAboutDialog() {
   return (dispatch) => {
     return Promise.resolve()
@@ -37,13 +29,26 @@ export function showLicenseDialog() {
       .then(() => fs.readFile(getLicenseFile(), { encoding: licenseFileEncoding }))
       .then(text => dispatch(showLicenseDialogSuccessful(text)))
       .catch(error => dispatch(showLicenseDialogFailed(error)));
-
   };
 }
 
 export function hideLicenseDialog() {
   return {
     type: t.HIDE_LICENSE_DIALOG,
+    payload: {}
+  };
+}
+
+export function showContributorsDialog() {
+  return {
+    type: t.SHOW_CONTRIBUTORS_DIALOG,
+    payload: {}
+  };
+}
+
+export function hideContributorsDialog() {
+  return {
+    type: t.HIDE_CONTRIBUTORS_DIALOG,
     payload: {}
   };
 }
@@ -74,4 +79,12 @@ function showLicenseDialogFailed(error) {
     type: t.SHOW_LICENSE_DIALOG_FAILED,
     payload: { error }
   };
+}
+
+function getLicenseFile() {
+  let licenseFile = path.join(remote.app.getAppPath(), "./LICENSE");
+  if (isDev) {
+    licenseFile = "./LICENSE";
+  }
+  return licenseFile;
 }

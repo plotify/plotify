@@ -5,3 +5,6 @@ export const SHOW_LICENSE_DIALOG_REQUEST = "about/license/show";
 export const SHOW_LICENSE_DIALOG_SUCCESSFUL = "about/license/show/successful";
 export const SHOW_LICENSE_DIALOG_FAILED = "about/license/show/failed";
 export const HIDE_LICENSE_DIALOG = "about/license/hide";
+
+export const SHOW_CONTRIBUTORS_DIALOG = "about/contributors/show";
+export const HIDE_CONTRIBUTORS_DIALOG = "about/contributors/hide";
