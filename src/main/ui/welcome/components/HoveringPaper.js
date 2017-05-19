@@ -1,7 +1,11 @@
 import React from "react";
 import Paper from "material-ui/Paper";
 import { spacing } from "../../themes/PlotifyMainTheme";
-import LinearProgress from "material-ui/LinearProgress";
+import RefreshIndicator from "material-ui/RefreshIndicator";
+
+const style = {
+  noRadius: { borderRadius: 0 },
+};
 
 export default class HoveringPaper extends React.Component {
   constructor(props) {
@@ -65,6 +69,7 @@ export default class HoveringPaper extends React.Component {
       width: size,
       height: size,
       cursor: "pointer",
+      opacity: this.state.isLoading ? 0.7 : 1,
     };
     return Object.assign({}, styles, this.props.paperStyle);
   }
@@ -86,22 +91,28 @@ export default class HoveringPaper extends React.Component {
   render() {
     return (
       <div style={this.stylesWrapper()}>
-        <Paper
-          style={this.stylesPaper()}
+        {
+          this.state.isLoading &&
+          <RefreshIndicator
+            left={85}
+            top={85}
+            size={50}
+            status="loading"/>
+        }
+        <div
           onClick={this.handleClick}
-          zDepth={this.state.height}
           onMouseOver={this.handleMouseOver}
           onMouseOut={this.handleMouseOut}
-          circle={!this.state.isHovered}>
-          {
-            this.state.isLoading &&
-            <LinearProgress mode="indeterminate" style={{ borderRadius: 0 }}/>
-          }
-
-        </Paper>
-        <Paper zDepth={3} style={this.stylesLabel()}>
-          {this.props.title}
-        </Paper>
+          >
+          <Paper
+            style={this.stylesPaper()}
+            zDepth={this.state.height}
+            >
+          </Paper>
+          <Paper zDepth={this.state.height} style={this.stylesLabel()}>
+            {this.props.title}
+          </Paper>
+        </div>
       </div>
 
     );
