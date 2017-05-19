@@ -1,32 +1,60 @@
-export function isLoading(state) {
-  return state.characters.list.loading === true;
-}
+import { createSelector } from "reselect";
 
-export function isLoadingFailed(state) {
-  return state.characters.list.error !== null;
-}
+const getCharactersList = (state) => state.characters.list;
+export const isLoading = createSelector(
+  [getCharactersList],
+  (list) => {
+    return list.loading === true;
+  }
+);
 
-export function getLoadingError(state) {
-  return state.characters.list.error;
-}
+export const isLoadingFailed = createSelector(
+  [getCharactersList],
+  (list) => {
+    return list.error !== null;
+  }
+);
 
-export function getListFilter(state) {
-  return state.characters.list.filter;
-}
+export const getLoadingError = createSelector (
+  [getCharactersList],
+  (list) => {
+    return list.error;
+  }
+);
 
-export function getCharactersInOrder(state) {
-  return state.characters.list.order.map(
-    id => state.characters.list.characters[id]);
-}
+export const getListFilter = createSelector(
+  [getCharactersList],
+  (list) => {
+    return list.filter;
+  }
+);
 
-export function isCharacterSelected(state) {
-  return state.characters.list.selected !== null;
-}
+export const getCharactersInOrder = createSelector(
+  [getCharactersList],
+  (list) => {
+    return list.order.map(
+      id => list.characters[id]
+    );
+  }
+);
 
-export function getSelectedCharacterId(state) {
-  return state.characters.list.selected;
-}
+export const isCharacterSelected = createSelector(
+  [getCharactersList],
+  (list) => {
+    return list.selected !== null;
+  }
+);
 
-export function getSelectedCharacter(state) {
-  return state.characters.list.characters[getSelectedCharacterId(state)];
-}
+export const getSelectedCharacterId = createSelector(
+  [getCharactersList],
+  (list) => {
+    return list.selected;
+  }
+);
+
+export const getSelectedCharacter = createSelector(
+  [getCharactersList, getSelectedCharacterId],
+  (list, id) => {
+    return list.characters[id];
+  }
+);

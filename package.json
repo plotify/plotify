@@ -48,6 +48,7 @@
     "redux-logger": "3.0.1",
     "redux-thunk": "2.2.0",
     "redux-title": "0.0.3",
+    "reselect": "3.0.1",
     "sqlite3": "3.1.8"
   },
   "devDependencies": {

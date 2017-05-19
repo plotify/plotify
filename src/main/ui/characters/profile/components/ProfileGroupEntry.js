@@ -8,14 +8,23 @@ import FadingSuccessIcon from "./FadingSuccessIcon";
 import AlertError from "material-ui/svg-icons/alert/error";
 import StatusTextField from "./StatusTextField";
 
-const mapStateToProps = (state) => {
-  return {
-    value: (entryId) => s.getEntryValue(state, entryId),
-    hasValueChanged: (entryId) => s.hasEntryValueChanged(state, entryId),
-    isSaving: (entryId) => s.isEntrySaving(state, entryId),
-    isSavingFailed: (entryId) => s.isEntrySavingFailed(state, entryId),
-    savingError: (entryId) => s.getEntrySavingError(state, entryId),
+const makeMapStateToProps = () => {
+  const hasEntryValueChanged = s.makeHasEntryValueChanged();
+  const getEntryValue = s.makeGetEntryValue();
+  const isEntrySaving = s.makeIsEntrySaving();
+  const isEntrySavingFailed = s.makeIsEntrySavingFailed();
+  const getEntrySavingError = s.makeGetEntrySavingError();
+
+  const mapStateToProps = (state, props) => {
+    return {
+      value: getEntryValue(state, props),
+      hasValueChanged: hasEntryValueChanged(state, props),
+      isSaving: isEntrySaving(state, props),
+      isSavingFailed: isEntrySavingFailed(state, props),
+      savingError: getEntrySavingError(state, props),
+    };
   };
+  return mapStateToProps;
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -41,7 +50,6 @@ class ProfileGroupEntryComponent extends Component {
     this.state = {
       iconVisible: false,
     };
-    this.handleChange = this.handleChange.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.onIconHideRequest = this.onIconHideRequest.bind(this);
   }
@@ -53,28 +61,24 @@ class ProfileGroupEntryComponent extends Component {
   }
 
   getValue() {
-    return this.props.value(this.props.id);
+    return this.props.value;
   }
 
   getSavingError() {
-    return this.props.savingError(this.props.id);
-  }
-
-  handleChange(event) {
-    //this.props.setEntryValue(this.props.id, event.target.value);
+    return this.props.savingError;
   }
 
   handleBlur(value) {
     Promise.resolve()
-    .then(() => this.props.setEntryValue(this.props.id, value))
+    .then(() => this.props.setEntryValue(this.props.entryId, value))
     .then(() => {
-      if (this.props.hasValueChanged(this.props.id)) {
+      if (this.props.hasValueChanged) {
         this.setState({
           iconVisible: true,
         });
       }
     })
-    .then(() => this.props.saveEntryValue(this.props.id));
+    .then(() => this.props.saveEntryValue(this.props.entryId));
   }
 
   render() {
@@ -88,13 +92,12 @@ class ProfileGroupEntryComponent extends Component {
         multiLine={true}
         errorText={typeof this.getSavingError() === Object ? "" : this.getSavingError()}
         onBlur={this.handleBlur}
-        onChange={this.handleChange}
-        isLoading={this.props.isSaving(this.props.id)}
+        isLoading={this.props.isSaving}
         isSuccessFul={
-          !this.props.isSaving(this.props.id) &&
-          !this.props.isSavingFailed(this.props.id)
+          !this.props.isSaving &&
+          !this.props.isSavingFailed
         }
-        isError={!this.props.isSaving(this.props.id) && this.props.isSavingFailed(this.props.id)}
+        isError={!this.props.isSaving && this.props.isSavingFailed}
         iconVisible={this.state.iconVisible}
         iconHideRequest={this.onIconHideRequest}
       />
@@ -103,7 +106,7 @@ class ProfileGroupEntryComponent extends Component {
 }
 
 const ProfileGroupEntry = connect(
-  mapStateToProps,
+  makeMapStateToProps,
   mapDispatchToProps
 )(ProfileGroupEntryComponent);
 

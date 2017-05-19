@@ -57,10 +57,13 @@ export function setEntryValue(entryId, changedValue) {
 
 export function saveEntryValue(entryId) {
   return (dispatch, getState) => {
-    if (s.hasEntryValueChanged(getState(), entryId)) {
+    const hasEntryValueChanged = s.makeHasEntryValueChanged();
+    const props = { entryId };
+    if (hasEntryValueChanged(getState(), props)) {
+      const getEntryValue = s.makeGetEntryValue();
 
       const characterId = s.getCharacterId(getState());
-      const changedValue = s.getEntryValue(getState(), entryId);
+      const changedValue = getEntryValue(getState(), props);
       const params = {
         characterId: characterId,
         type: types.ENTRY,

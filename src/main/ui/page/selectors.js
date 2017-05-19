@@ -1,11 +1,24 @@
-export function getCurrentPageId(state) {
-  return state.page.id;
-}
+import { createSelector } from "reselect";
 
-export function getCurrentPageTitle(state) {
-  return state.page.title;
-}
+const getPage = (state) => state.page;
 
-export function hasCurrentPageNavigation(state) {
-  return state.page.navigation === true;
-}
+export const getCurrentPageId = createSelector(
+  [getPage],
+  (page) => {
+    return page.id;
+  }
+);
+
+export const getCurrentPageTitle = createSelector(
+  [getPage],
+  (page) => {
+    return page.title;
+  }
+);
+
+export const hasCurrentPageNavigation = createSelector(
+  [getPage],
+  (page) => {
+    return page.navigation === true;
+  }
+);

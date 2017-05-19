@@ -1,55 +1,94 @@
-export function isStoryLoading(state) {
-  return state.story.loading === true;
-}
+import { createSelector } from "reselect";
 
-export function isStoryLoadingFailed(state) {
-  return state.story.loadingFailed === true;
-}
+const getStory = (state) => state.story;
 
-export function getStoryLoadingError(state) {
-  if (isStoryLoadingFailed(state)) {
-    return state.story.error;
-  } else {
-    return null;
+export const isStoryLoading = createSelector(
+  [getStory],
+  (story) => {
+    return story.loading === true;
   }
-}
+);
 
-export function isStoryClosing(state) {
-  return state.story.closing === true;
-}
-
-export function isStoryClosingFailed(state) {
-  return state.story.closingFailed === true;
-}
-
-export function getStoryClosingError(state) {
-  if (isStoryClosingFailed(state)) {
-    return state.story.error;
-  } else {
-    return null;
+export const isStoryLoadingFailed = createSelector(
+  [getStory],
+  (story) => {
+    return story.loadingFailed === true;
   }
-}
+);
 
-export function isStoryCreating(state) {
-  return state.story.creating === true;
-}
 
-export function isStoryCreationFailed(state) {
-  return state.story.creationFailed === true;
-}
-
-export function getStoryCreationError(state) {
-  if (isStoryCreationFailed(state)) {
-    return state.story.error;
-  } else {
-    return null;
+export const getStoryLoadingError = createSelector(
+  [getStory, isStoryLoadingFailed],
+  (story, loadingFailed) => {
+    if (loadingFailed) {
+      return story.error;
+    } else {
+      return null;
+    }
   }
-}
+);
 
-export function isStoryOpen(state) {
-  return state.story.open === true;
-}
+export const isStoryClosing = createSelector(
+  [getStory],
+  (story) => {
+    return story.closing === true;
+  }
+);
 
-export function getOpenStoryFile(state) {
-  return state.story.file;
-}
+export const isStoryClosingFailed = createSelector(
+  [getStory],
+  (story) => {
+    return story.closingFailed === true;
+  }
+);
+
+export const getStoryClosingError = createSelector(
+  [getStory, isStoryClosingFailed],
+  (story, storyClosingFailed) => {
+    if (storyClosingFailed) {
+      return story.error;
+    } else {
+      return null;
+    }
+  }
+);
+
+export const isStoryCreating = createSelector(
+  [getStory],
+  (story) => {
+    return story.creating === true;
+  }
+);
+
+export const isStoryCreationFailed = createSelector(
+  [getStory],
+  (story) => {
+    return story.creationFailed === true;
+  }
+);
+
+export const getStoryCreationError = createSelector(
+  [getStory, isStoryCreationFailed],
+  (story, storyCreationFailed) => {
+    if (storyCreationFailed) {
+      return story.error;
+    } else {
+      return null;
+    }
+  }
+);
+
+
+export const isStoryOpen = createSelector(
+  [getStory],
+  (story) => {
+    return story.open === true;
+  }
+);
+
+export const getOpenStoryFile = createSelector(
+  [getStory],
+  (story) => {
+    return story.file;
+  }
+);

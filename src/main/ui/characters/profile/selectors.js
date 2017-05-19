@@ -1,56 +1,92 @@
+import { createSelector } from "reselect";
 import list from "../list";
 
-export function isVisible(state) {
-  return state.characters.profile.hasOwnProperty("characterId");
-}
+const getProfile = (state) => state.characters.profile;
 
-export function getCharacterId(state) {
-  return state.characters.profile.characterId;
-}
-
-export function getCharacterName(state) {
-  return state.characters.profile.changedName;
-}
-
-export function hasCharacterNameChanged(state) {
-  return state.characters.profile.changedName !== state.characters.profile.savedName;
-}
-
-export function isCharacterDeleted(state) {
-  return state.characters.profile.deleted;
-}
-
-export function isLoading(state) {
-  return state.characters.profile.loading;
-}
-
-export function isLoadingFailed(state) {
-  return state.characters.profile.loadingFailed;
-}
-
-export function getLoadingError(state) {
-  if (isLoadingFailed(state)) {
-    return state.characters.profile.error;
-  } else {
-    return null;
+export const isVisible = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.hasOwnProperty("characterId");
   }
-}
+);
 
-export function isSaving(state) {
-  return state.characters.profile.saving;
-}
-
-export function isSavingFailed(state) {
-  return state.characters.profile.savingFailed;
-}
-
-export function getSavingError(state) {
-  if (isSavingFailed(state)) {
-    return state.characters.profile.error;
-  } else {
-    return null;
+export const getCharacterId = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.characterId;
   }
-}
+);
+
+export const getCharacterName = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.changedName;
+  }
+);
+
+export const hasCharacterNameChanged = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.changedName !== profile.savedName;
+  }
+);
+
+export const isCharacterDeleted = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.deleted;
+  }
+);
+
+export const isLoading = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.loading;
+  }
+);
+
+export const isLoadingFailed = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.loadingFailed;
+  }
+);
+
+export const getLoadingError = createSelector(
+  [getProfile, isLoadingFailed],
+  (profile, loadingFailed) => {
+    if (loadingFailed) {
+      return profile.error;
+    } else {
+      return null;
+    }
+  }
+);
+
+export const isSaving = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.saving;
+  }
+);
+
+export const isSavingFailed = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.savingFailed;
+  }
+);
+
+export const getSavingError = createSelector(
+  [getProfile, isSavingFailed],
+  (profile, savingFailed) => {
+    if (savingFailed) {
+      return profile.error;
+    } else {
+      return null;
+    }
+  }
+);
 
 export function getGroupsInOrder(state) {
   return state.characters.profile.groupsOrder.map(id => mapToGroup(state, id));
@@ -74,28 +110,59 @@ function mapToEntry(state, id) {
   };
 }
 
+const getEntry = (state, props) => getProfile(state).entries[props.entryId];
+
+// Depricated
 export function hasEntryValueChanged(state, entryId) {
-  const entry = state.characters.profile.entries[entryId];
+  const entry = getEntry(state, { entryId });
   return entry.changedValue !== entry.savedValue;
 }
 
-export function getEntryValue(state, entryId) {
-  const entry = state.characters.profile.entries[entryId];
-  return entry.changedValue;
-}
+export const makeHasEntryValueChanged = () => {
+  return createSelector(
+    [getEntry],
+    (entry) => {
+      return entry.changedValue !== entry.savedValue;
+    }
+  );
+};
 
-export function isEntrySaving(state, entryId) {
-  return state.characters.profile.entries[entryId].saving;
-}
+export const makeGetEntryValue = () => {
+  return createSelector(
+    [getEntry],
+    (entry) => {
+      return entry.changedValue;
+    }
+  );
+};
 
-export function isEntrySavingFailed(state, entryId) {
-  return state.characters.profile.entries[entryId].savingFailed;
-}
+export const makeIsEntrySaving = () => {
+  return  createSelector(
+    [getEntry],
+    (entry) => {
+      return entry.saving;
+    }
+  );
+};
 
-export function getEntrySavingError(state, entryId) {
-  if (isEntrySavingFailed(state, entryId)) {
-    return state.characters.profile.entries[entryId].error;
-  } else {
-    return null;
-  }
-}
+export const makeIsEntrySavingFailed = () => {
+  return createSelector(
+    [getEntry],
+    (entry) => {
+      return entry.savingFailed;
+    }
+  );
+};
+
+export const makeGetEntrySavingError = () => {
+  return createSelector(
+    [getEntry, makeIsEntrySavingFailed],
+    (entry, entrySavingFailed) => {
+      if (entrySavingFailed) {
+        return entry.error;
+      } else {
+        return null;
+      }
+    }
+  );
+};
