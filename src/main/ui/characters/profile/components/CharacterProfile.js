@@ -14,6 +14,7 @@ const mapStateToProps = (state) => {
     characterName: s.getCharacterName(state),
     isCharacterDeleted: s.isCharacterDeleted(state),
     isLoading: s.isLoading(state),
+    visible: s.isVisible(state),
   };
 };
 
@@ -84,31 +85,45 @@ class CharacterProfileComponent extends Component {
 
   render() {
     return (
-      <div style={styles.wrapper}>
-        <Paper rounded={false}
-               zDepth={2}
-               style={styles.nameHeader}>
-          <StatusTextField
-            floatingLabelText="Name"
-            defaultValue={this.props.characterName}
-            value={this.props.characterName}
-            style={styles.nameInput}
-            inputStyle={styles.nameInput.inputStyle}
-            floatingLabelFocusStyle={styles.nameInput.floatingLabelFocusStyle}
-            floatingLabelStyle={styles.nameInput.floatingLabelStyle}
-            underlineFocusStyle={styles.nameInput.underlineFocusStyle}
-            fullWidth={true}
-            onChange={this.handleCharacterChanged}
-            onBlur={this.saveCharacterName}
-          />
-        </Paper>
-        <div style={entryGroupWrapperStyle} className="scrollable">
-          <CircularProgress
-            size={24}
-            thickness={2}
-            style={this.props.isLoading ? styles.profileLoading : { display: "none" }}/>
-          <ProfileGroupsList />
+      <div>
+      {
+        this.props.visible &&
+        <div style={styles.wrapper}>
+          <Paper rounded={false}
+                 zDepth={2}
+                 style={styles.nameHeader}>
+            <StatusTextField
+              floatingLabelText="Name"
+              defaultValue={this.props.characterName}
+              value={this.props.characterName}
+              style={styles.nameInput}
+              inputStyle={styles.nameInput.inputStyle}
+              floatingLabelFocusStyle={styles.nameInput.floatingLabelFocusStyle}
+              floatingLabelStyle={styles.nameInput.floatingLabelStyle}
+              underlineFocusStyle={styles.nameInput.underlineFocusStyle}
+              fullWidth={true}
+              onChange={this.handleCharacterChanged}
+              onBlur={this.saveCharacterName}
+            />
+          </Paper>
+          <div style={entryGroupWrapperStyle} className="scrollable">
+            {
+              this.props.isLoading &&
+              <CircularProgress
+                size={24}
+                thickness={2}
+                style={styles.profileLoading}/>
+            }
+            <ProfileGroupsList />
+          </div>
         </div>
+      }
+      {
+        !this.props.visible &&
+        <div>
+          <h1>Kein Charakter ausgewählt</h1>
+        </div>
+      }
       </div>
     );
   }
