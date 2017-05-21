@@ -15,7 +15,7 @@ const contributors = [
   {
     name: "Sebastian Schmidt",
     url: "https://github.com/SebastianSchmidt",
-    image: null
+    image: "./resources/contributors/sebastian-schmidt.jpg"
   },
   {
     name: "Jasper Meyer",
