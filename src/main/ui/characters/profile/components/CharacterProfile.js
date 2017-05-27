@@ -85,7 +85,7 @@ class CharacterProfileComponent extends Component {
 
   render() {
     return (
-      <div>
+      <div style={styles.wrapper}>
       {
         this.props.visible &&
         <div style={styles.wrapper}>
@@ -106,7 +106,7 @@ class CharacterProfileComponent extends Component {
               onBlur={this.saveCharacterName}
             />
           </Paper>
-          <div style={entryGroupWrapperStyle} className="scrollable">
+          <div style={entryGroupWrapperStyle}>
             {
               this.props.isLoading &&
               <CircularProgress

@@ -31,7 +31,7 @@ const styles = {
 class CharacterListComponent extends Component {
   render() {
     return (
-      <List style={styles.list} className="scrollable">
+      <List style={styles.list}>
         {
           this.props.characters.map((character) => {
             return (
