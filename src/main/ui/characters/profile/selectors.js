@@ -1,5 +1,4 @@
 import { createSelector } from "reselect";
-import list from "../list";
 
 const getProfile = (state) => state.characters.profile;
 
