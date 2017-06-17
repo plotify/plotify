@@ -1,5 +1,5 @@
 import * as t from "./actionTypes";
-import fs from "fs-promise";
+import fs from "fs-extra";
 import firstline from "firstline";
 import path from "path";
 import { remote } from "electron";
