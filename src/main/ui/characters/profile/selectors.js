@@ -111,7 +111,7 @@ function mapToEntry(state, id) {
 
 const getEntry = (state, props) => getProfile(state).entries[props.entryId];
 
-// Depricated
+// Deprecated
 export function hasEntryValueChanged(state, entryId) {
   const entry = getEntry(state, { entryId });
   return entry.changedValue !== entry.savedValue;

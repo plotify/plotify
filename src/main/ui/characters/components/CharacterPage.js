@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import { white } from "material-ui/styles/colors";
 import { FloatingActionButton, Paper } from "material-ui";
@@ -9,6 +10,8 @@ import { spacing } from "../../themes/PlotifyMainTheme";
 
 import FilterableCharactersList from "../list/components/FilterableCharactersList";
 import CharacterProfile from "../profile/components/CharacterProfile";
+
+import creation from "../creation";
 
 const styles = {
   root: {
@@ -45,13 +48,36 @@ const styles = {
   }
 };
 
-export default class CharacterPageComponent extends Component {
+const mapStateToProps = (state) => {
+  return {
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createCharacter: () => dispatch(creation.actions.createCharacter())
+  };
+};
+
+class CharacterPageComponent extends Component {
+
+  constructor(props) {
+    super(props);
+    this.createCharacter = this.createCharacter.bind(this);
+  }
+
+  createCharacter() {
+    this.props.createCharacter();
+  }
+
   render() {
     return (
       <div id="CharacterPage" style={styles.root}>
         <Paper zDepth={1} style={styles.listPaper}>
           <FilterableCharactersList />
-          <FloatingActionButton style={styles.addCharacterButton}>
+          <FloatingActionButton
+            style={styles.addCharacterButton}
+            onTouchTap={this.createCharacter}>
             <ContentAdd  />
           </FloatingActionButton>
         </Paper>
@@ -63,3 +89,10 @@ export default class CharacterPageComponent extends Component {
     );
   }
 }
+
+const CharacterPage = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CharacterPageComponent);
+
+export default CharacterPage;

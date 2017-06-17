@@ -9,12 +9,32 @@ import { sendToModel } from "../../../shared/commons/ipc";
 
 export function loadProfile() {
   return (dispatch, getState) => {
+
     const character = list.selectors.getSelectedCharacter(getState());
+
+    let id;
+    let name;
+    let deleted;
+
+    // TODO Woraround: Wenn ein neuer Charakter erstellt wurde, befindet sich dieser nicht in der
+    // Liste. Aus diesem Grund kann der Charakter nicht über getSelectedCharacter geladen werden.
+    // Ein neuer Charakter hat keinen Namen und ist nicht gelöscht.
+    if (character) {
+      id = character.id;
+      name = character.name;
+      deleted = character.deleted;
+    } else {
+      id = list.selectors.getSelectedCharacterId(getState());
+      name = "";
+      deleted = false;
+    }
+
     return Promise.resolve()
-      .then(() => dispatch(loadProfileRequest(character.id, character.name, character.deleted)))
-      .then(() => sendToModel(c.GET_CHARACTER_PROFILE, character.id))
+      .then(() => dispatch(loadProfileRequest(id, name, deleted)))
+      .then(() => sendToModel(c.GET_CHARACTER_PROFILE, id))
       .then(groups => dispatch(loadProfileSuccessful(groups)))
       .catch(error => dispatch(loadProfileFailed(error)));
+
   };
 }
 
@@ -44,10 +64,11 @@ export function saveCharacterName() {
         .then(() => dispatch(list.actions.updateCharacterName(characterId, changedName)))
         .then(() => dispatch(saveCharacterNameSuccessful()))
         .catch(error => dispatch(saveCharacterNameFailed(error)));
-        
+
     }
   };
 }
+
 export function setEntryValue(entryId, changedValue) {
   return {
     type: t.SET_ENTRY_VALUE,
