@@ -44,8 +44,8 @@ export function saveCharacterName() {
         .then(() => dispatch(list.actions.updateCharacterName(characterId, changedName)))
         .then(() => dispatch(saveCharacterNameSuccessful()))
         .catch(error => dispatch(saveCharacterNameFailed(error)));
+        
     }
-
   };
 }
 export function setEntryValue(entryId, changedValue) {

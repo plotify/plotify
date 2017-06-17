@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
 
 const getCharactersList = (state) => state.characters.list;
+
 export const isLoading = createSelector(
   [getCharactersList],
   (list) => {

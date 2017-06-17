@@ -21,9 +21,9 @@
     openContributors: false
   },
   page: {
-      id: "characters",
-      title: "Charaktere",
-      navigation: true
+    id: "characters",
+    title: "Charaktere",
+    navigation: true
   }
   story: {
     loading: false,
@@ -37,6 +37,10 @@
     file: "/home/mustermann/Dokumente/Neue Geschichte.story"
   },
   characters: {
+    creation: {
+      creating: false,
+      error: null
+    }
     list: {
       loading: false,
       error: null,

@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import FilterableCharactersList from "../list/components/FilterableCharactersList";
-import CharacterProfile from "../profile/components/CharacterProfile";
+
 import { white } from "material-ui/styles/colors";
 import { FloatingActionButton, Paper } from "material-ui";
-import ContentAdd from "material-ui/svg-icons/content/add";
-import { spacing } from "../../themes/PlotifyMainTheme";
 import { CircularProgress } from "material-ui";
+import ContentAdd from "material-ui/svg-icons/content/add";
+
+import { spacing } from "../../themes/PlotifyMainTheme";
+
+import FilterableCharactersList from "../list/components/FilterableCharactersList";
+import CharacterProfile from "../profile/components/CharacterProfile";
 
 const styles = {
   root: {
