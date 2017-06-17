@@ -36,7 +36,7 @@ class AboutDialog extends React.Component {
     super(props);
     this.handleOpenContributors = this.handleOpenContributors.bind(this);
     this.handleOpenLicense = this.handleOpenLicense.bind(this);
-    this.handleOpenHomepage = this.handleOpenHomepage.bind(this);
+    this.handleOpenWebsite = this.handleOpenWebsite.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
@@ -48,8 +48,8 @@ class AboutDialog extends React.Component {
     this.props.onOpenLicense();
   }
 
-  handleOpenHomepage() {
-    this.props.onOpenHomepage();
+  handleOpenWebsite() {
+    this.props.onOpenWebsite();
   }
 
   handleClose() {
@@ -66,8 +66,8 @@ class AboutDialog extends React.Component {
         label="Mitwirkende"
         onTouchTap={this.handleOpenContributors} />,
       <FlatButton
-        label="Homepage"
-        onTouchTap={this.handleOpenHomepage} />,
+        label="Website"
+        onTouchTap={this.handleOpenWebsite} />,
       <FlatButton
         label="Schließen"
         primary={true}
@@ -111,7 +111,7 @@ const mapDispatchToProps = (dispatch) => {
     onOpenLicense: () => {
       dispatch(showLicenseDialog());
     },
-    onOpenHomepage: () => {
+    onOpenWebsite: () => {
       shell.openExternal(packageJson.homepage);
     },
     close: () => {
