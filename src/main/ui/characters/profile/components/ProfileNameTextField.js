@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Paper from "material-ui/Paper";
+import TextField from "material-ui/TextField";
 import StatusTextField from "./StatusTextField";
 import * as s from "../selectors";
 import * as a from "../actions";
@@ -42,6 +43,9 @@ const style = {
     right: 0,
     padding: spacing.desktopGutterLess,
   },
+  nameInput: {
+    color: white,
+  }
 };
 
 class ProfileNameTextFieldComponent extends Component {
@@ -49,6 +53,9 @@ class ProfileNameTextFieldComponent extends Component {
     super(props);
     this.handleCharacterChanged = this.handleCharacterChanged.bind(this);
     this.saveCharacterName = this.saveCharacterName.bind(this);
+    this.state = {
+      value: this.props.value
+    };
   }
 
   handleCharacterChanged(event) {
@@ -69,7 +76,7 @@ class ProfileNameTextFieldComponent extends Component {
       <Paper rounded={false}
              zDepth={2}
              style={this.getStyle().nameHeader}>
-        <StatusTextField
+        <TextField
           floatingLabelText="Name"
           value={this.props.characterName}
           style={this.getStyle().nameInput}
