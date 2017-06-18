@@ -45,7 +45,6 @@ class CharacterProfileLoadingIndicatorComponent extends Component {
     const parentSaysIsLoading = this.props.isLoading;
     const willBeLoading = nextProps.isLoading;
     if (parentSaysIsLoading && !willBeLoading) {
-      console.log("setting timeout");
       setTimeout(() => {
         this.setState({
           isLoading: willBeLoading
