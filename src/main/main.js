@@ -110,9 +110,7 @@ function updateCachedMainWindowPreferences() {
 }
 
 app.on("ready", () => {
-  if (isDev) {
-    BrowserWindow.addDevToolsExtension("C:\\Users\\jaspe\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.5.0_0");
-  }
+
   createWindow();
 });
 
