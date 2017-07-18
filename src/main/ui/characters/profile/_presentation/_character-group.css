@@ -1,0 +1,22 @@
+.plotify-profile-group {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.plotify-character-groups-list {
+    padding: 15px 15px 0 15px;
+    overflow-y: auto;
+    flex: 9 6 100%;
+}
+
+/* color fix for text field */
+.mdl-textfield__label:after {
+    background-color: var(--primary-color) !important;
+}
+
+.plotify-saving-text-field .mdl-spinner {
+    color: var(--primary-color);
+    position: absolute;
+    right: 1vw;
+    margin-top: 12px;
+}

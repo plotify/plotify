@@ -5,7 +5,7 @@ const getProfile = (state) => state.characters.profile;
 export const isVisible = createSelector(
   [getProfile],
   (profile) => {
-    return profile.hasOwnProperty("characterId");
+    return profile.hasOwnProperty("characterId") && profile.characterId !== undefined;
   }
 );
 
@@ -65,14 +65,14 @@ export const getLoadingError = createSelector(
 export const isSaving = createSelector(
   [getProfile],
   (profile) => {
-    return profile.saving;
+    return profile.saving || false;
   }
 );
 
 export const isSavingFailed = createSelector(
   [getProfile],
   (profile) => {
-    return profile.savingFailed;
+    return profile.savingFailed || false;
   }
 );
 
@@ -88,7 +88,10 @@ export const getSavingError = createSelector(
 );
 
 export function getGroupsInOrder(state) {
-  return state.characters.profile.groupsOrder.map(id => mapToGroup(state, id));
+  if (state.characters.profile.groupsOrder) {
+    return state.characters.profile.groupsOrder.map(id => mapToGroup(state, id));
+  }
+  return [];
 }
 
 function mapToGroup(state, id) {

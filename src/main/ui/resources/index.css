@@ -1,0 +1,74 @@
+@import "../mdl-components/mdl-react.css";
+@import "../characters/list/_presentation/_filter.css";
+@import "../characters/list/_presentation/_character-list.css";
+@import "../characters/profile/_presentation/_character-group.css";
+@import "../characters/profile/_presentation/_character-profile.css";
+@import "../characters/_presentation/_character-section.css";
+@import "../page/_presentation/_main-navigation.css";
+
+:root {
+    --primary-color: rgb(45, 4, 68);
+    --secondary-color: rgb(118, 75, 142);
+    --disabled-text-color: green;
+    --disabled-color: red;
+}
+
+.mdl-color-text--primary {
+    color: var(--primary-color) !important;
+}
+
+.mdl-color-text--secondary {
+    color: var(--secondary-color) !important;
+}
+
+.mdl-color--primary {
+    background-color: var(--primary-color) !important;
+}
+
+.mdl-color--secondary {
+    background-color: var(--secondary-color) !important;
+}
+
+.mdl-color--primary-dark {
+    /* todo background-color: rgb(45, 4, 68) !important;*/
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+}
+
+html, body, #root, #app {
+    -webkit-user-select: none;
+    cursor: default;
+    height: 100%;
+    width: 100%;
+}
+
+.marginTransition {
+    -webkit-transition: margin 1s;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #2D0444;
+    border-radius: 4px;
+}
+
+div:hover::-webkit-scrollbar-thumb {
+    background-color: #2D0444;
+}
+
+.mdl-layout__content {
+    height: 100vh;
+    overflow: hidden;
+}

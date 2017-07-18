@@ -1,0 +1,13 @@
+.plotify-character-list .mdl-list {
+    padding-top: 0;
+}
+
+.plotify-character-list--filterable {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.plotify-character-list {
+    overflow-y: auto;
+}

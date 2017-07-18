@@ -109,7 +109,12 @@ function updateCachedMainWindowPreferences() {
   mainWindowMaximized = mainWindow.isMaximized();
 }
 
-app.on("ready", () => createWindow());
+app.on("ready", () => {
+  if (isDev) {
+    BrowserWindow.addDevToolsExtension("C:\\Users\\jaspe\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\fmkadmapgofadopljbjfkapdkoienihi\\2.5.0_0");
+  }
+  createWindow();
+});
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
