@@ -25,32 +25,6 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-const styles = {
-  app:                {
-    background: palette.accent2Color,
-    height:     "100%",
-    width:      "100%",
-  },
-  pageWrapper:        {
-    position: "fixed",
-    overflow: "hidden",
-    top:      spacing.desktopKeylineIncrement,
-    left:     0,
-    right:    0,
-    bottom:   0,
-  },
-  navigationWrapper:  {
-    width:  spacing.desktopToolbarHeight,
-    height: "100%",
-    float:  "left",
-  },
-  pageContentWrapper: {
-    width:      "calc(100% - " + spacing.desktopToolbarHeight + "px)",
-    marginLeft: spacing.desktopToolbarHeight,
-    height:     "100%",
-  },
-};
-
 class AppComponent extends Component {
   componentDidMount() {
     componentHandler.upgradeDom();
