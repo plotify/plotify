@@ -28,6 +28,7 @@ export default class FloatingMenu extends PureComponent {
           icon="folder"
           action={ this.props.onOpenStoryFileLocation }
         />
+        <Divider />
         <MenuItem
           caption="Über Plotify"
           icon="info"

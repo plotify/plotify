@@ -1,4 +1,5 @@
 @import "../mdl-components/mdl-react.css";
+@import "../welcome/_presentation/_welcome.css";
 @import "../characters/list/_presentation/_filter.css";
 @import "../characters/list/_presentation/_character-list.css";
 @import "../characters/profile/_presentation/_character-group.css";
@@ -71,4 +72,9 @@ div:hover::-webkit-scrollbar-thumb {
 .mdl-layout__content {
     height: 100vh;
     overflow: hidden;
+}
+
+/* fixes outlines on button focus */
+.mdl-layout__drawer-button:focus {
+    outline: none;
 }

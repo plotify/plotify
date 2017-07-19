@@ -9,7 +9,9 @@ export class AppBar extends PureComponent {
 
   render() {
     return (
-      <header className="mdl-layout__header mdl-color--primary">
+      <header className="mdl-layout__header mdl-color--primary" style={{
+        display: this.props.visible ? "block" : "none",
+      }}>
         <div className="mdl-layout__header-row">
           <span className="mdl-layout-title">
             { this.props.title }
@@ -27,4 +29,5 @@ export class AppBar extends PureComponent {
 AppBar.proptypes = {
   title:      PropTypes.string.isRequired,
   actionMenu: PropTypes.element,
+  visible:    PropTypes.bool,
 };

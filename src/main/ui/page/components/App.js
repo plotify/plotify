@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import * as selectors from "../selectors";
 import { PAGES } from "../constants";
 import CharacterSection from "../../characters/_containers/CharacterSection";
-import WelcomePage from "../../welcome/components/WelcomePage";
+import WelcomePage from "../../welcome/_containers/WelcomePage";
 import { connect } from "react-redux";
 import Snackbar from "../../snackbar/components/Snackbar";
 import AboutDialog from "../../about/components/AboutDialog";
@@ -44,6 +44,7 @@ class AppComponent extends Component {
       <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header ">
         <AppBar
           title={this.props.title}
+          visible={this.props.currentPageId !== PAGES.WELCOME.id}
           actionMenu={
             <div>
               <IconButton icon="more_vert" id="open-action-menu" />
@@ -56,7 +57,7 @@ class AppComponent extends Component {
         <Drawer title={this.props.title}>
           <Navigation />
         </Drawer>
-        <main className="mdl-layout__content">
+        <main className="mdl-layout__content mdl-color--grey-100">
           {page}
         </main>
 
