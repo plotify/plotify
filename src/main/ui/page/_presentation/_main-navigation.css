@@ -27,3 +27,7 @@
     background-color: var(--secondary-color);
     color: white;
 }
+
+.plotify-main-navigation a.mdl-navigation__link.active:hover {
+    background-color: var(--primary-color);
+}

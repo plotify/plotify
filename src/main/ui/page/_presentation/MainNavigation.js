@@ -4,6 +4,7 @@ import { NavigationLink } from "../../mdl-components/Layout/";
 import Divider from "./Divider";
 import { PAGES } from "../constants";
 
+//TODO split in multiple containers for each navigation link
 export default class MainNavigation extends PureComponent {
   render() {
     return (

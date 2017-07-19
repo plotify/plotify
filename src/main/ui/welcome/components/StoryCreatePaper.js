@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     handleCreateStory: () => {
-      dispatch(a.onCreateStory());
+      dispatch(a.createStory());
     },
   };
 };
