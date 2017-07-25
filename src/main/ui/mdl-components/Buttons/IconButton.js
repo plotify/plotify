@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import requiredIf from "react-required-if";
 import * as componentHandler from "../../resources/material";
 
-export default class IconButton extends PureComponent {
+export class IconButton extends PureComponent {
   componentDidMount() {
     componentHandler.upgradeDom();
   }

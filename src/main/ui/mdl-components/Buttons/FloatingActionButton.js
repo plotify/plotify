@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
-export default class FloatingActionButton extends PureComponent {
+export class FloatingActionButton extends PureComponent {
 
   render() {
     return (
@@ -14,7 +14,7 @@ export default class FloatingActionButton extends PureComponent {
                    mdl-color--primary
                    mdl-color-text--primary-contrast"
         onClick={ this.props.action }>
-        <i className="material-icons">{ this.props.icon }</i>
+        <span className="material-icons">{ this.props.icon }</span>
       </button>
     );
   }

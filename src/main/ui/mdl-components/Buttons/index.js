@@ -1,4 +1,5 @@
-import FloatingActionButton from "./FloatingActionButton";
-import IconButton from "./IconButton";
+export { FloatingActionButton } from "./FloatingActionButton";
+export { IconButton } from "./IconButton";
+export { FlatButton } from "./FlatButton";
+export { RaisedButton } from "./RaisedButton";
 
-export { FloatingActionButton, IconButton };
