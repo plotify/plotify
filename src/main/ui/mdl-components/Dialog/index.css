@@ -1,0 +1,82 @@
+:root {
+    --transition-time: .4s;
+}
+
+.mdl-dialog {
+    position: fixed;
+    width: auto;
+    left: 20vw;
+    right: 20vw;
+    transform: translateY(-50%);
+    top: 50%;
+    max-height: 100vh;
+}
+
+.mdl-dialog[open] {
+    animation: show var(--transition-time) ease normal;
+}
+
+.mdl-dialog.hide {
+    /*animation: hide .4s ease normal;*/
+}
+
+@keyframes show {
+    from {
+        opacity: 0;
+        transform: translateY(-70%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes hide {
+    to {
+        opacity: 0;
+        transform: translateY(-70%);
+    }
+}
+
+.mdl-dialog__title {
+    font-size: 2rem;
+    padding: 24px;
+}
+
+.mdl-dialog__content {
+    max-height: 50vh;
+    overflow-y: hidden;
+}
+
+.mdl-dialog::backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    animation: none;
+}
+
+.mdl-dialog[open]::backdrop {
+    animation: show-backdrop .4s ease normal;
+}
+
+.mdl-dialog.hide::backdrop {
+    /*animation: hide-backdrop .4s ease normal;*/
+}
+
+@keyframes show-backdrop {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes hide-backdrop {
+    to {
+        opacity: 0;
+    }
+}
