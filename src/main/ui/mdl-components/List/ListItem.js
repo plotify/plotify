@@ -18,14 +18,13 @@ export default class ListItem extends PureComponent {
     };
   }
 
-  getClasses() {
+  get background() {
     const hovered = this.state.hover;
     const selected = this.props.selected;
     const result = [];
     if (selected) {
       result.push([
         "mdl-color--secondary",
-        "mdl-color-text--white",
       ]);
     }
 
@@ -35,6 +34,12 @@ export default class ListItem extends PureComponent {
       ]);
     }
     return result;
+  }
+
+  get text() {
+    if (this.props.selected) {
+        return "mdl-color-text--white";
+    }
   }
 
   handleMouseOver() {
@@ -49,7 +54,7 @@ export default class ListItem extends PureComponent {
     const showLeftIcon = typeof this.props.leftIcon !== "undefined";
     return (
       <div
-        className={ classNames("mdl-list__item", this.getClasses()) }
+        className={ classNames("mdl-list__item", this.background, this.text) }
         onClick={ this.props.handleSelect }
         style={ this.getStyle() }
         onMouseOver={ this.handleMouseOver }
@@ -58,9 +63,9 @@ export default class ListItem extends PureComponent {
         <span className="mdl-list__item-primary-content">
           {
             showLeftIcon &&
-            <i className={ classNames("material-icons", "mdl-list__item-icon", this.getClasses()) }>
+            <span className={ classNames("material-icons", "mdl-list__item-icon", this.text) }>
               { this.props.leftIcon }
-            </i>
+            </span>
           }
           { this.props.caption }
         </span>
