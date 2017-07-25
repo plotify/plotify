@@ -6,6 +6,8 @@
 @import "../characters/profile/_presentation/_character-profile.css";
 @import "../characters/_presentation/_character-section.css";
 @import "../page/_presentation/_main-navigation.css";
+@import "../about/_presentation/_about.css";
+@import "./mdl-overrides.css";
 
 :root {
     --primary-color: rgb(45, 4, 68);
@@ -72,9 +74,4 @@ div:hover::-webkit-scrollbar-thumb {
 .mdl-layout__content {
     height: 100vh;
     overflow: hidden;
-}
-
-/* fixes outlines on button focus */
-.mdl-layout__drawer-button:focus {
-    outline: none;
 }

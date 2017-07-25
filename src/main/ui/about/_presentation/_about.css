@@ -1,0 +1,15 @@
+.plotify-about-dialog img {
+    display: block;
+    float: left;
+}
+
+.plotify-about-dialog .content {
+    margin-left: 152px;
+}
+
+.plotify-about-dialog p {
+}
+
+.plotify-about-dialog p.description {
+    text-align: justify;
+}

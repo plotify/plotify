@@ -5,7 +5,7 @@ import CharacterSection from "../../characters/_containers/CharacterSection";
 import WelcomePage from "../../welcome/_containers/WelcomePage";
 import { connect } from "react-redux";
 import Snackbar from "../../snackbar/components/Snackbar";
-import AboutDialog from "../../about/components/AboutDialog";
+import AboutDialog from "../../about/_containers/AboutDialog";
 import { AppBar, Drawer } from "../../mdl-components/Layout/";
 import ActionMenu from "../_containers/ActionMenu";
 import { IconButton } from "../../mdl-components/Buttons/";

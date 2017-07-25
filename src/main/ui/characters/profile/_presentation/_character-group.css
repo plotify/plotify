@@ -9,11 +9,6 @@
     flex: 9 6 100%;
 }
 
-/* color fix for text field */
-.mdl-textfield__label:after {
-    background-color: var(--primary-color) !important;
-}
-
 .plotify-saving-text-field .mdl-spinner {
     color: var(--primary-color);
     position: absolute;

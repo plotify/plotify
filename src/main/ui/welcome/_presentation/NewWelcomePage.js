@@ -8,10 +8,11 @@ export default class NewWelcomePage extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      new: 2,
+      new:  2,
       open: 2,
     }
   }
+
   render() {
     return (
       <div className="plotify-welcome-section">
@@ -28,29 +29,33 @@ export default class NewWelcomePage extends PureComponent {
               <p>
                 { this.props.versionDescription }
               </p>
+              <button className="mdl-button mdl-js-button mdl-js-ripple-effect"
+                      onClick={ this.props.onOpenAboutDialog }>
+                Über Plotify
+              </button>
             </div>
           </div>
           <div className="actions-flex-box">
             <Card className="actions-card">
               <CardSupportingText>
                 <div className={ classNames("action-panel", "new-story", `mdl-shadow--${this.state.new}dp`) }
-                     onMouseOver={ () => this.setState({ new: 8})}
-                     onMouseOut={ () => this.setState({ new: 2})}
+                     onMouseOver={ () => this.setState({ new: 8 })}
+                     onMouseOut={ () => this.setState({ new: 2 })}
                      onClick={ this.props.createStory }>
                   <img src={ this.props.newStoryIconUrl } width="120" />
                   <h5>{ this.props.newStoryLabel }</h5>
                   <p>
-                    Erstelle jetzt eine neue Geschichte <br/> und fange sofort an zu plotten.
+                    Erstelle jetzt eine neue Geschichte <br /> und fange sofort an zu plotten.
                   </p>
                 </div>
                 <div className={ classNames("action-panel", "open-story", `mdl-shadow--${this.state.open}dp`) }
-                     onMouseOver={ () => this.setState({ open: 8})}
-                     onMouseOut={ () => this.setState({ open: 2})}
+                     onMouseOver={ () => this.setState({ open: 8 })}
+                     onMouseOut={ () => this.setState({ open: 2 })}
                      onClick={ this.props.openStory }>
                   <img src={ this.props.openStoryIconUrl } width="120" />
                   <h5>{ this.props.openStoryLabel }</h5>
                   <p>
-                    Öffne einer deiner bereits begonnen <br/> fantastischen Geschichten.
+                    Öffne einer deiner bereits begonnen <br /> fantastischen Geschichten.
                   </p>
                 </div>
               </CardSupportingText>
