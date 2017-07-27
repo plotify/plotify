@@ -13,3 +13,8 @@
 .plotify-about-dialog p.description {
     text-align: justify;
 }
+
+.plotify-contributors-dialog .mdl-list__item {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
