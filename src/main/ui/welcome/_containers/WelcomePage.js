@@ -2,11 +2,11 @@ import { connect }from "react-redux";
 import * as a from "../../story/actions";
 import NewWelcomePage from "../_presentation/NewWelcomePage";
 import * as aboutActions from "../../about/actions";
-
+import packageJson from "../../../package.json";
 const mapStateToProps = (state) => {
   return {
     versionDescription: "Vielen Dank, dass du Plotify verwendest. Erstelle eine fantastische Geschichte!",
-    versionName:        "Plotify Version 0.2.0 Beta",
+    versionName:        packageJson.productName + " " + packageJson.version,
     logoUrl:            "resources/app-icons/64.png",
     newStoryLabel:      "Neue Geschichte",
     openStoryLabel:     "Geschichte öffnen",
