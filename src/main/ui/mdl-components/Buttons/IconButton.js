@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import requiredIf from "react-required-if";
 import * as componentHandler from "../../resources/material";
+import { Tooltip } from "../Tooltip";
 
 export class IconButton extends PureComponent {
   componentDidMount() {
@@ -21,9 +22,7 @@ export class IconButton extends PureComponent {
         </button>
         {
           this.props.tooltip &&
-          <div className="mdl-tooltip" htmlFor={ this.props.id }>
-            { this.props.tooltip }
-          </div>
+          <Tooltip for={ this.props.id } caption={ this.props.tooltip } />
         }
       </span>
 

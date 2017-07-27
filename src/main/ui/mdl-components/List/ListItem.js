@@ -2,14 +2,20 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
-export default class ListItem extends PureComponent {
+export class ListItem extends PureComponent {
   constructor(props) {
     super(props);
     this.handleMouseOver = this.handleMouseOver.bind(this);
     this.handleMouseOut = this.handleMouseOut.bind(this);
+    this.handleSecondaryAction = this.handleSecondaryAction.bind(this);
     this.state = {
       hover: false,
     };
+  }
+
+  handleSecondaryAction(e) {
+    e.preventDefault();
+    this.props.secondaryAction();
   }
 
   getStyle() {
@@ -38,7 +44,7 @@ export default class ListItem extends PureComponent {
 
   get text() {
     if (this.props.selected) {
-        return "mdl-color-text--white";
+      return "mdl-color-text--white";
     }
   }
 
@@ -51,7 +57,6 @@ export default class ListItem extends PureComponent {
   }
 
   render() {
-    const showLeftIcon = typeof this.props.leftIcon !== "undefined";
     return (
       <div
         className={ classNames("mdl-list__item", this.background, this.text) }
@@ -62,23 +67,38 @@ export default class ListItem extends PureComponent {
       >
         <span className="mdl-list__item-primary-content">
           {
-            showLeftIcon &&
+            this.props.leftIcon &&
             <span className={ classNames("material-icons", "mdl-list__item-icon", this.text) }>
               { this.props.leftIcon }
             </span>
           }
+
+          { this.props.leftAvatar }
+
           { this.props.caption }
         </span>
+        {
+          this.props.secondaryAction &&
+          <a className="mdl-list__item-secondary-action mdl-color-text--secondary"
+             onClick={ this.handleSecondaryAction }>
+            <span className="material-icons" alt={this.props.secondaryActionIcon }>
+              { this.props.secondaryActionIcon }
+            </span>
+          </a>
+        }
       </div>
     );
   }
 }
 
 ListItem.propTypes = {
-  caption:      PropTypes.string.isRequired,
-  handleSelect: PropTypes.func.isRequired,
-  selected:     PropTypes.bool.isRequired,
-  leftIcon:     PropTypes.string,
+  caption:             PropTypes.string.isRequired,
+  handleSelect:        PropTypes.func.isRequired,
+  selected:            PropTypes.bool.isRequired,
+  leftIcon:            PropTypes.string,
+  leftAvatar:          PropTypes.element,
+  secondaryAction:     PropTypes.func,
+  secondaryActionIcon: PropTypes.string,
 };
 
 ListItem.defaultProps = {

@@ -1,4 +1,3 @@
-import List from "./List";
-import ListItem from "./ListItem";
-
-export { List, ListItem };
+export { List } from "./List";
+export { ListItem } from "./ListItem";
+export { Avatar } from "./Avatar";
