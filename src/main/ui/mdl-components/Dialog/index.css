@@ -5,8 +5,8 @@
 .mdl-dialog {
     position: fixed;
     width: auto;
-    left: 16vw;
-    right: 16vw;
+    left: 20vw;
+    right: 20vw;
     transform: translateY(-50%);
     top: 50%;
     max-height: 100vh;
@@ -46,6 +46,10 @@
 .mdl-dialog__content {
     max-height: 50vh;
     overflow-y: hidden;
+}
+
+.mdl-dialog.scroll .mdl-dialog__content {
+    overflow-y: scroll;
 }
 
 .mdl-dialog::backdrop {

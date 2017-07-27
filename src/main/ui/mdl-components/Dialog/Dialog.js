@@ -14,12 +14,14 @@ export class Dialog extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const dialog = this.node;
-    if (prevProps.open !== this.props.open && this.props.open) {
-      dialog.showModal();
-      dialog.classList.add("hide");
-    } else {
-      dialog.classList.remove("hide");
-      dialog.close();
+    if (prevProps.open !== this.props.open) {
+      if (this.props.open) {
+        dialog.showModal();
+        dialog.classList.add("hide");
+      } else {
+        dialog.classList.remove("hide");
+        dialog.close();
+      }
     }
   }
 
@@ -36,7 +38,9 @@ export class Dialog extends PureComponent {
     const { className, children, title, actions } = this.props;
 
     return (
-      <dialog className={ classNames("mdl-dialog", className)}>
+      <dialog className={ classNames("mdl-dialog", className, {
+        scroll: this.props.autoScrollBodyContent,
+      })}>
         { title &&
         <h4 className="mdl-dialog__title">
           { title }
@@ -54,12 +58,14 @@ export class Dialog extends PureComponent {
 }
 
 Dialog.propTypes = {
-  title:          PropTypes.string,
-  actions:        PropTypes.arrayOf(PropTypes.element),
-  open:           PropTypes.bool.isRequired,
-  onRequestClose: PropTypes.func,
+  title:                 PropTypes.string,
+  actions:               PropTypes.arrayOf(PropTypes.element),
+  open:                  PropTypes.bool.isRequired,
+  onRequestClose:        PropTypes.func,
+  autoScrollBodyContent: PropTypes.bool,
 };
 
 Dialog.defaultProps = {
-  onRequestClose: () => e => e.preventDefault(),
+  onRequestClose:        () => e => e.preventDefault(),
+  autoScrollBodyContent: false,
 };
