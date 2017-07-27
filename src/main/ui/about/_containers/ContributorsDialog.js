@@ -26,7 +26,7 @@ const contributors = [
   {
     name:  "Gesa Müller",
     url:   "https://github.com/GesaMueller",
-    image: null,
+    image: "./resources/contributors/gesa-mueller.jpg",
   },
 ];
 
