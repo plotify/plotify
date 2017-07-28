@@ -1,0 +1,12 @@
+.mdl-list__item, .mdl-list__item-icon {
+    transition: all .4s ease;
+    /*margin-left: 8px;
+    margin-right: 24px !important;*/
+}
+
+.mdl-list__item-avatar {
+    line-height: 40px;
+    font-size: 19px;
+    text-align: center;
+    background-size: cover;
+}

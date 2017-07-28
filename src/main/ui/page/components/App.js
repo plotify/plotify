@@ -1,21 +1,22 @@
 import React, { Component } from "react";
-import PlotifyAppBar from "./AppBar";
-import Navigation from "./Navigation";
 import * as selectors from "../selectors";
 import { PAGES } from "../constants";
-import CharacterPage from "../../characters/components/CharacterPage";
-import WelcomePage from "../../welcome/components/WelcomePage";
+import CharacterSection from "../../characters/_containers/CharacterSection";
+import WelcomePage from "../../welcome/_containers/WelcomePage";
 import { connect } from "react-redux";
-import { palette, spacing } from "../../themes/PlotifyMainTheme";
 import Snackbar from "../../snackbar/components/Snackbar";
-import AboutDialog from "../../about/components/AboutDialog";
-import { white } from "material-ui/styles/colors";
+import AboutDialog from "../../about/_containers/AboutDialog";
+import { AppBar, Drawer } from "../../mdl-components/Layout/";
+import ActionMenu from "../_containers/ActionMenu";
+import { IconButton } from "../../mdl-components/Buttons/";
+import * as componentHandler from "../../resources/material";
+import Navigation from "../_containers/Navigation";
 
 const mapStateToProps = (state) => {
   return {
     currentPageId: selectors.getCurrentPageId(state),
     hasNavigation: selectors.hasCurrentPageNavigation(state),
-    title: selectors.getCurrentPageTitle(state),
+    title:         selectors.getCurrentPageTitle(state),
   };
 };
 
@@ -23,59 +24,42 @@ const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
-const styles = {
-  app: {
-    background: palette.accent2Color,
-    height: "100%",
-    width: "100%",
-  },
-  pageWrapper: {
-    position: "fixed",
-    overflow: "hidden",
-    top: spacing.desktopKeylineIncrement,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  navigationWrapper: {
-    width: spacing.desktopToolbarHeight,
-    height: "100%",
-    float: "left",
-  },
-  pageContentWrapper: {
-    width: "calc(100% - " + spacing.desktopToolbarHeight + "px)",
-    marginLeft: spacing.desktopToolbarHeight,
-    height: "100%",
-  },
-};
-
 class AppComponent extends Component {
+  componentDidMount() {
+    componentHandler.upgradeDom();
+  }
+
   render() {
     let page;
     switch (this.props.currentPageId) {
       case
       PAGES.CHARACTERS.id :
-        page = <CharacterPage />;
+        page = <CharacterSection />;
         break;
       default:
         page = <WelcomePage />;
         break;
     }
     return (
-      <div id="PlotifyApp" style={styles.app}>
-        
-        <PlotifyAppBar title={this.props.title}/>
-
-        <div style={styles.pageWrapper}>
-          { this.props.hasNavigation &&
-          <div style={styles.navigationWrapper}>
-            <Navigation />
-          </div>
+      <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header ">
+        <AppBar
+          title={this.props.title}
+          visible={this.props.currentPageId !== PAGES.WELCOME.id}
+          actionMenu={
+            <div>
+              <IconButton icon="more_vert" id="open-action-menu" />
+              <ActionMenu
+                anchorEl="open-action-menu"
+              />
+            </div>
           }
-          <div style={styles.pageContentWrapper}>
-            {page}
-          </div>
-        </div>
+        />
+        <Drawer title={this.props.title}>
+          <Navigation />
+        </Drawer>
+        <main className="mdl-layout__content mdl-color--grey-100">
+          {page}
+        </main>
 
         <Snackbar />
         <AboutDialog />
@@ -87,7 +71,7 @@ class AppComponent extends Component {
 
 const App = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(AppComponent);
 
 export default App;

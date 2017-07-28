@@ -1,0 +1,33 @@
+.plotify-main-navigation .material-icons {
+    margin-right: 16px;
+}
+
+.plotify-main-navigation a.mdl-navigation__link {
+    padding: 16px !important;
+    /*color: var(--primary-color) !important;*/
+}
+
+.plotify-main-navigation a.mdl-navigation__link.dividing {
+    padding: 0 !important;
+    border-bottom: 1px solid #c2c2c2;
+}
+
+.plotify-main-navigation a.mdl-navigation__link:hover {
+    cursor: pointer;
+}
+
+.plotify-main-navigation a.mdl-navigation__link.disabled,
+.plotify-main-navigation a.mdl-navigation__link.disabled:hover {
+    cursor: default;
+    color: #c2c2c2 !important;
+    background-color: inherit;
+}
+
+.plotify-main-navigation a.mdl-navigation__link.active {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.plotify-main-navigation a.mdl-navigation__link.active:hover {
+    background-color: var(--primary-color);
+}

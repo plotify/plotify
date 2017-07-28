@@ -1,0 +1,29 @@
+/* fixes outlines on button focus */
+.mdl-layout__drawer-button:focus, a:focus {
+    outline: none;
+}
+
+/* fixes button color */
+.mdl-button.mdl-button--primary {
+    color: var(--primary-color);
+}
+
+.mdl-button.mdl-button--secondary {
+    color: var(--secondary-color);
+}
+
+/* fixes button color */
+.mdl-button--raised.mdl-button--primary {
+    color: white;
+    background-color: var(--primary-color) !important;
+}
+
+.mdl-button--raised.mdl-button--secondary {
+    color: white;
+    background-color: var(--secondary-color) !important;
+}
+
+/* color fix for text field */
+.mdl-textfield__label:after {
+    background-color: var(--primary-color) !important;
+}

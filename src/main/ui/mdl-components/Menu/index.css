@@ -1,0 +1,6 @@
+/* fixes icon positioning in menuItems */
+.mdl-menu__item > i {
+    position: relative;
+    top: 6px;
+    padding-right: 6px;
+}

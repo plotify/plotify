@@ -1,0 +1,11 @@
+.plotify-filter {
+
+}
+
+.plotify-filter .mdl-layout__header-row {
+    padding-left: 15px;
+}
+
+.plotify-filter .mdl-layout__header-row h6 {
+    height: 32px;
+}

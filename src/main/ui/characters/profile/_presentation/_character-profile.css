@@ -1,0 +1,62 @@
+.plotify-character-profile {
+    height: calc(100vh - 56px);
+    display: flex;
+    flex-direction: column;
+}
+
+.plotify-character-profile .mdl-textfield__input {
+    color: black;
+}
+
+.plotify-character-profile--name-panel {
+    flex: 1 0 120px;
+    border-radius: 0;
+    z-index: 2;
+    min-height: 0;
+    width: 100%;
+}
+
+.plotify-character-profile--name-panel .mdl-textfield .mdl-textfield__input {
+    color: white !important;
+    border-bottom: 1px solid white;
+}
+
+.plotify-character-profile--name-panel .mdl-textfield .mdl-textfield__label {
+    color: white !important;
+}
+
+.plotify-character-profile--name-panel .mdl-textfield .mdl-textfield__label:after {
+    background-color: white !important;
+}
+
+.plotify-character-profile--name-panel .mdl-textfield {
+    margin-top: 25px;
+}
+
+/* profile animation */
+.profile-enter {
+    opacity: 0.01;
+}
+
+.profile-enter.profile-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+.profile-leave {
+    opacity: 1;
+}
+
+.profile-leave.profile-leave-active {
+    opacity: 0.01;
+    transition: opacity .001ms ease-in;
+}
+
+.profile-appear {
+    opacity: 0.01;
+}
+
+.profile-appear.profile-appear-active {
+    opacity: 1;
+    transition: opacity .5s ease-in;
+}
