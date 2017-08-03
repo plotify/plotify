@@ -10,12 +10,17 @@ export default class Snackbar extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.open) {
-      const data = {
-        message:       nextProps.message,
-        timeout:       nextProps.autoHideDuration,
-        actionHandler: nextProps.action ? nextProps.action : (undefined),
-        actionText:    nextProps.actionLabel ? nextProps.actionLabel : (undefined),
+      let data;
+      const baseData = {
+        message: nextProps.message,
+        timeout: nextProps.autoHideDuration,
       };
+      !nextProps.asToast ? data = {
+          ...baseData,
+          actionHandler: nextProps.action ? nextProps.action : (undefined),
+          actionText:    nextProps.actionLabel ? nextProps.actionLabel : (undefined),
+        }
+        : data = baseData;
       this.show(data);
     }
   }
@@ -47,8 +52,10 @@ Snackbar.propTypes = {
   action:           PropTypes.func,
   actionLabel:      PropTypes.string,
   onRequestClose:   PropTypes.func,
+  asToast:          PropTypes.bool.isRequired,
 };
 
 Snackbar.defaultProps = {
   autoHideDuration: 2000,
+  asToast:          false,
 };

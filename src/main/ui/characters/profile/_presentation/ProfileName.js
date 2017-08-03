@@ -19,14 +19,14 @@ export default class ProfileName extends PureComponent {
       <Card className="plotify-character-profile--name-panel mdl-color--secondary">
         <CardMenu>
           <IconButton
-            action={ this.handleUndo }
+            action={ this.props.handleUndo }
             icon="undo"
             tooltip="Rückgängig"
             id="undo-profile"
             disabled={ !this.props.canUndo }
           />
           <IconButton
-            action={ this.handleRedo }
+            action={ this.props.handleRedo }
             icon="redo"
             tooltip="Wiederherstellen"
             id="redo-profile"

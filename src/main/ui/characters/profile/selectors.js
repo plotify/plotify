@@ -87,6 +87,20 @@ export const getSavingError = createSelector(
   }
 );
 
+export const canUndo = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.canUndo || false;
+  }
+);
+
+export const canRedo = createSelector(
+  [getProfile],
+  (profile) => {
+    return profile.canRedo || false;
+  }
+);
+
 export function getGroupsInOrder(state) {
   if (state.characters.profile.groupsOrder) {
     return state.characters.profile.groupsOrder.map(id => mapToGroup(state, id));

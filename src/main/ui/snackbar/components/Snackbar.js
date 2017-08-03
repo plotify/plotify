@@ -1,25 +1,27 @@
 import { connect } from "react-redux";
-import Snackbar from "../../mdl-components/Snackbar";
+import Snackbar from "../../mdl-components/Snackbar/Snackbar";
 
 import * as s from "../selectors";
 import { hideSnackbar } from "../actions";
 
 const mapStateToProps = (state) => {
-  return {
-    open: s.isSnackbarOpen(state),
-    message: s.getSnackbarMessage(state),
-    autoHideDuration: s.getSnackbarAutoHideDuration(state),
-    actionLabel: s.getSnackbarActionLabel(state),
-    action: s.getSnackbarActionCreator(state)
-  };
-};
+    return {
+      open:             s.isSnackbarOpen(state),
+      message:          s.getSnackbarMessage(state),
+      autoHideDuration: s.getSnackbarAutoHideDuration(state),
+      actionLabel:      s.getSnackbarActionLabel(state),
+      action:           s.getSnackbarActionCreator(state),
+      asToast:          typeof s.getSnackbarActionLabel(state) === "undefined",
+    };
+  }
+;
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onRequestClose: () => {
       dispatch(hideSnackbar());
     },
-    action: dispatch
+    action:         dispatch,
   };
 };
 
@@ -29,14 +31,14 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
       if (stateProps.action) {
         dispatchProps.action(stateProps.action());
       }
-    }
+    },
   });
 };
 
 const PlotifySnackbar = connect(
   mapStateToProps,
   mapDispatchToProps,
-  mergeProps
+  mergeProps,
 )(Snackbar);
 
 export default PlotifySnackbar;

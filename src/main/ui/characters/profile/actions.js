@@ -33,6 +33,8 @@ export function loadProfile() {
       .then(() => dispatch(loadProfileRequest(id, name, deleted)))
       .then(() => sendToModel(c.GET_CHARACTER_PROFILE, id))
       .then(groups => dispatch(loadProfileSuccessful(groups)))
+      .then(() => dispatch(checkCanUndo()))
+      .then(() => dispatch(checkCanRedo()))
       .catch(error => dispatch(loadProfileFailed(error)));
 
   };
@@ -63,6 +65,8 @@ export function saveCharacterName() {
         .then(() => sendToModel(c.UPDATE_CHARACTER, params))
         .then(() => dispatch(list.actions.updateCharacterName(characterId, changedName)))
         .then(() => dispatch(saveCharacterNameSuccessful()))
+        .then(() => dispatch(checkCanUndo()))
+        .then(() => dispatch(checkCanRedo()))
         .catch(error => dispatch(saveCharacterNameFailed(error)));
 
     }
@@ -96,10 +100,48 @@ export function saveEntryValue(entryId) {
         .then(() => dispatch(saveEntryValueRequest(entryId)))
         .then(() => sendToModel(c.UPDATE_CHARACTER, params))
         .then(() => dispatch(saveEntryValueSuccessful(entryId)))
+        .then(() => dispatch(checkCanUndo()))
+        .then(() => dispatch(checkCanRedo()))
         .catch(error => dispatch(saveEntryValueFailed(entryId, error)));
 
     }
   };
+}
+
+export function checkCanRedo() {
+  return (dispatch, getState) => {
+    const characterId = list.selectors.getSelectedCharacter(getState()).id;
+
+    return Promise.resolve()
+      .then(() => sendToModel(c.CAN_REDO_CHARACTER_CHANGE, characterId))
+      .then((data) => dispatch(checkCanRedoSuccessful(characterId, data)))
+      .catch((err) => dispatch(checkCanRedoSuccessful(characterId, false)));
+  }
+}
+
+export function checkCanUndo() {
+  return (dispatch, getState) => {
+    const characterId = list.selectors.getSelectedCharacter(getState()).id;
+
+    return Promise.resolve()
+      .then(() => sendToModel(c.CAN_UNDO_CHARACTER_CHANGE, characterId))
+      .then((data) => dispatch(checkCanUndoSuccessful(characterId, data)))
+      .catch((err) => dispatch(checkCanUndoSuccessful(characterId, false)));
+  }
+}
+
+function checkCanRedoSuccessful(characterId, canUndo) {
+  return {
+    type: t.CAN_REDO_CHARACTER,
+    payload: { characterId, canUndo }
+  }
+}
+
+function checkCanUndoSuccessful(characterId, canUndo) {
+  return {
+    type: t.CAN_UNDO_CHARACTER,
+    payload: { characterId, canUndo }
+  }
 }
 
 function loadProfileRequest(characterId, name, deleted) {

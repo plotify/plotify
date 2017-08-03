@@ -11,3 +11,9 @@ export const SET_ENTRY_VALUE = "characters/profile/set/entry-value";
 export const SAVE_ENTRY_VALUE_REQUEST = "characters/profile/save/entry-value";
 export const SAVE_ENTRY_VALUE_SUCCESSFUL = "characters/profile/save/entry-value/successful";
 export const SAVE_ENTRY_VALUE_FAILED = "characters/profile/save/entry-value/failed";
+
+export const CAN_UNDO_CHARACTER = "characters/profile/can/undo";
+export const CAN_REDO_CHARACTER = "characters/profile/can/redo";
+export const UNDO_CHARACTER_CHANGE_REQUEST = "characters/profile/undo";
+export const UNDO_CHARACTER_CHANGE_SUCCESSFUL = "characters/profile/undo/successful";
+export const UNDO_CHARACTER_CHANGE_FAILED = "characters/profile/undo/failed";
