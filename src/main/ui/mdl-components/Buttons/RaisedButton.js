@@ -4,10 +4,9 @@ import { FlatButton } from "./FlatButton";
 
 export class RaisedButton extends PureComponent {
   render() {
-    const otherProps = Object.assign({}, this.props);
-    delete otherProps.className;
+    const { className, ...otherProps } = this.props;
     return (
-      <FlatButton className="mdl-button--raised" { ...otherProps } />
+      <FlatButton className="mdl-button--raised" {...otherProps} />
     )
   }
 }

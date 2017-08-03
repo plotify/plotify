@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { Dialog } from "../../mdl-components/Dialog";
-import { FlatButton , RaisedButton} from "../../mdl-components/Buttons";
+import { FlatButton } from "../../mdl-components/Buttons";
 import ContributorsDialog from "../_containers/ContributorsDialog";
 import LicenseDialog from "../_containers/LicenseDialog";
 import packageJson from "../../../package.json";
