@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { Card, CardSupportingText } from "../../mdl-components/Card";
+import { FlatButton } from "../../mdl-components/Buttons"
 import classNames from "classnames";
 
 // todo
@@ -29,10 +30,7 @@ export default class NewWelcomePage extends PureComponent {
               <p>
                 { this.props.versionDescription }
               </p>
-              <button className="mdl-button mdl-js-button mdl-js-ripple-effect"
-                      onClick={ this.props.onOpenAboutDialog }>
-                Über Plotify
-              </button>
+              <FlatButton label="Über Plotify" onTouchTap={ this.props.onOpenAboutDialog }/>
             </div>
           </div>
           <div className="actions-flex-box">
