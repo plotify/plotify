@@ -9,6 +9,7 @@ import SearchIcon from 'material-ui-icons/Search';
 import CharactersGrid from './characters/CharactersGrid';
 import NavigationDrawer from './navigation/NavigationDrawer';
 import NavigationDrawerButton from './navigation/NavigationDrawerButton';
+import AboutDialog from './about/AboutDialog';
 import uuid from 'uuid/v4';
 
 const characters = [
@@ -25,6 +26,7 @@ function App(props) {
   return (
     <div>
       <NavigationDrawer open={true} />
+      <AboutDialog />
       <AppBar position='static'>
         <Toolbar>
           <NavigationDrawerButton className={classes.menuButton} color='contrast' />

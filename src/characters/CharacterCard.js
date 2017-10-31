@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import ButtonBase from 'material-ui/ButtonBase';
 import Typography from 'material-ui/Typography';
-import picturePlaceholder from './profile-64.png';
+import PicturePlaceholderImage from './profile-64.png';
 import DeleteIcon from 'material-ui-icons/Delete';
 import ContentCopyIcon from 'material-ui-icons/ContentCopy';
 import IconButton from 'material-ui/IconButton';
@@ -17,7 +17,7 @@ function CharacterCard(props) {
       <ButtonBase className={classes.primaryAction}>
         <CardContent className={classes.content}>
           <Typography className={classes.name} type='headline'>{character.name}</Typography>
-          <CardMedia image={picturePlaceholder} className={classes.picture} />
+          <CardMedia image={PicturePlaceholderImage} className={classes.picture} />
         </CardContent>
       </ButtonBase>
       <CardActions className={classes.secondaryActions}>
