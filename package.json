@@ -1,85 +1,21 @@
 {
   "name": "plotify",
-  "version": "0.2.0-SNAPSHOT",
-  "description": "Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren. Behalte stets den Überblick und erschaffe eine fantastische Geschichte!",
-  "homepage": "https://github.com/plotify/plotify",
-  "productName": "Plotify",
-  "productDescription": "Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren. Behalte stets den Überblick und erschaffe eine fantastische Geschichte!",
-  "main": "main.js",
-  "scripts": {
-    "rebuild": "electron-rebuild -f -w sqlite3",
-    "start": "gulp",
-    "test": "gulp test",
-    "distribution:linux": "gulp distribution:linux",
-    "distribution:windows": "gulp distribution:windows",
-    "distribution:macos": "gulp distribution:macos"
-  },
+  "version": "0.2.0-SNAPHOT",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:plotify/plotify.git"
-  },
-  "author": "Sebastian Schmidt <email@sebastian-schmidt.info>",
-  "contributors": [
-    {
-      "name": "Sebastian Schmidt",
-      "email": "email@sebastian-schmidt.info"
-    },
-    {
-      "name": "Jasper Meyer",
-      "email": "jasper.meyer@gmx.net"
-    }
-  ],
-  "license": "GPL-3.0",
   "dependencies": {
-    "classnames": "2.2.5",
-    "electron": "1.6.11",
-    "electron-is-dev": "0.1.2",
-    "electron-squirrel-startup": "1.0.0",
-    "firstline": "1.2.1",
-    "fs-extra": "3.0.1",
-    "mz": "2.6.0",
-    "prop-types": "15.5.10",
-    "react": "15.6.1",
-    "react-addons-css-transition-group": "15.6.0",
-    "react-dom": "15.6.1",
-    "react-redux": "5.0.5",
-    "react-required-if": "1.0.1",
-    "react-tap-event-plugin": "2.0.1",
-    "redux": "3.7.0",
-    "redux-logger": "3.0.6",
-    "redux-thunk": "2.2.0",
-    "redux-title": "0.0.3",
-    "reselect": "3.0.1",
-    "sqlite3": "3.1.8"
+    "material-ui": "1.0.0-beta.19",
+    "material-ui-icons": "1.0.0-beta.17",
+    "react": "16.0.0",
+    "react-dom": "16.0.0",
+    "react-redux": "5.0.6",
+    "react-scripts": "1.0.16",
+    "redux": "3.7.2",
+    "uuid": "3.1.0"
   },
-  "devDependencies": {
-    "babel-plugin-transform-builtin-extend": "1.1.2",
-    "babel-plugin-transform-react-jsx": "6.24.1",
-    "babel-plugin-transform-object-rest-spread": "6.23.0",
-    "babel-polyfill": "6.23.0",
-    "babel-preset-latest": "6.24.1",
-    "chai": "4.0.2",
-    "chai-as-promised": "7.0.0",
-    "check-dependencies": "1.0.1",
-    "electron-packager": "8.7.1",
-    "electron-rebuild": "1.5.11",
-    "electron-winstaller": "2.6.2",
-    "gulp": "3.9.1",
-    "gulp-babel": "6.1.2",
-    "gulp-clean": "0.3.2",
-    "gulp-mocha": "4.3.1",
-    "gulp-run-electron": "3.0.1",
-    "gulp-shell": "0.6.3",
-    "gulp-watch": "4.3.11",
-    "license-checker": "11.0.0",
-    "mocha": "3.4.2",
-    "run-sequence": "1.2.2",
-    "sinon": "2.3.4",
-    "sinon-chai": "2.11.0",
-    "tmp": "0.0.31"
-  },
-  "optionalDependencies": {
-    "electron-installer-debian": "0.5.2"
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   }
 }
