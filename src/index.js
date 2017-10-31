@@ -3,17 +3,14 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducers from './reducers';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import { MuiThemeProvider } from 'material-ui/styles';
+import theme from './theme';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 const store = createStore(reducers);
 console.log(store.getState());
 store.subscribe(() => console.log(store.getState()));
-
-const theme = createMuiTheme({
-
-});
 
 ReactDOM.render(
   <Provider store={store}>
