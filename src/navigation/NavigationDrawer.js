@@ -7,7 +7,8 @@ import FolderOpenIcon from 'material-ui-icons/FolderOpen';
 import PersonIcon from 'material-ui-icons/Person';
 import GroupIcon from 'material-ui-icons/Group';
 import DeleteIcon from 'material-ui-icons/Delete';
-import SettingsIcon from 'material-ui-icons/Settings';
+import HelpIcon from 'material-ui-icons/Help';
+import FeedbackIcon from 'material-ui-icons/Feedback';
 import InfoIcon from 'material-ui-icons/Info';
 import { connect } from 'react-redux'
 import * as s from './selectors';
@@ -35,7 +36,8 @@ function NavigationDrawer(props) {
         <DrawerItem text='Gruppen' icon={<GroupIcon />} />
         <DrawerItem text='Papierkorb' icon={<DeleteIcon />} />
         <Divider />
-        <DrawerItem text='Einstellungen' icon={<SettingsIcon />} />
+        <DrawerItem text='Hilfe & Anleitungen' icon={<HelpIcon />} />
+        <DrawerItem text='Feedback geben' icon={<FeedbackIcon />} />
         <DrawerItem text='Über Plotify' icon={<InfoIcon />} />
       </List>
     </Drawer>
