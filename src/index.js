@@ -12,6 +12,8 @@ const store = createStore(reducers);
 console.log(store.getState());
 store.subscribe(() => console.log(store.getState()));
 
+console.log(theme);
+
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>

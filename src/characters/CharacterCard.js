@@ -1,26 +1,71 @@
 import React from 'react';
-import Card, { CardActions, CardContent } from 'material-ui/Card';
-import Button from 'material-ui/Button';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import ButtonBase from 'material-ui/ButtonBase';
 import Typography from 'material-ui/Typography';
+import picturePlaceholder from './profile-64.png';
+import DeleteIcon from 'material-ui-icons/Delete';
+import ContentCopyIcon from 'material-ui-icons/ContentCopy';
+import IconButton from 'material-ui/IconButton';
+import Tooltip from 'material-ui/Tooltip';
 
 function CharacterCard(props) {
+  const { classes, character, className } = props;
   return (
-    <Card>
-      <CardContent>
-        <Typography type="headline" paragraph>
-          Max Mustermann
-        </Typography>
-        <Typography>
-        Mustermann ist ein häufig verwendeter Familienname fiktiver Personen in Deutschland. Erika Mustermann und Max Mustermann stehen als Platzhalternamen für eine beliebige (reale) Frau und einen beliebigen (realen) Mann.
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button dense color="primary">Ansehen</Button>
-        <Button dense>Kopieren</Button>
-        <Button dense>Löschen</Button>
+    <Card className={className}>
+      <ButtonBase className={classes.primaryAction}>
+        <CardContent className={classes.content}>
+          <Typography className={classes.name} type="headline">{character.name}</Typography>
+          <CardMedia image={picturePlaceholder} className={classes.picture} />
+        </CardContent>
+      </ButtonBase>
+      <CardActions className={classes.secondaryActions}>
+        <Tooltip title='Kopieren' placement='bottom'>
+          <IconButton>
+            <ContentCopyIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title='Löschen' placement='bottom'>
+          <IconButton>
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
       </CardActions>
     </Card>
   );
 }
 
-export default CharacterCard;
+CharacterCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+  character: PropTypes.object.isRequired,
+  className: PropTypes.string
+};
+
+const styles = theme => ({
+  primaryAction: {
+    display: 'block',
+    width: '100%',
+    textAlign: 'left'
+  },
+  secondaryActions: {
+    justifyContent: 'flex-start'
+  },
+  content: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  name: {
+    flexGrow: 1,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    paddingRight: theme.spacing.unit
+  },
+  picture: {
+    height: '64px',
+    width: '64px'
+  }
+});
+
+export default withStyles(styles)(CharacterCard);
