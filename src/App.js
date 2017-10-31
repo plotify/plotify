@@ -23,15 +23,15 @@ function App(props) {
   const { classes } = props;
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar>
-          <IconButton className={classes.menuButton} color="contrast" aria-label="Menu">
+          <IconButton className={classes.menuButton} color='contrast' aria-label='Menu'>
             <MenuIcon />
           </IconButton>
-          <Typography type="title" color="inherit" className={classes.flex}>
+          <Typography type='title' color='inherit' className={classes.flex}>
             Plotify
           </Typography>
-          <Button color="contrast">Hello world</Button>
+          <Button color='contrast'>Hello world</Button>
         </Toolbar>
       </AppBar>
       <div className={classes.content}>

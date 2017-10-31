@@ -16,7 +16,7 @@ function CharacterCard(props) {
     <Card className={className}>
       <ButtonBase className={classes.primaryAction}>
         <CardContent className={classes.content}>
-          <Typography className={classes.name} type="headline">{character.name}</Typography>
+          <Typography className={classes.name} type='headline'>{character.name}</Typography>
           <CardMedia image={picturePlaceholder} className={classes.picture} />
         </CardContent>
       </ButtonBase>
