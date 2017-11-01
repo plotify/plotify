@@ -1,14 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
+import Section from './navigation/Section';
 import IconButton from 'material-ui/IconButton';
 import SearchIcon from 'material-ui-icons/Search';
 import CharactersList from './characters/CharactersList';
 import NavigationDrawer from './navigation/NavigationDrawer';
-import NavigationDrawerButton from './navigation/NavigationDrawerButton';
 import AboutDialog from './about/AboutDialog';
 import uuid from 'uuid/v4';
 
@@ -24,23 +21,18 @@ const characters = [
 function App(props) {
   const { classes } = props;
   return (
-    <div className={classes.root}>
-      <NavigationDrawer open={true} />
+    <div className={classes.wrapper}>
+      <NavigationDrawer />
       <AboutDialog />
-      <AppBar position='static'>
-        <Toolbar>
-          <NavigationDrawerButton className={classes.menuButton} color='contrast' />
-          <Typography type='title' color='inherit' className={classes.flex}>
-            Charaktere
-          </Typography>
+      <Section
+        title='Charaktere'
+        actions={
           <IconButton color='contrast'>
             <SearchIcon />
           </IconButton>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.content}>
+        }>
         <CharactersList characters={characters} />
-      </div>
+      </Section>
     </div>
   );
 }
@@ -50,19 +42,10 @@ App.propTypes = {
 };
 
 const styles = theme => ({
-  root: {
+  wrapper: {
+    height: '100%',
+    width: '100%',
     backgroundColor: theme.palette.background.default
-  },
-  flex: {
-    flex: 1
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 12
-  },
-  content: {
-    overflow: 'scroll',
-    height: 'calc(100% - 64px)'
   }
 });
 
