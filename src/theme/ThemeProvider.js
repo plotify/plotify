@@ -15,8 +15,11 @@ function ThemeProvider(props) {
     theme.palette.type = 'light';
   }
 
+  const muiTheme = createMuiTheme(theme);
+  console.log(muiTheme);
+
   return (
-    <MuiThemeProvider theme={createMuiTheme(theme)}>
+    <MuiThemeProvider theme={muiTheme}>
       {children}
     </MuiThemeProvider>
   );

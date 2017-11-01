@@ -6,7 +6,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import SearchIcon from 'material-ui-icons/Search';
-import CharactersGrid from './characters/CharactersGrid';
+import CharactersList from './characters/CharactersList';
 import NavigationDrawer from './navigation/NavigationDrawer';
 import NavigationDrawerButton from './navigation/NavigationDrawerButton';
 import AboutDialog from './about/AboutDialog';
@@ -24,7 +24,7 @@ const characters = [
 function App(props) {
   const { classes } = props;
   return (
-    <div>
+    <div className={classes.root}>
       <NavigationDrawer open={true} />
       <AboutDialog />
       <AppBar position='static'>
@@ -39,7 +39,7 @@ function App(props) {
         </Toolbar>
       </AppBar>
       <div className={classes.content}>
-        <CharactersGrid characters={characters} />
+        <CharactersList characters={characters} />
       </div>
     </div>
   );
@@ -50,6 +50,9 @@ App.propTypes = {
 };
 
 const styles = theme => ({
+  root: {
+    backgroundColor: theme.palette.background.default
+  },
   flex: {
     flex: 1
   },
