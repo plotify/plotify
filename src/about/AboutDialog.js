@@ -1,6 +1,6 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
-import Dialog, { DialogContent, DialogContentText, DialogActions } from 'material-ui/Dialog';
+import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import AppIcon from './app-icon-128.png';
@@ -16,20 +16,18 @@ function AboutDialog(props) {
   const { open, onCloseAboutDialog, classes } = props;
   return (
     <Dialog open={open} onRequestClose={onCloseAboutDialog}>
-      <DialogContent>
+      <DialogContent className={classes.content}>
         <img alt='Plotify Icon' src={AppIcon} className={classes.appIcon} />
-        <Typography type='headline' className={classes.paragraph}>Plotify</Typography>
-        <DialogContentText>
-          <span className={classes.paragraph}>Version: 0.2.0</span>
-          <span className={classes.paragraph}>
-            Copyright © 2017 Sebastian Schmidt & Jasper Meyer
-          </span>
-          <span className={classes.paragraph}>
-            Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft,
-            die Charaktere deiner Geschichte zu planen und zu organisieren.
-            Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
-          </span>
-        </DialogContentText>
+        <Typography type='headline'>Plotify</Typography>
+        <Typography>Version: 0.2.0</Typography>
+        <Typography>
+          Copyright © 2017 Sebastian Schmidt & Jasper Meyer
+        </Typography>
+        <Typography>
+          Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft,
+          die Charaktere deiner Geschichte zu planen und zu organisieren.
+          Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
+        </Typography>
       </DialogContent>
       <DialogActions>
         <Button onClick={onCloseAboutDialog}>Schließen</Button>
@@ -44,11 +42,12 @@ const styles = theme => ({
     width: '128px',
     float: 'left'
   },
-  paragraph: {
-    display: 'block',
-    marginBottom: theme.spacing.unit * 2,
-    marginLeft: 128 + (theme.spacing.unit * 3),
-    '&:last-child': {
+  content: {
+    '& h1, p': {
+      marginBottom: theme.spacing.unit * 2,
+      marginLeft: 128 + (theme.spacing.unit * 3)
+    },
+    '& p:last-child': {
       marginBottom: 0
     }
   }
