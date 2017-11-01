@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import * as a from './actions';
 
 function Button(props) {

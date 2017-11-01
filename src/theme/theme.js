@@ -1,7 +1,6 @@
-import { createMuiTheme } from 'material-ui/styles';
 import green from 'material-ui/colors/green';
 
-const theme = createMuiTheme({
+const theme = {
   palette: {
     primary: {
       50: '#e9e3f1',
@@ -22,6 +21,6 @@ const theme = createMuiTheme({
     },
     secondary: green
   }
-});
+};
 
 export default theme;
