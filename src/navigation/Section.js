@@ -6,6 +6,8 @@ import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import NavigationDrawerButton from './NavigationDrawerButton'
 
+// TODO Bekannter Fehler: Bei schmalen Fenstern schrumpft die AppBar in der Höhe.
+//      Dadurch passen die festen Abstände von 64px nicht mehr und es entstehen Lücken.
 function Section (props) {
   const { classes, title, actions, children } = props
   return (
