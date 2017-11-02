@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import CharacterCard from './CharacterCard';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import CharacterCard from './CharacterCard'
 
-function CharactersGrid(props) {
-  const { classes, characters } = props;
+function CharactersGrid (props) {
+  const { classes, characters } = props
   return (
     <div className={classes.container}>
       {characters.map(character =>
@@ -15,13 +15,13 @@ function CharactersGrid(props) {
         />
       )}
     </div>
-  );
+  )
 }
 
 CharactersGrid.propTypes = {
   classes: PropTypes.object.isRequired,
   characters: PropTypes.array.isRequired
-};
+}
 
 const styles = theme => ({
   container: {
@@ -35,9 +35,8 @@ const styles = theme => ({
 
     maxHeight: '236px',
     margin: theme.spacing.unit * 2,
-    flexGrow: '1',
-    /*flex: '1 1'*/
+    flexGrow: '1'
   }
-});
+})
 
-export default withStyles(styles)(CharactersGrid);
+export default withStyles(styles)(CharactersGrid)

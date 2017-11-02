@@ -4,4 +4,6 @@ os:
   - linux
   - osx
 dist: trusty
-script: npm run build
+script:
+  - npm test
+  - npm run build

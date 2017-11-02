@@ -1,13 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import NavigationDrawerButton from './NavigationDrawerButton';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import AppBar from 'material-ui/AppBar'
+import Toolbar from 'material-ui/Toolbar'
+import Typography from 'material-ui/Typography'
+import NavigationDrawerButton from './NavigationDrawerButton'
 
-function Section(props) {
-  const { classes, title, actions, children } = props;
+function Section (props) {
+  const { classes, title, actions, children } = props
   return (
     <div className={classes.wrapper}>
       <AppBar position='static'>
@@ -23,7 +23,7 @@ function Section(props) {
         {children}
       </div>
     </div>
-  );
+  )
 }
 
 Section.propTypes = {
@@ -31,7 +31,7 @@ Section.propTypes = {
   title: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
   actions: PropTypes.element
-};
+}
 
 const styles = theme => ({
   wrapper: {
@@ -49,6 +49,6 @@ const styles = theme => ({
     overflow: 'scroll',
     height: 'calc(100% - 64px)'
   }
-});
+})
 
-export default withStyles(styles)(Section);
+export default withStyles(styles)(Section)

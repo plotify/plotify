@@ -1,4 +1,4 @@
-import green from 'material-ui/colors/green';
+import green from 'material-ui/colors/green'
 
 const theme = {
   palette: {
@@ -21,6 +21,6 @@ const theme = {
     },
     secondary: green
   }
-};
+}
 
-export default theme;
+export default theme

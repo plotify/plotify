@@ -1,17 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
-import ButtonBase from 'material-ui/ButtonBase';
-import Typography from 'material-ui/Typography';
-import PicturePlaceholderImage from './profile-64.png';
-import DeleteIcon from 'material-ui-icons/Delete';
-import ContentCopyIcon from 'material-ui-icons/ContentCopy';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
+import React from 'react'
+import PropTypes from 'prop-types'
+import { withStyles } from 'material-ui/styles'
+import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
+import ButtonBase from 'material-ui/ButtonBase'
+import Typography from 'material-ui/Typography'
+import PicturePlaceholderImage from './profile-64.png'
+import DeleteIcon from 'material-ui-icons/Delete'
+import ContentCopyIcon from 'material-ui-icons/ContentCopy'
+import IconButton from 'material-ui/IconButton'
+import Tooltip from 'material-ui/Tooltip'
 
-function CharacterCard(props) {
-  const { classes, character, className } = props;
+function CharacterCard (props) {
+  const { classes, character, className } = props
   return (
     <Card className={className}>
       <ButtonBase className={classes.primaryAction}>
@@ -33,14 +33,14 @@ function CharacterCard(props) {
         </Tooltip>
       </CardActions>
     </Card>
-  );
+  )
 }
 
 CharacterCard.propTypes = {
   classes: PropTypes.object.isRequired,
   character: PropTypes.object.isRequired,
   className: PropTypes.string
-};
+}
 
 const styles = theme => ({
   primaryAction: {
@@ -66,6 +66,6 @@ const styles = theme => ({
     height: '64px',
     width: '64px'
   }
-});
+})
 
-export default withStyles(styles)(CharacterCard);
+export default withStyles(styles)(CharacterCard)

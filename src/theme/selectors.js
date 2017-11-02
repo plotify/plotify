@@ -1,3 +1,3 @@
-export function isDarkThemeEnabled(state) {
-  return state.theme.darkTheme === true;
+export function isDarkThemeEnabled (state) {
+  return state.theme.darkTheme === true
 }

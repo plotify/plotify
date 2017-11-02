@@ -1,20 +1,20 @@
-import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import AppIcon from './app-icon-128.png';
+import React from 'react'
+import { withStyles } from 'material-ui/styles'
+import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
+import Typography from 'material-ui/Typography'
+import Button from 'material-ui/Button'
+import AppIcon from './app-icon-128.png'
 import { connect } from 'react-redux'
-import * as s from './selectors';
-import * as a from './actions';
-import ContributorsDialog from './ContributorsDialog';
+import * as s from './selectors'
+import * as a from './actions'
+import ContributorsDialog from './ContributorsDialog'
 
 // TODO Versionsnummer aus package.json auslesen
 // TODO Lizenz
 // TODO Mitwirkende
 // TODO Website
-function AboutDialog(props) {
-  const { open, closeAboutDialog, openContributorsDialog, classes } = props;
+function AboutDialog (props) {
+  const { open, closeAboutDialog, openContributorsDialog, classes } = props
   return (
     <Dialog open={open} onRequestClose={closeAboutDialog}>
       <DialogContent className={classes.content}>
@@ -36,7 +36,7 @@ function AboutDialog(props) {
       </DialogActions>
       <ContributorsDialog />
     </Dialog>
-  );
+  )
 }
 
 const styles = theme => ({
@@ -54,21 +54,21 @@ const styles = theme => ({
       marginBottom: 0
     }
   }
-});
+})
 
-const StyledAboutDialog =  withStyles(styles)(AboutDialog);
+const StyledAboutDialog = withStyles(styles)(AboutDialog)
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     open: s.isAboutDialogOpen(state)
-  };
+  }
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps (dispatch) {
   return {
     closeAboutDialog: () => dispatch(a.closeAboutDialog()),
     openContributorsDialog: () => dispatch(a.openContributorsDialog())
-  };
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(StyledAboutDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(StyledAboutDialog)

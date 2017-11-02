@@ -1,29 +1,29 @@
-import * as t from './actionTypes';
+import * as t from './actionTypes'
 
-export function openAboutDialog() {
+export function openAboutDialog () {
   return {
     type: t.OPEN_ABOUT_DIALOG,
     payload: {}
-  };
+  }
 }
 
-export function closeAboutDialog() {
+export function closeAboutDialog () {
   return {
     type: t.CLOSE_ABOUT_DIALOG,
     payload: {}
-  };
+  }
 }
 
-export function openContributorsDialog() {
+export function openContributorsDialog () {
   return {
     type: t.OPEN_CONTRIBUTORS_DIALOG,
     payload: {}
-  };
+  }
 }
 
-export function closeContributorsDialog() {
+export function closeContributorsDialog () {
   return {
     type: t.CLOSE_CONTRIBUTORS_DIALOG,
     payload: {}
-  };
+  }
 }
