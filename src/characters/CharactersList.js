@@ -4,9 +4,9 @@ import List from 'material-ui/List'
 import CharacterListItem from './CharacterListItem'
 
 function CharactersList (props) {
-  const { characters } = props
+  const { characters, className } = props
   return (
-    <List>
+    <List className={className}>
       {characters.map((character) => (
         <CharacterListItem
           key={character.id}
@@ -19,7 +19,8 @@ function CharactersList (props) {
 }
 
 CharactersList.propTypes = {
-  characters: PropTypes.array.isRequired
+  characters: PropTypes.array.isRequired,
+  className: PropTypes.string
 }
 
 export default CharactersList
