@@ -7,15 +7,16 @@ import AppIcon from './app-icon-128.png';
 import { connect } from 'react-redux'
 import * as s from './selectors';
 import * as a from './actions';
+import ContributorsDialog from './ContributorsDialog';
 
 // TODO Versionsnummer aus package.json auslesen
 // TODO Lizenz
 // TODO Mitwirkende
 // TODO Website
 function AboutDialog(props) {
-  const { open, onCloseAboutDialog, classes } = props;
+  const { open, closeAboutDialog, openContributorsDialog, classes } = props;
   return (
-    <Dialog open={open} onRequestClose={onCloseAboutDialog}>
+    <Dialog open={open} onRequestClose={closeAboutDialog}>
       <DialogContent className={classes.content}>
         <img alt='Plotify Icon' src={AppIcon} className={classes.appIcon} />
         <Typography type='headline'>Plotify</Typography>
@@ -30,8 +31,10 @@ function AboutDialog(props) {
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onCloseAboutDialog}>Schließen</Button>
+        <Button onClick={openContributorsDialog}>Mitwirkende</Button>
+        <Button onClick={closeAboutDialog}>Schließen</Button>
       </DialogActions>
+      <ContributorsDialog />
     </Dialog>
   );
 }
@@ -63,7 +66,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onCloseAboutDialog: () => dispatch(a.closeAboutDialog())
+    closeAboutDialog: () => dispatch(a.closeAboutDialog()),
+    openContributorsDialog: () => dispatch(a.openContributorsDialog())
   };
 }
 
