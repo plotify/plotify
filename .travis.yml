@@ -14,5 +14,5 @@ deploy:
   local_dir: build
   github_token: $GITHUB_TOKEN
   on:
-    branch: gh-pages
+    branch: reborn
 
