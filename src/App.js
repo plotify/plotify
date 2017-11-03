@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import NavigationDrawer from './navigation/NavigationDrawer'
 import AboutDialog from './about/AboutDialog'
-import CharactersSection from './characters/CharactersSection'
+import CharactersSection from './characters/components/CharactersSection'
 
 function App (props) {
   const { classes } = props
