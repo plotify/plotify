@@ -3,15 +3,13 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
+import classNames from 'classnames'
 
 function CharacterListItem (props) {
   const { classes, character, onClick, selected } = props
-
-  let classNames = classes.listItem
-  if (selected) classNames += ' ' + classes.selectedListItem
-
+  const className = classNames(classes.listItem, { [classes.selectedListItem]: selected })
   return (
-    <ListItem className={classNames} onClick={onClick} button={!selected}>
+    <ListItem className={className} onClick={onClick} button>
       <ListItemAvatar>
         <Avatar>{character.name.charAt(0)}</Avatar>
       </ListItemAvatar>
@@ -50,7 +48,11 @@ const styles = theme => {
       backgroundColor: backgroundColor,
       borderLeftColor: borderColor,
       boxShadow: 'inset 0 1px 1px -1px ' + theme.palette.grey[top] + ',' +
-                'inset 0 -1px 1px -1px ' + theme.palette.grey[bottom]
+                 'inset 0 -1px 1px -1px ' + theme.palette.grey[bottom],
+      '&:hover': {
+        backgroundColor: backgroundColor,
+        cursor: 'default'
+      }
     },
     characterName: {
       display: 'flex',
