@@ -7,11 +7,15 @@ import Button from 'material-ui/Button'
 import { isContributorsDialogOpen } from '../selectors'
 import { closeContributorsDialog } from '../actions'
 
+import SebastianSchmidtImage from '../resources/contributors/sebastian-schmidt.jpg'
+import JasperMeyerImage from '../resources/contributors/jasper-meyer.jpg'
+import GesaMuellerImage from '../resources/contributors/gesa-mueller.jpg'
+
 const contributors = [
-  { name: 'Sebastian Schmidt', url: 'https://github.com/SebastianSchmidt' },
-  { name: 'Jasper Meyer', url: 'https://github.com/itsJASPERr' },
-  { name: 'Gesa Müller', url: 'https://github.com/GesaMueller' },
-  { name: 'Rebecca Rademacher', url: 'https://github.com/RebeccaRademacher' }
+  { name: 'Sebastian Schmidt', image: SebastianSchmidtImage },
+  { name: 'Jasper Meyer', image: JasperMeyerImage },
+  { name: 'Gesa Müller', image: GesaMuellerImage },
+  { name: 'Rebecca Rademacher' }
 ]
 
 // TODO Profilbilder darstellen.
@@ -25,7 +29,7 @@ function ContributorsDialog (props) {
         <List>
           {contributors.map((contributor, index) => (
             <ListItem key={index} button>
-              <Avatar>{contributor.name.charAt(0)}</Avatar>
+              { contributor.image ? <Avatar src={contributor.image} /> : <Avatar>{contributor.name.charAt(0)}</Avatar> }
               <ListItemText primary={contributor.name} />
             </ListItem>
           ))}
