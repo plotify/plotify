@@ -10,11 +10,11 @@ import GroupIcon from 'material-ui-icons/Group'
 import DeleteIcon from 'material-ui-icons/Delete'
 import HelpIcon from 'material-ui-icons/Help'
 import FeedbackIcon from 'material-ui-icons/Feedback'
-import ToggleDarkThemeDrawerItem from '../theme/ToggleDarkThemeDrawerItem'
-import AboutDrawerItem from '../about/AboutDrawerItem'
+import ToggleDarkThemeDrawerItem from '../../theme/components/ToggleDarkThemeDrawerItem'
+import AboutDrawerItem from '../../about/components/AboutDrawerItem'
 import { connect } from 'react-redux'
-import * as s from './selectors'
-import * as a from './actions'
+import * as s from '../selectors'
+import * as a from '../actions'
 
 function NavigationDrawer (props) {
   const { open, onCloseDrawer } = props

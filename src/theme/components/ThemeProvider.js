@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
-import { isDarkThemeEnabled } from './selectors'
-import theme from './theme'
+import { isDarkThemeEnabled } from '../selectors'
+import theme from '../theme'
 
 function ThemeProvider (props) {
   const { children, darkTheme } = props

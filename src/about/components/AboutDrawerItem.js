@@ -1,8 +1,8 @@
 import React from 'react'
 import InfoIcon from 'material-ui-icons/Info'
-import DrawerItem from '../navigation/DrawerItem'
+import DrawerItem from '../../navigation/components/DrawerItem'
 import { connect } from 'react-redux'
-import { openAboutDialog } from './actions'
+import { openAboutDialog } from '../actions'
 
 function AboutDrawerItem (props) {
   const { onOpenAboutDialog } = props

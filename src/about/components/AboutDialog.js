@@ -3,10 +3,10 @@ import { withStyles } from 'material-ui/styles'
 import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
-import AppIcon from './app-icon-128.png'
+import AppIcon from '../resources/app-icon-128.png'
 import { connect } from 'react-redux'
-import * as s from './selectors'
-import * as a from './actions'
+import * as s from '../selectors'
+import * as a from '../actions'
 import ContributorsDialog from './ContributorsDialog'
 
 // TODO Versionsnummer aus package.json auslesen

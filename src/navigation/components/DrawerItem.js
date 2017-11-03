@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import { connect } from 'react-redux'
-import { closeNavigationDrawer } from './actions'
+import { closeNavigationDrawer } from '../actions'
 
 function DrawerItem (props) {
   const { text, icon, onClick, closeNavigationDrawer } = props

@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 import Switch from 'material-ui/Switch'
 import LightbulbIcon from 'material-ui-icons/LightbulbOutline'
-import { isDarkThemeEnabled } from './selectors'
-import { toggleDarkTheme } from './actions'
+import { isDarkThemeEnabled } from '../selectors'
+import { toggleDarkTheme } from '../actions'
 
 function ToggleDarkThemeDrawerItem (props) {
   const { darkTheme, toggleDarkTheme } = props

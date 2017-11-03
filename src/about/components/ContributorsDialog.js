@@ -4,8 +4,8 @@ import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/D
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import Button from 'material-ui/Button'
-import { isContributorsDialogOpen } from './selectors'
-import { closeContributorsDialog } from './actions'
+import { isContributorsDialogOpen } from '../selectors'
+import { closeContributorsDialog } from '../actions'
 
 const contributors = [
   { name: 'Sebastian Schmidt', url: 'https://github.com/SebastianSchmidt' },

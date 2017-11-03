@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import NavigationDrawer from './navigation/NavigationDrawer'
-import AboutDialog from './about/AboutDialog'
+import NavigationDrawer from './navigation/components/NavigationDrawer'
+import AboutDialog from './about/components/AboutDialog'
 import CharactersSection from './characters/components/CharactersSection'
 
 function App (props) {
