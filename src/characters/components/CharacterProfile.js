@@ -1,24 +1,85 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+import { withStyles } from 'material-ui/styles'
+import TextField from 'material-ui/TextField'
+import CharacterProfileGroup from './CharacterProfileGroup'
+import classNames from 'classnames'
+import defaultProfile from '../default-profile'
 
-function CharacterProfile (props) {
-  const { className } = props
+const CharacterProfile = (props) => {
+  const { classes, className } = props
   return (
-    <div className={className}>Platzhalter</div>
+    <div className={classNames(className, classes.root)}>
+      <div className={classes.wrapper}>
+        {defaultProfile.map((item, index) => (
+          <CharacterProfileGroup
+            key={index}
+            title={item.title}
+            className={classes.profileGroup}
+            paperClass={classes.profilePaperClass}>
+            {item.entries.filter(entry => !!entry.value).map((entry, i) => (
+              <div key={i} className={classes.entry}>
+                <TextField
+                  className={classes.textField}
+                  label={entry.title}
+                  defaultValue={entry.value}
+                  InputProps={{disableUnderline: true,
+                    classes: {
+                      input: classes.input
+                    }}}
+                  InputLabelProps={{className: classes.inputLabel}}
+                  disabled
+                  fullWidth
+                />
+              </div>
+            ))}
+          </CharacterProfileGroup>
+        ))}
+      </div>
+    </div>
   )
 }
 
 CharacterProfile.propTypes = {
+  classes: PropTypes.object.isRequired,
   className: PropTypes.string.isRequired
 }
 
-function mapStateToProps (state) {
-  return {}
+const styles = (theme) => {
+  return {
+    root: {
+      display: 'flex',
+      justifyContent: 'space-around',
+      flexDirection: 'row'
+    },
+    wrapper: {
+      flex: '.5 .1 400px'
+    },
+    profileGroup: {
+      padding: theme.spacing.unit * 2
+    },
+    profilePaperClass: {
+      display: 'flex',
+      flexDirection: 'row',
+      flexWrap: 'wrap'
+    },
+    entry: {
+      padding: theme.spacing.unit * 2,
+      flex: '2 0 auto'
+    },
+    textField: {
+      maxWidth: '200px'
+    },
+    input: {
+      color: theme.palette.text.primary
+    },
+    inputLabel: {
+      widht: '100%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
+    }
+  }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CharacterProfile)
+export default withStyles(styles)(CharacterProfile)
