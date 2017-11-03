@@ -43,13 +43,15 @@ const styles = theme => {
       borderLeftWidth: theme.spacing.unit / 2,
       borderLeftStyle: 'solid',
       borderLeftColor: borderColor,
+      transition: theme.transitions.create('border-left-color', { duration: theme.transitions.duration.standard }),
       paddingLeft: theme.spacing.unit + theme.spacing.unit / 2
     }
   }
 
   return {
     listItem: {
-      height: theme.spacing.unit * 7
+      height: theme.spacing.unit * 7,
+      borderLeftColor: 'transparent'
     },
     selectedListItem: {
       ...selectedListItem,
