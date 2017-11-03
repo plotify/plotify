@@ -1,6 +1,7 @@
 {
   "name": "plotify",
   "version": "0.2.0-SNAPHOT",
+  "homepage": "http://plotify.org/plotify/",
   "private": true,
   "dependencies": {
     "classnames": "2.2.5",
