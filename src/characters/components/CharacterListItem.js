@@ -36,17 +36,24 @@ const styles = theme => {
   const backgroundColor = light ? theme.palette.secondary['50'] : theme.palette.background.contentFrame
   const borderColor = light ? theme.palette.secondary['700'] : 'transparent'
 
-  return {
-    listItem: {
-      height: theme.spacing.unit * 7,
+  let selectedListItem = {}
+
+  if (light) {
+    selectedListItem = {
       borderLeftWidth: theme.spacing.unit / 2,
       borderLeftStyle: 'solid',
-      borderLeftColor: 'transparent',
+      borderLeftColor: borderColor,
       paddingLeft: theme.spacing.unit + theme.spacing.unit / 2
+    }
+  }
+
+  return {
+    listItem: {
+      height: theme.spacing.unit * 7
     },
     selectedListItem: {
+      ...selectedListItem,
       backgroundColor: backgroundColor,
-      borderLeftColor: borderColor,
       boxShadow: 'inset 0 1px 1px -1px ' + theme.palette.grey[top] + ',' +
                  'inset 0 -1px 1px -1px ' + theme.palette.grey[bottom],
       '&:hover': {
