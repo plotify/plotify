@@ -6,6 +6,7 @@ import IconButton from 'material-ui/IconButton'
 import SearchIcon from 'material-ui-icons/Search'
 import Paper from 'material-ui/Paper'
 import CharactersList from './CharactersList'
+import CharacterProfile from './CharacterProfile'
 
 function CharactersSection (props) {
   const { classes } = props
@@ -21,16 +22,11 @@ function CharactersSection (props) {
         <Paper className={classes.charactersListWrapper}>
           <CharactersList className={classes.charactersList} />
         </Paper>
+        <CharacterProfile className={classes.characterProfile} />
       </div>
     </Section>
   )
 }
-
-/*
-        <div className={classes.test}>
-          <Paper className={classes.testItem}></Paper>
-        </div>
-*/
 
 CharactersSection.propTypes = {
   classes: PropTypes.object.isRequired
@@ -48,17 +44,10 @@ const styles = theme => ({
     overflowY: 'auto',
     float: 'left'
   },
-  test: {
+  characterProfile: {
     height: '100%',
     overflowY: 'auto',
-    marginLeft: '300px'
-  },
-  testItem: {
-    height: '1500px',
-    maxWidth: '600px',
-    margin: 'auto',
-    marginTop: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 2
+    backgroundColor: 'transparent'
   }
 })
 

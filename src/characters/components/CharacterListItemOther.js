@@ -30,17 +30,24 @@ CharacterListItem.propTypes = {
 }
 
 const styles = theme => {
-  const light = theme.palette.type === 'light'
-  const top = light ? 600 : 700
-  const bottom = light ? 100 : 500
+  let borderColor = theme.palette.secondary['700']
+  let backgroundColor = theme.palette.secondary['50']
+
+  if (theme.palette.type === 'dark') {
+    backgroundColor = theme.palette.secondary['900']
+  }
+
   return {
     listItem: {
-      height: theme.spacing.unit * 7
+      height: theme.spacing.unit * 7,
+      borderLeftWidth: theme.spacing.unit / 2,
+      borderLeftStyle: 'solid',
+      borderLeftColor: 'transparent',
+      paddingLeft: theme.spacing.unit + theme.spacing.unit / 2
     },
     selectedListItem: {
-      backgroundColor: theme.palette.background.contentFrame,
-      boxShadow: 'inset 0 1px 1px -1px ' + theme.palette.grey[top] + ',' +
-                'inset 0 -1px 1px -1px ' + theme.palette.grey[bottom]
+      borderLeftColor: borderColor,
+      backgroundColor: backgroundColor
     },
     characterName: {
       display: 'flex',
