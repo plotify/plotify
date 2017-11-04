@@ -69,6 +69,7 @@ const styles = theme => {
       height: theme.spacing.unit * 6,
       '& h3': {
         overflow: 'hidden',
+        wordBreak: 'break-word',
         display: '-webkit-box',
         '-webkit-line-clamp': 2,
         '-webkit-box-orient': 'vertical'
