@@ -74,8 +74,7 @@ const styles = (theme) => {
       color: theme.palette.text.primary
     },
     inputLabel: {
-      widht: '100%',
-      overflow: 'hidden',
+      // overflow: 'hidden', // TODO Fehler:  Schneidet das Label auch oben und unten ab.
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap'
     }
