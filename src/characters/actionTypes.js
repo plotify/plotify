@@ -1,2 +1,5 @@
+export const OPEN_CREATE_CHARACTER_DIALOG = 'characters/open-create-character-dialog'
+export const CLOSE_CREATE_CHARACTER_DIALOG = 'characters/close-create-character-dialog'
+export const CREATE_CHARACTER = 'characters/create-character'
 export const SELECT_CHARACTER = 'characters/select-character'
 export const DESELECT_CHARACTER = 'characters/deselect-character'

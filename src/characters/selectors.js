@@ -1,11 +1,15 @@
-export function getCharacters (state) {
-  return state.characters.entities
-}
+export const isCreateCharacterDialogOpen = (state) => (
+  state.characters.createDialogOpen === true
+)
 
-export function isCharacterSelected (state) {
-  return state.characters.selected !== null
-}
+export const getCharacters = (state) => (
+  state.characters.entities
+)
 
-export function getSelectedCharacterId (state) {
-  return state.characters.selected
-}
+export const isCharacterSelected = (state) => (
+  state.characters.selected !== null
+)
+
+export const getSelectedCharacterId = (state) => (
+  state.characters.selected
+)

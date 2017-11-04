@@ -7,6 +7,8 @@ import SearchIcon from 'material-ui-icons/Search'
 import Paper from 'material-ui/Paper'
 import CharactersList from './CharactersList'
 import CharacterProfile from './CharacterProfile'
+import CreateCharacterButton from './CreateCharacterButton'
+import CreateCharacterDialog from './CreateCharacterDialog'
 
 function CharactersSection (props) {
   const { classes } = props
@@ -19,10 +21,12 @@ function CharactersSection (props) {
         </IconButton>
       }>
       <div className={classes.root}>
-        <Paper className={classes.charactersListWrapper}>
-          <CharactersList className={classes.charactersList} />
+        <Paper className={classes.listWrapper}>
+          <CharactersList />
+          <CreateCharacterButton className={classes.createButton} />
         </Paper>
-        <CharacterProfile className={classes.characterProfile} />
+        <CharacterProfile className={classes.profile} />
+        <CreateCharacterDialog />
       </div>
     </Section>
   )
@@ -38,13 +42,18 @@ const styles = theme => ({
     width: '100%',
     overflow: 'hidden'
   },
-  charactersListWrapper: {
+  listWrapper: {
     height: '100%',
     width: '300px',
     overflowY: 'auto',
     float: 'left'
   },
-  characterProfile: {
+  createButton: {
+    position: 'fixed',
+    bottom: theme.spacing.unit * 2,
+    left: 'calc(300px - 56px - 16px)'
+  },
+  profile: {
     height: '100%',
     overflowY: 'auto',
     backgroundColor: 'transparent'
