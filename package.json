@@ -1,7 +1,7 @@
 {
   "name": "plotify",
   "version": "0.2.0-SNAPHOT",
-  "homepage": "http://plotify.org/plotify/",
+  "homepage": ".",
   "main": "src/electron-starter.js",
   "private": true,
   "dependencies": {
@@ -26,6 +26,6 @@
     "test": "standard",
     "devtest": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "npm run build && electron ."
   }
 }

@@ -4,11 +4,17 @@
 
 [Demo](http://plotify.org/plotify/)
 
+Plotify Demo herunterladen, installieren und starten:
+
 ```bash
+git clone git@github.com:plotify/plotify.git
+git checkout reborn
 npm install
 npm start
+```
 
-# Optional: Demo in Electron anzeigen.
-# npm start muss parallel ausgeführt werden.
+Plotify Demo in Electron starten:
+
+```bash
 npm run electron
 ```
