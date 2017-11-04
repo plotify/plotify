@@ -33,8 +33,8 @@ const styles = theme => {
   const top = light ? 600 : 700
   const bottom = light ? 100 : 500
 
-  const backgroundColor = light ? theme.palette.secondary['50'] : theme.palette.background.contentFrame
-  const borderColor = light ? theme.palette.secondary['700'] : 'transparent'
+  const backgroundColor = light ? theme.palette.primary['50'] : theme.palette.background.contentFrame
+  const borderColor = light ? theme.palette.primary['700'] : 'transparent'
 
   let selectedListItem = {}
 
