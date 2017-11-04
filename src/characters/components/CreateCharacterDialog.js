@@ -12,12 +12,19 @@ class CreateCharacterDialog extends Component {
     super(props)
     this.state = { input: '' }
     this.onInputChanged = this.onInputChanged.bind(this)
+    this.onKeyPress = this.onKeyPress.bind(this)
     this.createCharacter = this.createCharacter.bind(this)
     this.close = this.close.bind(this)
   }
 
   onInputChanged (event) {
     this.setState({ input: event.target.value })
+  }
+
+  onKeyPress (event) {
+    if (event.key === 'Enter' && this.state.input.length > 0) {
+      this.createCharacter()
+    }
   }
 
   createCharacter () {
@@ -43,6 +50,7 @@ class CreateCharacterDialog extends Component {
           </DialogContentText>
           <TextField
             onChange={this.onInputChanged}
+            onKeyPress={this.onKeyPress}
             margin='normal'
             autoFocus
             fullWidth
