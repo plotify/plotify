@@ -8,8 +8,10 @@ import classNames from 'classnames'
 function CharacterListItem (props) {
   const { classes, character, onClick, selected } = props
   const className = classNames(classes.listItem, { [classes.selectedListItem]: selected })
+  const borderClassName = classNames(classes.leftBorder, { [classes.selectedLeftBorder]: selected })
   return (
     <ListItem className={className} onClick={onClick} button>
+      <div className={borderClassName} />
       <ListItemAvatar>
         <Avatar>{character.name.charAt(0)}</Avatar>
       </ListItemAvatar>
@@ -44,16 +46,22 @@ const styles = theme => {
       backgroundColor: backgroundColor,
       boxShadow: 'inset 0 1px 1px -1px ' + theme.palette.grey[top] + ',' +
                  'inset 0 -1px 1px -1px ' + theme.palette.grey[bottom],
-      borderLeftWidth: theme.spacing.unit / 2,
-      borderLeftStyle: 'solid',
-      borderLeftColor: borderColor,
-      paddingLeft: theme.spacing.unit + theme.spacing.unit / 2,
-      transition: theme.transitions.create('border-left-width', { duration: theme.transitions.duration.shortest }) + ', ' +
-                  theme.transitions.create('padding-left', { duration: theme.transitions.duration.shortest }),
       '&:hover': {
         backgroundColor: backgroundColor,
         cursor: 'default'
       }
+    },
+    leftBorder: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      height: '100%',
+      width: 0,
+      backgroundColor: borderColor
+    },
+    selectedLeftBorder: {
+      width: theme.spacing.unit / 2,
+      transition: theme.transitions.create('width', { duration: theme.transitions.duration.shortest })
     },
     characterName: {
       display: 'flex',
