@@ -34,7 +34,7 @@ const styles = theme => {
   const bottom = light ? 100 : 500
 
   const backgroundColor = light ? theme.palette.primary['50'] : theme.palette.background.contentFrame
-  const borderColor = light ? theme.palette.primary['700'] : theme.palette.text.secondary
+  const borderColor = light ? theme.palette.primary['700'] : theme.palette.grey[600]
 
   return {
     listItem: {
