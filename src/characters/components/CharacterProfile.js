@@ -61,7 +61,8 @@ const styles = (theme) => {
     profilePaperClass: {
       display: 'flex',
       flexDirection: 'row',
-      flexWrap: 'wrap'
+      flexWrap: 'wrap',
+      maxWidth: '850px' // Maximale Breite zu Testzwecken in der Demo.
     },
     entry: {
       padding: theme.spacing.unit * 2,
