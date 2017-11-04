@@ -8,25 +8,22 @@ import NavigationDrawerButton from './NavigationDrawerButton'
 
 // TODO Bekannter Fehler: Bei schmalen Fenstern schrumpft die AppBar in der Höhe.
 //      Dadurch passen die festen Abstände von 64px nicht mehr und es entstehen Lücken.
-function Section (props) {
-  const { classes, title, actions, children } = props
-  return (
-    <div className={classes.wrapper}>
-      <AppBar>
-        <Toolbar>
-          <NavigationDrawerButton className={classes.menuButton} color='contrast' />
-          <Typography type='title' color='inherit' className={classes.title}>
-            {title}
-          </Typography>
-          {actions}
-        </Toolbar>
-      </AppBar>
-      <div className={classes.content}>
-        {children}
-      </div>
+const Section = (props) => (
+  <div className={props.classes.wrapper}>
+    <AppBar>
+      <Toolbar>
+        <NavigationDrawerButton className={props.classes.menuButton} color='contrast' />
+        <Typography type='title' color='inherit' className={props.classes.title}>
+          {props.title}
+        </Typography>
+        {props.actions}
+      </Toolbar>
+    </AppBar>
+    <div className={props.classes.content}>
+      {props.children}
     </div>
-  )
-}
+  </div>
+)
 
 Section.propTypes = {
   classes: PropTypes.object.isRequired,
@@ -35,7 +32,7 @@ Section.propTypes = {
   actions: PropTypes.element
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
   wrapper: {
     height: '100%',
     width: '100%'

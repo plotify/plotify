@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Drawer from 'material-ui/Drawer'
 import DrawerItem from './DrawerItem'
 import List from 'material-ui/List'
@@ -13,41 +14,39 @@ import FeedbackIcon from 'material-ui-icons/Feedback'
 import ToggleDarkThemeDrawerItem from '../../theme/components/ToggleDarkThemeDrawerItem'
 import AboutDrawerItem from '../../about/components/AboutDrawerItem'
 import { connect } from 'react-redux'
-import * as s from '../selectors'
-import * as a from '../actions'
+import { isNavigationDrawerOpen } from '../selectors'
+import { closeNavigationDrawer } from '../actions'
 
-function NavigationDrawer (props) {
-  const { open, onCloseDrawer } = props
-  return (
-    <Drawer open={open} onRequestClose={onCloseDrawer}>
-      <List>
-        <DrawerItem text='Neue Geschichte' icon={<CreateNewFolderIcon />} />
-        <DrawerItem text='Geschichte öffnen' icon={<FolderOpenIcon />} />
-        <Divider />
-        <DrawerItem text='Charaktere' icon={<PersonIcon />} />
-        <DrawerItem text='Gruppen' icon={<GroupIcon />} />
-        <DrawerItem text='Papierkorb' icon={<DeleteIcon />} />
-        <Divider />
-        <ToggleDarkThemeDrawerItem />
-        <Divider />
-        <DrawerItem text='Hilfe & Anleitungen' icon={<HelpIcon />} />
-        <DrawerItem text='Feedback geben' icon={<FeedbackIcon />} />
-        <AboutDrawerItem />
-      </List>
-    </Drawer>
-  )
+const NavigationDrawer = (props) => (
+  <Drawer open={props.open} onRequestClose={props.onCloseDrawer}>
+    <List>
+      <DrawerItem text='Neue Geschichte' icon={<CreateNewFolderIcon />} />
+      <DrawerItem text='Geschichte öffnen' icon={<FolderOpenIcon />} />
+      <Divider />
+      <DrawerItem text='Charaktere' icon={<PersonIcon />} />
+      <DrawerItem text='Gruppen' icon={<GroupIcon />} />
+      <DrawerItem text='Papierkorb' icon={<DeleteIcon />} />
+      <Divider />
+      <ToggleDarkThemeDrawerItem />
+      <Divider />
+      <DrawerItem text='Hilfe & Anleitungen' icon={<HelpIcon />} />
+      <DrawerItem text='Feedback geben' icon={<FeedbackIcon />} />
+      <AboutDrawerItem />
+    </List>
+  </Drawer>
+)
+
+NavigationDrawer.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onCloseDrawer: PropTypes.func.isRequired
 }
 
-function mapStateToProps (state) {
-  return {
-    open: s.isNavigationDrawerOpen(state)
-  }
-}
+const mapStateToProps = (state) => ({
+  open: isNavigationDrawerOpen(state)
+})
 
-function mapDispatchToProps (dispatch) {
-  return {
-    onCloseDrawer: () => dispatch(a.closeNavigationDrawer())
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  onCloseDrawer: () => dispatch(closeNavigationDrawer())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationDrawer)

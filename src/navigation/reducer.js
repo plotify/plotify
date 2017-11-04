@@ -4,7 +4,7 @@ const initialState = {
   drawerOpen: false
 }
 
-function reducer (state = initialState, action) {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.OPEN_NAVIGATION_DRAWER:
       return Object.assign({}, state, {

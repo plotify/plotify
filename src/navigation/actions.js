@@ -1,15 +1,11 @@
 import * as t from './actionTypes'
 
-export function openNavigationDrawer () {
-  return {
-    type: t.OPEN_NAVIGATION_DRAWER,
-    payload: {}
-  }
-}
+export const openNavigationDrawer = () => ({
+  type: t.OPEN_NAVIGATION_DRAWER,
+  payload: {}
+})
 
-export function closeNavigationDrawer () {
-  return {
-    type: t.CLOSE_NAVIGATION_DRAWER,
-    payload: {}
-  }
-}
+export const closeNavigationDrawer = () => ({
+  type: t.CLOSE_NAVIGATION_DRAWER,
+  payload: {}
+})

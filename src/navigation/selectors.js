@@ -1,3 +1,3 @@
-export function isNavigationDrawerOpen (state) {
-  return state.navigation.drawerOpen === true
-}
+export const isNavigationDrawerOpen = (state) => (
+  state.navigation.drawerOpen === true
+)

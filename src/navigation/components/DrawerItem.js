@@ -4,7 +4,7 @@ import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import { connect } from 'react-redux'
 import { closeNavigationDrawer } from '../actions'
 
-function DrawerItem (props) {
+const DrawerItem = (props) => {
   const { text, icon, onClick, closeNavigationDrawer } = props
 
   const combinedOnClick = () => {
@@ -20,22 +20,16 @@ function DrawerItem (props) {
   )
 }
 
-function mapStateToProps (state) {
-  return {}
-}
-
-function mapDispatchToProps (dispatch) {
-  return {
-    closeNavigationDrawer: () => dispatch(closeNavigationDrawer())
-  }
-}
-
-const ConnectedDrawerItem = connect(mapStateToProps, mapDispatchToProps)(DrawerItem)
-
-ConnectedDrawerItem.propTypes = {
+DrawerItem.propTypes = {
   text: PropTypes.string.isRequired,
   icon: PropTypes.object.isRequired,
   onClick: PropTypes.func
 }
 
-export default ConnectedDrawerItem
+const mapStateToProps = (state) => ({})
+
+const mapDispatchToProps = (dispatch) => ({
+  closeNavigationDrawer: () => dispatch(closeNavigationDrawer())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerItem)
