@@ -1,8 +1,6 @@
 import * as t from './actionTypes'
 
-export function toggleDarkTheme () {
-  return {
-    type: t.TOGGLE_DARK_THEME,
-    payload: {}
-  }
-}
+export const toggleDarkTheme = () => ({
+  type: t.TOGGLE_DARK_THEME,
+  payload: {}
+})

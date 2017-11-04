@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles'
 import { isDarkThemeEnabled } from '../selectors'
 import theme from '../theme'
 
-function ThemeProvider (props) {
+const ThemeProvider = (props) => {
   const { children, darkTheme } = props
 
   if (darkTheme) {
@@ -23,10 +24,13 @@ function ThemeProvider (props) {
   )
 }
 
-function mapStateToProps (state) {
-  return {
-    darkTheme: isDarkThemeEnabled(state)
-  }
+ThemeProvider.propTypes = {
+  darkTheme: PropTypes.bool.isRequired,
+  children: PropTypes.element.isRequired
 }
+
+const mapStateToProps = (state) => ({
+  darkTheme: isDarkThemeEnabled(state)
+})
 
 export default connect(mapStateToProps)(ThemeProvider)

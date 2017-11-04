@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
 import Typography from 'material-ui/Typography'
@@ -38,6 +39,13 @@ const AboutDialog = (props) => {
       <ContributorsDialog />
     </Dialog>
   )
+}
+
+AboutDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  closeAboutDialog: PropTypes.func.isRequired,
+  openContributorsDialog: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired
 }
 
 const styles = (theme) => ({

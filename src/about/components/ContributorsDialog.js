@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog'
 import List, { ListItem, ListItemText } from 'material-ui/List'
@@ -36,6 +37,11 @@ const ContributorsDialog = (props) => (
     </DialogActions>
   </Dialog>
 )
+
+ContributorsDialog.propTypes = {
+  open: PropTypes.bool.isRequired,
+  closeContributorsDialog: PropTypes.func.isRequired
+}
 
 const mapStateToProps = (state) => ({
   open: isContributorsDialogOpen(state)

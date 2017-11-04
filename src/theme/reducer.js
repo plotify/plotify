@@ -4,7 +4,7 @@ const initialState = {
   darkTheme: false
 }
 
-function reducer (state = initialState, action) {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.TOGGLE_DARK_THEME:
       return Object.assign({}, state, {

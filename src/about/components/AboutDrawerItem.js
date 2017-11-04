@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import InfoIcon from 'material-ui-icons/Info'
 import DrawerItem from '../../navigation/components/DrawerItem'
 import { connect } from 'react-redux'
@@ -11,7 +12,11 @@ const AboutDrawerItem = (props) => (
     onClick={props.onOpenAboutDialog} />
 )
 
-const mapStateToProps = (state) => {}
+AboutDrawerItem.propTypes = {
+  onOpenAboutDialog: PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = (dispatch) => ({
   onOpenAboutDialog: () => dispatch(openAboutDialog())

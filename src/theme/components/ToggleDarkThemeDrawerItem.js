@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { ListItem, ListItemIcon, ListItemText, ListItemSecondaryAction } from 'material-ui/List'
 import Switch from 'material-ui/Switch'
@@ -6,34 +7,32 @@ import LightbulbIcon from 'material-ui-icons/LightbulbOutline'
 import { isDarkThemeEnabled } from '../selectors'
 import { toggleDarkTheme } from '../actions'
 
-function ToggleDarkThemeDrawerItem (props) {
-  const { darkTheme, toggleDarkTheme } = props
-  return (
-    <ListItem>
-      <ListItemIcon>
-        <LightbulbIcon />
-      </ListItemIcon>
-      <ListItemText primary='Nachtmodus' />
-      <ListItemSecondaryAction>
-        <Switch
-          onClick={toggleDarkTheme}
-          checked={darkTheme}
-          disableRipple />
-      </ListItemSecondaryAction>
-    </ListItem>
-  )
+const ToggleDarkThemeDrawerItem = (props) => (
+  <ListItem>
+    <ListItemIcon>
+      <LightbulbIcon />
+    </ListItemIcon>
+    <ListItemText primary='Nachtmodus' />
+    <ListItemSecondaryAction>
+      <Switch
+        onClick={props.toggleDarkTheme}
+        checked={props.darkTheme}
+        disableRipple />
+    </ListItemSecondaryAction>
+  </ListItem>
+)
+
+ToggleDarkThemeDrawerItem.propTypes = {
+  darkTheme: PropTypes.bool.isRequired,
+  toggleDarkTheme: PropTypes.func.isRequired
 }
 
-function mapStateToProps (state) {
-  return {
-    darkTheme: isDarkThemeEnabled(state)
-  }
-}
+const mapStateToProps = (state) => ({
+  darkTheme: isDarkThemeEnabled(state)
+})
 
-function mapDispatchToProps (dispatch) {
-  return {
-    toggleDarkTheme: () => dispatch(toggleDarkTheme())
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  toggleDarkTheme: () => dispatch(toggleDarkTheme())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToggleDarkThemeDrawerItem)
