@@ -28,7 +28,8 @@ class CreateCharacterDialog extends Component {
   }
 
   createCharacter () {
-    this.props.onCreate(this.state.input)
+    const trimmedInput = this.state.input.trim()
+    this.props.onCreate(trimmedInput)
     this.close()
   }
 
