@@ -50,7 +50,8 @@ const styles = (theme) => {
     root: {
       display: 'flex',
       justifyContent: 'space-around',
-      flexDirection: 'row'
+      flexDirection: 'row',
+      paddingTop: theme.spacing.unit * 2
     },
     wrapper: {
       flex: '.5 .1 400px'
