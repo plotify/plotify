@@ -12,14 +12,12 @@ import JasperMeyerImage from '../resources/contributors/jasper-meyer.jpg'
 import GesaMuellerImage from '../resources/contributors/gesa-mueller.jpg'
 
 const contributors = [
-  { name: 'Sebastian Schmidt', image: SebastianSchmidtImage },
-  { name: 'Jasper Meyer', image: JasperMeyerImage },
-  { name: 'Gesa Müller', image: GesaMuellerImage },
-  { name: 'Rebecca Rademacher' }
+  { name: 'Sebastian Schmidt', url: 'https://github.com/SebastianSchmidt', image: SebastianSchmidtImage },
+  { name: 'Jasper Meyer', url: 'https://github.com/itsJASPERr', image: JasperMeyerImage },
+  { name: 'Gesa Müller', url: 'https://github.com/GesaMueller', image: GesaMuellerImage },
+  { name: 'Rebecca Rademacher', url: 'https://github.com/RebeccaRademacher' }
 ]
 
-// TODO Profilbilder darstellen.
-// TODO Öffnen der URLs im Browser.
 function ContributorsDialog (props) {
   const { open, closeContributorsDialog } = props
   return (
@@ -28,7 +26,7 @@ function ContributorsDialog (props) {
       <DialogContent>
         <List>
           {contributors.map((contributor, index) => (
-            <ListItem key={index} button>
+            <ListItem key={index} button onClick={() => window.open(contributor.url)}>
               { contributor.image ? <Avatar src={contributor.image} /> : <Avatar>{contributor.name.charAt(0)}</Avatar> }
               <ListItemText primary={contributor.name} />
             </ListItem>

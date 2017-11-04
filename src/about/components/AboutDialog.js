@@ -11,7 +11,6 @@ import ContributorsDialog from './ContributorsDialog'
 
 // TODO Versionsnummer aus package.json auslesen
 // TODO Lizenz
-// TODO Mitwirkende
 // TODO Website
 function AboutDialog (props) {
   const { open, closeAboutDialog, openContributorsDialog, classes } = props

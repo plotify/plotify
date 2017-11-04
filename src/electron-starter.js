@@ -1,5 +1,6 @@
 const electron = require('electron')
 const app = electron.app
+const shell = electron.shell
 const BrowserWindow = electron.BrowserWindow
 const url = require('url')
 const path = require('path')
@@ -16,14 +17,21 @@ let mainWindow
 
 function createWindow () {
   mainWindow = new BrowserWindow({ width: 800, height: 600 })
+
+  mainWindow.on('closed', function () {
+    mainWindow = null
+  })
+
+  mainWindow.webContents.on('new-window', function (event, url) {
+    event.preventDefault()
+    shell.openExternal(url)
+  })
+
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, '/../build/index.html'),
     protocol: 'file:',
     slashes: true
   }))
-  mainWindow.on('closed', function () {
-    mainWindow = null
-  })
 }
 
 app.on('ready', createWindow)
