@@ -2,6 +2,7 @@
   "name": "plotify",
   "version": "0.2.0-SNAPHOT",
   "homepage": "http://plotify.org/plotify/",
+  "main": "src/electron-starter.js",
   "private": true,
   "dependencies": {
     "classnames": "2.2.5",
@@ -16,6 +17,7 @@
     "uuid": "3.1.0"
   },
   "devDependencies": {
+    "electron": "1.7.9",
     "standard": "10.0.3"
   },
   "scripts": {
@@ -23,6 +25,7 @@
     "build": "react-scripts build",
     "test": "standard",
     "devtest": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron ."
   }
 }
