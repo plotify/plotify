@@ -17,7 +17,8 @@ function ToggleDarkThemeDrawerItem (props) {
       <ListItemSecondaryAction>
         <Switch
           onClick={toggleDarkTheme}
-          checked={darkTheme} />
+          checked={darkTheme}
+          disableRipple />
       </ListItemSecondaryAction>
     </ListItem>
   )
