@@ -34,30 +34,22 @@ const styles = theme => {
   const bottom = light ? 100 : 500
 
   const backgroundColor = light ? theme.palette.primary['50'] : theme.palette.background.contentFrame
-  const borderColor = light ? theme.palette.primary['700'] : 'transparent'
-
-  let selectedListItem = {}
-
-  if (light) {
-    selectedListItem = {
-      borderLeftWidth: theme.spacing.unit / 2,
-      borderLeftStyle: 'solid',
-      borderLeftColor: borderColor,
-      transition: theme.transitions.create('border-left-color', { duration: theme.transitions.duration.standard }),
-      paddingLeft: theme.spacing.unit + theme.spacing.unit / 2
-    }
-  }
+  const borderColor = light ? theme.palette.primary['700'] : theme.palette.text.secondary
 
   return {
     listItem: {
-      height: theme.spacing.unit * 7,
-      borderLeftColor: 'transparent'
+      height: theme.spacing.unit * 7
     },
     selectedListItem: {
-      ...selectedListItem,
       backgroundColor: backgroundColor,
       boxShadow: 'inset 0 1px 1px -1px ' + theme.palette.grey[top] + ',' +
                  'inset 0 -1px 1px -1px ' + theme.palette.grey[bottom],
+      borderLeftWidth: theme.spacing.unit / 2,
+      borderLeftStyle: 'solid',
+      borderLeftColor: borderColor,
+      paddingLeft: theme.spacing.unit + theme.spacing.unit / 2,
+      transition: theme.transitions.create('border-left-width', { duration: theme.transitions.duration.shortest }) + ', ' +
+                  theme.transitions.create('padding-left', { duration: theme.transitions.duration.shortest }),
       '&:hover': {
         backgroundColor: backgroundColor,
         cursor: 'default'
