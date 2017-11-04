@@ -1,7 +1,7 @@
-export function isAboutDialogOpen (state) {
-  return state.about.aboutOpen === true
-}
+export const isAboutDialogOpen = (state) => (
+  state.about.aboutOpen === true
+)
 
-export function isContributorsDialogOpen (state) {
-  return state.about.contributorsOpen === true
-}
+export const isContributorsDialogOpen = (state) => (
+  state.about.contributorsOpen === true
+)

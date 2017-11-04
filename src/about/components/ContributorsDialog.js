@@ -18,38 +18,31 @@ const contributors = [
   { name: 'Rebecca Rademacher', url: 'https://github.com/RebeccaRademacher' }
 ]
 
-function ContributorsDialog (props) {
-  const { open, closeContributorsDialog } = props
-  return (
-    <Dialog open={open} onRequestClose={closeContributorsDialog}>
-      <DialogTitle>Mitwirkende</DialogTitle>
-      <DialogContent>
-        <List>
-          {contributors.map((contributor, index) => (
-            <ListItem key={index} button onClick={() => window.open(contributor.url)}>
-              { contributor.image ? <Avatar src={contributor.image} /> : <Avatar>{contributor.name.charAt(0)}</Avatar> }
-              <ListItemText primary={contributor.name} />
-            </ListItem>
-          ))}
-        </List>
-      </DialogContent>
-      <DialogActions>
-        <Button onClick={closeContributorsDialog}>Schließen</Button>
-      </DialogActions>
-    </Dialog>
-  )
-}
+const ContributorsDialog = (props) => (
+  <Dialog open={props.open} onRequestClose={props.closeContributorsDialog}>
+    <DialogTitle>Mitwirkende</DialogTitle>
+    <DialogContent>
+      <List>
+        {contributors.map((contributor, index) => (
+          <ListItem key={index} button onClick={() => window.open(contributor.url)}>
+            { contributor.image ? <Avatar src={contributor.image} /> : <Avatar>{contributor.name.charAt(0)}</Avatar> }
+            <ListItemText primary={contributor.name} />
+          </ListItem>
+        ))}
+      </List>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={props.closeContributorsDialog}>Schließen</Button>
+    </DialogActions>
+  </Dialog>
+)
 
-function mapStateToProps (state) {
-  return {
-    open: isContributorsDialogOpen(state)
-  }
-}
+const mapStateToProps = (state) => ({
+  open: isContributorsDialogOpen(state)
+})
 
-function mapDispatchToProps (dispatch) {
-  return {
-    closeContributorsDialog: () => dispatch(closeContributorsDialog())
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  closeContributorsDialog: () => dispatch(closeContributorsDialog())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContributorsDialog)

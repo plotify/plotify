@@ -4,24 +4,17 @@ import DrawerItem from '../../navigation/components/DrawerItem'
 import { connect } from 'react-redux'
 import { openAboutDialog } from '../actions'
 
-function AboutDrawerItem (props) {
-  const { onOpenAboutDialog } = props
-  return (
-    <DrawerItem
-      text='Über Plotify'
-      icon={<InfoIcon />}
-      onClick={onOpenAboutDialog} />
-  )
-}
+const AboutDrawerItem = (props) => (
+  <DrawerItem
+    text='Über Plotify'
+    icon={<InfoIcon />}
+    onClick={props.onOpenAboutDialog} />
+)
 
-function mapStateToProps (state) {
-  return {}
-}
+const mapStateToProps = (state) => {}
 
-function mapDispatchToProps (dispatch) {
-  return {
-    onOpenAboutDialog: () => dispatch(openAboutDialog())
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  onOpenAboutDialog: () => dispatch(openAboutDialog())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(AboutDrawerItem)

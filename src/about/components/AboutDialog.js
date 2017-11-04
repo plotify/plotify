@@ -12,7 +12,7 @@ import ContributorsDialog from './ContributorsDialog'
 // TODO Versionsnummer aus package.json auslesen
 // TODO URL der Website package.json auslesen
 // TODO Lizenz
-function AboutDialog (props) {
+const AboutDialog = (props) => {
   const { open, closeAboutDialog, openContributorsDialog, classes } = props
   const openWebsite = () => window.open('https://github.com/plotify/plotify#readme')
   return (
@@ -40,7 +40,7 @@ function AboutDialog (props) {
   )
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
   appIcon: {
     height: '128px',
     width: '128px',
@@ -59,17 +59,13 @@ const styles = theme => ({
 
 const StyledAboutDialog = withStyles(styles)(AboutDialog)
 
-function mapStateToProps (state) {
-  return {
-    open: s.isAboutDialogOpen(state)
-  }
-}
+const mapStateToProps = (state) => ({
+  open: s.isAboutDialogOpen(state)
+})
 
-function mapDispatchToProps (dispatch) {
-  return {
-    closeAboutDialog: () => dispatch(a.closeAboutDialog()),
-    openContributorsDialog: () => dispatch(a.openContributorsDialog())
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  closeAboutDialog: () => dispatch(a.closeAboutDialog()),
+  openContributorsDialog: () => dispatch(a.openContributorsDialog())
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(StyledAboutDialog)

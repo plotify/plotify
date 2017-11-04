@@ -5,7 +5,7 @@ const initialState = {
   contributorsOpen: false
 }
 
-function reducer (state = initialState, action) {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.OPEN_ABOUT_DIALOG:
       return Object.assign({}, state, {
