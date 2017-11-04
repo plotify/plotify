@@ -5,7 +5,7 @@ import { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import classNames from 'classnames'
 
-function CharacterListItem (props) {
+const CharacterListItem = (props) => {
   const { classes, character, onClick, selected } = props
   const className = classNames(classes.listItem, { [classes.selectedListItem]: selected })
   const borderClassName = classNames(classes.leftBorder, { [classes.selectedLeftBorder]: selected })
@@ -29,7 +29,7 @@ CharacterListItem.propTypes = {
   selected: PropTypes.bool
 }
 
-const styles = theme => {
+const styles = (theme) => {
   const light = theme.palette.type === 'light'
 
   const top = light ? 600 : 700

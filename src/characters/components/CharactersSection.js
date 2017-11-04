@@ -10,7 +10,7 @@ import CharacterProfile from './CharacterProfile'
 import CreateCharacterButton from './CreateCharacterButton'
 import CreateCharacterDialog from './CreateCharacterDialog'
 
-function CharactersSection (props) {
+const CharactersSection = (props) => {
   const { classes } = props
   return (
     <Section
@@ -36,7 +36,7 @@ CharactersSection.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     height: '100%',
     width: '100%',

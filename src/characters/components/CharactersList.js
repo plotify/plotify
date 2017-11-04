@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import List, { ListItem } from 'material-ui/List'
 import CharacterListItem from './CharacterListItem'
-import * as s from '../selectors'
-import * as a from '../actions'
+import { getCharacters, getSelectedCharacterId } from '../selectors'
+import { selectCharacter } from '../actions'
 import { connect } from 'react-redux'
 
-function CharactersList (props) {
+const CharactersList = (props) => {
   const { classes, characters, onClick, selected, className } = props
   return (
     <List className={className}>
@@ -32,7 +32,7 @@ CharactersList.propTypes = {
   className: PropTypes.string
 }
 
-const style = theme => ({
+const style = (theme) => ({
   // Leerer Listeneintrag als Platzhalter, damit der Button zum Erstellen eines neuen Charakters
   // nicht eventuell den letzten Charakter in der Liste überdeckt, wenn die Liste ganz nach unten gescrollt wurde.
   placeholderItem: {
@@ -42,17 +42,13 @@ const style = theme => ({
 
 const StyledCharactersList = withStyles(style)(CharactersList)
 
-function mapStateToProps (state) {
-  return {
-    characters: s.getCharacters(state),
-    selected: s.getSelectedCharacterId(state)
-  }
-}
+const mapStateToProps = (state) => ({
+  characters: getCharacters(state),
+  selected: getSelectedCharacterId(state)
+})
 
-function mapDispatchToProps (dispatch) {
-  return {
-    onClick: id => dispatch(a.selectCharacter(id))
-  }
-}
+const mapDispatchToProps = (dispatch) => ({
+  onClick: id => dispatch(selectCharacter(id))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(StyledCharactersList)

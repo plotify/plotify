@@ -73,11 +73,11 @@ CreateCharacterDialog.propTypes = {
   onCreate: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   open: isCreateCharacterDialogOpen(state)
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   onClose: () => dispatch(closeCreateCharacterDialog()),
   onCreate: (name) => dispatch(createCharacter(name))
 })

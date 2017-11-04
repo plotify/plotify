@@ -11,13 +11,32 @@ const characters = [
   { id: uuid(), name: 'Inspector Lestrade' }
 ]
 
+const sortCharacters = (characters) => (
+  characters.slice().sort(compareCharacters)
+)
+
+const compareCharacters = (character1, character2) => {
+  const name1 = character1.name.toUpperCase()
+  const name2 = character2.name.toUpperCase()
+
+  if (name1 < name2) {
+    return -1
+  }
+
+  if (name1 > name2) {
+    return 1
+  }
+
+  return 0
+}
+
 const initialState = {
   entities: sortCharacters(characters),
   selected: null,
   createDialogOpen: false
 }
 
-function reducer (state = initialState, action) {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.OPEN_CREATE_CHARACTER_DIALOG:
       return Object.assign({}, state, {
@@ -54,25 +73,6 @@ function reducer (state = initialState, action) {
     default:
       return state
   }
-}
-
-function sortCharacters (characters) {
-  return characters.slice().sort(compareCharacters)
-}
-
-function compareCharacters (character1, character2) {
-  const name1 = character1.name.toUpperCase()
-  const name2 = character2.name.toUpperCase()
-
-  if (name1 < name2) {
-    return -1
-  }
-
-  if (name1 > name2) {
-    return 1
-  }
-
-  return 0
 }
 
 export default reducer

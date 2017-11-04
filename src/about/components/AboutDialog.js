@@ -6,8 +6,8 @@ import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import AppIcon from '../resources/app-icon-128.png'
 import { connect } from 'react-redux'
-import * as s from '../selectors'
-import * as a from '../actions'
+import { isAboutDialogOpen } from '../selectors'
+import { closeAboutDialog, openContributorsDialog } from '../actions'
 import ContributorsDialog from './ContributorsDialog'
 
 // TODO Versionsnummer aus package.json auslesen
@@ -68,12 +68,12 @@ const styles = (theme) => ({
 const StyledAboutDialog = withStyles(styles)(AboutDialog)
 
 const mapStateToProps = (state) => ({
-  open: s.isAboutDialogOpen(state)
+  open: isAboutDialogOpen(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  closeAboutDialog: () => dispatch(a.closeAboutDialog()),
-  openContributorsDialog: () => dispatch(a.openContributorsDialog())
+  closeAboutDialog: () => dispatch(closeAboutDialog()),
+  openContributorsDialog: () => dispatch(openContributorsDialog())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StyledAboutDialog)
