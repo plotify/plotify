@@ -5,9 +5,8 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import NavigationDrawerButton from './NavigationDrawerButton'
+import MediaQuery from 'react-responsive'
 
-// TODO Bekannter Fehler: Bei schmalen Fenstern schrumpft die AppBar in der Höhe.
-//      Dadurch passen die festen Abstände von 64px nicht mehr und es entstehen Lücken.
 const Section = (props) => (
   <div className={props.classes.wrapper}>
     <AppBar>
@@ -19,9 +18,16 @@ const Section = (props) => (
         {props.actions}
       </Toolbar>
     </AppBar>
-    <div className={props.classes.content}>
-      {props.children}
-    </div>
+    <MediaQuery minWidth={600}>
+      <div className={props.classes.content}>
+        {props.children}
+      </div>
+    </MediaQuery>
+    <MediaQuery maxWidth={599}>
+      <div className={props.classes.contentSmallAppBar}>
+        {props.children}
+      </div>
+    </MediaQuery>
   </div>
 )
 
@@ -48,6 +54,11 @@ const styles = (theme) => ({
     overflowY: 'auto',
     paddingTop: '64px',
     height: 'calc(100% - 64px)'
+  },
+  contentSmallAppBar: {
+    overflowY: 'auto',
+    paddingTop: '56px',
+    height: 'calc(100% - 56px)'
   }
 })
 

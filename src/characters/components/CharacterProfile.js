@@ -54,7 +54,7 @@ const styles = (theme) => {
       paddingTop: theme.spacing.unit * 2
     },
     wrapper: {
-      flex: '.5 .1 400px'
+      flex: '0.5 0.1 400px'
     },
     profileGroup: {
       padding: theme.spacing.unit * 2

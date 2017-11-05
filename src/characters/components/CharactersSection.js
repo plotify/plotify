@@ -9,6 +9,8 @@ import CharactersList from './CharactersList'
 import CharacterProfile from './CharacterProfile'
 import CreateCharacterButton from './CreateCharacterButton'
 import CreateCharacterDialog from './CreateCharacterDialog'
+import MediaQuery from 'react-responsive'
+import classNames from 'classnames'
 
 const CharactersSection = (props) => {
   const { classes } = props
@@ -21,12 +23,22 @@ const CharactersSection = (props) => {
         </IconButton>
       }>
       <div className={classes.root}>
-        <Paper className={classes.listWrapper}>
-          <CharactersList />
-          <CreateCharacterButton className={classes.createButton} />
-        </Paper>
-        <CharacterProfile className={classes.profile} />
         <CreateCharacterDialog />
+        <MediaQuery maxWidth={759}>
+          <Paper className={classNames(classes.listWrapper, classes.listWrapperSingleView)}>
+            <CharactersList />
+            <CreateCharacterButton className={classNames(classes.createButton, classes.createButtonSingleView)} />
+          </Paper>
+        </MediaQuery>
+        <MediaQuery minWidth={760}>
+          <Paper className={classes.listWrapper}>
+            <CharactersList />
+            <CreateCharacterButton className={classes.createButton} />
+          </Paper>
+        </MediaQuery>
+        <MediaQuery minWidth={760}>
+          <CharacterProfile className={classes.profile} />
+        </MediaQuery>
       </div>
     </Section>
   )
@@ -48,10 +60,18 @@ const styles = (theme) => ({
     overflowY: 'auto',
     float: 'left'
   },
+  listWrapperSingleView: {
+    width: '100%',
+    float: 'none'
+  },
   createButton: {
     position: 'fixed',
     bottom: theme.spacing.unit * 2,
     left: 'calc(300px - 56px - 16px)'
+  },
+  createButtonSingleView: {
+    left: 'auto',
+    right: '16px'
   },
   profile: {
     height: '100%',
