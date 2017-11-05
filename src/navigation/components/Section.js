@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
 import NavigationDrawerButton from './NavigationDrawerButton'
 import MediaQuery from 'react-responsive'
 
@@ -12,10 +11,7 @@ const Section = (props) => (
     <AppBar>
       <Toolbar>
         <NavigationDrawerButton className={props.classes.menuButton} color='contrast' />
-        <Typography type='title' color='inherit' className={props.classes.title}>
-          {props.title}
-        </Typography>
-        {props.actions}
+        {props.toolbar}
       </Toolbar>
     </AppBar>
     <MediaQuery minWidth={600}>
@@ -33,9 +29,8 @@ const Section = (props) => (
 
 Section.propTypes = {
   classes: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
   children: PropTypes.element.isRequired,
-  actions: PropTypes.element
+  toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
 }
 
 const styles = (theme) => ({
@@ -46,9 +41,6 @@ const styles = (theme) => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 12
-  },
-  title: {
-    flex: 1
   },
   content: {
     overflowY: 'auto',

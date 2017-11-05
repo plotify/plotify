@@ -20,8 +20,8 @@ const AboutDialog = (props) => {
   const openWebsite = () => window.open('https://github.com/plotify/plotify#readme')
 
   const content = [
-    <img alt='Plotify Icon' src={AppIcon} />,
-    <div>
+    <img alt='Plotify Icon' src={AppIcon} key={1} />,
+    <div key={2}>
       <Typography type='headline'>Plotify</Typography>
       <Typography>Version: 0.2.0-SNAPSHOT</Typography>
       <Typography>
@@ -36,12 +36,12 @@ const AboutDialog = (props) => {
   ]
 
   const dialogContent = [
-    <MediaQuery minWidth={600}>
+    <MediaQuery minWidth={600} key={1}>
       <DialogContent className={classes.content}>
         {content}
       </DialogContent>
     </MediaQuery>,
-    <MediaQuery maxWidth={599}>
+    <MediaQuery maxWidth={599} key={2}>
       <DialogContent className={classNames(classes.content, classes.smallContent)}>
         {content}
       </DialogContent>

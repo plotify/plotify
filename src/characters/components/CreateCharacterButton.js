@@ -2,26 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Tooltip from 'material-ui/Tooltip'
-import Button from 'material-ui/Button'
+import IconButton from 'material-ui/IconButton'
 import AddIcon from 'material-ui-icons/Add'
 import { openCreateCharacterDialog } from '../actions'
 
 const CreateCharacterButton = (props) => (
-  <Tooltip title='Neuer Charakter' placement='top'>
-    <Button
-      fab
-      color='primary'
+  <Tooltip title='Neuer Charakter' placement='bottom'>
+    <IconButton
+      color='contrast'
       aria-label='add'
-      onClick={props.onClick}
-      className={props.className}>
+      onClick={props.onClick}>
       <AddIcon />
-    </Button>
+    </IconButton>
   </Tooltip>
 )
 
 CreateCharacterButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  className: PropTypes.string
+  onClick: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({})
