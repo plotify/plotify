@@ -9,6 +9,8 @@ import { connect } from 'react-redux'
 import { isAboutDialogOpen } from '../selectors'
 import { closeAboutDialog, openContributorsDialog } from '../actions'
 import ContributorsDialog from './ContributorsDialog'
+import MediaQuery from 'react-responsive'
+import classNames from 'classnames'
 
 // TODO Versionsnummer aus package.json auslesen
 // TODO URL der Website package.json auslesen
@@ -16,21 +18,39 @@ import ContributorsDialog from './ContributorsDialog'
 const AboutDialog = (props) => {
   const { open, closeAboutDialog, openContributorsDialog, classes } = props
   const openWebsite = () => window.open('https://github.com/plotify/plotify#readme')
+
+  const content = [
+    <img alt='Plotify Icon' src={AppIcon} />,
+    <div>
+      <Typography type='headline'>Plotify</Typography>
+      <Typography>Version: 0.2.0-SNAPSHOT</Typography>
+      <Typography>
+        Copyright © 2017 Sebastian Schmidt & Jasper Meyer
+      </Typography>
+      <Typography>
+        Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft,
+        die Charaktere deiner Geschichte zu planen und zu organisieren.
+        Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
+      </Typography>
+    </div>
+  ]
+
+  const dialogContent = [
+    <MediaQuery minWidth={600}>
+      <DialogContent className={classes.content}>
+        {content}
+      </DialogContent>
+    </MediaQuery>,
+    <MediaQuery maxWidth={599}>
+      <DialogContent className={classNames(classes.content, classes.smallContent)}>
+        {content}
+      </DialogContent>
+    </MediaQuery>
+  ]
+
   return (
     <Dialog open={open} onRequestClose={closeAboutDialog}>
-      <DialogContent className={classes.content}>
-        <img alt='Plotify Icon' src={AppIcon} className={classes.appIcon} />
-        <Typography type='headline'>Plotify</Typography>
-        <Typography>Version: 0.2.0-SNAPSHOT</Typography>
-        <Typography>
-          Copyright © 2017 Sebastian Schmidt & Jasper Meyer
-        </Typography>
-        <Typography>
-          Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft,
-          die Charaktere deiner Geschichte zu planen und zu organisieren.
-          Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
-        </Typography>
-      </DialogContent>
+      {dialogContent}
       <DialogActions>
         <Button onClick={openContributorsDialog}>Mitwirkende</Button>
         <Button onClick={openWebsite}>Website</Button>
@@ -49,18 +69,28 @@ AboutDialog.propTypes = {
 }
 
 const styles = (theme) => ({
-  appIcon: {
-    height: '128px',
-    width: '128px',
-    float: 'left'
-  },
   content: {
+    '& img': {
+      height: '128px',
+      width: '128px',
+      float: 'left'
+    },
     '& h1, p': {
       marginBottom: theme.spacing.unit * 2,
       marginLeft: 128 + (theme.spacing.unit * 3)
     },
     '& p:last-child': {
       marginBottom: 0
+    }
+  },
+  smallContent: {
+    '& img': {
+      height: '64px',
+      width: '64px',
+      float: 'right'
+    },
+    '& h1, p': {
+      marginLeft: 0
     }
   }
 })
