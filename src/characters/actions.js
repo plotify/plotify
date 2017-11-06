@@ -24,3 +24,13 @@ export const deselectCharacter = () => ({
   type: t.DESELECT_CHARACTER,
   payload: {}
 })
+
+export const enableCharacterEditMode = () => ({
+  type: t.ENABLE_CHARACTER_EDIT_MODE,
+  payload: {}
+})
+
+export const disableCharacterEditMode = () => ({
+  type: t.DISABLE_CHARACTER_EDIT_MODE,
+  payload: {}
+})

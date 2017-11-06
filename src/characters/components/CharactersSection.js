@@ -5,18 +5,21 @@ import Section from '../../navigation/components/Section'
 import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
 import SearchIcon from 'material-ui-icons/Search'
-import MoreIcon from 'material-ui-icons/MoreVert'
 import Paper from 'material-ui/Paper'
 import CharactersList from './CharactersList'
 import CharacterProfile from './CharacterProfile'
 import CreateCharacterButton from './CreateCharacterButton'
-import EditCharacterButton from './EditCharacterButton'
+import UndoRedoButtons from './UndoRedoButtons'
+import ToggleEditModeButton from './ToggleEditModeButton'
+import CharacterProfileMenu from './CharacterProfileMenu'
 import CreateCharacterDialog from './CreateCharacterDialog'
 import MediaQuery from 'react-responsive'
 import classNames from 'classnames'
+import { connect } from 'react-redux'
+import { isCharacterSelected } from '../selectors'
 
 const CharactersSection = (props) => {
-  const { classes } = props
+  const { classes, characterSelected } = props
 
   const listToolbar = ([
     <Typography type='title' color='inherit' className={classes.title} key={1}>
@@ -28,10 +31,9 @@ const CharactersSection = (props) => {
     </IconButton>
   ])
   const profileToolbar = ([
-    <EditCharacterButton key={1} />,
-    <IconButton color='contrast' key={2}>
-      <MoreIcon />
-    </IconButton>
+    <UndoRedoButtons key={1} />,
+    <ToggleEditModeButton key={2} />,
+    <CharacterProfileMenu key={3} />
   ])
   const toolbar = ([
     <MediaQuery maxWidth={759} key={1}>
@@ -51,6 +53,15 @@ const CharactersSection = (props) => {
     </MediaQuery>
   ])
 
+  let profile = null
+  if (characterSelected) {
+    profile = (
+      <MediaQuery minWidth={760}>
+        <CharacterProfile className={classes.profile} />
+      </MediaQuery>
+    )
+  }
+
   return (
     <Section
       title='Charaktere'
@@ -67,16 +78,15 @@ const CharactersSection = (props) => {
             <CharactersList />
           </Paper>
         </MediaQuery>
-        <MediaQuery minWidth={760}>
-          <CharacterProfile className={classes.profile} />
-        </MediaQuery>
+        {profile}
       </div>
     </Section>
   )
 }
 
 CharactersSection.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  characterSelected: PropTypes.bool.isRequired
 }
 
 const styles = (theme) => ({
@@ -118,4 +128,10 @@ const styles = (theme) => ({
   }
 })
 
-export default withStyles(styles)(CharactersSection)
+const StyledCharactersSection = withStyles(styles)(CharactersSection)
+
+const mapStateToProps = (state) => ({
+  characterSelected: isCharacterSelected(state)
+})
+
+export default connect(mapStateToProps)(StyledCharactersSection)

@@ -33,6 +33,7 @@ const compareCharacters = (character1, character2) => {
 const initialState = {
   entities: sortCharacters(characters),
   selected: null,
+  editMode: false,
   createDialogOpen: false
 }
 
@@ -67,7 +68,21 @@ const reducer = (state = initialState, action) => {
       })
     case t.DESELECT_CHARACTER:
       return Object.assign({}, state, {
-        selected: null
+        selected: null,
+        editMode: false
+      })
+
+    case t.ENABLE_CHARACTER_EDIT_MODE:
+      if (state.selected !== null) {
+        return Object.assign({}, state, {
+          editMode: true
+        })
+      } else {
+        return state
+      }
+    case t.DISABLE_CHARACTER_EDIT_MODE:
+      return Object.assign({}, state, {
+        editMode: false
       })
 
     default:

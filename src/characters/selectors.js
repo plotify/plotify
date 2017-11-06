@@ -13,3 +13,7 @@ export const isCharacterSelected = (state) => (
 export const getSelectedCharacterId = (state) => (
   state.characters.selected
 )
+
+export const isCharacterEditModeEnabled = (state) => (
+  state.characters.editMode === true
+)
