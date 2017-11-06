@@ -17,4 +17,4 @@ deploy:
   github_token: $GITHUB_TOKEN
   on:
     branch: reborn
-
+    condition: "$TRAVIS_OS_NAME = linux"
