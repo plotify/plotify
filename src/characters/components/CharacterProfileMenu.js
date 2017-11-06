@@ -45,13 +45,13 @@ class CharacterProfileMenu extends Component {
           open={this.state.open}
           anchorEl={this.state.anchorEl}
           onRequestClose={this.handleRequestClose}>
-          <MenuItem>
+          <MenuItem onClick={this.handleRequestClose}>
             <ListItemIcon>
               <CopyIcon />
             </ListItemIcon>
             <ListItemText primary='Duplizieren' />
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={this.handleRequestClose}>
             <ListItemIcon>
               <DeleteIcon />
             </ListItemIcon>
