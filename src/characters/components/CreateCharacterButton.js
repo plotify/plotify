@@ -7,7 +7,7 @@ import AddIcon from 'material-ui-icons/Add'
 import { openCreateCharacterDialog } from '../actions'
 
 const CreateCharacterButton = (props) => (
-  <Tooltip title='Neuer Charakter' placement='bottom'>
+  <Tooltip title='Neuen Charakter erstellen' placement='bottom'>
     <IconButton
       color='contrast'
       aria-label='add'

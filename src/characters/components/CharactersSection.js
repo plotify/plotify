@@ -5,10 +5,12 @@ import Section from '../../navigation/components/Section'
 import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
 import SearchIcon from 'material-ui-icons/Search'
+import MoreIcon from 'material-ui-icons/MoreVert'
 import Paper from 'material-ui/Paper'
 import CharactersList from './CharactersList'
 import CharacterProfile from './CharacterProfile'
 import CreateCharacterButton from './CreateCharacterButton'
+import EditCharacterButton from './EditCharacterButton'
 import CreateCharacterDialog from './CreateCharacterDialog'
 import MediaQuery from 'react-responsive'
 import classNames from 'classnames'
@@ -16,7 +18,7 @@ import classNames from 'classnames'
 const CharactersSection = (props) => {
   const { classes } = props
 
-  const toolbarContent = ([
+  const listToolbar = ([
     <Typography type='title' color='inherit' className={classes.title} key={1}>
       Charaktere
     </Typography>,
@@ -25,15 +27,26 @@ const CharactersSection = (props) => {
       <SearchIcon />
     </IconButton>
   ])
+  const profileToolbar = ([
+    <EditCharacterButton key={1} />,
+    <IconButton color='contrast' key={2}>
+      <MoreIcon />
+    </IconButton>
+  ])
   const toolbar = ([
     <MediaQuery maxWidth={759} key={1}>
-      <div className={classNames(classes.toolbar, classes.toolbarSingleView)}>
-        {toolbarContent}
+      <div className={classNames(classes.listToolbar, classes.listToolbarSingleView)}>
+        {listToolbar}
       </div>
     </MediaQuery>,
     <MediaQuery minWidth={760} key={2}>
-      <div className={classes.toolbar}>
-        {toolbarContent}
+      <div className={classes.listToolbar}>
+        {listToolbar}
+      </div>
+    </MediaQuery>,
+    <MediaQuery minWidth={760} key={3}>
+      <div className={classes.profileToolbar}>
+        {profileToolbar}
       </div>
     </MediaQuery>
   ])
@@ -67,13 +80,18 @@ CharactersSection.propTypes = {
 }
 
 const styles = (theme) => ({
-  toolbar: {
+  listToolbar: {
     display: 'flex',
     alignItems: 'center',
     width: 300 - 72 - (theme.spacing.unit / 2)
   },
-  toolbarSingleView: {
+  listToolbarSingleView: {
     width: '100%'
+  },
+  profileToolbar: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'flex-end'
   },
   title: {
     flex: 1
