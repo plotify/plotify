@@ -14,7 +14,7 @@ const CharactersList = (props) => {
         <CharacterListItem
           key={character.id}
           character={character}
-          onClick={() => onClick(character.id)}
+          onClick={onClick}
           selected={character.id === selected}
         />
       ))}

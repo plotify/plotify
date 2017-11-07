@@ -1,25 +1,31 @@
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
 import classNames from 'classnames'
 
-const CharacterListItem = (props) => {
-  const { classes, character, onClick, selected } = props
-  const className = classNames(classes.listItem, { [classes.selectedListItem]: selected })
-  const borderClassName = classNames(classes.leftBorder, { [classes.selectedLeftBorder]: selected })
-  return (
-    <ListItem className={className} onClick={onClick} button>
-      <div className={borderClassName} />
-      <ListItemAvatar>
-        <Avatar>{character.name.charAt(0)}</Avatar>
-      </ListItemAvatar>
-      <ListItemText
-        className={classes.characterName}
-        primary={character.name} />
-    </ListItem>
-  )
+class CharacterListItem extends PureComponent {
+  render () {
+    const { classes, character, onClick, selected } = this.props
+
+    const className = classNames(classes.listItem, { [classes.selectedListItem]: selected })
+    const borderClassName = classNames(classes.leftBorder, { [classes.selectedLeftBorder]: selected })
+
+    const onClickHandler = () => onClick(character.id)
+
+    return (
+      <ListItem className={className} onClick={onClickHandler} button>
+        <div className={borderClassName} />
+        <ListItemAvatar>
+          <Avatar>{character.name.charAt(0)}</Avatar>
+        </ListItemAvatar>
+        <ListItemText
+          className={classes.characterName}
+          primary={character.name} />
+      </ListItem>
+    )
+  }
 }
 
 CharacterListItem.propTypes = {
