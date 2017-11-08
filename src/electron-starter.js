@@ -1,7 +1,5 @@
-const electron = require('electron')
-const app = electron.app
-const shell = electron.shell
-const BrowserWindow = electron.BrowserWindow
+const { app, Menu, BrowserWindow, shell } = require('electron')
+const createMenuTemplate = require('./electron-menu')
 const url = require('url')
 const path = require('path')
 
@@ -12,6 +10,10 @@ const versions = ' Versions\n' +
   ' Node:      ' + process.versions.node + '\n' +
   ' V8:        ' + process.versions.v8 + '\n'
 console.log(versions)
+
+const menuTemplate = createMenuTemplate(process.platform)
+const menu = Menu.buildFromTemplate(menuTemplate)
+Menu.setApplicationMenu(menu)
 
 let mainWindow
 
