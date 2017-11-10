@@ -17,3 +17,11 @@ export const getSelectedCharacterId = (state) => (
 export const isCharacterEditModeEnabled = (state) => (
   state.characters.editMode === true
 )
+
+export const getProfile = (state) => (
+  state.characters.profile
+)
+
+export const getProfileGroupById = (state, id) => (
+  getProfile(state).find(group => group.id === id)
+)

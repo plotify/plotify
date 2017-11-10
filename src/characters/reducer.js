@@ -1,4 +1,6 @@
 import * as t from './actionTypes'
+
+import defaultProfile from './default-profile'
 import uuid from 'uuid/v4'
 
 const characters = [
@@ -34,7 +36,8 @@ const initialState = {
   entities: sortCharacters(characters),
   selected: null,
   editMode: false,
-  createDialogOpen: false
+  createDialogOpen: false,
+  profile: defaultProfile
 }
 
 const reducer = (state = initialState, action) => {

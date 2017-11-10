@@ -1,48 +1,25 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import TextField from 'material-ui/TextField'
 import CharacterProfileGroup from './CharacterProfileGroup'
+import PropTypes from 'prop-types'
+import React from 'react'
 import classNames from 'classnames'
-import defaultProfile from '../default-profile'
+import { connect } from 'react-redux'
+import { getProfile } from '../selectors'
+import { withStyles } from 'material-ui/styles'
 
-const CharacterProfile = (props) => {
-  const { classes, className } = props
+const CharacterProfile = ({ classes, className, profile }) => {
   return (
     <div className={classNames(className, classes.root)}>
       <div className={classes.wrapper}>
-        {defaultProfile.map((item, index) => (
+        {profile.map((item, index) => (
           <CharacterProfileGroup
             key={index}
-            title={item.title}
+            groupId={item.id}
             className={classes.profileGroup}
-            paperClass={classes.profilePaperClass}>
-            {item.entries.filter(entry => !!entry.value).map((entry, i) => (
-              <div key={i} className={classes.entry}>
-                <TextField
-                  className={classes.textField}
-                  label={entry.title}
-                  defaultValue={entry.value}
-                  InputProps={{disableUnderline: true,
-                    classes: {
-                      input: classes.input
-                    }}}
-                  InputLabelProps={{className: classes.inputLabel}}
-                  disabled
-                  fullWidth
-                />
-              </div>
-            ))}
-          </CharacterProfileGroup>
+            paperClass={classes.profilePaperClass} />
         ))}
       </div>
     </div>
   )
-}
-
-CharacterProfile.propTypes = {
-  classes: PropTypes.object.isRequired,
-  className: PropTypes.string.isRequired
 }
 
 const styles = (theme) => {
@@ -64,23 +41,18 @@ const styles = (theme) => {
       flexDirection: 'row',
       flexWrap: 'wrap',
       maxWidth: '850px' // Maximale Breite zu Testzwecken in der Demo.
-    },
-    entry: {
-      padding: theme.spacing.unit * 2,
-      flex: '2 0 auto'
-    },
-    textField: {
-      maxWidth: '200px'
-    },
-    input: {
-      color: theme.palette.text.primary
-    },
-    inputLabel: {
-      // overflow: 'hidden', // TODO Fehler:  Schneidet das Label auch oben und unten ab.
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap'
     }
   }
 }
 
-export default withStyles(styles)(CharacterProfile)
+CharacterProfile.propTypes = {
+  classes: PropTypes.object.isRequired,
+  className: PropTypes.string.isRequired,
+  profile: PropTypes.array.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  profile: getProfile(state)
+})
+
+export default connect(mapStateToProps)(withStyles(styles)(CharacterProfile))
