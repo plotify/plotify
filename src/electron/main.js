@@ -14,11 +14,12 @@ console.log(versions)
 
 const menuTemplate = createMenuTemplate(process.platform)
 const menu = Menu.buildFromTemplate(menuTemplate)
-Menu.setApplicationMenu(menu)
 
 let mainWindow
 
 const createWindow = () => {
+  Menu.setApplicationMenu(menu)
+
   mainWindow = new BrowserWindow({ width: 900, height: 600 })
   setMainWindow(mainWindow)
 
