@@ -37,7 +37,7 @@ const createMenuTemplate = (platform) => {
         { label: 'Verkleinern', role: 'zoomout' },
         { label: 'Standardgröße', role: 'resetzoom' },
         { type: 'separator' },
-        { label: 'Nachtmodus', type: 'checkbox', checked: true },
+        { label: 'Nachtmodus', type: 'checkbox' },
         { type: 'separator' },
         { label: 'Vollbild', role: 'togglefullscreen' }
       ]
@@ -48,6 +48,8 @@ const createMenuTemplate = (platform) => {
         { label: 'Einführungsvideos' },
         { label: 'Benutzerhandbuch' },
         { label: 'Feedback geben' },
+        { type: 'separator' },
+        { label: 'Entwicklerwerkzeuge', role: 'toggledevtools' },
         { type: 'separator' },
         { label: 'Über Plotify' }
       ]
