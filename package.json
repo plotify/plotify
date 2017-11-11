@@ -13,7 +13,6 @@
     "react-dom": "16.1.0",
     "react-redux": "5.0.6",
     "react-responsive": "3.0.0",
-    "react-scripts": "1.0.17",
     "redux": "3.7.2",
     "uuid": "3.1.0"
   },
@@ -28,12 +27,8 @@
     "standard": "10.0.3"
   },
   "scripts": {
-    "compile": "gulp compile",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "standard",
-    "devtest": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "electron": "npm run build && electron ."
+    "start": "gulp",
+    "build": "gulp compile",
+    "test": "standard"
   }
 }

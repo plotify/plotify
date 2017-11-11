@@ -9,7 +9,7 @@ cache:
     - node_modules
 script:
   - npm test
-  - npm run compile
+  - npm run build
 #deploy:
 #  provider: pages
 #  skip_cleanup: true
