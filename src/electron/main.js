@@ -1,11 +1,11 @@
-import printVersions from './versions'
+import printWelcomeScreen from './versions'
 import { app, Menu, BrowserWindow, shell } from 'electron'
 import { setMainWindow } from './shared/main-window'
 import { createMenuTemplate } from './menu'
 import url from 'url'
 import path from 'path'
 
-printVersions()
+printWelcomeScreen()
 
 const menuTemplate = createMenuTemplate(process.platform)
 const menu = Menu.buildFromTemplate(menuTemplate)
