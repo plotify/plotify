@@ -8,14 +8,10 @@ import Button from 'material-ui/Button'
 import { isContributorsDialogOpen } from '../selectors'
 import { closeContributorsDialog } from '../actions'
 
-import SebastianSchmidtImage from '../resources/contributors/sebastian-schmidt.jpg'
-import JasperMeyerImage from '../resources/contributors/jasper-meyer.jpg'
-import GesaMuellerImage from '../resources/contributors/gesa-mueller.jpg'
-
 const contributors = [
-  { name: 'Sebastian Schmidt', url: 'https://github.com/SebastianSchmidt', image: SebastianSchmidtImage },
-  { name: 'Jasper Meyer', url: 'https://github.com/itsJASPERr', image: JasperMeyerImage },
-  { name: 'Gesa Müller', url: 'https://github.com/GesaMueller', image: GesaMuellerImage },
+  { name: 'Sebastian Schmidt', url: 'https://github.com/SebastianSchmidt', image: './contributors/sebastian-schmidt.jpg' },
+  { name: 'Jasper Meyer', url: 'https://github.com/itsJASPERr', image: './contributors/jasper-meyer.jpg' },
+  { name: 'Gesa Müller', url: 'https://github.com/GesaMueller', image: './contributors/gesa-mueller.jpg' },
   { name: 'Rebecca Rademacher', url: 'https://github.com/RebeccaRademacher' }
 ]
 

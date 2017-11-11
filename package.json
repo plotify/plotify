@@ -2,7 +2,7 @@
   "name": "plotify",
   "version": "0.2.0-SNAPHOT",
   "homepage": ".",
-  "main": "src/electron/main.js",
+  "main": "main.js",
   "private": true,
   "dependencies": {
     "classnames": "2.2.5",
@@ -18,10 +18,17 @@
     "uuid": "3.1.0"
   },
   "devDependencies": {
+    "babel-plugin-transform-react-jsx": "6.24.1",
+    "babel-preset-env": "1.6.1",
     "electron": "1.7.9",
+    "gulp": "3.9.1",
+    "gulp-babel": "7.0.0",
+    "gulp-clean": "0.3.2",
+    "run-sequence": "2.2.0",
     "standard": "10.0.3"
   },
   "scripts": {
+    "compile": "gulp compile",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "standard",

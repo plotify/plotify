@@ -4,7 +4,6 @@ import { withStyles } from 'material-ui/styles'
 import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
-import AppIcon from '../resources/app-icon-128.png'
 import { connect } from 'react-redux'
 import { isAboutDialogOpen } from '../selectors'
 import { closeAboutDialog, openContributorsDialog } from '../actions'
@@ -20,7 +19,7 @@ const AboutDialog = (props) => {
   const openWebsite = () => window.open('https://github.com/plotify/plotify#readme')
 
   const content = [
-    <img alt='Plotify Icon' src={AppIcon} key={1} />,
+    <img alt='Plotify Icon' src='./app-icon-128.png' key={1} />,
     <div key={2}>
       <Typography type='headline'>Plotify</Typography>
       <Typography>Version: 0.2.0-SNAPSHOT</Typography>

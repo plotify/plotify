@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron'
 import uuid from 'uuid/v4'
+import { getStore } from './store'
 
 const callbackChannelPrefix = 'channel-'
 
@@ -33,6 +34,6 @@ const sendRequest = (name, args, callbackChannel) => {
 
 export const eventHandler = (name, handler) => {
   ipcRenderer.on(name, (event, message) => {
-    handler(message)
+    handler(getStore().dispatch, message)
   })
 }

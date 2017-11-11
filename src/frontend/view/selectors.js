@@ -1,3 +1,3 @@
 export const isDarkThemeEnabled = (state) => (
-  state.theme.darkTheme === true
+  state.view.darkTheme === true
 )

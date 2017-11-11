@@ -9,12 +9,12 @@ cache:
     - node_modules
 script:
   - npm test
-  - npm run build
-deploy:
-  provider: pages
-  skip_cleanup: true
-  local_dir: build
-  github_token: $GITHUB_TOKEN
-  on:
-    branch: reborn
-    condition: "$TRAVIS_OS_NAME = linux"
+  - npm run compile
+#deploy:
+#  provider: pages
+#  skip_cleanup: true
+#  local_dir: build
+#  github_token: $GITHUB_TOKEN
+#  on:
+#    branch: reborn
+#    condition: "$TRAVIS_OS_NAME = linux"
