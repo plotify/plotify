@@ -1,5 +1,5 @@
 const { app, Menu, BrowserWindow, shell } = require('electron')
-const createMenuTemplate = require('./electron-menu')
+const createMenuTemplate = require('./menu')
 const url = require('url')
 const path = require('path')
 
@@ -30,7 +30,7 @@ const createWindow = () => {
   })
 
   mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '/../build/index.html'),
+    pathname: path.join(__dirname, '/../../build/index.html'),
     protocol: 'file:',
     slashes: true
   }))

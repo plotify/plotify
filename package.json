@@ -2,7 +2,7 @@
   "name": "plotify",
   "version": "0.2.0-SNAPHOT",
   "homepage": ".",
-  "main": "src/electron-starter.js",
+  "main": "src/electron/main.js",
   "private": true,
   "dependencies": {
     "classnames": "2.2.5",
