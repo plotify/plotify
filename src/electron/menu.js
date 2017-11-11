@@ -1,10 +1,14 @@
 import { event } from './shared/communications'
 import { DARK_THEME_ENABLED, DARK_THEME_DISABLED } from '../shared/view/events'
 import { OPEN_ABOUT_DIALOG_REQUESTED } from '../shared/about/events'
+import { Menu } from 'electron'
 
 const toggleDarkTheme = (item) => {
   const name = item.checked ? DARK_THEME_ENABLED : DARK_THEME_DISABLED
   event(name)
+
+  // Workaround: Unter Unity aktualisiert sich die Checkbox nicht.
+  Menu.setApplicationMenu(Menu.getApplicationMenu())
 }
 
 const openAboutDialog = () => {
@@ -48,7 +52,7 @@ export const createMenuTemplate = (platform) => {
         { label: 'Verkleinern', role: 'zoomout' },
         { label: 'Standardgröße', role: 'resetzoom' },
         { type: 'separator' },
-        { label: 'Nachtmodus', type: 'checkbox', click: toggleDarkTheme },
+        { label: 'Nachtmodus', type: 'checkbox', checked: false, click: toggleDarkTheme },
         { type: 'separator' },
         { label: 'Vollbild', role: 'togglefullscreen' }
       ]
