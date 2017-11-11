@@ -33,6 +33,12 @@ gulp.task('assets', () => {
     .pipe(gulp.dest(path.build))
 })
 
+gulp.task('package-json', () => {
+  return gulp
+    .src('./package.json')
+    .pipe(gulp.dest(path.build))
+})
+
 gulp.task('electron', (callback) => {
   const process = spawn('electron', [path.build + '/electron/main.js'])
   process.stdout.on('data', (data) => console.log(data.toString()))
@@ -40,5 +46,5 @@ gulp.task('electron', (callback) => {
 })
 
 gulp.task('default', () => {
-  sequence('clean', 'compile', 'assets', 'electron')
+  sequence('clean', 'compile', 'assets', 'package-json', 'electron')
 })

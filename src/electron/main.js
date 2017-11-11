@@ -1,16 +1,11 @@
+import printVersions from './versions'
 import { app, Menu, BrowserWindow, shell } from 'electron'
 import { setMainWindow } from './shared/main-window'
 import { createMenuTemplate } from './menu'
 import url from 'url'
 import path from 'path'
 
-const versions = ' Versions\n' +
-  '--------------------------\n' +
-  ' Electron:  ' + process.versions.electron + '\n' +
-  ' Chromium:  ' + process.versions.chrome + '\n' +
-  ' Node:      ' + process.versions.node + '\n' +
-  ' V8:        ' + process.versions.v8 + '\n'
-console.log(versions)
+printVersions()
 
 const menuTemplate = createMenuTemplate(process.platform)
 const menu = Menu.buildFromTemplate(menuTemplate)
