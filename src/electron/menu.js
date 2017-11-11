@@ -1,9 +1,14 @@
 import { event } from './shared/communications'
 import { DARK_THEME_ENABLED, DARK_THEME_DISABLED } from '../shared/view/events'
+import { OPEN_ABOUT_DIALOG_REQUESTED } from '../shared/about/events'
 
 const toggleDarkTheme = (item) => {
   const name = item.checked ? DARK_THEME_ENABLED : DARK_THEME_DISABLED
   event(name)
+}
+
+const openAboutDialog = () => {
+  event(OPEN_ABOUT_DIALOG_REQUESTED)
 }
 
 export const createMenuTemplate = (platform) => {
@@ -13,7 +18,6 @@ export const createMenuTemplate = (platform) => {
   // TODO Rückgängig
   // TODO Wiederherstellen
   // TODO Feedback geben
-  // TODO Über Plotify
   // TODO Evtl.: Einführungsvideos, Benutzerhandbuch
   return [
     {
@@ -52,13 +56,9 @@ export const createMenuTemplate = (platform) => {
     {
       label: 'Hilfe',
       submenu: [
-        { label: 'Einführungsvideos' },
-        { label: 'Benutzerhandbuch' },
-        { label: 'Feedback geben' },
-        { type: 'separator' },
         { label: 'Entwicklerwerkzeuge', role: 'toggledevtools' },
         { type: 'separator' },
-        { label: 'Über Plotify' }
+        { label: 'Über Plotify', click: openAboutDialog }
       ]
     }
   ]
