@@ -1,7 +1,7 @@
 const gulp = require('gulp')
 const clean = require('gulp-clean')
 const babel = require('gulp-babel')
-const exec = require('child_process').exec
+const spawn = require('child_process').spawn
 const sequence = require('run-sequence')
 
 const path = {
@@ -34,9 +34,9 @@ gulp.task('assets', () => {
 })
 
 gulp.task('electron', (callback) => {
-  exec('electron ' + path.build + '/electron/main.js', (error) => {
-    callback(error)
-  })
+  const process = spawn('electron', [path.build + '/electron/main.js'])
+  process.stdout.on('data', (data) => console.log(data.toString()))
+  process.stderr.on('data', (data) => console.log(data.toString()))
 })
 
 gulp.task('default', () => {

@@ -1,7 +1,8 @@
-const { app, Menu, BrowserWindow, shell } = require('electron')
-const createMenuTemplate = require('./menu')
-const url = require('url')
-const path = require('path')
+import { app, Menu, BrowserWindow, shell } from 'electron'
+import { setMainWindow } from './shared/main-window'
+import { createMenuTemplate } from './menu'
+import url from 'url'
+import path from 'path'
 
 const versions = ' Versions\n' +
   '--------------------------\n' +
@@ -19,6 +20,7 @@ let mainWindow
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({ width: 900, height: 600 })
+  setMainWindow(mainWindow)
 
   mainWindow.on('closed', () => {
     mainWindow = null

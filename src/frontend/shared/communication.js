@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron'
 import uuid from 'uuid/v4'
 import { getStore } from './store'
 
-const callbackChannelPrefix = 'channel-'
+const callbackChannelPrefix = 'callback/'
 
 export const request = (name, args) => {
   return new Promise((resolve, reject) => {
@@ -33,7 +33,7 @@ const sendRequest = (name, args, callbackChannel) => {
 }
 
 export const eventHandler = (name, handler) => {
-  ipcRenderer.on(name, (event, message) => {
-    handler(getStore().dispatch, message)
+  ipcRenderer.on(name, (event, payload) => {
+    handler(getStore().dispatch, payload)
   })
 }

@@ -1,4 +1,12 @@
-const createMenuTemplate = (platform) => {
+import { event } from './shared/communications'
+import { DARK_THEME_ENABLED, DARK_THEME_DISABLED } from '../shared/view/events'
+
+const toggleDarkTheme = (item) => {
+  const name = item.checked ? DARK_THEME_ENABLED : DARK_THEME_DISABLED
+  event(name)
+}
+
+export const createMenuTemplate = (platform) => {
   // TODO macOS-spezifisches Menü
   // TODO Neue Geschichte
   // TODO Geschichte öffnen
@@ -37,7 +45,7 @@ const createMenuTemplate = (platform) => {
         { label: 'Verkleinern', role: 'zoomout' },
         { label: 'Standardgröße', role: 'resetzoom' },
         { type: 'separator' },
-        { label: 'Nachtmodus', type: 'checkbox' },
+        { label: 'Nachtmodus', type: 'checkbox', click: toggleDarkTheme },
         { type: 'separator' },
         { label: 'Vollbild', role: 'togglefullscreen' }
       ]
@@ -56,5 +64,3 @@ const createMenuTemplate = (platform) => {
     }
   ]
 }
-
-module.exports = createMenuTemplate
