@@ -12,7 +12,6 @@ export const createMenuTemplate = (platform) => {
   // TODO Geschichte öffnen
   // TODO Rückgängig
   // TODO Wiederherstellen
-  // TODO Nachtmodus
   // TODO Feedback geben
   // TODO Über Plotify
   // TODO Evtl.: Einführungsvideos, Benutzerhandbuch
