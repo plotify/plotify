@@ -2,6 +2,7 @@
   "name": "plotify",
   "version": "0.2.0-SNAPHOT",
   "homepage": ".",
+  "productName": "Plotify",
   "main": "main.js",
   "private": true,
   "dependencies": {

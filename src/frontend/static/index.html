@@ -3,7 +3,6 @@
   <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-    <title>Plotify</title>
     <link rel="stylesheet" type="text/css" href="fonts/index.css">
     <style>
       * {
@@ -30,6 +29,10 @@
   </head>
   <body>
     <div id='root'></div>
-    <script>require('../index.js')</script>
+    <script>
+      const productName = require('../../package.json').productName
+      document.title = productName
+      require('../index.js')
+    </script>
   </body>
 </html>
