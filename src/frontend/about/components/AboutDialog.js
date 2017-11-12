@@ -11,18 +11,18 @@ import ContributorsDialog from './ContributorsDialog'
 import MediaQuery from 'react-responsive'
 import classNames from 'classnames'
 
-// TODO Versionsnummer aus package.json auslesen
-// TODO URL der Website package.json auslesen
+const packageJson = require('../../../package.json')
+
 // TODO Lizenz
 const AboutDialog = (props) => {
   const { open, closeAboutDialog, openContributorsDialog, classes } = props
-  const openWebsite = () => window.open('https://github.com/plotify/plotify#readme')
+  const openWebsite = () => window.open(packageJson.homepage)
 
   const content = [
     <img alt='Plotify Icon' src='./app-icon-128.png' key={1} />,
     <div key={2}>
-      <Typography type='headline'>Plotify</Typography>
-      <Typography>Version: 0.2.0-SNAPSHOT</Typography>
+      <Typography type='headline'>{packageJson.productName}</Typography>
+      <Typography>Version: {packageJson.version}</Typography>
       <Typography>
         Copyright © 2017 Sebastian Schmidt & Jasper Meyer
       </Typography>

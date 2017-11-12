@@ -1,7 +1,7 @@
 {
   "name": "plotify",
   "version": "0.2.0-SNAPHOT",
-  "homepage": ".",
+  "homepage": "https://github.com/plotify/plotify#readme",
   "productName": "Plotify",
   "main": "main.js",
   "private": true,
