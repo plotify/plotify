@@ -4,6 +4,8 @@ import { setMainWindow } from './shared/main-window'
 import { createMenuTemplate } from './menu'
 import url from 'url'
 import path from 'path'
+import watch from 'node-watch'
+import isDev from 'electron-is-dev'
 
 printWelcomeScreen()
 
@@ -32,6 +34,13 @@ const createWindow = () => {
     protocol: 'file:',
     slashes: true
   }))
+
+  if (isDev) {
+    const frontend = path.join(__dirname, '../frontend/')
+    watch(frontend, { recursive: true }, () => {
+      mainWindow.webContents.reloadIgnoringCache()
+    })
+  }
 }
 
 app.on('ready', createWindow)

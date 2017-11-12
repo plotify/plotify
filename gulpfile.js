@@ -1,11 +1,13 @@
 const gulp = require('gulp')
 const clean = require('gulp-clean')
 const babel = require('gulp-babel')
+const cache = require('gulp-cached')
 const spawn = require('child_process').spawn
 const sequence = require('run-sequence')
 
 const path = {
   src: './src',
+  frontend: './src/frontend',
   build: './build'
 }
 
@@ -18,6 +20,7 @@ gulp.task('clean', () => {
 gulp.task('compile', () => {
   return gulp
     .src(path.src + '/**/*.js')
+    .pipe(cache('javascript', { optimizeMemory: true }))
     .pipe(babel({
       presets: ['env'],
       plugins: [
@@ -30,6 +33,7 @@ gulp.task('compile', () => {
 gulp.task('assets', () => {
   return gulp
     .src(path.src + '/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,eot,ttf,woff,woff2,otf}')
+    .pipe(cache('assets', { optimizeMemory: true }))
     .pipe(gulp.dest(path.build))
 })
 
@@ -45,6 +49,10 @@ gulp.task('electron', (callback) => {
   process.stderr.on('data', (data) => console.log(data.toString()))
 })
 
+gulp.task('watch-frontend', () => {
+  gulp.watch(path.frontend + '/**/*.*', ['compile', 'assets'])
+})
+
 gulp.task('default', () => {
-  sequence('clean', 'compile', 'assets', 'package-json', 'electron')
+  sequence('clean', 'compile', 'assets', 'package-json', 'watch-frontend', 'electron')
 })
