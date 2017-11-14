@@ -49,6 +49,7 @@
     "start": "gulp",
     "build": "gulp compile",
     "distribution:linux": "gulp distribution:linux",
+    "distribution:mac": "gulp distribution:mac",
     "distribution:win": "gulp distribution:win",
     "test": "standard"
   }
