@@ -60,7 +60,7 @@ const styles = (theme) => ({
     display: 'none'
   },
   profileEntry: {
-    width: '50%',
+    minWidth: '50%',
     boxSizing: 'border-box',
     flex: '2 0 auto'
   }

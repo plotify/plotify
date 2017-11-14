@@ -27,9 +27,7 @@ class CharacterProfileEntry extends Component {
     return (
       <div className={classNames(classes.entry, className)}>
         <TextField
-          className={classNames({
-            [classes.textField]: !disabled
-          })}
+          className={classes.textField}
           label={entry.title}
           defaultValue={entry.value}
           InputLabelProps={{className: classes.inputLabel}}
