@@ -112,7 +112,7 @@ const config = {
   }
 }
 
-gulp.task('distribution-linux', () => {
+gulp.task('build-linux-installer', () => {
   return builder.build({
     platform: 'linux',
     x64: true,
@@ -120,7 +120,7 @@ gulp.task('distribution-linux', () => {
   })
 })
 
-gulp.task('distribution-win', () => {
+gulp.task('build-win-installer', () => {
   return builder.build({
     platform: 'win',
     x64: true,
@@ -150,4 +150,12 @@ gulp.task('watch-frontend', () => {
 
 gulp.task('default', () => {
   sequence('preparation', 'compile', 'assets', 'development')
+})
+
+gulp.task('distribution:linux', () => {
+  sequence('preparation', 'compile', 'assets', 'build-linux-installer')
+})
+
+gulp.task('distribution:win', () => {
+  sequence('preparation', 'compile', 'assets', 'build-win-installer')
 })

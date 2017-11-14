@@ -48,6 +48,8 @@
   "scripts": {
     "start": "gulp",
     "build": "gulp compile",
+    "distribution:linux": "gulp distribution:linux",
+    "distribution:win": "gulp distribution:win",
     "test": "standard"
   }
 }
