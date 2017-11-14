@@ -1,16 +1,19 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import NavigationDrawerButton from './NavigationDrawerButton'
 import MediaQuery from 'react-responsive'
+import NavigationDrawerButton from './NavigationDrawerButton'
+import PropTypes from 'prop-types'
+import React from 'react'
+import Toolbar from 'material-ui/Toolbar'
+import { withStyles } from 'material-ui/styles'
 
 const Section = (props) => (
   <div className={props.classes.wrapper}>
     <AppBar>
       <Toolbar>
-        <NavigationDrawerButton className={props.classes.menuButton} color='contrast' />
+        {props.MenuButton && <props.MenuButton className={props.classes.menuButton} />}
+        {!props.MenuButton &&
+          <NavigationDrawerButton className={props.classes.menuButton} color='contrast' />
+        }
         {props.toolbar}
       </Toolbar>
     </AppBar>
@@ -30,7 +33,8 @@ const Section = (props) => (
 Section.propTypes = {
   classes: PropTypes.object.isRequired,
   children: PropTypes.element.isRequired,
-  toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
+  toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
+  MenuButton: PropTypes.func
 }
 
 const styles = (theme) => ({

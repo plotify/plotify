@@ -14,6 +14,15 @@ export const getSelectedCharacterId = (state) => (
   state.characters.selected
 )
 
+export const getSelectedCharacterName = (state) => {
+  let result
+  if (isCharacterSelected(state)) {
+    const id = getSelectedCharacterId(state)
+    result = state.characters.entities.find(character => character.id === id).name
+  }
+  return result
+}
+
 export const isCharacterEditModeEnabled = (state) => (
   state.characters.editMode === true
 )

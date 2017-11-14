@@ -1,3 +1,6 @@
+import { getSelectedCharacterName, isCharacterSelected } from '../selectors'
+
+import BackIcon from 'material-ui-icons/ArrowBack'
 import CharacterProfile from './CharacterProfile'
 import CharacterProfileMenu from './CharacterProfileMenu'
 import CharactersList from './CharactersList'
@@ -15,11 +18,11 @@ import Typography from 'material-ui/Typography'
 import UndoRedoButtons from './UndoRedoButtons'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { isCharacterSelected } from '../selectors'
+import { deselectCharacter } from '../actions'
 import { withStyles } from 'material-ui/styles'
 
 const CharactersSection = (props) => {
-  const { classes, characterSelected } = props
+  const { classes, characterSelected, selectedCharacterName } = props
 
   const listToolbar = ([
     <Typography type='title' color='inherit' className={classes.title} key={1}>
@@ -30,58 +33,86 @@ const CharactersSection = (props) => {
       <SearchIcon />
     </IconButton>
   ])
+
   const profileToolbar = ([
+    <MediaQuery maxWidth={759} key={0}>
+      <Typography type='title' color='inherit' className={classes.title}>
+        {characterSelected && selectedCharacterName}
+      </Typography>
+    </MediaQuery>,
     <UndoRedoButtons key={1} />,
     <ToggleEditModeButton key={2} />,
     <CharacterProfileMenu key={3} />
   ])
   const toolbar = ([
     <MediaQuery maxWidth={759} key={1}>
+      {!characterSelected &&
       <div className={classNames(classes.listToolbar, classes.listToolbarSingleView)}>
         {listToolbar}
-      </div>
+      </div>}
     </MediaQuery>,
     <MediaQuery minWidth={760} key={2}>
       <div className={classes.listToolbar}>
         {listToolbar}
       </div>
     </MediaQuery>,
-    <MediaQuery minWidth={760} key={3}>
-      <div className={classes.profileToolbar}>
-        {profileToolbar}
-      </div>
-    </MediaQuery>
+    <div className={classes.profileToolbar} key={3}>
+      {profileToolbar}
+    </div>
   ])
 
   let profile = null
+  let BackButton = null
   if (characterSelected) {
     profile = (
-      <MediaQuery minWidth={760}>
-        <CharacterProfile className={classes.profile} />
-      </MediaQuery>
+      <CharacterProfile className={classes.profile} />
+    )
+    BackButton = (backProps) => (
+      <IconButton
+        color='contrast'
+        onClick={props.deselectCharacter}
+        aria-label='Back'
+        {...backProps}
+      >
+        <BackIcon />
+      </IconButton>
     )
   }
 
-  return (
-    <Section
-      title='Charaktere'
-      toolbar={toolbar}>
-      <div className={classes.root}>
-        <CreateCharacterDialog />
-        <MediaQuery maxWidth={759}>
-          <Paper className={classNames(classes.listWrapper, classes.listWrapperSingleView)}>
-            <CharactersList />
-          </Paper>
-        </MediaQuery>
-        <MediaQuery minWidth={760}>
-          <Paper className={classes.listWrapper}>
-            <CharactersList />
-          </Paper>
-        </MediaQuery>
-        {profile}
-      </div>
-    </Section>
-  )
+  const content = <div className={classes.root}>
+    <CreateCharacterDialog />
+    {!characterSelected &&
+      <MediaQuery maxWidth={759}>
+        <Paper className={classNames(classes.listWrapper, classes.listWrapperSingleView)}>
+          <CharactersList />
+        </Paper>
+      </MediaQuery>
+    }
+    <MediaQuery minWidth={760}>
+      <Paper className={classes.listWrapper}>
+        <CharactersList />
+      </Paper>
+    </MediaQuery>
+    {profile}
+  </div>
+
+  return [
+    <MediaQuery minWidth={760} key={0}>
+      <Section
+        title='Charaktere'
+        toolbar={toolbar}>
+        {content}
+      </Section>
+    </MediaQuery>,
+    <MediaQuery maxWidth={759} key={1}>
+      <Section
+        title='Charaktere'
+        toolbar={toolbar}
+        MenuButton={BackButton}>
+        {content}
+      </Section>
+    </MediaQuery>
+  ]
 }
 
 CharactersSection.propTypes = {
@@ -101,7 +132,8 @@ const styles = (theme) => ({
   profileToolbar: {
     flex: 1,
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    alignItems: 'center'
   },
   title: {
     flex: 1
@@ -131,7 +163,12 @@ const styles = (theme) => ({
 const StyledCharactersSection = withStyles(styles)(CharactersSection)
 
 const mapStateToProps = (state) => ({
-  characterSelected: isCharacterSelected(state)
+  characterSelected: isCharacterSelected(state),
+  selectedCharacterName: getSelectedCharacterName(state)
 })
 
-export default connect(mapStateToProps)(StyledCharactersSection)
+const mapDispatchToProps = (dispatch) => ({
+  deselectCharacter: () => dispatch(deselectCharacter())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(StyledCharactersSection)
