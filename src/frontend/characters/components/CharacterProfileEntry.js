@@ -19,7 +19,8 @@ class CharacterProfileEntry extends Component {
     } else {
       inputProps = {
         classes: {
-          root: classes.inputRoot
+          root: classes.inputRoot,
+          input: classes.input
         }
       }
     }
@@ -65,6 +66,11 @@ const styles = (theme) => ({
   inputDisabled: {
     color: theme.palette.text.primary
   },
+  input: {
+    '&:hover': {
+      cursor: 'text'
+    }
+  },
   inputLabel: {
     width: '100%',
     overflowX: 'hidden',
@@ -74,9 +80,6 @@ const styles = (theme) => ({
     transition: '200ms'
   },
   textField: {
-    '&:hover': {
-      cursor: 'text'
-    }
   }
 })
 
