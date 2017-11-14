@@ -1,13 +1,16 @@
-import printWelcomeScreen from './versions'
-import { app, Menu, BrowserWindow, shell } from 'electron'
-import { setMainWindow } from './shared/main-window'
+import { BrowserWindow, Menu, app, shell } from 'electron'
+
 import { createMenuTemplate } from './menu'
-import url from 'url'
-import path from 'path'
-import watch from 'node-watch'
+import initReload from './reload'
 import isDev from 'electron-is-dev'
+import path from 'path'
+import printWelcomeScreen from './versions'
+import { registerRequestHandlers } from './saved-state'
+import { setMainWindow } from './shared/main-window'
+import url from 'url'
 
 printWelcomeScreen()
+registerRequestHandlers()
 
 const menuTemplate = createMenuTemplate(process.platform)
 const menu = Menu.buildFromTemplate(menuTemplate)
@@ -36,10 +39,7 @@ const createWindow = () => {
   }))
 
   if (isDev) {
-    const frontend = path.join(__dirname, '../frontend/')
-    watch(frontend, { recursive: true }, () => {
-      mainWindow.webContents.reloadIgnoringCache()
-    })
+    initReload(mainWindow)
   }
 }
 
