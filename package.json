@@ -48,9 +48,9 @@
   "scripts": {
     "start": "gulp",
     "build": "gulp compile",
-    "distribution:linux": "gulp distribution:linux",
-    "distribution:mac": "gulp distribution:mac",
-    "distribution:win": "gulp distribution:win",
+    "dist:linux": "gulp distribution:linux",
+    "dist:mac": "gulp distribution:mac",
+    "dist:win": "gulp distribution:win",
     "test": "standard"
   }
 }

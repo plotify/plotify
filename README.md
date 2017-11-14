@@ -25,6 +25,7 @@ npm start
 Installationsprogramme für Plotify erzeugen:
 
 ```bash
-npm run distribution:linux
-npm run distribution:win
+npm run dist:linux
+npm run dist:win
+npm run dist:mac
 ```
