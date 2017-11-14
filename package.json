@@ -1,9 +1,22 @@
 {
   "name": "plotify",
   "version": "0.2.0-SNAPHOT",
+  "description": "Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren. Behalte stets den Überblick und erschaffe eine fantastische Geschichte!",
   "homepage": "https://github.com/plotify/plotify#readme",
   "productName": "Plotify",
-  "main": "main.js",
+  "license": "GPL-3.0",
+  "author": "Sebastian Schmidt <email@sebastian-schmidt.info>",
+  "contributors": [
+    {
+      "name": "Sebastian Schmidt",
+      "email": "email@sebastian-schmidt.info"
+    },
+    {
+      "name": "Jasper Meyer",
+      "email": "jasper.meyer@gmx.net"
+    }
+  ],
+  "main": "electron/main.js",
   "private": true,
   "dependencies": {
     "classnames": "2.2.5",
@@ -24,6 +37,7 @@
     "babel-preset-env": "1.6.1",
     "check-dependencies": "1.1.0",
     "electron": "1.7.9",
+    "electron-builder": "19.45.4",
     "gulp": "3.9.1",
     "gulp-babel": "7.0.0",
     "gulp-cached": "1.1.1",

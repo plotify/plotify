@@ -5,23 +5,35 @@ const cache = require('gulp-cached')
 const spawn = require('child_process').spawn
 const sequence = require('run-sequence')
 const checkDependencies = require('check-dependencies')
+const builder = require('electron-builder')
 
 const path = {
   src: './src',
   frontend: './src/frontend',
-  build: './build',
+  build: {
+    root: './build',
+    app: './build/app',
+    dist: './build/dist'
+  },
   packageJson: './package.json'
 }
 
+// 1. Preparation
+// 2. Compile
+// 3. Copy assets
+// 4. Distribution
+// A. Development
+// B. Combined tasks
+
 //
-// Preparation
+// 1. Preparation
 //
 
 gulp.task('preparation', ['clean', 'check-dependencies'])
 
 gulp.task('clean', () => {
   return gulp
-    .src(path.build, {read: false})
+    .src(path.build.root, {read: false})
     .pipe(clean())
 })
 
@@ -40,7 +52,7 @@ gulp.task('check-dependencies', () => {
 })
 
 //
-// Compile
+// 2. Compile
 //
 
 gulp.task('compile', () => {
@@ -53,11 +65,11 @@ gulp.task('compile', () => {
         'transform-react-jsx'
       ]
     }))
-    .pipe(gulp.dest(path.build))
+    .pipe(gulp.dest(path.build.app))
 })
 
 //
-// Assets
+// 3. Copy assets
 //
 
 gulp.task('assets', ['static-files', 'package-json'])
@@ -66,23 +78,64 @@ gulp.task('static-files', () => {
   return gulp
     .src(path.src + '/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,eot,ttf,woff,woff2,otf}')
     .pipe(cache('static-files', { optimizeMemory: true }))
-    .pipe(gulp.dest(path.build))
+    .pipe(gulp.dest(path.build.app))
 })
 
 gulp.task('package-json', () => {
   return gulp
     .src(path.packageJson)
-    .pipe(gulp.dest(path.build))
+    .pipe(gulp.dest(path.build.app))
 })
 
 //
-// Development
+// 4. Distribution
+//
+
+const config = {
+  appId: 'org.plotify',
+  directories: {
+    app: path.build.app,
+    output: path.build.dist
+  },
+  linux: {
+    target: 'deb',
+    category: 'Office',
+    icon: './app/frontend/static/app-icons'
+  },
+  mac: {
+    category: 'public.app-category.productivity'
+  },
+  win: {
+    // TODO Auflösung des Icons verbessern: 256x256 wurde aus 128x128 abgeleitet.
+    // TODO Auflösung des Icons verbessern: Bei kleinen Darstellungen wird das Icon unter Windows schlecht dargestellt.
+    icon: './build/app/frontend/static/app-icons/256x256.ico'
+  }
+}
+
+gulp.task('distribution-linux', () => {
+  return builder.build({
+    platform: 'linux',
+    x64: true,
+    config
+  })
+})
+
+gulp.task('distribution-win', () => {
+  return builder.build({
+    platform: 'win',
+    x64: true,
+    config
+  })
+})
+
+//
+// A. Development
 //
 
 gulp.task('development', ['electron', 'watch-frontend'])
 
 gulp.task('electron', (callback) => {
-  const process = spawn('electron', [path.build + '/electron/main.js'])
+  const process = spawn('electron', [path.build.app + '/electron/main.js'])
   process.stdout.on('data', (data) => console.log(data.toString()))
   process.stderr.on('data', (data) => console.log(data.toString()))
 })
@@ -92,7 +145,7 @@ gulp.task('watch-frontend', () => {
 })
 
 //
-// Combined tasks
+// B. Combined tasks
 //
 
 gulp.task('default', () => {

@@ -19,7 +19,7 @@ const AboutDialog = (props) => {
   const openWebsite = () => window.open(packageJson.homepage)
 
   const content = [
-    <img alt='Plotify Icon' src='./app-icon-128.png' key={1} />,
+    <img alt='Plotify Icon' src='./app-icons/128x128.png' key={1} />,
     <div key={2}>
       <Typography type='headline'>{packageJson.productName}</Typography>
       <Typography>Version: {packageJson.version}</Typography>
