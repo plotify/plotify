@@ -29,8 +29,10 @@ const CharacterProfileGroup = (props) => {
             .filter(entry => !!entry.value)
             .map((entry, i) => (
               <CharacterProfileEntry
+                className={classes.profileEntry}
                 entry={entry}
                 key={i}
+                disabled={!editMode}
               />
             ))}
         </Paper>
@@ -49,7 +51,6 @@ CharacterProfileGroup.propTypes = {
 
 const styles = (theme) => ({
   wrapper: {
-    // display: 'inline'
   },
   title: {
     marginLeft: theme.spacing.unit * 2,
@@ -57,6 +58,11 @@ const styles = (theme) => ({
   },
   hidden: {
     display: 'none'
+  },
+  profileEntry: {
+    width: '50%',
+    boxSizing: 'border-box',
+    flex: '2 0 auto'
   }
 })
 

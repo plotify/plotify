@@ -2,24 +2,40 @@ import React, { Component } from 'react'
 
 import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
+import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 
 class CharacterProfileEntry extends Component {
   render () {
-    const { classes, entry } = this.props
+    const { classes, className, entry, disabled } = this.props
+    let inputProps
+    if (disabled) {
+      inputProps = {
+        disableUnderline: true,
+        classes: {
+          input: classes.inputDisabled
+        }
+      }
+    } else {
+      inputProps = {
+        classes: {
+          root: classes.inputRoot
+        }
+      }
+    }
     return (
-      <div className={classes.entry}>
+      <div className={classNames(classes.entry, className)}>
         <TextField
-          className={classes.textField}
+          className={classNames({
+            [classes.textField]: !disabled
+          })}
           label={entry.title}
           defaultValue={entry.value}
-          InputProps={{disableUnderline: true,
-            classes: {
-              input: classes.input
-            }}}
           InputLabelProps={{className: classes.inputLabel}}
-          disabled
+          disabled={disabled}
+          InputProps={inputProps}
           fullWidth
+          multiline
         />
       </div>
     )
@@ -29,24 +45,38 @@ class CharacterProfileEntry extends Component {
 CharacterProfileEntry.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
-  entry: PropTypes.object.isRequired
+  entry: PropTypes.object.isRequired,
+  disabled: PropTypes.bool.isRequired
+}
+
+CharacterProfileEntry.defaultProps = {
+  disabled: true
 }
 
 const styles = (theme) => ({
   entry: {
-    padding: theme.spacing.unit * 2,
-    flex: '2 0 auto'
+    padding: theme.spacing.unit * 3
   },
-  textField: {
-    maxWidth: '200px'
+  inputRoot: {
+    '&:before': {
+      backgroundColor: 'rgba(0, 0, 0, 0.2)'
+    }
   },
-  input: {
+  inputDisabled: {
     color: theme.palette.text.primary
   },
   inputLabel: {
-    // overflow: 'hidden', // TODO Fehler:  Schneidet das Label auch oben und unten ab.
+    width: '100%',
+    overflowX: 'hidden',
+    padding: '1px 1px 1px 0',
     textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap'
+    whiteSpace: 'nowrap',
+    transition: '200ms'
+  },
+  textField: {
+    '&:hover': {
+      cursor: 'text'
+    }
   }
 })
 

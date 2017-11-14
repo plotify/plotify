@@ -28,7 +28,9 @@ const styles = (theme) => {
       display: 'flex',
       justifyContent: 'space-around',
       flexDirection: 'row',
-      paddingTop: theme.spacing.unit * 2
+      paddingTop: theme.spacing.unit * 2,
+      paddingBottom: theme.spacing.unit * 2,
+      boxSizing: 'border-box'
     },
     wrapper: {
       flex: '0.5 0.1 400px'
