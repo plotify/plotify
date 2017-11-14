@@ -1,9 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import NavigationDrawer from './navigation/components/NavigationDrawer'
 import AboutDialog from './about/components/AboutDialog'
 import CharactersSection from './characters/components/CharactersSection'
+import NavigationDrawer from './navigation/components/NavigationDrawer'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { withStyles } from 'material-ui/styles'
 
 const App = (props) => (
   <div className={props.classes.wrapper}>

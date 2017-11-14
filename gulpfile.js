@@ -76,7 +76,7 @@ gulp.task('assets', ['static-files', 'package-json'])
 
 gulp.task('static-files', () => {
   return gulp
-    .src(path.src + '/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,eot,ttf,woff,woff2,otf}')
+    .src(path.src + '/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,icns,eot,ttf,woff,woff2,otf}')
     .pipe(cache('static-files', { optimizeMemory: true }))
     .pipe(gulp.dest(path.build.app))
 })
@@ -100,12 +100,15 @@ const config = {
   linux: {
     target: 'deb',
     category: 'Office',
-    icon: './app/frontend/static/app-icons'
+    icon: './build/app/frontend/static/app-icons'
   },
   mac: {
-    category: 'public.app-category.productivity'
+    target: 'dmg',
+    category: 'public.app-category.productivity',
+    icon: './build/app/frontend/static/app-icons/128x128.icns'
   },
   win: {
+    target: 'nsis',
     // TODO Auflösung des Icons verbessern: 256x256 wurde aus 128x128 abgeleitet.
     // TODO Auflösung des Icons verbessern: Bei kleinen Darstellungen wird das Icon unter Windows schlecht dargestellt.
     icon: './build/app/frontend/static/app-icons/256x256.ico'
@@ -115,6 +118,14 @@ const config = {
 gulp.task('build-linux-installer', () => {
   return builder.build({
     platform: 'linux',
+    x64: true,
+    config
+  })
+})
+
+gulp.task('build-mac-installer', () => {
+  return builder.build({
+    platform: 'mac',
     x64: true,
     config
   })
@@ -154,6 +165,10 @@ gulp.task('default', () => {
 
 gulp.task('distribution:linux', () => {
   sequence('preparation', 'compile', 'assets', 'build-linux-installer')
+})
+
+gulp.task('distribution:mac', () => {
+  sequence('preparation', 'compile', 'assets', 'build-mac-installer')
 })
 
 gulp.task('distribution:win', () => {

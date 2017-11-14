@@ -1,19 +1,51 @@
 import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../shared/view/requests'
+import { setShouldSaveState, shouldSaveState } from './saved-state'
 
 import { Menu } from 'electron'
 import { OPEN_ABOUT_DIALOG } from '../shared/about/requests'
+import isDev from 'electron-is-dev'
 import { request } from './shared/communication'
+
+// Workaround: Unter Unity aktualisiert sich die Checkbox nicht.
+const unityWorkaround = () => {
+  Menu.setApplicationMenu(Menu.getApplicationMenu())
+}
 
 const toggleDarkTheme = (item) => {
   const name = item.checked ? ENABLE_DARK_THEME : DISABLE_DARK_THEME
   request(name)
+  unityWorkaround()
+}
 
-  // Workaround: Unter Unity aktualisiert sich die Checkbox nicht.
-  Menu.setApplicationMenu(Menu.getApplicationMenu())
+const toggleShouldSaveState = () => {
+  setShouldSaveState(!shouldSaveState())
+  unityWorkaround()
 }
 
 const openAboutDialog = () => {
   request(OPEN_ABOUT_DIALOG)
+}
+
+export const addDeveloperMenu = (template) => {
+  if (isDev) {
+    template.push({
+      label: 'Entwicklung',
+      submenu: [
+        { label: 'Werkzeuge', role: 'toggledevtools' },
+        { type: 'separator' },
+        { label: 'Zustand wiederherstellen', type: 'checkbox', checked: shouldSaveState(), click: toggleShouldSaveState }
+      ]
+    })
+  }
+}
+
+export const addHelpMenu = (template) => {
+  template.push({
+    label: 'Hilfe',
+    submenu: [
+      { label: 'Über Plotify', click: openAboutDialog }
+    ]
+  })
 }
 
 export const createMenuTemplate = (platform) => {
@@ -23,8 +55,7 @@ export const createMenuTemplate = (platform) => {
   // TODO Rückgängig
   // TODO Wiederherstellen
   // TODO Feedback geben
-  // TODO Evtl.: Einführungsvideos, Benutzerhandbuch
-  return [
+  const template = [
     {
       label: 'Datei',
       submenu: [
@@ -57,14 +88,9 @@ export const createMenuTemplate = (platform) => {
         { type: 'separator' },
         { label: 'Vollbild', role: 'togglefullscreen' }
       ]
-    },
-    {
-      label: 'Hilfe',
-      submenu: [
-        { label: 'Entwicklerwerkzeuge', role: 'toggledevtools' },
-        { type: 'separator' },
-        { label: 'Über Plotify', click: openAboutDialog }
-      ]
     }
   ]
+  addDeveloperMenu(template)
+  addHelpMenu(template)
+  return template
 }

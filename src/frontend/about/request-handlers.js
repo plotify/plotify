@@ -2,7 +2,7 @@ import { OPEN_ABOUT_DIALOG } from '../../shared/about/requests'
 import { openAboutDialog } from './actions'
 import { requestHandler } from '../shared/communication'
 
-const handleOpenAboutDialogRequested = (resolve, reject, dispatch, payload) => {
+const handleOpenAboutDialogRequested = (resolve, _, __, dispatch) => {
   dispatch(openAboutDialog())
   resolve()
 }
