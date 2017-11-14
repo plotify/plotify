@@ -1,10 +1,20 @@
 import { GET_SAVED_STATE } from '../shared/requests'
 import { requestHandler } from './shared/communication'
 
+let _shouldSaveState = false
 let savedState = null
 
+export const shouldSaveState = () => (_shouldSaveState)
+
+export const setShouldSaveState = (save) => {
+  _shouldSaveState = (save === true)
+  if (!save) savedState = null
+}
+
 export const saveState = (state) => {
-  savedState = state
+  if (_shouldSaveState) {
+    savedState = state
+  }
 }
 
 const handleGetSavedState = (resolve, reject) => {

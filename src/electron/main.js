@@ -1,15 +1,16 @@
 import { BrowserWindow, Menu, app, shell } from 'electron'
+import { registerRequestHandlers, setShouldSaveState } from './saved-state'
 
 import { createMenuTemplate } from './menu'
 import initReload from './reload'
 import isDev from 'electron-is-dev'
 import path from 'path'
 import printWelcomeScreen from './versions'
-import { registerRequestHandlers } from './saved-state'
 import { setMainWindow } from './shared/main-window'
 import url from 'url'
 
 printWelcomeScreen()
+setShouldSaveState(isDev)
 registerRequestHandlers()
 
 const menuTemplate = createMenuTemplate(process.platform)
