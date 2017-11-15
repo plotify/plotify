@@ -99,7 +99,6 @@ const config = {
   },
   linux: {
     // TODO Icon wird unter Fedora 25 (rpm) nicht im Anwendungsmenü angezeigt.
-    // TODO Installation schlägt unter Ubuntu Gnome 16.04 (deb) fehl: "Package libappindicator1 is not installed."
     target: ['deb', 'rpm'],
     category: 'Office',
     icon: './build/app/frontend/static/app-icons'
