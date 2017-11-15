@@ -101,24 +101,23 @@ const config = {
     buildResources: paths.distribution
   },
   linux: {
-    // TODO Icon wird unter Fedora 25 (rpm) nicht im Anwendungsmenü angezeigt.
-    target: ['deb', 'rpm'],
+    target: ['deb'],
     category: 'Office',
-    icon: './icons/linux'
+    icon: './linux/icons'
   },
   mac: {
     target: 'dmg',
     category: 'public.app-category.productivity',
-    icon: './icons/mac/icon.icns'
+    icon: './mac/icon.icns'
   },
   win: {
     target: 'nsis',
-    icon: path.join(paths.distribution, './icons/windows/icon.ico'),
+    icon: path.join(paths.distribution, './win/icon.ico'),
     fileAssociations: {
       ext: 'story',
       name: 'Plotify-Geschichte',
       description: 'Plotify-Geschichte',
-      icon: path.join(paths.distribution, './icons/windows/icon.ico')
+      icon: path.join(paths.distribution, './win/icon.ico')
     }
   },
   nsis: {
