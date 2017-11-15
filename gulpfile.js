@@ -6,10 +6,12 @@ const spawn = require('child_process').spawn
 const sequence = require('run-sequence')
 const checkDependencies = require('check-dependencies')
 const builder = require('electron-builder')
+const path = require('path')
 
-const path = {
+const paths = {
   src: './src',
   frontend: './src/frontend',
+  distribution: './distribution',
   build: {
     root: './build',
     app: './build/app',
@@ -33,7 +35,7 @@ gulp.task('preparation', ['clean', 'check-dependencies'])
 
 gulp.task('clean', () => {
   return gulp
-    .src(path.build.root, {read: false})
+    .src(paths.build.root, {read: false})
     .pipe(clean())
 })
 
@@ -57,7 +59,7 @@ gulp.task('check-dependencies', () => {
 
 gulp.task('compile', () => {
   return gulp
-    .src(path.src + '/**/*.js')
+    .src(paths.src + '/**/*.js')
     .pipe(cache('javascript', { optimizeMemory: true }))
     .pipe(babel({
       presets: ['env'],
@@ -65,7 +67,7 @@ gulp.task('compile', () => {
         'transform-react-jsx'
       ]
     }))
-    .pipe(gulp.dest(path.build.app))
+    .pipe(gulp.dest(paths.build.app))
 })
 
 //
@@ -76,15 +78,15 @@ gulp.task('assets', ['static-files', 'package-json'])
 
 gulp.task('static-files', () => {
   return gulp
-    .src(path.src + '/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,icns,eot,ttf,woff,woff2,otf}')
+    .src(paths.src + '/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,icns,eot,ttf,woff,woff2,otf}')
     .pipe(cache('static-files', { optimizeMemory: true }))
-    .pipe(gulp.dest(path.build.app))
+    .pipe(gulp.dest(paths.build.app))
 })
 
 gulp.task('package-json', () => {
   return gulp
-    .src(path.packageJson)
-    .pipe(gulp.dest(path.build.app))
+    .src(paths.packageJson)
+    .pipe(gulp.dest(paths.build.app))
 })
 
 //
@@ -94,25 +96,24 @@ gulp.task('package-json', () => {
 const config = {
   appId: 'org.plotify',
   directories: {
-    app: path.build.app,
-    output: path.build.dist
+    app: paths.build.app,
+    output: paths.build.dist,
+    buildResources: paths.distribution
   },
   linux: {
     // TODO Icon wird unter Fedora 25 (rpm) nicht im Anwendungsmenü angezeigt.
     target: ['deb', 'rpm'],
     category: 'Office',
-    icon: './build/app/frontend/static/app-icons'
+    icon: './icons/linux'
   },
   mac: {
     target: 'dmg',
     category: 'public.app-category.productivity',
-    icon: './build/app/frontend/static/app-icons/128x128.icns'
+    icon: './icons/mac/icon.icns'
   },
   win: {
     target: 'nsis',
-    // TODO Auflösung des Icons verbessern: 256x256 wurde aus 128x128 abgeleitet.
-    // TODO Auflösung des Icons verbessern: Bei kleinen Darstellungen wird das Icon unter Windows schlecht dargestellt.
-    icon: './build/app/frontend/static/app-icons/256x256.ico'
+    icon: path.join(paths.distribution, './icons/windows/icon.ico')
   }
 }
 
@@ -147,13 +148,13 @@ gulp.task('build-win-installer', () => {
 gulp.task('development', ['electron', 'watch-frontend'])
 
 gulp.task('electron', (callback) => {
-  const process = spawn('electron', [path.build.app + '/electron/main.js'])
+  const process = spawn('electron', [paths.build.app + '/electron/main.js'])
   process.stdout.on('data', (data) => console.log(data.toString()))
   process.stderr.on('data', (data) => console.log(data.toString()))
 })
 
 gulp.task('watch-frontend', () => {
-  gulp.watch(path.frontend + '/**/*.*', ['compile', 'assets'])
+  gulp.watch(paths.frontend + '/**/*.*', ['compile', 'assets'])
 })
 
 //

@@ -1,15 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import Dialog, { DialogContent, DialogActions } from 'material-ui/Dialog'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
-import { connect } from 'react-redux'
-import { isAboutDialogOpen } from '../selectors'
+import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog'
 import { closeAboutDialog, openContributorsDialog } from '../actions'
+
+import Button from 'material-ui/Button'
 import ContributorsDialog from './ContributorsDialog'
 import MediaQuery from 'react-responsive'
+import PropTypes from 'prop-types'
+import React from 'react'
+import Typography from 'material-ui/Typography'
 import classNames from 'classnames'
+import { connect } from 'react-redux'
+import { isAboutDialogOpen } from '../selectors'
+import { withStyles } from 'material-ui/styles'
 
 const packageJson = require('../../../package.json')
 
@@ -19,7 +20,7 @@ const AboutDialog = (props) => {
   const openWebsite = () => window.open(packageJson.homepage)
 
   const content = [
-    <img alt='Plotify Icon' src='./app-icons/128x128.png' key={1} />,
+    <img alt='Plotify Icon' src='./app-icon.png' key={1} />,
     <div key={2}>
       <Typography type='headline'>{packageJson.productName}</Typography>
       <Typography>Version: {packageJson.version}</Typography>
