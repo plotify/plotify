@@ -113,7 +113,16 @@ const config = {
   },
   win: {
     target: 'nsis',
-    icon: path.join(paths.distribution, './icons/windows/icon.ico')
+    icon: path.join(paths.distribution, './icons/windows/icon.ico'),
+    fileAssociations: {
+      ext: 'story',
+      name: 'Plotify-Geschichte',
+      description: 'Plotify-Geschichte',
+      icon: path.join(paths.distribution, './icons/windows/icon.ico')
+    }
+  },
+  nsis: {
+    perMachine: true
   }
 }
 
