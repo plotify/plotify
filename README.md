@@ -29,3 +29,9 @@ npm run dist:linux
 npm run dist:win
 npm run dist:mac
 ```
+
+## story-Dateien unter Linux mit Plotify öffnen
+
+- MIME-Typ `application/org.plotify.story` der Desktop-Datei hinzufügen.
+  Da `electron-builder` aktuell keine eigenen Deskop-Dateieinträge erlaubt,
+  wird der MIME-Typ über den Category-Eintrag und einen Zeilenumbruch eingefügt.

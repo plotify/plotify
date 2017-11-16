@@ -20,6 +20,8 @@ const paths = {
   packageJson: './package.json'
 }
 
+const storyMimeType = 'application/org.plotify.story'
+
 // 1. Preparation
 // 2. Compile
 // 3. Copy assets
@@ -94,22 +96,39 @@ gulp.task('package-json', () => {
 //
 
 const config = {
+
   appId: 'org.plotify',
   directories: {
     app: paths.build.app,
     output: paths.build.dist,
     buildResources: paths.distribution
   },
+
+  //
+  // Linux
+  //
   linux: {
     target: ['deb'],
-    category: 'Office',
+    category: 'Office\nMimeType=' + storyMimeType,
     icon: './linux/icons'
   },
+  deb: {
+    afterInstall: path.join(paths.distribution, './linux/after-install.tpl.sh'),
+    afterRemove: path.join(paths.distribution, './linux/after-remove.tpl.sh')
+  },
+
+  //
+  // Mac
+  //
   mac: {
     target: 'dmg',
     category: 'public.app-category.productivity',
     icon: './mac/icon.icns'
   },
+
+  //
+  // Windows
+  //
   win: {
     target: 'nsis',
     icon: path.join(paths.distribution, './win/icon.ico'),
@@ -123,6 +142,7 @@ const config = {
   nsis: {
     perMachine: true
   }
+
 }
 
 gulp.task('build-linux-installer', () => {
