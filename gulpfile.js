@@ -134,8 +134,8 @@ const config = {
     icon: path.join(paths.distribution, './win/icon.ico'),
     fileAssociations: {
       ext: 'story',
-      name: 'Plotify-Geschichte',
-      description: 'Plotify-Geschichte',
+      name: 'Plotify Geschichte',
+      description: 'Plotify Geschichte',
       icon: path.join(paths.distribution, './win/icon.ico')
     }
   },
