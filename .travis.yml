@@ -1,20 +1,18 @@
 language: node_js
 node_js: "7"
+
 os:
   - linux
   - osx
 dist: trusty
+
 cache:
   directories:
     - node_modules
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
+
 script:
   - npm test
-  - npm run build
-#deploy:
-#  provider: pages
-#  skip_cleanup: true
-#  local_dir: build
-#  github_token: $GITHUB_TOKEN
-#  on:
-#    branch: reborn
-#    condition: "$TRAVIS_OS_NAME = linux"
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run dist:linux ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx"   ]]; then npm run dist:mac   ; fi
