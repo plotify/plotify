@@ -149,6 +149,7 @@ gulp.task('build-linux-installer', () => {
   return builder.build({
     platform: 'linux',
     x64: true,
+    publish: 'never',
     config
   })
 })
@@ -157,6 +158,7 @@ gulp.task('build-mac-installer', () => {
   return builder.build({
     platform: 'mac',
     x64: true,
+    publish: 'never',
     config
   })
 })
@@ -165,6 +167,7 @@ gulp.task('build-win-installer', () => {
   return builder.build({
     platform: 'win',
     x64: true,
+    publish: 'never',
     config
   })
 })
