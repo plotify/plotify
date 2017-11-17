@@ -1,354 +1,209 @@
-const path = require("path");
-
-const gulp = require("gulp");
-const babel = require("gulp-babel");
-const watch = require("gulp-watch");
-const clean = require("gulp-clean");
-const mocha = require("gulp-mocha");
-const runSequence = require("run-sequence");
-const shell = require("gulp-shell");
-const runElectron = require("gulp-run-electron");
-
-const checkDependencies = require("check-dependencies");
-const rebuild = require("electron-rebuild").default;
-const electronInstaller = require("electron-winstaller");
-const winPackager = require("electron-packager");
-
-const checker = require("license-checker");
-const fs = require("fs");
-const ownLicenseFile = "./LICENSE";
-const robotoLicenseFile = "./src/main/ui/resources/fonts/roboto-license.txt";
-
-const packageJson = require("./package.json");
+const gulp = require('gulp')
+const clean = require('gulp-clean')
+const babel = require('gulp-babel')
+const cache = require('gulp-cached')
+const spawn = require('child_process').spawn
+const sequence = require('run-sequence')
+const checkDependencies = require('check-dependencies')
+const builder = require('electron-builder')
+const path = require('path')
 
 const paths = {
-  src: "./src",
-  icons: "./src/main/ui/resources/app-icons",
-  installers: "./installers",
+  src: './src',
+  frontend: './src/frontend',
+  distribution: './distribution',
   build: {
-    root: "./build",
-    app: {
-      root: "./build/app",
-      main: "./build/app/main",
-      tests: "./build/app/test"
-    },
-    licenseFile: "./build/app/main/LICENSE",
-    packaged: "./build/packaged",
-    installers: "./build/installers"
-  }
-};
+    root: './build',
+    app: './build/app',
+    dist: './build/dist'
+  },
+  packageJson: './package.json'
+}
 
-const electronVersion = packageJson.dependencies.electron;
+const storyMimeType = 'application/org.plotify.story'
 
-/* Preparation Tasks */
+// 1. Preparation
+// 2. Compile
+// 3. Copy assets
+// 4. Distribution
+// A. Development
+// B. Combined tasks
 
-const preparationTasks = ["clean-build", "check-dependencies"];
+//
+// 1. Preparation
+//
 
-gulp.task("clean-build", () => {
-  return gulp.src(paths.build.root, {read: false}).pipe(clean());
-});
+gulp.task('preparation', ['clean', 'check-dependencies'])
 
-gulp.task("check-dependencies", () => {
+gulp.task('clean', () => {
+  return gulp
+    .src(paths.build.root, {read: false})
+    .pipe(clean())
+})
+
+gulp.task('check-dependencies', () => {
   return checkDependencies().then(result => {
-    if (!result.depsWereOk)  {
-
-      console.log("The following dependencies are not installed in the exact same versions " +
-                  "that are specified in package.json:");
-
+    if (!result.depsWereOk) {
+      console.log('The following dependencies are not installed in the exact same versions that are specified in package.json:')
       result.error.forEach(message => {
-        if (!message.includes("to install missing packages")) {
-          console.log(" - " + message);
+        if (!message.includes('to install missing packages')) {
+          console.log(' - ' + message)
         }
-      });
-
-      throw new Error("Invoke npm install to install missing packages.");
-
+      })
+      throw new Error('Invoke npm install to install missing packages.')
     }
-  });
-});
+  })
+})
 
+//
+// 2. Compile
+//
 
-/* Babel Tasks */
-
-const babelTasks = ["babel-js-compile"];
-const babelTasksDev = babelTasks.concat(["babel-js-watch"]);
-
-gulp.task("babel-js-compile", () => {
-  return gulp.src(paths.src + "/**/*.js")
+gulp.task('compile', () => {
+  return gulp
+    .src(paths.src + '/**/*.js')
+    .pipe(cache('javascript', { optimizeMemory: true }))
     .pipe(babel({
-      "presets": ["latest"],
-      "plugins": [
-        "transform-react-jsx",
-        ["babel-plugin-transform-builtin-extend", {
-          globals: ["Error", "Array"]
-        }]
+      presets: ['env'],
+      plugins: [
+        'transform-react-jsx'
       ]
     }))
-    .pipe(gulp.dest(paths.build.app.root));
-});
+    .pipe(gulp.dest(paths.build.app))
+})
 
-gulp.task("babel-js-watch", () => {
-  return gulp.watch(paths.src + "/**/*.js", ["babel-js-compile"]);
-});
+//
+// 3. Copy assets
+//
 
+gulp.task('assets', ['static-files', 'package-json'])
 
-/* Assets Tasks */
+gulp.task('static-files', () => {
+  return gulp
+    .src(paths.src + '/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,icns,eot,ttf,woff,woff2,otf}')
+    .pipe(cache('static-files', { optimizeMemory: true }))
+    .pipe(gulp.dest(paths.build.app))
+})
 
-const assetsTasks = ["assets-package-json-copy", "assets-copy"];
-const assetsTasksDev = assetsTasks.concat(["assets-watch"]);
-const assetsPath = paths.src + "/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,eot,ttf,woff,woff2,otf}";
+gulp.task('package-json', () => {
+  return gulp
+    .src(paths.packageJson)
+    .pipe(gulp.dest(paths.build.app))
+})
 
-gulp.task("assets-package-json-copy", () => {
-  return gulp.src(["package.json"]).pipe(gulp.dest(paths.build.app.main));
-});
+//
+// 4. Distribution
+//
 
-gulp.task("assets-copy", () => {
-  return gulp.src(assetsPath).pipe(gulp.dest(paths.build.app.root));
-});
+const config = {
 
-gulp.task("assets-watch", () => {
-  return gulp.watch(assetsPath, ["assets-copy"]);
-});
+  appId: 'org.plotify',
+  directories: {
+    app: paths.build.app,
+    output: paths.build.dist,
+    buildResources: paths.distribution
+  },
 
+  //
+  // Linux
+  //
+  linux: {
+    target: ['deb'],
+    category: 'Office\nMimeType=' + storyMimeType,
+    icon: './linux/icons'
+  },
+  deb: {
+    afterInstall: path.join(paths.distribution, './linux/after-install.tpl.sh'),
+    afterRemove: path.join(paths.distribution, './linux/after-remove.tpl.sh')
+  },
 
-/* Tests Tasks */
+  //
+  // Mac
+  //
+  mac: {
+    target: 'dmg',
+    category: 'public.app-category.productivity',
+    icon: './mac/icon.icns'
+  },
 
-const testsTasks = ["tests-execute"];
-const testsTasksDev = testsTasks.concat(["tests-watch"]);
-
-gulp.task("tests-execute", () => {
-  return gulp.src(paths.build.app.tests + "/**/*.js", { read: false })
-    .pipe(mocha({
-      reporter: "spec"
-    }));
-});
-
-gulp.task("tests-watch", () => {
-  return gulp.watch(paths.build.app.tests + "/**/*.*", ["tests-execute"]);
-});
-
-
-/* Electron Tasks */
-
-const electronTasks = ["electron-run", "electron-watch"];
-
-gulp.task("electron-run", () => {
-  return gulp.src(paths.build.app.main).pipe(runElectron());
-});
-
-gulp.task("electron-watch", () => {
-  return gulp.watch(paths.build.app.main + "/**/*.*", ["electron-run"]);
-});
-
-
-/* Distribution Tasks */
-
-gulp.task("install-production-dependencies", shell.task([
-  "npm --prefix " + paths.build.app.main + " install " + paths.build.app.main + " --production"
-]));
-
-gulp.task("rebuild-production-dependencies", () => {
-
-  const absolutePath = path.normalize(__dirname + "/" + paths.build.app.main);
-  const rebuilder = rebuild(absolutePath, electronVersion, undefined, ["sqlite3"], true);
-
-  const lifecycle = rebuilder.lifecycle;
-
-  lifecycle.on("module-found", (moduleName) => {
-    console.log("Module found: " + moduleName);
-  });
-
-  lifecycle.on("module-done", () => {
-    console.log("Module done.");
-  });
-
-  return rebuilder
-    .then(() => console.info("Rebuild successful."))
-    .catch((e) => {
-      console.error("Rebuild failed.");
-      console.error(e);
-    });
-
-});
-
-gulp.task("package:generate-license-file", () => {
-
-  const options = Object.freeze({ encoding: "utf-8" });
-  const separator = "---------------------------------------------------------" +
-    "-----------------";
-
-  const ownLicenseFileContent = fs.readFileSync(ownLicenseFile, options) + "\n\n";
-  fs.appendFileSync(paths.build.licenseFile, ownLicenseFileContent, options);
-
-  const robotoLicenseFileContent = separator + "\n\n" +
-                                   fs.readFileSync(robotoLicenseFile, options) + "\n\n";
-  fs.appendFileSync(paths.build.licenseFile, robotoLicenseFileContent, options);
-
-  checker.init({ start: paths.build.app.main }, (error, json) => {
-    for (let name in json) {
-
-      const p = json[name];
-
-      let output = separator + "\n\n";
-      output += "Package:   " + name + "\n";
-      output += "Publisher: " + p.publisher + "\n";
-      output += "License:   " + p.licenses + "\n\n";
-
-      if (p.licenseFile) {
-        output += fs.readFileSync(p.licenseFile, options) + "\n\n";
-      }
-
-      fs.appendFileSync(paths.build.licenseFile, output, options);
-
+  //
+  // Windows
+  //
+  win: {
+    target: 'nsis',
+    icon: path.join(paths.distribution, './win/icon.ico'),
+    fileAssociations: {
+      ext: 'story',
+      name: 'Plotify Geschichte',
+      description: 'Plotify Geschichte',
+      icon: path.join(paths.distribution, './win/icon.ico')
     }
-  });
+  },
+  nsis: {
+    perMachine: true
+  }
 
-});
+}
 
-gulp.task("package:add-license-file-to-packages", () => {
-  fs.readdir(paths.build.packaged, (error, files) => {
-    files.forEach(file => {
-      const filePath = path.join(paths.build.packaged, file);
-      fs.stat(filePath, (error, stats) => {
-        if (stats.isDirectory()) {
-          const oldElectronLicenseFile = path.join(filePath, "LICENSE");
-          const newElectronLicenseFile = path.join(filePath, "LICENSE-electron");
-          fs.rename(oldElectronLicenseFile, newElectronLicenseFile, (error) => {
-            fs.createReadStream(paths.build.licenseFile)
-              .pipe(fs.createWriteStream(oldElectronLicenseFile));
-          });
-        }
-      });
-    });
-  });
-});
+gulp.task('build-linux-installer', () => {
+  return builder.build({
+    platform: 'linux',
+    x64: true,
+    publish: 'never',
+    config
+  })
+})
 
-gulp.task("package:linux", shell.task([
-  "electron-packager " + paths.build.app.main + " plotify " +
-        "--out " + paths.build.packaged + " " +
-        "--electron-version=" + electronVersion + " " +
-        "--platform=linux " +
-        "--arch=x64 " +
-        "--icon=" + paths.icons + "/64.png"
+gulp.task('build-mac-installer', () => {
+  return builder.build({
+    platform: 'mac',
+    x64: true,
+    publish: 'never',
+    config
+  })
+})
 
-]));
+gulp.task('build-win-installer', () => {
+  return builder.build({
+    platform: 'win',
+    x64: true,
+    publish: 'never',
+    config
+  })
+})
 
-gulp.task("installer:linux", shell.task([
-  "electron-installer-debian " +
-        "--src " + paths.build.packaged + "/plotify-linux-x64 " +
-        "--dest " + paths.build.installers + " " +
-        "--arch amd64 " +
-        "--config linux-package.json"
-]));
+//
+// A. Development
+//
 
-gulp.task("package:windows", () => {
-  return new Promise((resolve, reject) => {
+gulp.task('development', ['electron', 'watch-frontend'])
 
-    const options = {
-      dir: paths.build.app.main,
-      arch: "x64",
-      electronVersion: electronVersion,
-      icon: paths.icons + "/64.ico",
-      name: packageJson.name,
-      platform: "win32",
-      overwrite: true,
-      out: paths.build.packaged,
-      asar: true,
-      appCopyright: "Copyright (C) 2017 Sebastian Schmidt und Jasper Meyer",
-      win32metadata: {
-        CompanyName: "Sebastian Schmidt und Jasper Meyer",
-        FileDescription: packageJson.productDescription,
-        ProductName: packageJson.productName,
-        OriginalFilename: packageJson.productName + ".exe"
-      }
-    };
+gulp.task('electron', (callback) => {
+  const process = spawn('electron', [paths.build.app + '/electron/main.js'])
+  process.stdout.on('data', (data) => console.log(data.toString()))
+  process.stderr.on('data', (data) => console.log(data.toString()))
+})
 
-    winPackager(options, (error, appPaths) => {
-      if (error) {
-        reject(error);
-      } else {
-        resolve();
-      }
-    });
+gulp.task('watch-frontend', () => {
+  gulp.watch(paths.frontend + '/**/*.*', ['compile', 'assets'])
+})
 
-  });
-});
+//
+// B. Combined tasks
+//
 
-gulp.task("installer:windows", () => {
-  let result = electronInstaller.createWindowsInstaller({
-    appDirectory: paths.build.packaged + "/plotify-win32-x64",
-    outputDirectory: paths.installers + "/windows",
-    authors: "Sebastian Schmidt und Jasper Meyer",
-    exe: "Plotify.exe",
-    noMsi: true,
-    icon: paths.icons + "/64.ico",
-    setupIcon: paths.icons + "/64.ico",
-    iconUrl: "https://github.com/SebastianSchmidt/plotify/blob/master/src/main/ui/resources/app-icons/64.ico"
-  });
-  return result.then(() => {
-    console.log("Successfully created Windows Installer!");
-  }, (e) => {
-    console.log(`No dice: ${e.message}`);
-  });
-});
+gulp.task('default', () => {
+  sequence('preparation', 'compile', 'assets', 'development')
+})
 
-gulp.task("package:macos", shell.task([
-  "electron-packager " + paths.build.app.main + " plotify " +
-        "--out " + paths.build.packaged + " " +
-        "--electron-version=" + electronVersion + " " +
-        "--platform=darwin " +
-        "--arch=x64 " +
-        "--icon=" + paths.icons + "/64.icns"
-]));
+gulp.task('distribution:linux', () => {
+  sequence('preparation', 'compile', 'assets', 'build-linux-installer')
+})
 
-/* Combined Tasks */
+gulp.task('distribution:mac', () => {
+  sequence('preparation', 'compile', 'assets', 'build-mac-installer')
+})
 
-const buildTasks = babelTasks.concat(assetsTasks);
-const buildTasksDev = babelTasksDev.concat(assetsTasksDev);
-
-gulp.task("default", () => {
-  runSequence(preparationTasks, buildTasksDev, testsTasksDev, electronTasks);
-});
-
-gulp.task("noui", () => {
-  runSequence(preparationTasks, buildTasksDev, testsTasksDev);
-});
-
-gulp.task("test", () => {
-  runSequence(preparationTasks, buildTasks, testsTasks);
-});
-
-gulp.task("distribution:linux", () => {
-  runSequence(preparationTasks,
-              buildTasks,
-              testsTasks,
-              "install-production-dependencies",
-              "rebuild-production-dependencies",
-              "package:generate-license-file",
-              "package:linux",
-              "package:add-license-file-to-packages",
-              "installer:linux");
-});
-
-gulp.task("distribution:windows", () => {
-  runSequence(preparationTasks,
-              buildTasks,
-              testsTasks,
-              "install-production-dependencies",
-              "rebuild-production-dependencies",
-              "package:generate-license-file",
-              "package:windows",
-              "package:add-license-file-to-packages",
-              "installer:windows");
-});
-
-gulp.task("distribution:macos", () => {
-  runSequence(preparationTasks,
-              buildTasks,
-              testsTasks,
-              "install-production-dependencies",
-              "rebuild-production-dependencies",
-              "package:macos",
-              "package:generate-license-file",
-              "package:add-license-file-to-packages");
-});
+gulp.task('distribution:win', () => {
+  sequence('preparation', 'compile', 'assets', 'build-win-installer')
+})

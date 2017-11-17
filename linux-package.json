@@ -1,8 +1,0 @@
-{
-  "icon": {
-    "48x48": "./src/main/ui/resources/app-icons/48.png",
-    "64x64": "./src/main/ui/resources/app-icons/64.png",
-    "96x96": "./src/main/ui/resources/app-icons/96.png",
-    "128x128": "./src/main/ui/resources/app-icons/128.png"
-  }
-}
