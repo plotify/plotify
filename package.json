@@ -2,7 +2,7 @@
   "name": "plotify",
   "version": "0.2.0-SNAPHOT",
   "description": "Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren. Behalte stets den Überblick und erschaffe eine fantastische Geschichte!",
-  "homepage": "https://github.com/plotify/plotify#readme",
+  "homepage": "http://plotify.org",
   "productName": "Plotify",
   "license": "GPL-3.0",
   "author": "Sebastian Schmidt <email@sebastian-schmidt.info>",
