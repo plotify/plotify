@@ -14,3 +14,4 @@ test: off
 
 cache:
   - node_modules
+  - %APPDATA%\Local\electron-builder
