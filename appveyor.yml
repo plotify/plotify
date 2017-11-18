@@ -9,3 +9,8 @@ before_build:
 build_script:
   - npm test
   - npm run dist:win
+
+test: off
+
+cache:
+  - node_modules
