@@ -7,6 +7,20 @@ const sequence = require('run-sequence')
 const checkDependencies = require('check-dependencies')
 const builder = require('electron-builder')
 const path = require('path')
+const fs = require('fs-extra')
+
+const _licenseChecker = require('license-checker')
+const licenseChecker = (options) => {
+  return new Promise((resolve, reject) => {
+    _licenseChecker.init(options, (error, result) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(result)
+      }
+    })
+  })
+}
 
 const paths = {
   src: './src',
@@ -25,7 +39,8 @@ const storyMimeType = 'application/org.plotify.story'
 // 1. Preparation
 // 2. Compile
 // 3. Copy assets
-// 4. Distribution
+// 4. Prepare distribution
+// 5. Distribution
 // A. Development
 // B. Combined tasks
 
@@ -92,7 +107,65 @@ gulp.task('package-json', () => {
 })
 
 //
-// 4. Distribution
+// 4. Prepare distribution
+//
+
+const ownLicenseFile = 'LICENSE'
+const dependenciesLicenseFile = 'LICENSES.dependencies.txt'
+const robotoLicenseFile = 'src/frontend/static/fonts/roboto-license.txt'
+
+const options = Object.freeze({ encoding: 'utf-8' })
+const separator = '\n\n--------------------------------------------------------------------------\n\n'
+
+const copyOwnLicenseFile = async (context) => {
+  const licenseFile = path.join(context.appOutDir, ownLicenseFile)
+  await fs.copy(ownLicenseFile, licenseFile)
+}
+
+const createDependenciesLicenseFile = async (context) => {
+  const file = path.join(context.appOutDir, dependenciesLicenseFile)
+  const fd = await fs.open(file, 'w')
+  await fs.close(fd)
+  return file
+}
+
+const addRobotoLicense = async (targetFile) => {
+  const robotoLicense = await fs.readFile(robotoLicenseFile, options)
+  await fs.appendFile(targetFile, robotoLicense, options)
+}
+
+const addDependenciesLicenses = async (targetFile) => {
+  const dependencies = await licenseChecker({ start: paths.build.app })
+
+  for (const name in dependencies) {
+    const dependency = dependencies[name]
+
+    const header = separator +
+      'Package:   ' + name + '\n' +
+      'Publisher: ' + dependency.publisher + '\n' +
+      'License:   ' + dependency.licenses
+
+    let content = ''
+    if (dependency.licenseFile) {
+      content += '\n\n'
+      content += await fs.readFile(dependency.licenseFile, options)
+    }
+
+    await fs.appendFile(targetFile, header + content)
+  }
+}
+
+const generateLicenseFile = async (context) => {
+  console.log('Generate license files...')
+  await copyOwnLicenseFile(context)
+  const licenseFile = await createDependenciesLicenseFile(context)
+  await addRobotoLicense(licenseFile)
+  await addDependenciesLicenses(licenseFile)
+  console.log('License files generated.')
+}
+
+//
+// 5. Distribution
 //
 
 const config = {
@@ -103,6 +176,7 @@ const config = {
     output: paths.build.dist,
     buildResources: paths.distribution
   },
+  afterPack: generateLicenseFile,
 
   //
   // Linux
