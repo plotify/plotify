@@ -28,11 +28,13 @@ In diesem Dokument ist beschrieben, welche Software für die Weiterentwicklung v
     1. [Git](https://git-scm.com/download/win)
     2. [Node.js 7.x](https://nodejs.org/download/release/v7.10.1/node-v7.10.1-x64.msi)
     3. [C++ Build Tools Windows](https://github.com/felixrieseberg/windows-build-tools#readme)
-2. Repository von Plotify klonen:
+2. Pfad zur Installation von Python zur PATH-Umgebungsvariable von Windows hinzufügen:
+   `C:\Users\%username%\.windows-build-tools\python27\`
+3. Repository von Plotify klonen:
     ```bash
     git clone https://github.com/plotify/plotify.git
     ```
-3. Abhängigkeiten von Plotify installieren:
+4. Abhängigkeiten von Plotify installieren:
     ```bash
     npm install
     npm run rebuild
