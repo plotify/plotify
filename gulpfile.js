@@ -32,11 +32,13 @@ const paths = {
     app: './build/app',
     dist: './build/dist'
   },
-  packageJson: './package.json'
+  packageJson: './package.json',
+  bin: './node_modules/.bin'
 }
 
 const storyMimeType = 'application/org.plotify.story'
 
+// 0. Helper functions
 // 1. Preparation
 // 2. Compile
 // 3. Copy assets
@@ -45,6 +47,18 @@ const storyMimeType = 'application/org.plotify.story'
 // 6. Distribution
 // A. Development
 // B. Combined tasks
+
+//
+// 0. Helper functions
+//
+
+const bin = (name) => {
+  let executable = name
+  if (process.platform === 'win32') {
+    executable += '.cmd'
+  }
+  return path.join(paths.bin, executable)
+}
 
 //
 // 1. Preparation
@@ -114,7 +128,7 @@ gulp.task('package-json', () => {
 
 gulp.task('tests', () => {
   return new Promise((resolve, reject) => {
-    const process = spawn('mocha', ['--colors', paths.build.app + '/**/*.spec.js'])
+    const process = spawn(bin('mocha'), ['--colors', paths.build.app + '/**/*.spec.js'])
 
     process.on('exit', (code) => {
       if (code === 0) {
@@ -191,6 +205,7 @@ const generateLicenseFile = async (context) => {
 // 6. Distribution
 //
 
+// TODO Filter test files (*.spec.js)
 const config = {
 
   appId: 'org.plotify',
@@ -276,7 +291,7 @@ gulp.task('build-win-installer', () => {
 gulp.task('development-frontend', ['electron', 'watch-frontend'])
 
 gulp.task('electron', (callback) => {
-  const process = spawn('electron', [paths.build.app + '/electron/main.js'])
+  const process = spawn(bin('electron'), [paths.build.app + '/electron/main.js'])
   process.stdout.on('data', (data) => console.log(data.toString()))
   process.stderr.on('data', (data) => console.log(data.toString()))
 })
