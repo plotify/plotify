@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+
 import { BrowserWindow, Menu, app, shell } from 'electron'
 import { registerRequestHandlers, setShouldSaveState } from './saved-state'
 

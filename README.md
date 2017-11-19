@@ -74,6 +74,7 @@ Quellcode von Plotify herunterladen und die Abhängigkeiten installieren.
 git clone git@github.com:plotify/plotify.git
 git checkout reborn
 npm install
+npm run rebuild
 ```
 
 Plotify im Entwicklungsmodus starten:

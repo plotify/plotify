@@ -19,6 +19,7 @@
   "main": "electron/main.js",
   "private": true,
   "dependencies": {
+    "babel-polyfill": "6.26.0",
     "classnames": "2.2.5",
     "electron-is-dev": "0.3.0",
     "fs-extra": "4.0.2",
@@ -31,6 +32,7 @@
     "react-redux": "5.0.6",
     "react-responsive": "4.0.0",
     "redux": "3.7.2",
+    "sqlite3": "3.1.13",
     "uuid": "3.1.0"
   },
   "devDependencies": {
@@ -50,6 +52,7 @@
   },
   "scripts": {
     "start": "gulp",
+    "rebuild": "electron-builder install-app-deps",
     "dist:linux": "gulp distribution:linux",
     "dist:mac": "gulp distribution:mac",
     "dist:win": "gulp distribution:win",
