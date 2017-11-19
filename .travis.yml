@@ -12,6 +12,9 @@ cache:
     - $HOME/.cache/electron
     - $HOME/.cache/electron-builder
 
+before_script:
+  - npm run rebuild
+
 script:
   - npm test
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run dist:linux ; fi
