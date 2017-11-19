@@ -39,6 +39,7 @@
     "babel-core": "6.26.0",
     "babel-plugin-transform-react-jsx": "6.24.1",
     "babel-preset-env": "1.6.1",
+    "chai": "4.1.2",
     "check-dependencies": "1.1.0",
     "electron": "1.7.9",
     "electron-builder": "19.45.5",
@@ -47,15 +48,18 @@
     "gulp-cached": "1.1.1",
     "gulp-clean": "0.3.2",
     "license-checker": "15.0.0",
+    "mocha": "4.0.1",
     "run-sequence": "2.2.0",
     "standard": "10.0.3"
   },
   "scripts": {
     "start": "gulp",
     "rebuild": "electron-builder install-app-deps",
-    "dist:linux": "gulp distribution:linux",
-    "dist:mac": "gulp distribution:mac",
-    "dist:win": "gulp distribution:win",
-    "test": "standard"
+    "dev:frontend": "gulp dev:frontend",
+    "dev:backend": "gulp dev:backend",
+    "dist:linux": "gulp dist:linux",
+    "dist:mac": "gulp dist:mac",
+    "dist:win": "gulp dist:win",
+    "lint": "standard"
   }
 }

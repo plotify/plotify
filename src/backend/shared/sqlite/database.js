@@ -1,5 +1,8 @@
 export default class Database {
   constructor (connection) {
+    if (connection === null || typeof connection !== 'object') {
+      throw new TypeError('connection must be an object.')
+    }
     this.connection = connection
   }
 

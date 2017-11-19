@@ -25,6 +25,7 @@ const licenseChecker = (options) => {
 const paths = {
   src: './src',
   frontend: './src/frontend',
+  backend: './src/backend',
   distribution: './distribution',
   build: {
     root: './build',
@@ -39,8 +40,9 @@ const storyMimeType = 'application/org.plotify.story'
 // 1. Preparation
 // 2. Compile
 // 3. Copy assets
-// 4. Prepare distribution
-// 5. Distribution
+// 4. Execute tests
+// 5. Prepare distribution
+// 6. Distribution
 // A. Development
 // B. Combined tasks
 
@@ -107,7 +109,31 @@ gulp.task('package-json', () => {
 })
 
 //
-// 4. Prepare distribution
+// 4. Execute tests
+//
+
+const mocha = './node_modules/mocha/bin/mocha'
+const mochaArguments = ['--colors', paths.build.app + '/**/*.spec.js']
+
+gulp.task('tests', () => {
+  return new Promise((resolve, reject) => {
+    const process = spawn(mocha, mochaArguments)
+
+    process.on('exit', (code) => {
+      if (code === 0) {
+        resolve()
+      } else {
+        reject(code)
+      }
+    })
+
+    process.stdout.on('data', (data) => console.log(data.toString()))
+    process.stderr.on('data', (data) => console.log(data.toString()))
+  })
+})
+
+//
+// 5. Prepare distribution
 //
 
 const ownLicenseFile = 'LICENSE'
@@ -165,7 +191,7 @@ const generateLicenseFile = async (context) => {
 }
 
 //
-// 5. Distribution
+// 6. Distribution
 //
 
 const config = {
@@ -250,7 +276,7 @@ gulp.task('build-win-installer', () => {
 // A. Development
 //
 
-gulp.task('development', ['electron', 'watch-frontend'])
+gulp.task('development-frontend', ['electron', 'watch-frontend'])
 
 gulp.task('electron', (callback) => {
   const process = spawn('electron', [paths.build.app + '/electron/main.js'])
@@ -262,22 +288,40 @@ gulp.task('watch-frontend', () => {
   gulp.watch(paths.frontend + '/**/*.*', ['compile', 'assets'])
 })
 
+gulp.task('development-backend', ['tests', 'watch-backend'])
+
+gulp.task('watch-backend', () => {
+  gulp.watch(paths.backend + '/**/*.*', ['compile-and-test'])
+})
+
+gulp.task('compile-and-test', () => {
+  sequence('compile', 'assets', 'tests')
+})
+
 //
 // B. Combined tasks
 //
 
 gulp.task('default', () => {
-  sequence('preparation', 'compile', 'assets', 'development')
+  sequence('preparation', 'compile', 'assets', 'electron')
 })
 
-gulp.task('distribution:linux', () => {
-  sequence('preparation', 'compile', 'assets', 'build-linux-installer')
+gulp.task('dev:frontend', () => {
+  sequence('preparation', 'compile', 'assets', 'development-frontend')
 })
 
-gulp.task('distribution:mac', () => {
-  sequence('preparation', 'compile', 'assets', 'build-mac-installer')
+gulp.task('dev:backend', () => {
+  sequence('preparation', 'compile', 'assets', 'development-backend')
 })
 
-gulp.task('distribution:win', () => {
-  sequence('preparation', 'compile', 'assets', 'build-win-installer')
+gulp.task('dist:linux', () => {
+  sequence('preparation', 'compile', 'assets', 'tests', 'build-linux-installer')
+})
+
+gulp.task('dist:mac', () => {
+  sequence('preparation', 'compile', 'assets', 'tests', 'build-mac-installer')
+})
+
+gulp.task('dist:win', () => {
+  sequence('preparation', 'compile', 'assets', 'tests', 'build-win-installer')
 })
