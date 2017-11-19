@@ -8,19 +8,21 @@ const checkDependencies = require('check-dependencies')
 const builder = require('electron-builder')
 const path = require('path')
 const fs = require('fs-extra')
+const licenseCheckerDirect = require('license-checker')
 
-const _licenseChecker = require('license-checker')
-const licenseChecker = (options) => {
-  return new Promise((resolve, reject) => {
-    _licenseChecker.init(options, (error, result) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve(result)
-      }
-    })
-  })
-}
+// 0. Constants and helper functions
+// 1. Preparation
+// 2. Compile
+// 3. Copy assets
+// 4. Execute tests
+// 5. Prepare distribution
+// 6. Distribution
+// A. Development
+// B. Combined tasks
+
+//
+// 0. Constants and helper functions
+//
 
 const paths = {
   src: './src',
@@ -38,26 +40,24 @@ const paths = {
 
 const storyMimeType = 'application/org.plotify.story'
 
-// 0. Helper functions
-// 1. Preparation
-// 2. Compile
-// 3. Copy assets
-// 4. Execute tests
-// 5. Prepare distribution
-// 6. Distribution
-// A. Development
-// B. Combined tasks
-
-//
-// 0. Helper functions
-//
-
 const bin = (name) => {
   let executable = name
   if (process.platform === 'win32') {
     executable += '.cmd'
   }
   return path.join(paths.bin, executable)
+}
+
+const licenseChecker = (options) => {
+  return new Promise((resolve, reject) => {
+    licenseCheckerDirect.init(options, (error, result) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(result)
+      }
+    })
+  })
 }
 
 //
