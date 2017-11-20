@@ -96,9 +96,7 @@ gulp.task('compile', () => {
     .pipe(cache('javascript', { optimizeMemory: true }))
     .pipe(babel({
       presets: ['env'],
-      plugins: [
-        'transform-react-jsx'
-      ]
+      plugins: ['transform-react-jsx']
     }))
     .pipe(gulp.dest(paths.build.app))
 })
@@ -307,7 +305,7 @@ gulp.task('watch-frontend', () => {
   gulp.watch(paths.frontend + '/**/*.*', ['compile', 'assets'])
 })
 
-gulp.task('development-backend', ['tests', 'watch-backend'])
+gulp.task('development-backend', ['watch-backend'])
 
 gulp.task('watch-backend', () => {
   gulp.watch(paths.backend + '/**/*.*', ['compile-and-test'])
@@ -326,11 +324,11 @@ gulp.task('default', () => {
 })
 
 gulp.task('dev:frontend', () => {
-  sequence('preparation', 'compile', 'assets', 'development-frontend')
+  sequence('preparation', 'compile', 'assets', 'tests', 'development-frontend')
 })
 
 gulp.task('dev:backend', () => {
-  sequence('preparation', 'compile', 'assets', 'development-backend')
+  sequence('preparation', 'compile', 'assets', 'tests', 'development-backend')
 })
 
 gulp.task('dist:linux', () => {
