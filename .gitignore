@@ -1,6 +1,6 @@
 # Build directories
 build/
-installers/
+.nyc_output/
 
 # Node modules
 node_modules/

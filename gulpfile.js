@@ -10,6 +10,42 @@ const path = require('path')
 const fs = require('fs-extra')
 const licenseCheckerDirect = require('license-checker')
 
+//
+// Recommended tasks
+//
+
+gulp.task('default', () => {
+  sequence('preparation', 'compile', 'assets', 'tests', 'electron')
+})
+
+gulp.task('test', () => {
+  sequence('preparation', 'compile', 'assets', 'tests')
+})
+
+gulp.task('coverage', () => {
+  sequence('preparation', 'compile', 'assets', 'coverage')
+})
+
+gulp.task('dev:frontend', () => {
+  sequence('preparation', 'compile', 'assets', 'tests', 'development-frontend')
+})
+
+gulp.task('dev:backend', () => {
+  sequence('preparation', 'compile', 'assets', 'tests', 'development-backend')
+})
+
+gulp.task('dist:linux', () => {
+  sequence('preparation', 'compile', 'assets', 'tests', 'build-linux-installer')
+})
+
+gulp.task('dist:mac', () => {
+  sequence('preparation', 'compile', 'assets', 'tests', 'build-mac-installer')
+})
+
+gulp.task('dist:win', () => {
+  sequence('preparation', 'compile', 'assets', 'tests', 'build-win-installer')
+})
+
 // 0. Constants and helper functions
 // 1. Preparation
 // 2. Compile
@@ -17,8 +53,7 @@ const licenseCheckerDirect = require('license-checker')
 // 4. Execute tests
 // 5. Prepare distribution
 // 6. Distribution
-// A. Development
-// B. Combined tasks
+// 7. Development
 
 //
 // 0. Constants and helper functions
@@ -152,6 +187,17 @@ const mochaOptions = [
 
 gulp.task('tests', () => {
   return executeBinary('mocha', mochaOptions)
+})
+
+const istanbulOptions = [
+  '-x',
+  '**/*.spec.js',
+  bin('mocha'),
+  ...mochaOptions
+]
+
+gulp.task('coverage', () => {
+  return executeBinary('nyc', istanbulOptions)
 })
 
 //
@@ -296,7 +342,7 @@ gulp.task('build-win-installer', () => {
 })
 
 //
-// A. Development
+// 7. Development
 //
 
 gulp.task('development-frontend', ['electron', 'watch-frontend'])
@@ -317,32 +363,4 @@ gulp.task('watch-backend', () => {
 
 gulp.task('compile-and-test', () => {
   sequence('compile', 'assets', 'tests')
-})
-
-//
-// B. Combined tasks
-//
-
-gulp.task('default', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'electron')
-})
-
-gulp.task('dev:frontend', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'development-frontend')
-})
-
-gulp.task('dev:backend', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'development-backend')
-})
-
-gulp.task('dist:linux', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'build-linux-installer')
-})
-
-gulp.task('dist:mac', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'build-mac-installer')
-})
-
-gulp.task('dist:win', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'build-win-installer')
 })

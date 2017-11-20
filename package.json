@@ -50,6 +50,7 @@
     "gulp-clean": "0.3.2",
     "license-checker": "15.0.0",
     "mocha": "4.0.1",
+    "nyc": "11.3.0",
     "run-sequence": "2.2.0",
     "sinon": "4.1.2",
     "sinon-chai": "2.14.0",
@@ -57,12 +58,14 @@
   },
   "scripts": {
     "start": "gulp",
+    "test": "gulp test",
+    "coverage": "gulp coverage",
+    "lint": "standard",
     "rebuild": "electron-builder install-app-deps",
     "dev:frontend": "gulp dev:frontend",
     "dev:backend": "gulp dev:backend",
     "dist:linux": "gulp dist:linux",
     "dist:mac": "gulp dist:mac",
-    "dist:win": "gulp dist:win",
-    "lint": "standard"
+    "dist:win": "gulp dist:win"
   }
 }
