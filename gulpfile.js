@@ -126,9 +126,16 @@ gulp.task('package-json', () => {
 // 4. Execute tests
 //
 
+const mochaOptions = [
+  '--colors',
+  '--require',
+  'babel-polyfill',
+  paths.build.app + '/**/*.spec.js'
+]
+
 gulp.task('tests', () => {
   return new Promise((resolve, reject) => {
-    const process = spawn(bin('mocha'), ['--colors', paths.build.app + '/**/*.spec.js'])
+    const process = spawn(bin('mocha'), mochaOptions)
 
     process.on('exit', (code) => {
       if (code === 0) {

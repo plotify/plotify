@@ -1,5 +1,3 @@
-import 'babel-polyfill'
-
 import { beforeEach, describe, it } from 'mocha'
 import chai, { expect } from 'chai'
 import { match, stub } from 'sinon'
