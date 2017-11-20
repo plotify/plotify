@@ -21,28 +21,20 @@ describe('Database', () => {
   })
 
   describe('#constructor', () => {
-    describe('with object', () => {
-      it('should construct object', () => {
-        expect(new Database({})).to.be.an('object')
-      })
+    it('should construct object when called with object', () => {
+      expect(new Database({})).to.be.an('object')
     })
 
-    describe('without argument', () => {
-      it('should throw TypeError', () => {
-        expect(() => new Database()).to.throw(TypeError)
-      })
+    it('should throw TypeError when called without argument', () => {
+      expect(() => new Database()).to.throw(TypeError)
     })
 
-    describe('with not an object', () => {
-      it('should throw TypeError', () => {
-        expect(() => new Database('foobar')).to.throw(TypeError)
-      })
+    it('should throw TypeError when called without an object', () => {
+      expect(() => new Database('foobar')).to.throw(TypeError)
     })
 
-    describe('with null', () => {
-      it('should throw TypeError', () => {
-        expect(() => new Database(null)).to.throw(TypeError)
-      })
+    it('should throw TypeError when called with null', () => {
+      expect(() => new Database(null)).to.throw(TypeError)
     })
   })
 
@@ -56,17 +48,13 @@ describe('Database', () => {
       expect(connection.close).to.have.been.calledWith(match.func)
     })
 
-    describe('if the connection was closed successfully', () => {
-      it('returns without error', () => {
-        return expect(database.close()).to.be.fulfilled
-      })
+    it('returns without error when the connection was closed successfully', () => {
+      return expect(database.close()).to.be.fulfilled
     })
 
-    describe('if the connection could not be closed', () => {
-      it('throws error', () => {
-        connection.close = stub().callsArgWith(0, new Error())
-        return expect(database.close()).to.be.rejected
-      })
+    it('throws error when the connection could not be closed', () => {
+      connection.close = stub().callsArgWith(0, new Error())
+      return expect(database.close()).to.be.rejected
     })
   })
 })
