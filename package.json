@@ -40,6 +40,7 @@
     "babel-plugin-transform-react-jsx": "6.24.1",
     "babel-preset-env": "1.6.1",
     "chai": "4.1.2",
+    "chai-as-promised": "7.1.1",
     "check-dependencies": "1.1.0",
     "electron": "1.7.9",
     "electron-builder": "19.45.5",
@@ -50,6 +51,8 @@
     "license-checker": "15.0.0",
     "mocha": "4.0.1",
     "run-sequence": "2.2.0",
+    "sinon": "4.1.2",
+    "sinon-chai": "2.14.0",
     "standard": "10.0.3"
   },
   "scripts": {
