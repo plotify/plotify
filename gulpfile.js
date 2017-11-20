@@ -203,6 +203,7 @@ const istanbulOptions = [
   ...mochaOptions
 ]
 
+// TODO Coverage basierend auf src/ und nicht auf build/app/
 gulp.task('test-coverage', () => {
   return executeBinary('nyc', istanbulOptions)
 })
