@@ -19,6 +19,10 @@ export default class Database {
   }
 
   exec (sql) {
+    if (sql === null || typeof sql !== 'string') {
+      throw new TypeError('sql must be a string.')
+    }
+
     return new Promise((resolve, reject) => {
       this.connection.exec(sql, (error) => {
         if (error) {

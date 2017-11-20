@@ -31,7 +31,7 @@ gulp.task('dev:frontend', () => {
 })
 
 gulp.task('dev:backend', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'development-backend')
+  sequence('preparation', 'compile', 'assets', 'tests-without-exit', 'development-backend')
 })
 
 gulp.task('dist:linux', () => {
@@ -187,6 +187,10 @@ const mochaOptions = [
 
 gulp.task('tests', () => {
   return executeBinary('mocha', mochaOptions)
+})
+
+gulp.task('tests-without-exit', () => {
+  executeBinary('mocha', mochaOptions)
 })
 
 const istanbulOptions = [
@@ -365,5 +369,5 @@ gulp.task('watch-backend', () => {
 })
 
 gulp.task('compile-and-test', () => {
-  sequence('compile', 'assets', 'tests')
+  sequence('compile', 'assets', 'tests-without-exit')
 })
