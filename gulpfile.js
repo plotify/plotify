@@ -23,7 +23,7 @@ gulp.task('test', () => {
 })
 
 gulp.task('coverage', () => {
-  sequence('preparation', 'compile', 'assets', 'coverage')
+  sequence('preparation', 'compile', 'assets', 'test-coverage')
 })
 
 gulp.task('dev:frontend', () => {
@@ -190,13 +190,16 @@ gulp.task('tests', () => {
 })
 
 const istanbulOptions = [
-  '-x',
-  '**/*.spec.js',
+  '--all',
+  '--include',
+  'build/app/**/*.js',
+  '--exclude',
+  'build/app/**/*.spec.js',
   bin('mocha'),
   ...mochaOptions
 ]
 
-gulp.task('coverage', () => {
+gulp.task('test-coverage', () => {
   return executeBinary('nyc', istanbulOptions)
 })
 
