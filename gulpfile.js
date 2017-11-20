@@ -48,6 +48,23 @@ const bin = (name) => {
   return path.join(paths.bin, executable)
 }
 
+const executeBinary = (name, args) => {
+  return new Promise((resolve, reject) => {
+    const child = spawn(bin(name), args)
+
+    child.on('exit', (code) => {
+      if (code === 0) {
+        resolve()
+      } else {
+        reject(code)
+      }
+    })
+
+    child.stdout.on('data', (data) => process.stdout.write(data))
+    child.stderr.on('data', (data) => process.stderr.write(data))
+  })
+}
+
 const licenseChecker = (options) => {
   return new Promise((resolve, reject) => {
     licenseCheckerDirect.init(options, (error, result) => {
@@ -126,26 +143,15 @@ gulp.task('package-json', () => {
 
 const mochaOptions = [
   '--colors',
+  '--reporter',
+  'progress',
   '--require',
   'babel-polyfill',
   paths.build.app + '/**/*.spec.js'
 ]
 
 gulp.task('tests', () => {
-  return new Promise((resolve, reject) => {
-    const process = spawn(bin('mocha'), mochaOptions)
-
-    process.on('exit', (code) => {
-      if (code === 0) {
-        resolve()
-      } else {
-        reject(code)
-      }
-    })
-
-    process.stdout.on('data', (data) => console.log(data.toString()))
-    process.stderr.on('data', (data) => console.log(data.toString()))
-  })
+  return executeBinary('mocha', mochaOptions)
 })
 
 //
@@ -296,9 +302,7 @@ gulp.task('build-win-installer', () => {
 gulp.task('development-frontend', ['electron', 'watch-frontend'])
 
 gulp.task('electron', (callback) => {
-  const process = spawn(bin('electron'), [paths.build.app + '/electron/main.js'])
-  process.stdout.on('data', (data) => console.log(data.toString()))
-  process.stderr.on('data', (data) => console.log(data.toString()))
+  return executeBinary('electron', [paths.build.app + '/electron/main.js'])
 })
 
 gulp.task('watch-frontend', () => {
