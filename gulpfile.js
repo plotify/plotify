@@ -315,7 +315,7 @@ gulp.task('compile-and-test', () => {
 //
 
 gulp.task('default', () => {
-  sequence('preparation', 'compile', 'assets', 'electron')
+  sequence('preparation', 'compile', 'assets', 'tests', 'electron')
 })
 
 gulp.task('dev:frontend', () => {
