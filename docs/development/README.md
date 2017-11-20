@@ -10,10 +10,6 @@
 
 <table>
   <tr>
-    <th>Category</th>
-    <th>Badges</th>
-  </tr>
-  <tr>
     <th>Build</th>
     <td>
       <a href="https://travis-ci.org/plotify/plotify"><img src="https://img.shields.io/travis/plotify/plotify/master.svg" alt="Build status: Linux &amp; macOS" /></a>
