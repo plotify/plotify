@@ -15,42 +15,42 @@ const licenseCheckerDirect = require('license-checker')
 //
 
 gulp.task('default', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'electron')
+  sequence('preparation', 'tests', 'compile', 'assets', 'electron')
 })
 
 gulp.task('test', () => {
-  sequence('preparation', 'compile', 'assets', 'tests')
+  sequence('tests')
 })
 
 gulp.task('coverage', () => {
-  sequence('preparation', 'compile', 'assets', 'test-coverage')
+  sequence('test-coverage')
 })
 
 gulp.task('dev:frontend', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'development-frontend')
+  sequence('preparation', 'tests', 'compile', 'assets', 'development-frontend')
 })
 
 gulp.task('dev:backend', () => {
-  sequence('preparation', 'compile', 'assets', 'tests-without-exit', 'development-backend')
+  sequence('preparation', 'development-backend')
 })
 
 gulp.task('dist:linux', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'build-linux-installer')
+  sequence('preparation', 'tests', 'compile', 'assets', 'build-linux-installer')
 })
 
 gulp.task('dist:mac', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'build-mac-installer')
+  sequence('preparation', 'tests', 'compile', 'assets', 'build-mac-installer')
 })
 
 gulp.task('dist:win', () => {
-  sequence('preparation', 'compile', 'assets', 'tests', 'build-win-installer')
+  sequence('preparation', 'tests', 'compile', 'assets', 'build-win-installer')
 })
 
 // 0. Constants and helper functions
 // 1. Preparation
-// 2. Compile
-// 3. Copy assets
-// 4. Execute tests
+// 2. Execute tests
+// 3. Compile
+// 4. Copy assets
 // 5. Prepare distribution
 // 6. Distribution
 // 7. Development
@@ -139,22 +139,47 @@ gulp.task('check-dependencies', () => {
 })
 
 //
-// 2. Compile
+// 2. Execute tests
+//
+
+const jestOptions = [
+  '--colors',
+  'src/'
+]
+
+const coverageOptions = [
+  '--coverage',
+  '--collectCoverageFrom=src/**/*.js',
+  ...jestOptions
+]
+
+gulp.task('tests', () => {
+  return executeBinary('jest', jestOptions)
+})
+
+gulp.task('tests-without-exit', () => {
+  executeBinary('jest', jestOptions)
+})
+
+gulp.task('test-coverage', () => {
+  return executeBinary('jest', coverageOptions)
+})
+
+//
+// 3. Compile
 //
 
 gulp.task('compile', () => {
+  const babelrc = JSON.parse(fs.readFileSync('.babelrc', 'utf-8'))
   return gulp
     .src(paths.src + '/**/*.js')
     .pipe(cache('javascript', { optimizeMemory: true }))
-    .pipe(babel({
-      presets: ['env'],
-      plugins: ['transform-react-jsx']
-    }))
+    .pipe(babel(babelrc))
     .pipe(gulp.dest(paths.build.app))
 })
 
 //
-// 3. Copy assets
+// 4. Copy assets
 //
 
 gulp.task('assets', ['static-files', 'package-json'])
@@ -170,42 +195,6 @@ gulp.task('package-json', () => {
   return gulp
     .src(paths.packageJson)
     .pipe(gulp.dest(paths.build.app))
-})
-
-//
-// 4. Execute tests
-//
-
-const mochaOptions = [
-  '--colors',
-  '--reporter',
-  'progress',
-  '--require',
-  'babel-polyfill',
-  paths.build.app + '/**/*.spec.js'
-]
-
-gulp.task('tests', () => {
-  return executeBinary('mocha', mochaOptions)
-})
-
-gulp.task('tests-without-exit', () => {
-  executeBinary('mocha', mochaOptions)
-})
-
-const istanbulOptions = [
-  '--all',
-  '--include',
-  'build/app/**/*.js',
-  '--exclude',
-  'build/app/**/*.spec.js',
-  bin('mocha'),
-  ...mochaOptions
-]
-
-// TODO Coverage basierend auf src/ und nicht auf build/app/
-gulp.task('test-coverage', () => {
-  return executeBinary('nyc', istanbulOptions)
 })
 
 //
@@ -363,12 +352,8 @@ gulp.task('watch-frontend', () => {
   gulp.watch(paths.frontend + '/**/*.*', ['compile', 'assets'])
 })
 
-gulp.task('development-backend', ['watch-backend'])
+gulp.task('development-backend', ['tests-without-exit', 'watch-backend'])
 
 gulp.task('watch-backend', () => {
-  gulp.watch(paths.backend + '/**/*.*', ['compile-and-test'])
-})
-
-gulp.task('compile-and-test', () => {
-  sequence('compile', 'assets', 'tests-without-exit')
+  gulp.watch(paths.backend + '/**/*.*', ['tests-without-exit'])
 })

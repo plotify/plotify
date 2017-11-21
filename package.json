@@ -37,10 +37,9 @@
   },
   "devDependencies": {
     "babel-core": "6.26.0",
-    "babel-plugin-transform-react-jsx": "6.24.1",
+    "babel-jest": "21.2.0",
     "babel-preset-env": "1.6.1",
-    "chai": "4.1.2",
-    "chai-as-promised": "7.1.1",
+    "babel-preset-react": "6.24.1",
     "check-dependencies": "1.1.0",
     "coveralls": "3.0.0",
     "electron": "1.7.9",
@@ -49,19 +48,17 @@
     "gulp-babel": "7.0.0",
     "gulp-cached": "1.1.1",
     "gulp-clean": "0.3.2",
+    "jest": "21.2.1",
     "license-checker": "15.0.0",
-    "mocha": "4.0.1",
-    "nyc": "11.3.0",
+    "react-test-renderer": "16.1.1",
     "run-sequence": "2.2.0",
-    "sinon": "4.1.2",
-    "sinon-chai": "2.14.0",
     "standard": "10.0.3"
   },
   "scripts": {
     "start": "gulp",
     "test": "gulp test",
     "coverage": "gulp coverage",
-    "report-coverage": "nyc report --reporter=text-lcov | coveralls",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "lint": "standard",
     "rebuild": "electron-builder install-app-deps",
     "dev:frontend": "gulp dev:frontend",
@@ -69,5 +66,8 @@
     "dist:linux": "gulp dist:linux",
     "dist:mac": "gulp dist:mac",
     "dist:win": "gulp dist:win"
+  },
+  "standard": {
+    "env": ["jest"]
   }
 }
