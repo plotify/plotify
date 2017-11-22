@@ -19,8 +19,8 @@ export default class Database {
   }
 
   exec (sql) {
-    validateSql(sql)
     return new Promise((resolve, reject) => {
+      validateSql(sql)
       this.connection.exec(sql, (error) => {
         if (error) {
           reject(error)
@@ -32,9 +32,9 @@ export default class Database {
   }
 
   run (sql, params) {
-    validateSql(sql)
-    validateParams(params)
     return new Promise((resolve, reject) => {
+      validateSql(sql)
+      validateParams(params)
       this.connection.run(sql, params, (error) => {
         if (error) {
           reject(error)

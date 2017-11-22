@@ -53,7 +53,7 @@ describe('#close', () => {
 describe('#exec', () => {
   const sql = 'SELECT foo FROM bar;'
 
-  test('returns a promise when called with SQL statement', () => {
+  test('returns a promise', () => {
     expect(database.exec(sql)).toBeInstanceOf(Promise)
   })
 
@@ -73,21 +73,21 @@ describe('#exec', () => {
     return expect(database.exec(sql)).rejects.toBe(error)
   })
 
-  test('throws TypeError when called without argument', () => {
-    expect(() => database.exec()).toThrow(TypeError)
+  test('rejects to TypeError when called without argument', () => {
+    return expect(database.exec()).rejects.toBeInstanceOf(TypeError)
   })
 
-  test('throws TypeError when called without an SQL statement', () => {
-    expect(() => database.exec(123)).toThrow(TypeError)
+  test('rejects to TypeError when called without an SQL statement', () => {
+    return expect(database.exec(123)).rejects.toBeInstanceOf(TypeError)
   })
 
-  test('throws TypeError when called with null', () => {
-    expect(() => database.exec(null)).toThrow(TypeError)
+  test('rejects to TypeError when called with null', () => {
+    return expect(database.exec(null)).rejects.toBeInstanceOf(TypeError)
   })
 })
 
 describe('#run', () => {
-  const sql = 'UPDATE example SET name = ? WHERE id = ?'
+  const sql = 'UPDATE example SET name = ? WHERE id = ?;'
   const params = ['Max', 1]
 
   describe('with SQL statement and without parameters', () => {
@@ -136,19 +136,19 @@ describe('#run', () => {
     })
   })
 
-  test('throws TypeError when called without argument', () => {
-    expect(() => database.run()).toThrow(TypeError)
+  test('rejects to TypeError when called without argument', () => {
+    return expect(database.run()).rejects.toBeInstanceOf(TypeError)
   })
 
-  test('throws TypeError when called without an SQL statement', () => {
-    expect(() => database.run(123)).toThrow(TypeError)
+  test('rejects to TypeError when called without an SQL statement', () => {
+    return expect(database.run(123)).rejects.toBeInstanceOf(TypeError)
   })
 
-  test('throws TypeError when called with null', () => {
-    expect(() => database.run(null)).toThrow(TypeError)
+  test('rejects to TypeError when called with null', () => {
+    return expect(database.run(null)).rejects.toBeInstanceOf(TypeError)
   })
 
-  test('throws TypeError when no array is used for the parameters', () => {
-    expect(() => database.run(sql, 'Max', 1)).toThrow(TypeError)
+  test('rejects to TypeError when no array is used for the parameters', () => {
+    return expect(database.run(sql, 'Max', 1)).rejects.toBeInstanceOf(TypeError)
   })
 })
