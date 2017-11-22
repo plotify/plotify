@@ -31,4 +31,10 @@
       <a href="https://coveralls.io/github/plotify/plotify?branch=master"><img src="https://coveralls.io/repos/github/plotify/plotify/badge.svg?branch=master" alt="Test coverage" /></a>
     </td>
   </tr>
+  <tr>
+    <th>Security</th>
+    <td>
+      <a href="https://snyk.io/test/github/plotify/plotify"><img src="https://snyk.io/test/github/plotify/plotify/badge.svg" alt="Known Vulnerabilities" /></a>
+    </td>
+  </tr>
 </table>
