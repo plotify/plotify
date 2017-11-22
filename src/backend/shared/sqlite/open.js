@@ -4,9 +4,9 @@ import { parse } from 'path'
 import sqlite3 from 'sqlite3'
 
 const open = (path, mode) => {
-  validatePath(path)
-  validateMode(mode)
   return new Promise((resolve, reject) => {
+    validatePath(path)
+    validateMode(mode)
     const connection = new sqlite3.Database(path, mode, (error) => {
       if (error) {
         reject(error)
