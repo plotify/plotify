@@ -1,6 +1,5 @@
-import { existsSync, unlinkSync } from 'fs'
-
 import Database from './database'
+import { existsSync } from 'fs'
 import mode from './mode'
 import open from './open'
 import { tmpNameSync } from 'tmp'
@@ -10,11 +9,6 @@ const createMode = mode.OPEN_CREATE | mode.OPEN_READWRITE
 let path
 beforeEach(() => {
   path = tmpNameSync()
-})
-afterEach(() => {
-  if (existsSync(path)) {
-    unlinkSync(path)
-  }
 })
 
 test('resolves to database connection when called with valid path and mode', () => {

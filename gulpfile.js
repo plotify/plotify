@@ -19,11 +19,11 @@ gulp.task('default', () => {
 })
 
 gulp.task('test', () => {
-  sequence('tests')
+  sequence('preparation', 'tests')
 })
 
 gulp.task('coverage', () => {
-  sequence('test-coverage')
+  sequence('preparation', 'test-coverage')
 })
 
 gulp.task('dev:frontend', () => {
@@ -143,8 +143,7 @@ gulp.task('check-dependencies', () => {
 //
 
 const jestOptions = [
-  '--colors',
-  'src/'
+  '--colors'
 ]
 
 const coverageOptions = [
