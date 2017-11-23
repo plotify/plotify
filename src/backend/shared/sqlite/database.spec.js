@@ -6,7 +6,8 @@ beforeEach(() => {
   connection = {
     close: jest.fn(callback => callback()),
     exec: jest.fn((sql, callback) => callback()),
-    run: jest.fn((sql, params, callback) => callback())
+    run: jest.fn((sql, params, callback) => callback()),
+    get: jest.fn((sql, params, callback) => callback())
   }
   database = new Database(connection)
 })
@@ -150,5 +151,86 @@ describe('#run', () => {
 
   test('rejects to TypeError when no array is used for the parameters', () => {
     return expect(database.run(sql, 'Max', 1)).rejects.toBeInstanceOf(TypeError)
+  })
+})
+
+describe('#get', () => {
+  const sql = 'SELECT foo FROM bar WHERE id = ?;'
+  const params = [1]
+
+  describe('with SQL statement and without parameters', () => {
+    test('returns a promise', () => {
+      expect(database.get(sql)).toBeInstanceOf(Promise)
+    })
+
+    test('tries to execute the SQL statement', async () => {
+      await database.get(sql)
+      expect(connection.get.mock.calls.length).toBe(1)
+      expect(connection.get.mock.calls[0][0]).toBe(sql)
+      expect(connection.get.mock.calls[0][1]).toBe(undefined)
+    })
+
+    test('resolves to row when the SQL statement was executed successfully', () => {
+      const row = { foo: 'Hello world' }
+      connection.get = jest.fn((sql, params, callback) => callback(null, row))
+      return expect(database.get(sql)).resolves.toBe(row)
+    })
+
+    test('resolves to undefined when the SQL statement was executed successfully and the result set is empty', () => {
+      connection.get = jest.fn((sql, params, callback) => callback(null, undefined))
+      return expect(database.get(sql)).resolves.toBeUndefined()
+    })
+
+    test('rejects when the SQL statement could not be executed', () => {
+      const error = new Error()
+      connection.get = jest.fn((sql, params, callback) => callback(error))
+      return expect(database.get(sql)).rejects.toBe(error)
+    })
+  })
+
+  describe('with SQL statement and with parameters', () => {
+    test('returns a promise', () => {
+      expect(database.get(sql, params)).toBeInstanceOf(Promise)
+    })
+
+    test('tries to execute the SQL statement with parameters', async () => {
+      await database.get(sql, params)
+      expect(connection.get.mock.calls.length).toBe(1)
+      expect(connection.get.mock.calls[0][0]).toBe(sql)
+      expect(connection.get.mock.calls[0][1]).toBe(params)
+    })
+
+    test('resolves to row when the SQL statement was executed successfully', () => {
+      const row = { foo: 'Hello world' }
+      connection.get = jest.fn((sql, params, callback) => callback(null, row))
+      return expect(database.get(sql, params)).resolves.toBe(row)
+    })
+
+    test('resolves to undefined when the SQL statement was executed successfully and the result set is empty', () => {
+      connection.get = jest.fn((sql, params, callback) => callback(null, undefined))
+      return expect(database.get(sql, params)).resolves.toBeUndefined()
+    })
+
+    test('rejects when the SQL statement could not be executed', () => {
+      const error = new Error()
+      connection.get = jest.fn((sql, params, callback) => callback(error))
+      return expect(database.get(sql, params)).rejects.toBe(error)
+    })
+  })
+
+  test('rejects to TypeError when called without argument', () => {
+    return expect(database.get()).rejects.toBeInstanceOf(TypeError)
+  })
+
+  test('rejects to TypeError when called without an SQL statement', () => {
+    return expect(database.get(123)).rejects.toBeInstanceOf(TypeError)
+  })
+
+  test('rejects to TypeError when called with null', () => {
+    return expect(database.get(null)).rejects.toBeInstanceOf(TypeError)
+  })
+
+  test('rejects to TypeError when no array is used for the parameters', () => {
+    return expect(database.get(sql, 1)).rejects.toBeInstanceOf(TypeError)
   })
 })
