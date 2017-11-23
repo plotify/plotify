@@ -12,6 +12,7 @@ test('creates new SQLite database with initial tables when called with valid pat
   await create(path)
   const database = await open(path, mode.OPEN_READWRITE)
   const tables = await database.all('SELECT name FROM sqlite_master WHERE type=?;', ['table'])
+  await database.close()
   expect(tables).toContainEqual({ name: 'character' })
   expect(tables).toContainEqual({ name: 'character_history' })
   expect(tables).toContainEqual({ name: 'entry' })
