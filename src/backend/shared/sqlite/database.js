@@ -58,6 +58,20 @@ export default class Database {
       })
     })
   }
+
+  all (sql, params) {
+    return new Promise((resolve, reject) => {
+      validateSql(sql)
+      validateParams(params)
+      this.connection.all(sql, params, (error, rows) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(rows)
+        }
+      })
+    })
+  }
 }
 
 const validateSql = (sql) => {
