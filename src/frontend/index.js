@@ -11,6 +11,9 @@ import { request } from './shared/communication'
 import { setState } from './actions'
 import { setStore } from './shared/store'
 
+const productName = require('../package.json').productName
+document.title = productName
+
 const store = createStore(reducers)
 console.log(store.getState())
 store.subscribe(() => console.log(store.getState()))

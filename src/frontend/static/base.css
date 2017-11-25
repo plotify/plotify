@@ -1,0 +1,20 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #757575;
+}
+html, body, #root {
+  user-select: none;
+  cursor: default;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
