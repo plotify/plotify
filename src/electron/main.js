@@ -38,6 +38,17 @@ const createWindow = () => {
     }
   })
 
+  mainWindow.webContents.on('will-navigate', (event, url) => {
+    try {
+      const hostname = new URL(url).hostname
+      if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+        event.preventDefault()
+      }
+    } catch (error) {
+      event.preventDefault()
+    }
+  })
+
   mainWindow.loadURL(format({
     pathname: path.join(__dirname, '../frontend/static/index.html'),
     protocol: 'file:',
