@@ -171,7 +171,7 @@ gulp.task('test-coverage', () => {
 gulp.task('compile', () => {
   const babelrc = JSON.parse(fs.readFileSync('.babelrc', 'utf-8'))
   return gulp
-    .src([paths.src + '/**/*.js', '!**/*.spec.js'])
+    .src([paths.src + '/**/*.js', '!**/*.spec.js', '!**/__mocks__/**'])
     .pipe(cache('javascript', { optimizeMemory: true }))
     .pipe(babel(babelrc))
     .pipe(gulp.dest(paths.build.app))
