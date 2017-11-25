@@ -5,6 +5,7 @@ install:
 
 before_build:
   - npm install
+  - npm prune
   - npm run rebuild
 
 build_script:
