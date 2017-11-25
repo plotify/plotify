@@ -1,10 +1,11 @@
 import 'babel-polyfill'
 
-import { BrowserWindow, Menu, app, shell } from 'electron'
+import { BrowserWindow, Menu, app } from 'electron'
 import { URL, format } from 'url'
 import { registerRequestHandlers, setShouldSaveState } from './saved-state'
 
 import { createMenuTemplate } from './menu'
+import initEventHandlers from './events/window'
 import initReload from './reload'
 import isDev from 'electron-is-dev'
 import path from 'path'
@@ -28,15 +29,10 @@ const createWindow = () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null
+    setMainWindow(null)
   })
 
-  mainWindow.webContents.on('new-window', (event, url) => {
-    event.preventDefault()
-    const protocol = new URL(url).protocol
-    if (protocol === 'https:' || protocol === 'http:') {
-      shell.openExternal(url)
-    }
-  })
+  initEventHandlers(mainWindow)
 
   mainWindow.webContents.on('will-navigate', (event, url) => {
     try {
