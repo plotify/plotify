@@ -65,7 +65,7 @@ describe('#close', () => {
 
   test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
     await database.close()
-    return expect(database.close()).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+    return expect(database.close()).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
   })
 })
 
@@ -106,7 +106,7 @@ describe('#exec', () => {
 
   test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
     await database.close()
-    return expect(database.exec(sql)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+    return expect(database.exec(sql)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
   })
 })
 
@@ -138,7 +138,7 @@ describe('#run', () => {
 
     test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
       await database.close()
-      return expect(database.run(sql)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+      return expect(database.run(sql)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
   })
 
@@ -166,7 +166,7 @@ describe('#run', () => {
 
     test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
       await database.close()
-      return expect(database.run(sql, params)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+      return expect(database.run(sql, params)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
   })
 
@@ -221,7 +221,7 @@ describe('#get', () => {
 
     test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
       await database.close()
-      return expect(database.get(sql)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+      return expect(database.get(sql)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
   })
 
@@ -254,7 +254,7 @@ describe('#get', () => {
 
     test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
       await database.close()
-      return expect(database.get(sql, params)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+      return expect(database.get(sql, params)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
   })
 
@@ -309,7 +309,7 @@ describe('#all', () => {
 
     test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
       await database.close()
-      return expect(database.all(sql)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+      return expect(database.all(sql)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
   })
 
@@ -342,7 +342,7 @@ describe('#all', () => {
 
     test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
       await database.close()
-      return expect(database.all(sql, params)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+      return expect(database.all(sql, params)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
   })
 })
