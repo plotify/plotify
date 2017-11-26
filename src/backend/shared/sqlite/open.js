@@ -1,7 +1,7 @@
 import Database from './database'
 import mode from './mode'
-import { parse } from 'path'
 import sqlite3 from 'sqlite3'
+import { validatePath } from '../validation'
 
 const open = (path, mode) => {
   return new Promise((resolve, reject) => {
@@ -15,14 +15,6 @@ const open = (path, mode) => {
       }
     })
   })
-}
-
-const validatePath = (path) => {
-  try {
-    parse(path)
-  } catch (error) {
-    throw new TypeError('Invalid path: ' + path)
-  }
 }
 
 const validModes = [
