@@ -1,3 +1,4 @@
+import ConnectionAlreadyClosedError from './connection-already-closed-error'
 import Database from './database'
 
 let connection
@@ -31,6 +32,17 @@ describe('#constructor', () => {
   })
 })
 
+describe('#isClosed', () => {
+  test('returns false if the connection has not been closed', () => {
+    expect(database.isClosed()).toBe(false)
+  })
+
+  test('returns true if the connection was closed', async () => {
+    await database.close()
+    expect(database.isClosed()).toBe(true)
+  })
+})
+
 describe('#close', () => {
   test('returns a promise', () => {
     expect(database.close()).toBeInstanceOf(Promise)
@@ -49,6 +61,11 @@ describe('#close', () => {
     const error = new Error()
     connection.close = jest.fn(callback => callback(error))
     return expect(database.close()).rejects.toBe(error)
+  })
+
+  test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
+    await database.close()
+    return expect(database.close()).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
   })
 })
 
@@ -86,6 +103,11 @@ describe('#exec', () => {
   test('rejects to TypeError when called with null', () => {
     return expect(database.exec(null)).rejects.toBeInstanceOf(TypeError)
   })
+
+  test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
+    await database.close()
+    return expect(database.exec(sql)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+  })
 })
 
 describe('#run', () => {
@@ -113,6 +135,11 @@ describe('#run', () => {
       connection.run = jest.fn((sql, params, callback) => callback(error))
       return expect(database.run(sql)).rejects.toBe(error)
     })
+
+    test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
+      await database.close()
+      return expect(database.run(sql)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+    })
   })
 
   describe('with SQL statement and with parameters', () => {
@@ -135,6 +162,11 @@ describe('#run', () => {
       const error = new Error()
       connection.run = jest.fn((sql, params, callback) => callback(error))
       return expect(database.run(sql, params)).rejects.toBe(error)
+    })
+
+    test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
+      await database.close()
+      return expect(database.run(sql, params)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
     })
   })
 
@@ -186,6 +218,11 @@ describe('#get', () => {
       connection.get = jest.fn((sql, params, callback) => callback(error))
       return expect(database.get(sql)).rejects.toBe(error)
     })
+
+    test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
+      await database.close()
+      return expect(database.get(sql)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+    })
   })
 
   describe('with SQL statement and with parameters', () => {
@@ -213,6 +250,11 @@ describe('#get', () => {
       const error = new Error()
       connection.get = jest.fn((sql, params, callback) => callback(error))
       return expect(database.get(sql, params)).rejects.toBe(error)
+    })
+
+    test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
+      await database.close()
+      return expect(database.get(sql, params)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
     })
   })
 
@@ -264,6 +306,11 @@ describe('#all', () => {
       connection.all = jest.fn((sql, params, callback) => callback(error))
       return expect(database.all(sql)).rejects.toBe(error)
     })
+
+    test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
+      await database.close()
+      return expect(database.all(sql)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
+    })
   })
 
   describe('with SQL statement and with parameters', () => {
@@ -291,6 +338,11 @@ describe('#all', () => {
       const error = new Error()
       connection.all = jest.fn((sql, params, callback) => callback(error))
       return expect(database.all(sql, params)).rejects.toBe(error)
+    })
+
+    test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
+      await database.close()
+      return expect(database.all(sql, params)).rejects.toBeInstanceOf(ConnectionAlreadyClosedError)
     })
   })
 })

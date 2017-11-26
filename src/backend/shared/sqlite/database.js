@@ -1,17 +1,26 @@
+import ConnectionAlreadyClosedError from './connection-already-closed-error'
+
 export default class Database {
   constructor (connection) {
     if (connection === null || typeof connection !== 'object') {
       throw new TypeError('connection must be an object.')
     }
     this.connection = connection
+    this.closed = false
+  }
+
+  isClosed () {
+    return this.closed
   }
 
   close () {
     return new Promise((resolve, reject) => {
+      validateClosedStatus(this)
       this.connection.close((error) => {
         if (error) {
           reject(error)
         } else {
+          this.closed = true
           resolve()
         }
       })
@@ -20,6 +29,7 @@ export default class Database {
 
   exec (sql) {
     return new Promise((resolve, reject) => {
+      validateClosedStatus(this)
       validateSql(sql)
       this.connection.exec(sql, (error) => {
         if (error) {
@@ -33,6 +43,7 @@ export default class Database {
 
   run (sql, params) {
     return new Promise((resolve, reject) => {
+      validateClosedStatus(this)
       validateSql(sql)
       validateParams(params)
       this.connection.run(sql, params, (error) => {
@@ -47,6 +58,7 @@ export default class Database {
 
   get (sql, params) {
     return new Promise((resolve, reject) => {
+      validateClosedStatus(this)
       validateSql(sql)
       validateParams(params)
       this.connection.get(sql, params, (error, row) => {
@@ -61,6 +73,7 @@ export default class Database {
 
   all (sql, params) {
     return new Promise((resolve, reject) => {
+      validateClosedStatus(this)
       validateSql(sql)
       validateParams(params)
       this.connection.all(sql, params, (error, rows) => {
@@ -71,6 +84,12 @@ export default class Database {
         }
       })
     })
+  }
+}
+
+const validateClosedStatus = (database) => {
+  if (database.closed) {
+    throw new ConnectionAlreadyClosedError()
   }
 }
 
