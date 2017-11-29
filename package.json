@@ -23,7 +23,7 @@
     "classnames": "2.2.5",
     "electron-is-dev": "0.3.0",
     "fs-extra": "4.0.2",
-    "material-ui": "1.0.0-beta.21",
+    "material-ui": "1.0.0-beta.22",
     "material-ui-icons": "1.0.0-beta.17",
     "node-watch": "0.5.5",
     "prop-types": "15.6.0",
