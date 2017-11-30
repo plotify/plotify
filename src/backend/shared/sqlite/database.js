@@ -2,22 +2,22 @@ import ConnectionAlreadyClosedError from './connection-already-closed-error'
 
 export default class Database {
   constructor (connection) {
-    this.connection = validateConnection(connection)
-    this.closed = false
+    this._connection = validateConnection(connection)
+    this._closed = false
   }
 
-  isClosed () {
-    return this.closed
+  get closed () {
+    return this._closed
   }
 
   close () {
     return new Promise((resolve, reject) => {
       validateClosedStatus(this)
-      this.connection.close((error) => {
+      this._connection.close((error) => {
         if (error) {
           reject(error)
         } else {
-          this.closed = true
+          this._closed = true
           resolve()
         }
       })
@@ -28,7 +28,7 @@ export default class Database {
     return new Promise((resolve, reject) => {
       validateClosedStatus(this)
       validateSql(sql)
-      this.connection.exec(sql, (error) => {
+      this._connection.exec(sql, (error) => {
         if (error) {
           reject(error)
         } else {
@@ -43,7 +43,7 @@ export default class Database {
       validateClosedStatus(this)
       validateSql(sql)
       validateParams(params)
-      this.connection.run(sql, params, (error) => {
+      this._connection.run(sql, params, (error) => {
         if (error) {
           reject(error)
         } else {
@@ -58,7 +58,7 @@ export default class Database {
       validateClosedStatus(this)
       validateSql(sql)
       validateParams(params)
-      this.connection.get(sql, params, (error, row) => {
+      this._connection.get(sql, params, (error, row) => {
         if (error) {
           reject(error)
         } else {
@@ -73,7 +73,7 @@ export default class Database {
       validateClosedStatus(this)
       validateSql(sql)
       validateParams(params)
-      this.connection.all(sql, params, (error, rows) => {
+      this._connection.all(sql, params, (error, rows) => {
         if (error) {
           reject(error)
         } else {
@@ -93,7 +93,7 @@ const validateConnection = (connection) => {
 }
 
 const validateClosedStatus = (database) => {
-  if (database.closed) {
+  if (database._closed) {
     throw new ConnectionAlreadyClosedError()
   }
 }

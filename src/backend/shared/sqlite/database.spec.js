@@ -32,14 +32,14 @@ describe('#constructor', () => {
   })
 })
 
-describe('#isClosed', () => {
+describe('#closed', () => {
   test('returns false if the connection has not been closed', () => {
-    expect(database.isClosed()).toBe(false)
+    expect(database.closed).toBe(false)
   })
 
   test('returns true if the connection was closed', async () => {
     await database.close()
-    expect(database.isClosed()).toBe(true)
+    expect(database.closed).toBe(true)
   })
 })
 
