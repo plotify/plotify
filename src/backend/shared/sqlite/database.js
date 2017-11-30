@@ -2,10 +2,7 @@ import ConnectionAlreadyClosedError from './connection-already-closed-error'
 
 export default class Database {
   constructor (connection) {
-    if (connection === null || typeof connection !== 'object') {
-      throw new TypeError('connection must be an object.')
-    }
-    this.connection = connection
+    this.connection = validateConnection(connection)
     this.closed = false
   }
 
@@ -84,6 +81,14 @@ export default class Database {
         }
       })
     })
+  }
+}
+
+const validateConnection = (connection) => {
+  if (connection !== null && typeof connection === 'object') {
+    return connection
+  } else {
+    throw new TypeError('connection must be an object.')
   }
 }
 
