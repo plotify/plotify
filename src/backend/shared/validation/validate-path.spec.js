@@ -1,7 +1,8 @@
 import validatePath from './validate-path'
 
-test('does not throw TypeError when called with valid path', () => {
-  validatePath('/foo/bar')
+test('returns path when called with valid path', () => {
+  const path = '/foo/bar'
+  expect(validatePath(path)).toBe(path)
 })
 
 test('throws TypeError when called without argument', () => {
