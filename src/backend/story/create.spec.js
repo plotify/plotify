@@ -1,5 +1,4 @@
-import { mode, open } from '../shared/sqlite'
-
+import Story from './story'
 import create from './create'
 import { tmpNameSync } from 'tmp'
 
@@ -8,11 +7,16 @@ beforeEach(() => {
   path = tmpNameSync()
 })
 
+test('returns instance of Story when called with valid path', async () => {
+  const story = await create(path)
+  expect(story).toBeInstanceOf(Story)
+  await story.database.close()
+})
+
 test('creates new SQLite database with initial tables when called with valid path', async () => {
-  await create(path)
-  const database = await open(path, mode.OPEN_READWRITE)
-  const tables = await database.all('SELECT name FROM sqlite_master WHERE type=?;', ['table'])
-  await database.close()
+  const story = await create(path)
+  const tables = await story.database.all('SELECT name FROM sqlite_master WHERE type=?;', ['table'])
+  await story.database.close()
   expect(tables).toContainEqual({ name: 'character' })
   expect(tables).toContainEqual({ name: 'character_history' })
   expect(tables).toContainEqual({ name: 'entry' })
