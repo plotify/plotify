@@ -5,7 +5,9 @@ const path = '/foo/bar.story'
 let database
 let story
 beforeEach(() => {
-  database = new Database({})
+  database = new Database({
+    close: jest.fn(callback => callback())
+  })
   story = new Story(path, database)
 })
 
@@ -28,6 +30,11 @@ describe('#constructor', () => {
 
   test('throws TypeError when called with invalid database', () => {
     expect(() => new Story(path, 'invalid database')).toThrow(TypeError)
+  })
+
+  test('throws Error when called with already closed database connection', async () => {
+    await database.close()
+    expect(() => new Story(path, database)).toThrow(Error)
   })
 })
 

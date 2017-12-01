@@ -1,4 +1,5 @@
-import { Database } from '../shared/sqlite'
+import { ConnectionAlreadyClosedError, Database } from '../shared/sqlite'
+
 import { validatePath } from '../shared/validation'
 
 export default class Story {
@@ -17,9 +18,11 @@ export default class Story {
 }
 
 const validateDatabase = (database) => {
-  if (database instanceof Database) {
-    return database
-  } else {
+  if (!(database instanceof Database)) {
     throw new TypeError('database must be an instance of class Database.')
   }
+  if (database.closed) {
+    throw new ConnectionAlreadyClosedError()
+  }
+  return database
 }
