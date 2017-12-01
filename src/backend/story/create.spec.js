@@ -13,6 +13,12 @@ test('returns instance of Story when called with valid path', async () => {
   expect(story).toBeInstanceOf(Story)
 })
 
+test('returns instance of Story with passed path when called with valid path', async () => {
+  const story = await create(path)
+  await story.database.close()
+  expect(story.path).toEqual(path)
+})
+
 test('creates new SQLite database with initial tables when called with valid path', async () => {
   const story = await create(path)
   const tables = await story.database.all('SELECT name FROM sqlite_master WHERE type=?;', ['table'])
