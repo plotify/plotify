@@ -4,13 +4,13 @@ import { tmpNameSync } from 'tmp'
 
 let path
 beforeEach(() => {
-  path = tmpNameSync()
+  path = tmpNameSync({ postfix: '.story' })
 })
 
 test('returns instance of Story when called with valid path', async () => {
   const story = await create(path)
-  expect(story).toBeInstanceOf(Story)
   await story.database.close()
+  expect(story).toBeInstanceOf(Story)
 })
 
 test('creates new SQLite database with initial tables when called with valid path', async () => {
