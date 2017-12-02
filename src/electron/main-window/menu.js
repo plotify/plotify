@@ -1,10 +1,10 @@
-import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../shared/view/requests'
+import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../shared/view/requests'
 import { setShouldSaveState, shouldSaveState } from './saved-state'
 
 import { Menu } from 'electron'
-import { OPEN_ABOUT_DIALOG } from '../shared/about/requests'
+import { OPEN_ABOUT_DIALOG } from '../../shared/about/requests'
 import isDev from 'electron-is-dev'
-import { request } from './shared/communication'
+import { request } from '../shared/communication'
 
 // Workaround: Unter Unity aktualisiert sich die Checkbox nicht.
 const unityWorkaround = () => {

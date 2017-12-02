@@ -1,6 +1,6 @@
 import { requestBase, requestHandlerBase } from '../../shared/communication'
 
-import { getMainWindow } from './main-window'
+import { getMainWindow } from '../main-window'
 import { ipcMain } from 'electron'
 
 export const request = (name, payload) => (

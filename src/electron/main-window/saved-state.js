@@ -1,5 +1,5 @@
-import { GET_SAVED_STATE } from '../shared/requests'
-import { requestHandler } from './shared/communication'
+import { GET_SAVED_STATE } from '../../shared/requests'
+import { requestHandler } from '../shared/communication'
 
 let _shouldSaveState = false
 let savedState = null
