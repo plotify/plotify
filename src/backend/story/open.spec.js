@@ -2,6 +2,7 @@ import { mode, open } from '../shared/sqlite'
 
 import InvalidStoryFileError from './invalid-story-file-error'
 import Story from './story'
+import UnsupportedStoryFileVersionError from './unsupported-story-file-version-error'
 import createStory from './create'
 import openStory from './open'
 import { tmpNameSync } from 'tmp'
@@ -34,4 +35,11 @@ test('rejects to InvalidStoryFileError when called with SQLite database with inv
   const database = await open(path, mode.OPEN_CREATE | mode.OPEN_READWRITE)
   await database.close()
   return expect(openStory(path)).rejects.toHaveProperty('name', InvalidStoryFileError.name)
+})
+
+test('rejects to UnsupportedStoryFileVersionError when called with unsupported file version', async () => {
+  const database = await open(path, mode.OPEN_READWRITE)
+  await database.run('PRAGMA user_version = 9999;')
+  await database.close()
+  return expect(openStory(path)).rejects.toHaveProperty('name', UnsupportedStoryFileVersionError.name)
 })
