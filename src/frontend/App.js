@@ -1,20 +1,40 @@
 import AboutDialog from './about/components/AboutDialog'
 import CharactersSection from './characters/components/CharactersSection'
 import NavigationDrawer from './navigation/components/NavigationDrawer'
+import OpeningStoryDialog from './story/components/OpeningStoryDialog'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { basename } from 'path'
+import { connect } from 'react-redux'
+import { getStoryPath } from './story/selectors'
 import { withStyles } from 'material-ui/styles'
 
-const App = (props) => (
-  <div className={props.classes.wrapper}>
-    <NavigationDrawer />
-    <AboutDialog />
-    <CharactersSection />
-  </div>
-)
+const productName = require('../package.json').productName
+
+class App extends React.Component {
+  componentWillUpdate (nextProps) {
+    if (nextProps.path) {
+      document.title = basename(nextProps.path) + ' - ' + productName
+    } else {
+      document.title = productName
+    }
+  }
+
+  render () {
+    return (
+      <div className={this.props.classes.wrapper}>
+        <NavigationDrawer />
+        <AboutDialog />
+        <OpeningStoryDialog />
+        <CharactersSection />
+      </div>
+    )
+  }
+}
 
 App.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  path: PropTypes.string
 }
 
 const styles = (theme) => ({
@@ -25,4 +45,10 @@ const styles = (theme) => ({
   }
 })
 
-export default withStyles(styles)(App)
+const StyledApp = withStyles(styles)(App)
+
+const mapStateToProps = (state) => ({
+  path: getStoryPath(state)
+})
+
+export default connect(mapStateToProps)(StyledApp)

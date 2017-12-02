@@ -24,7 +24,6 @@ const createResponseChannel = (receiver, resolve, reject) => {
 }
 
 const sendRequest = (sender, name, payload, responseChannel) => {
-  payload = payload || {}
   sender.send(name, {
     responseChannel,
     payload
@@ -47,7 +46,6 @@ const callHandler = (handler, payload) => {
 }
 
 const sendResponse = (sender, responseChannel, payload, successful) => {
-  payload = payload || {}
   sender.send(responseChannel, {
     successful,
     payload

@@ -3,12 +3,14 @@ import about from './about/reducer'
 import characters from './characters/reducer'
 import { combineReducers } from 'redux'
 import navigation from './navigation/reducer'
+import story from './story/reducer'
 import view from './view/reducer'
 
 const appReducer = combineReducers({
   view,
   navigation,
   about,
+  story,
   characters
 })
 

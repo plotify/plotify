@@ -4,8 +4,10 @@ import { createMainWindow, getMainWindow } from './main-window'
 
 import { app } from 'electron'
 import printWelcomeScreen from './versions'
+import registerRequestHandlers from './request-handlers'
 
 printWelcomeScreen()
+registerRequestHandlers()
 
 app.on('ready', createMainWindow)
 

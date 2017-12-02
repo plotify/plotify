@@ -1,20 +1,21 @@
+import 'babel-polyfill'
+
+import { applyMiddleware, createStore } from 'redux'
+
 import App from './App'
 import { GET_SAVED_STATE } from '../shared/requests'
 import { Provider } from 'react-redux'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ThemeProvider from './view/components/ThemeProvider'
-import { createStore } from 'redux'
 import reducers from './reducers'
 import registerRequestHandlers from './request-handlers'
 import { request } from './shared/communication'
 import { setState } from './actions'
 import { setStore } from './shared/store'
+import thunk from 'redux-thunk'
 
-const productName = require('../package.json').productName
-document.title = productName
-
-const store = createStore(reducers)
+const store = createStore(reducers, applyMiddleware(thunk))
 console.log(store.getState())
 store.subscribe(() => console.log(store.getState()))
 setStore(store)
