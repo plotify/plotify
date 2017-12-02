@@ -18,7 +18,13 @@ const menu = Menu.buildFromTemplate(menuTemplate)
 const createMainWindow = () => {
   Menu.setApplicationMenu(menu)
 
-  const mainWindow = new BrowserWindow({ width: 900, height: 600 })
+  const mainWindow = new BrowserWindow({
+    width: 900,
+    height: 600,
+    backgroundColor: '#FAFAFA',
+    show: false
+  })
+
   setMainWindow(mainWindow)
 
   mainWindow.on('closed', () => {
