@@ -2,14 +2,16 @@ import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/D
 import { getOpeningStoryErrorMessage, isOpeningStoryFailed, isShowOpenStoryDialog } from '../selectors'
 
 import Button from 'material-ui/Button'
+import { CircularProgress } from 'material-ui/Progress'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Typography from 'material-ui/Typography'
 import { closeOpenStoryDialog } from '../actions'
 import { connect } from 'react-redux'
+import { withStyles } from 'material-ui/styles'
 
 const OpeningStoryDialog = (props) => {
-  const { open, failed, closeDialog, errorMessage } = props
+  const { classes, open, failed, closeDialog, errorMessage } = props
 
   let onRequestClose = () => {}
   let title = 'Öffne Geschichte...'
@@ -33,7 +35,10 @@ const OpeningStoryDialog = (props) => {
 
   return (
     <Dialog open={open} onRequestClose={onRequestClose}>
-      <DialogTitle>{title}</DialogTitle>
+      <DialogTitle className={classes.title}>
+        <CircularProgress className={failed ? classes.hide : classes.progress} />
+        <span>{title}</span>
+      </DialogTitle>
       {message}
       {actions}
     </Dialog>
@@ -41,11 +46,30 @@ const OpeningStoryDialog = (props) => {
 }
 
 OpeningStoryDialog.propTypes = {
+  classes: PropTypes.object.isRequired,
   open: PropTypes.bool.isRequired,
   failed: PropTypes.bool.isRequired,
   errorMessage: PropTypes.string,
   closeDialog: PropTypes.func.isRequired
 }
+
+const styles = (theme) => ({
+  title: {
+    '& h2': {
+      display: 'flex',
+      alignItems: 'center'
+    }
+  },
+  progress: {
+    display: 'block',
+    marginRight: theme.spacing.unit * 2
+  },
+  hide: {
+    display: 'none'
+  }
+})
+
+const StyledOpeningStoryDialog = withStyles(styles)(OpeningStoryDialog)
 
 const mapStateToProps = (state) => ({
   open: isShowOpenStoryDialog(state),
@@ -57,4 +81,4 @@ const mapDispatchToProps = (dispatch) => ({
   closeDialog: () => dispatch(closeOpenStoryDialog())
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(OpeningStoryDialog)
+export default connect(mapStateToProps, mapDispatchToProps)(StyledOpeningStoryDialog)
