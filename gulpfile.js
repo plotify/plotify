@@ -185,7 +185,7 @@ gulp.task('assets', ['static-files', 'package-json'])
 
 gulp.task('static-files', () => {
   return gulp
-    .src(paths.src + '/**/*.{html,css,sql,png,jpg,jpeg,ico,svg,icns,eot,ttf,woff,woff2,otf}')
+    .src(paths.src + '/**/*.{html,css,sql,png,jpg,jpeg,gif,ico,svg,icns,eot,ttf,woff,woff2,otf}')
     .pipe(cache('static-files', { optimizeMemory: true }))
     .pipe(gulp.dest(paths.build.app))
 })
