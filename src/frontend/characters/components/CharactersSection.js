@@ -62,7 +62,7 @@ const CharactersSection = (props) => {
   ])
 
   let profile = null
-  let BackButton = null
+  let BackButton
   if (characterSelected) {
     profile = (
       <CharacterProfile className={classes.profile} />

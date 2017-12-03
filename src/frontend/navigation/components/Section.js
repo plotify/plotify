@@ -6,35 +6,51 @@ import React from 'react'
 import Toolbar from 'material-ui/Toolbar'
 import { withStyles } from 'material-ui/styles'
 
-const Section = (props) => (
-  <div className={props.classes.wrapper}>
-    <AppBar>
-      <Toolbar>
-        {props.MenuButton && <props.MenuButton className={props.classes.menuButton} />}
-        {!props.MenuButton &&
-          <NavigationDrawerButton className={props.classes.menuButton} color='contrast' />
-        }
-        {props.toolbar}
-      </Toolbar>
-    </AppBar>
-    <MediaQuery minWidth={600}>
-      <div className={props.classes.content}>
-        {props.children}
-      </div>
-    </MediaQuery>
-    <MediaQuery maxWidth={599}>
-      <div className={props.classes.contentSmallAppBar}>
-        {props.children}
-      </div>
-    </MediaQuery>
-  </div>
-)
+const Section = (props) => {
+  const { classes, toolbar, children } = props
+  const menuButton = createMenuButton(props)
+  return (
+    <div className={classes.wrapper}>
+      <AppBar>
+        <Toolbar>
+          {menuButton}
+          {toolbar}
+        </Toolbar>
+      </AppBar>
+      <MediaQuery minWidth={600}>
+        <div className={classes.content}>
+          {children}
+        </div>
+      </MediaQuery>
+      <MediaQuery maxWidth={599}>
+        <div className={classes.contentSmallAppBar}>
+          {children}
+        </div>
+      </MediaQuery>
+    </div>
+  )
+}
+
+const createMenuButton = (props) => {
+  const { classes, hideMenuButton, MenuButton } = props
+  if (hideMenuButton) {
+    return null
+  } else {
+    return <MenuButton className={classes.menuButton} />
+  }
+}
 
 Section.propTypes = {
   classes: PropTypes.object.isRequired,
-  children: PropTypes.element.isRequired,
+  MenuButton: PropTypes.func.isRequired,
+  hideMenuButton: PropTypes.bool.isRequired,
   toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
-  MenuButton: PropTypes.func
+  children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
+}
+
+Section.defaultProps = {
+  MenuButton: NavigationDrawerButton,
+  hideMenuButton: false
 }
 
 const styles = (theme) => ({
