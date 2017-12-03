@@ -1,5 +1,6 @@
+import * as s from '../selectors'
+
 import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
-import { getOpeningStoryErrorMessage, isOpeningStoryFailed, isShowOpenStoryDialog } from '../selectors'
 
 import Button from 'material-ui/Button'
 import { CircularProgress } from 'material-ui/Progress'
@@ -72,9 +73,9 @@ const styles = (theme) => ({
 const StyledOpeningStoryDialog = withStyles(styles)(OpeningStoryDialog)
 
 const mapStateToProps = (state) => ({
-  open: isShowOpenStoryDialog(state),
-  failed: isOpeningStoryFailed(state),
-  errorMessage: getOpeningStoryErrorMessage(state)
+  open: s.isShowOpenStoryDialog(state),
+  failed: s.isOpeningStoryFailed(state),
+  errorMessage: s.getOpeningStoryErrorMessage(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
