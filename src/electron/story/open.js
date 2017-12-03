@@ -50,6 +50,9 @@ const INVALID_FILE_ERROR_MESSAGE =
 const UNSUPPORTED_FILE_VERSION_ERROR_MESSAGE =
   'Die ausgewählte Datei wurde mit einer neueren Version von Plotify erstellt. ' +
   'Bitte aktualisiere Plotify, um die Geschichte öffnen und bearbeiten zu können.'
+const CANT_OPEN_FILE_ERROR_MESSAGE =
+  'Die ausgewählte Datei konnte nicht geöffnet werden. ' +
+  'Existiert die Datei und hast du die notwendigen Berechtigungen, um auf die Datei zuzugreifen?'
 
 const errorMessage = (error) => {
   let message
@@ -58,6 +61,8 @@ const errorMessage = (error) => {
     message = INVALID_FILE_ERROR_MESSAGE
   } else if (error instanceof UnsupportedStoryFileVersionError) {
     message = UNSUPPORTED_FILE_VERSION_ERROR_MESSAGE
+  } else if (error.message.startsWith('SQLITE_CANTOPEN')) {
+    message = CANT_OPEN_FILE_ERROR_MESSAGE
   } else {
     message = error.message
   }
