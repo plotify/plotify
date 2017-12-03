@@ -17,8 +17,8 @@ const recentFiles = [
 const RecentFilesList = (props) => (
   <List>
     {props.files.map((file, index) => (
-      <ListItem button key={index}>
-        <ListItemText primary={format(file)} onClick={() => props.openStory(file)} />
+      <ListItem button key={index} onClick={() => props.openStory(file)}>
+        <ListItemText primary={format(file)} />
       </ListItem>
     ))}
   </List>

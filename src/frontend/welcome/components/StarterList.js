@@ -9,17 +9,17 @@ import { connect } from 'react-redux'
 
 const StarterList = (props) => (
   <List>
-    <ListItem button>
+    <ListItem button onClick={props.createStory}>
       <ListItemIcon>
         <CreateNewFolderIcon />
       </ListItemIcon>
-      <ListItemText primary='Neue Geschichte' onClick={props.createStory} />
+      <ListItemText primary='Neue Geschichte' />
     </ListItem>
-    <ListItem button>
+    <ListItem button onClick={props.openStory}>
       <ListItemIcon>
         <FolderOpenIcon />
       </ListItemIcon>
-      <ListItemText primary='Geschichte öffnen' onClick={props.openStory} />
+      <ListItemText primary='Geschichte öffnen' />
     </ListItem>
   </List>
 )
