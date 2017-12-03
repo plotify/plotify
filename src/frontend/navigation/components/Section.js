@@ -7,28 +7,42 @@ import Toolbar from 'material-ui/Toolbar'
 import { withStyles } from 'material-ui/styles'
 
 const Section = (props) => {
-  const { classes, toolbar, children } = props
-  const menuButton = createMenuButton(props)
+  const { classes, hideAppBar, children } = props
+  const appBar = createAppBar(props)
+  const contentClass = hideAppBar ? classes.contentWithoutAppBar : classes.content
+  const contentSmallAppBarClass = hideAppBar ? classes.contentWithoutAppBar : classes.contentSmallAppBar
   return (
     <div className={classes.wrapper}>
+      {appBar}
+      <MediaQuery minWidth={600}>
+        <div className={contentClass}>
+          {children}
+        </div>
+      </MediaQuery>
+      <MediaQuery maxWidth={599}>
+        <div className={contentSmallAppBarClass}>
+          {children}
+        </div>
+      </MediaQuery>
+    </div>
+  )
+}
+
+const createAppBar = (props) => {
+  const { hideAppBar, toolbar } = props
+  if (hideAppBar) {
+    return null
+  } else {
+    const menuButton = createMenuButton(props)
+    return (
       <AppBar>
         <Toolbar>
           {menuButton}
           {toolbar}
         </Toolbar>
       </AppBar>
-      <MediaQuery minWidth={600}>
-        <div className={classes.content}>
-          {children}
-        </div>
-      </MediaQuery>
-      <MediaQuery maxWidth={599}>
-        <div className={classes.contentSmallAppBar}>
-          {children}
-        </div>
-      </MediaQuery>
-    </div>
-  )
+    )
+  }
 }
 
 const createMenuButton = (props) => {
@@ -44,13 +58,15 @@ Section.propTypes = {
   classes: PropTypes.object.isRequired,
   MenuButton: PropTypes.func.isRequired,
   hideMenuButton: PropTypes.bool.isRequired,
+  hideAppBar: PropTypes.bool.isRequired,
   toolbar: PropTypes.oneOfType([PropTypes.element, PropTypes.array]),
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.array])
 }
 
 Section.defaultProps = {
   MenuButton: NavigationDrawerButton,
-  hideMenuButton: false
+  hideMenuButton: false,
+  hideAppBar: false
 }
 
 const styles = (theme) => ({
@@ -71,6 +87,10 @@ const styles = (theme) => ({
     overflowY: 'auto',
     paddingTop: '56px',
     height: 'calc(100% - 56px)'
+  },
+  contentWithoutAppBar: {
+    overflowY: 'auto',
+    height: '100%'
   }
 })
 
