@@ -1,24 +1,27 @@
-import { CLOSE_OPEN_STORY_DIALOG, OPEN_STORY_CANCELED, OPEN_STORY_FAILED, OPEN_STORY_STARTED, OPEN_STORY_SUCCESSFUL } from './action-types'
+import * as t from './action-types'
 
-import { OPEN_STORY } from '../../shared/story/requests'
-import { isOpeningStory } from './selectors'
+import { CREATE_STORY, OPEN_STORY } from '../../shared/story/requests'
+import { isCreatingStory, isOpeningStory } from './selectors'
+
 import { request } from '../shared/communication'
 
-export const openStory = () => {
+export const openStory = (path) => {
   return async (dispatch, getState) => {
-    if (isOpeningStory(getState())) {
+    if (isOpeningStory(getState()) || isCreatingStory(getState())) {
       return
     }
 
     dispatch(openStoryStarted())
 
     try {
-      const path = await request(OPEN_STORY)
+      path = await request(OPEN_STORY, path)
+
       if (path) {
         dispatch(openStorySuccessful(path))
       } else {
         dispatch(openStoryCanceled())
       }
+
       dispatch(closeOpenStoryDialog())
     } catch (error) {
       dispatch(openStoryFailed(error))
@@ -27,26 +30,79 @@ export const openStory = () => {
 }
 
 const openStoryStarted = () => ({
-  type: OPEN_STORY_STARTED,
+  type: t.OPEN_STORY_STARTED,
   payload: {}
 })
 
 const openStorySuccessful = (path) => ({
-  type: OPEN_STORY_SUCCESSFUL,
+  type: t.OPEN_STORY_SUCCESSFUL,
   payload: { path }
 })
 
 const openStoryFailed = (message) => ({
-  type: OPEN_STORY_FAILED,
+  type: t.OPEN_STORY_FAILED,
   payload: { message }
 })
 
 const openStoryCanceled = () => ({
-  type: OPEN_STORY_CANCELED,
+  type: t.OPEN_STORY_CANCELED,
   payload: {}
 })
 
 export const closeOpenStoryDialog = () => ({
-  type: CLOSE_OPEN_STORY_DIALOG,
+  type: t.CLOSE_OPEN_STORY_DIALOG,
   paylaod: {}
+})
+
+export const createStory = () => {
+  return async (dispatch, getState) => {
+    if (isOpeningStory(getState()) || isCreatingStory(getState())) {
+      return
+    }
+
+    dispatch(createStoryStarted())
+
+    try {
+      const path = await request(CREATE_STORY)
+
+      if (path) {
+        dispatch(createStorySuccessful())
+      } else {
+        dispatch(createStoryCanceled())
+      }
+
+      dispatch(closeCreateStoryDialog())
+
+      if (path) {
+        dispatch(openStory(path))
+      }
+    } catch (error) {
+      dispatch(createStoryFailed(error))
+    }
+  }
+}
+
+const createStoryStarted = () => ({
+  type: t.CREATE_STORY_STARTED,
+  payload: {}
+})
+
+const createStorySuccessful = () => ({
+  type: t.CREATE_STORY_SUCCESSFUL,
+  payload: {}
+})
+
+const createStoryFailed = (message) => ({
+  type: t.CREATE_STORY_FAILED,
+  payload: { message }
+})
+
+const createStoryCanceled = () => ({
+  type: t.CREATE_STORY_CANCELED,
+  payload: {}
+})
+
+export const closeCreateStoryDialog = () => ({
+  type: t.CLOSE_CREATE_STORY_DIALOG,
+  payload: {}
 })

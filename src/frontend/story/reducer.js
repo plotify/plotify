@@ -1,45 +1,80 @@
-import { CLOSE_OPEN_STORY_DIALOG, OPEN_STORY_CANCELED, OPEN_STORY_FAILED, OPEN_STORY_STARTED, OPEN_STORY_SUCCESSFUL } from './action-types'
+import * as t from './action-types'
 
 const initialState = {
   openStory: null,
   openingStory: false,
   showOpenStoryDialog: false,
   openingStoryFailed: false,
-  openingStoryErrorMessage: null
+  openingStoryErrorMessage: null,
+  creatingStory: false,
+  showCreateStoryDialog: false,
+  creatingStoryFailed: false,
+  creatingStoryErrorMessage: null
 }
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case OPEN_STORY_STARTED:
+    case t.OPEN_STORY_STARTED:
       return Object.assign({}, state, {
         openingStory: true,
         showOpenStoryDialog: true,
         openingStoryFailed: false,
-        openingStoryErrorMessage: null
+        openingStoryErrorMessage: null,
+        showCreateStoryDialog: false
       })
 
-    case OPEN_STORY_SUCCESSFUL:
+    case t.OPEN_STORY_SUCCESSFUL:
       return Object.assign({}, state, {
         openStory: action.payload.path,
         openingStory: false
       })
 
-    case OPEN_STORY_FAILED:
+    case t.OPEN_STORY_FAILED:
       return Object.assign({}, state, {
         openingStory: false,
         openingStoryFailed: true,
         openingStoryErrorMessage: action.payload.message
       })
 
-    case OPEN_STORY_CANCELED:
+    case t.OPEN_STORY_CANCELED:
       return Object.assign({}, state, {
         openingStory: false,
         openingStoryFailed: false
       })
 
-    case CLOSE_OPEN_STORY_DIALOG:
+    case t.CLOSE_OPEN_STORY_DIALOG:
       return Object.assign({}, state, {
         showOpenStoryDialog: false
+      })
+
+    case t.CREATE_STORY_STARTED:
+      return Object.assign({}, state, {
+        creatingStory: true,
+        showCreateStoryDialog: true,
+        showOpenStoryDialog: false
+      })
+
+    case t.CREATE_STORY_SUCCESSFUL:
+      return Object.assign({}, state, {
+        creatingStory: false
+      })
+
+    case t.CREATE_STORY_FAILED:
+      return Object.assign({}, state, {
+        creatingStory: false,
+        creatingStoryFailed: true,
+        creatingStoryErrorMessage: action.payload.message
+      })
+
+    case t.CREATE_STORY_CANCELED:
+      return Object.assign({}, state, {
+        creatingStory: false,
+        creatingStoryFailed: false
+      })
+
+    case t.CLOSE_CREATE_STORY_DIALOG:
+      return Object.assign({}, state, {
+        showCreateStoryDialog: false
       })
 
     default:

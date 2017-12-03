@@ -1,15 +1,19 @@
+import { CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../shared/story/requests'
 import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../shared/view/requests'
 import { setShouldSaveState, shouldSaveState } from './saved-state'
 
 import { Menu } from 'electron'
 import { OPEN_ABOUT_DIALOG } from '../../shared/about/requests'
-import { OPEN_STORY_REQUESTED } from '../../shared/story/requests'
 import isDev from 'electron-is-dev'
 import { request } from '../shared/communication'
 
 // Workaround: Unter Unity aktualisiert sich die Checkbox nicht.
 const unityWorkaround = () => {
   Menu.setApplicationMenu(Menu.getApplicationMenu())
+}
+
+const createStory = () => {
+  request(CREATE_STORY_REQUESTED)
 }
 
 const openStory = () => {
@@ -64,7 +68,7 @@ export const createMenuTemplate = (platform) => {
     {
       label: 'Datei',
       submenu: [
-        { label: 'Neue Geschichte' },
+        { label: 'Neue Geschichte', click: createStory },
         { label: 'Geschichte öffnen', click: openStory },
         { type: 'separator' },
         { label: 'Plotify beenden', role: 'quit' }

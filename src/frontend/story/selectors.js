@@ -21,3 +21,19 @@ export const isStoryOpen = (state) => (
 export const getStoryPath = (state) => (
   state.story.openStory
 )
+
+export const isCreatingStory = (state) => (
+  state.story.creatingStory === true
+)
+
+export const isShowCreateStoryDialog = (state) => (
+  state.story.showCreateStoryDialog === true
+)
+
+export const isCreatingStoryFailed = (state) => (
+  state.story.creatingStoryFailed === true
+)
+
+export const getCreatingStoryErrorMessage = (state) => (
+  state.story.creatingStoryErrorMessage
+)
