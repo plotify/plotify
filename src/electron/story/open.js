@@ -1,11 +1,12 @@
 import { InvalidStoryFileError, UnsupportedStoryFileVersionError, openStory } from '../../backend/story'
+import { app, dialog } from 'electron'
 import { getCurrentStory, setCurrentStory } from './current'
 
-import { dialog } from 'electron'
 import { getMainWindow } from '../main-window'
 
 const options = {
   title: 'Geschichte öffnen',
+  defaultPath: app.getPath('documents'),
   properties: ['openFile'],
   filters: [
     { name: 'Plotify Geschichte', extensions: ['story'] }
