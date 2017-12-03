@@ -12,13 +12,15 @@ const options = {
   ]
 }
 
-const open = async () => {
-  const files = dialog.showOpenDialog(getMainWindow(), options)
-  if (!files) {
-    return
+const open = async (path) => {
+  if (path === undefined) {
+    const files = dialog.showOpenDialog(getMainWindow(), options)
+    if (!files) {
+      return
+    }
+    path = files[0]
   }
 
-  const path = files[0]
   const currentPath = getCurrentStory() ? getCurrentStory().path : undefined
   if (path === currentPath) {
     return
