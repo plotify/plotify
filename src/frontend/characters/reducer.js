@@ -1,5 +1,6 @@
 import * as t from './actionTypes'
 
+import { OPEN_STORY_SUCCESSFUL } from '../story/action-types'
 import defaultProfile from './default-profile'
 import uuid from 'uuid/v4'
 
@@ -46,6 +47,7 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         createDialogOpen: true
       })
+
     case t.CLOSE_CREATE_CHARACTER_DIALOG:
       return Object.assign({}, state, {
         createDialogOpen: false
@@ -69,6 +71,7 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         selected: action.payload.id
       })
+
     case t.DESELECT_CHARACTER:
       return Object.assign({}, state, {
         selected: null,
@@ -83,10 +86,14 @@ const reducer = (state = initialState, action) => {
       } else {
         return state
       }
+
     case t.DISABLE_CHARACTER_EDIT_MODE:
       return Object.assign({}, state, {
         editMode: false
       })
+
+    case OPEN_STORY_SUCCESSFUL:
+      return initialState
 
     default:
       return state
