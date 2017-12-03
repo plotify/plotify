@@ -1,5 +1,7 @@
 import * as t from './actionTypes'
 
+import { CREATE_STORY_STARTED, OPEN_STORY_STARTED } from '../story/action-types'
+
 import { WELCOME_SECTION } from '../welcome/constants'
 
 const initialState = {
@@ -21,6 +23,8 @@ const reducer = (state = initialState, action) => {
       })
 
     case t.CLOSE_NAVIGATION_DRAWER:
+    case OPEN_STORY_STARTED:
+    case CREATE_STORY_STARTED:
       return Object.assign({}, state, {
         drawerOpen: false
       })
