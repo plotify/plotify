@@ -3,6 +3,7 @@ import * as t from './action-types'
 import { CREATE_STORY, OPEN_STORY } from '../../shared/story/requests'
 import { isCreatingStory, isOpeningStory } from './selectors'
 
+import { openCharactersSection } from '../characters/actions'
 import { request } from '../shared/communication'
 
 export const openStory = (path) => {
@@ -18,6 +19,7 @@ export const openStory = (path) => {
 
       if (path) {
         dispatch(openStorySuccessful(path))
+        dispatch(openCharactersSection())
       } else {
         dispatch(openStoryCanceled())
       }

@@ -5,6 +5,7 @@ import NavigationDrawer from './navigation/components/NavigationDrawer'
 import OpeningStoryDialog from './story/components/OpeningStoryDialog'
 import PropTypes from 'prop-types'
 import React from 'react'
+import WelcomeSection from './welcome/components/WelcomeSection'
 import { basename } from 'path'
 import { connect } from 'react-redux'
 import { getStoryPath } from './story/selectors'
@@ -28,6 +29,7 @@ class App extends React.Component {
         <AboutDialog />
         <OpeningStoryDialog />
         <CreatingStoryDialog />
+        <WelcomeSection />
         <CharactersSection />
       </div>
     )

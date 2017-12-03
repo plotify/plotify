@@ -1,6 +1,7 @@
 import { getSelectedCharacterName, isCharacterSelected } from '../selectors'
 
 import BackIcon from 'material-ui-icons/ArrowBack'
+import { CHARACTERS_SECTION } from '../constants'
 import CharacterProfile from './CharacterProfile'
 import CharacterProfileMenu from './CharacterProfileMenu'
 import CharactersList from './CharactersList'
@@ -99,6 +100,7 @@ const CharactersSection = (props) => {
   return [
     <MediaQuery minWidth={760} key={0}>
       <Section
+        id={CHARACTERS_SECTION}
         title='Charaktere'
         toolbar={toolbar}>
         {content}
@@ -106,6 +108,7 @@ const CharactersSection = (props) => {
     </MediaQuery>,
     <MediaQuery maxWidth={759} key={1}>
       <Section
+        id={CHARACTERS_SECTION}
         title='Charaktere'
         toolbar={toolbar}
         MenuButton={BackButton}>

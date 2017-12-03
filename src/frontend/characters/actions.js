@@ -1,5 +1,12 @@
 import * as t from './actionTypes'
 
+import { CHARACTERS_SECTION } from './constants'
+import { setSection } from '../navigation/actions'
+
+export const openCharactersSection = () => (
+  setSection(CHARACTERS_SECTION)
+)
+
 export const openCreateCharacterDialog = () => ({
   type: t.OPEN_CREATE_CHARACTER_DIALOG,
   payload: {}

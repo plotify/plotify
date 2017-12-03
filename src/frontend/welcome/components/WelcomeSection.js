@@ -5,12 +5,13 @@ import RecentFilesList from './RecentFilesList'
 import Section from '../../navigation/components/Section'
 import StarterList from './StarterList'
 import Typography from 'material-ui/Typography'
+import { WELCOME_SECTION } from '../constants'
 import { withStyles } from 'material-ui/styles'
 
 const WelcomeSection = (props) => {
   const { classes } = props
   return (
-    <Section hideAppBar>
+    <Section id={WELCOME_SECTION} hideAppBar>
       <div className={classes.wrapper}>
         <img className={classes.icon} src='./app-icon.png' />
         <Paper className={classes.card}>

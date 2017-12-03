@@ -4,9 +4,20 @@ import NavigationDrawerButton from './NavigationDrawerButton'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Toolbar from 'material-ui/Toolbar'
+import { connect } from 'react-redux'
+import { getCurrentSection } from '../selectors'
 import { withStyles } from 'material-ui/styles'
 
 const Section = (props) => {
+  const { id, currentSection } = props
+  if (id === currentSection) {
+    return createSection(props)
+  } else {
+    return null
+  }
+}
+
+const createSection = (props) => {
   const { classes, hideAppBar, children } = props
   const appBar = createAppBar(props)
   const contentClass = hideAppBar ? classes.contentWithoutAppBar : classes.content
@@ -56,6 +67,8 @@ const createMenuButton = (props) => {
 
 Section.propTypes = {
   classes: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
+  currentSection: PropTypes.string.isRequired,
   MenuButton: PropTypes.func.isRequired,
   hideMenuButton: PropTypes.bool.isRequired,
   hideAppBar: PropTypes.bool.isRequired,
@@ -94,4 +107,10 @@ const styles = (theme) => ({
   }
 })
 
-export default withStyles(styles)(Section)
+const StyledSection = withStyles(styles)(Section)
+
+const mapStateToProps = (state) => ({
+  currentSection: getCurrentSection(state)
+})
+
+export default connect(mapStateToProps)(StyledSection)

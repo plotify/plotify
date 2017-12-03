@@ -1,8 +1,9 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
-import { connect } from 'react-redux'
+
+import PropTypes from 'prop-types'
+import React from 'react'
 import { closeNavigationDrawer } from '../actions'
+import { connect } from 'react-redux'
 
 const DrawerItem = (props) => {
   const { text, icon, onClick, closeNavigationDrawer } = props
@@ -23,7 +24,8 @@ const DrawerItem = (props) => {
 DrawerItem.propTypes = {
   text: PropTypes.string.isRequired,
   icon: PropTypes.object.isRequired,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  closeNavigationDrawer: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({})
