@@ -66,9 +66,7 @@
     "rebuild": "electron-builder install-app-deps",
     "dev:frontend": "gulp dev:frontend",
     "dev:backend": "gulp dev:backend",
-    "dist:linux": "gulp dist:linux",
-    "dist:mac": "gulp dist:mac",
-    "dist:win": "gulp dist:win"
+    "dist": "gulp dist"
   },
   "standard": {
     "env": [

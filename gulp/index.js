@@ -1,0 +1,10 @@
+import './tasks/preparation'
+import './tasks/tests'
+import './tasks/assets'
+import './tasks/compile'
+import './tasks/distribution'
+import './tasks/electron'
+import './tasks/development-backend'
+import './tasks/development-frontend'
+
+export { default } from 'gulp'
