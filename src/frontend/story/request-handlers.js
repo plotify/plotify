@@ -8,8 +8,8 @@ const handleCreateStoryRequested = (resolve, _, __, dispatch) => {
   resolve()
 }
 
-const handleOpenStoryRequested = (resolve, _, __, dispatch) => {
-  dispatch(openStory())
+const handleOpenStoryRequested = (resolve, _, payload, dispatch) => {
+  dispatch(openStory(payload))
   resolve()
 }
 
