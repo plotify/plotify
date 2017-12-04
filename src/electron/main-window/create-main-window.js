@@ -21,7 +21,7 @@ const createMainWindow = () => {
   Menu.setApplicationMenu(menu)
 
   const mainWindow = new BrowserWindow({
-    width: 900,
+    width: 1000,
     height: 600,
     backgroundColor: '#FAFAFA',
     show: false
