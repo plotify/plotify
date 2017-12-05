@@ -46,7 +46,7 @@
     "check-dependencies": "1.1.0",
     "coveralls": "3.0.0",
     "electron": "1.7.9",
-    "electron-builder": "19.47.1",
+    "electron-builder": "19.48.2",
     "gulp": "3.9.1",
     "gulp-babel": "7.0.0",
     "gulp-cached": "1.1.1",
