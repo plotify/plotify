@@ -31,12 +31,18 @@ const sendRequest = (sender, name, payload, responseChannel) => {
 }
 
 export const requestHandlerBase = (receiver, name, handler) => {
-  receiver.on(name, (event, request) => {
-    const { payload, responseChannel } = request
-    callHandler(handler, payload)
-      .then(payload => sendResponse(event.sender, responseChannel, payload, true))
-      .catch(payload => sendResponse(event.sender, responseChannel, payload, false))
-  })
+  receiver.on(name, (event, request) => receiverHandler(handler, event, request))
+}
+
+export const requestHandlerOnceBase = (receiver, name, handler) => {
+  receiver.once(name, (event, request) => receiverHandler(handler, event, request))
+}
+
+const receiverHandler = (handler, event, request) => {
+  const { payload, responseChannel } = request
+  callHandler(handler, payload)
+    .then(payload => sendResponse(event.sender, responseChannel, payload, true))
+    .catch(payload => sendResponse(event.sender, responseChannel, payload, false))
 }
 
 const callHandler = (handler, payload) => {

@@ -1,14 +1,12 @@
 import { BrowserWindow, Menu } from 'electron'
 import { registerRequestHandlers, setShouldSaveState } from './saved-state'
 
-import { OPEN_STORY_REQUESTED } from '../../shared/story/requests'
 import { createMenuTemplate } from './menu'
 import { format } from 'url'
 import initEventHandlers from './events'
 import initReload from './reload'
 import isDev from 'electron-is-dev'
 import path from 'path'
-import { request } from '../shared/communication'
 import { setMainWindow } from './main-window'
 
 setShouldSaveState(isDev)
@@ -33,12 +31,6 @@ const createMainWindow = () => {
     setMainWindow(null)
   })
 
-  mainWindow.once('ready-to-show', () => {
-    if (!isDev) {
-      openStory()
-    }
-  })
-
   initEventHandlers(mainWindow)
 
   mainWindow.loadURL(format({
@@ -52,14 +44,6 @@ const createMainWindow = () => {
   }
 
   return mainWindow
-}
-
-const openStory = () => {
-  if (process.argv.length > 1) {
-    const args = process.argv.slice(1)
-    const path = args.join('')
-    request(OPEN_STORY_REQUESTED, path)
-  }
 }
 
 export default createMainWindow

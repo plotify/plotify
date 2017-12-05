@@ -23,20 +23,31 @@ const registerRequestHandlers = () => {
 }
 
 const createMainWindow = () => {
-  const { createMainWindow, getMainWindow } = require('./main-window')
+  const { createMainWindow } = require('./main-window')
+  const openStoryOnStartup = require('./open-story-on-startup').default
 
   const mainWindow = createMainWindow()
-
   mainWindow.once('ready-to-show', () => {
-    splashScreen.close()
-    splashScreen = null
-
-    app.on('activate', () => {
-      if (getMainWindow() === null) {
-        createMainWindow()
-      }
-    })
+    openStoryOnStartup(splashScreen)
+      .then(initActivateHandler)
+      .then(() => showMainWindow(mainWindow))
+      .then(() => splashScreen.close())
+      .catch(error => console.log(error))
   })
+}
+
+const initActivateHandler = () => {
+  const { getMainWindow } = require('./main-window')
+  app.on('activate', () => {
+    if (getMainWindow() === null) {
+      createMainWindow()
+    }
+  })
+}
+
+const showMainWindow = (mainWindow) => {
+  mainWindow.maximize()
+  mainWindow.show()
 }
 
 app.on('ready', initSplashScreen)

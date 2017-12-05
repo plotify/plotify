@@ -1,6 +1,6 @@
 import * as t from './action-types'
 
-import { CREATE_STORY, OPEN_STORY } from '../../shared/story/requests'
+import { CREATE_STORY, OPEN_STORY, OPEN_STORY_FINISHED } from '../../shared/story/requests'
 import { isCreatingStory, isOpeningStory } from './selectors'
 
 import { openCharactersSection } from '../characters/actions'
@@ -9,6 +9,7 @@ import { request } from '../shared/communication'
 export const openStory = (path) => {
   return async (dispatch, getState) => {
     if (isOpeningStory(getState()) || isCreatingStory(getState())) {
+      request(OPEN_STORY_FINISHED)
       return
     }
 
@@ -28,6 +29,8 @@ export const openStory = (path) => {
     } catch (error) {
       dispatch(openStoryFailed(error))
     }
+
+    request(OPEN_STORY_FINISHED)
   }
 }
 

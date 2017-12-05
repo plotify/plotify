@@ -3,3 +3,5 @@ export const CREATE_STORY_REQUESTED = 'story/create-story-requested'
 
 export const OPEN_STORY = 'story/open'
 export const CREATE_STORY = 'story/create'
+
+export const OPEN_STORY_FINISHED = 'story/open-story-finished'

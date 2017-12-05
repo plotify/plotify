@@ -1,4 +1,4 @@
-import { requestBase, requestHandlerBase } from '../../shared/communication'
+import { requestBase, requestHandlerBase, requestHandlerOnceBase } from '../../shared/communication'
 
 import { getMainWindow } from '../main-window'
 import { ipcMain } from 'electron'
@@ -9,4 +9,8 @@ export const request = (name, payload) => (
 
 export const requestHandler = (name, handler) => {
   requestHandlerBase(ipcMain, name, handler)
+}
+
+export const requestHandlerOnce = (name, handler) => {
+  requestHandlerOnceBase(ipcMain, name, handler)
 }
