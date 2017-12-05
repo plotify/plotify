@@ -50,6 +50,8 @@ const createMainWindow = () => {
   if (isDev) {
     initReload(mainWindow)
   }
+
+  return mainWindow
 }
 
 const openStory = () => {

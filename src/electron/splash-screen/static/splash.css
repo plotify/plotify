@@ -1,0 +1,121 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("Roboto-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  font-weight: normal;
+  box-sizing: border-box;
+}
+
+html, body {
+  user-select: none;
+  cursor: default;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: Roboto, sans-serif;
+}
+
+body {
+  background-color: #824DA0;
+  background-image: url("overlay.png"), linear-gradient(45deg, #824DA0 15%, #452258 85%);
+  color: #fff;
+  -webkit-app-region: drag;
+}
+
+#wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+#title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+h1 {
+  font-size: 5em;
+  letter-spacing: 4px;
+  margin-left: 2rem;
+}
+
+img {
+  display: block;
+  margin-left: 2rem;
+}
+
+.progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 8px;
+  width: 100%;
+  background-color: transparent;
+  background-clip: padding-box;
+  overflow: hidden;
+}
+
+.progress .indeterminate {
+  background-color: #422155;
+}
+
+.progress .indeterminate:before {
+  content: '';
+  position: absolute;
+  background-color: inherit;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  will-change: left, right;
+  animation: indeterminate 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+}
+
+.progress .indeterminate:after {
+  content: '';
+  position: absolute;
+  background-color: inherit;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  will-change: left, right;
+  animation: indeterminate-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation-delay: 1.15s;
+}
+
+@keyframes indeterminate {
+  0% {
+    left: -35%;
+    right: 100%;
+  }
+  60% {
+    left: 100%;
+    right: -90%;
+  }
+  100% {
+    left: 100%;
+    right: -90%;
+  }
+}
+
+@keyframes indeterminate-short {
+  0% {
+    left: -200%;
+    right: 100%;
+  }
+  60% {
+    left: 107%;
+    right: -8%;
+  }
+  100% {
+    left: 107%;
+    right: -8%;
+  }
+}
