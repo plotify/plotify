@@ -74,6 +74,7 @@ export const createMenuTemplate = (platform) => {
         { label: 'Plotify beenden', role: 'quit' }
       ]
     },
+    /*
     {
       label: 'Bearbeiten',
       submenu: [
@@ -86,6 +87,7 @@ export const createMenuTemplate = (platform) => {
         { label: 'Alles auswählen', role: 'selectall' }
       ]
     },
+    */
     {
       label: 'Ansicht',
       submenu: [

@@ -3,7 +3,6 @@ import { getSelectedCharacterName, isCharacterSelected } from '../selectors'
 import BackIcon from 'material-ui-icons/ArrowBack'
 import { CHARACTERS_SECTION } from '../constants'
 import CharacterProfile from './CharacterProfile'
-import CharacterProfileMenu from './CharacterProfileMenu'
 import CharactersList from './CharactersList'
 import CreateCharacterButton from './CreateCharacterButton'
 import CreateCharacterDialog from './CreateCharacterDialog'
@@ -12,15 +11,17 @@ import MediaQuery from 'react-responsive'
 import Paper from 'material-ui/Paper'
 import PropTypes from 'prop-types'
 import React from 'react'
-import SearchIcon from 'material-ui-icons/Search'
 import Section from '../../navigation/components/Section'
 import ToggleEditModeButton from './ToggleEditModeButton'
 import Typography from 'material-ui/Typography'
-import UndoRedoButtons from './UndoRedoButtons'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { deselectCharacter } from '../actions'
 import { withStyles } from 'material-ui/styles'
+
+// import SearchIcon from 'material-ui-icons/Search'
+// import CharacterProfileMenu from './CharacterProfileMenu'
+// import UndoRedoButtons from './UndoRedoButtons'
 
 const CharactersSection = (props) => {
   const { classes, characterSelected, selectedCharacterName } = props
@@ -30,9 +31,9 @@ const CharactersSection = (props) => {
       Charaktere
     </Typography>,
     <CreateCharacterButton key={2} />,
-    <IconButton color='contrast' key={3}>
-      <SearchIcon />
-    </IconButton>
+    //<IconButton color='contrast' key={3}>
+    //  <SearchIcon />
+    //</IconButton>
   ])
 
   const profileToolbar = ([
@@ -41,9 +42,9 @@ const CharactersSection = (props) => {
         {characterSelected && selectedCharacterName}
       </Typography>
     </MediaQuery>,
-    <UndoRedoButtons key={1} />,
+    // <UndoRedoButtons key={1} />,
     <ToggleEditModeButton key={2} />,
-    <CharacterProfileMenu key={3} />
+    // <CharacterProfileMenu key={3} />
   ])
   const toolbar = ([
     <MediaQuery maxWidth={759} key={1}>
