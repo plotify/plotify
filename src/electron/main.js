@@ -19,12 +19,12 @@ const initApp = () => {
 }
 
 const registerRequestHandlers = () => {
-  require('./request-handlers').default()
+  require('./request-handlers')()
 }
 
 const createMainWindow = () => {
   const { createMainWindow } = require('./main-window')
-  const openStoryOnStartup = require('./open-story-on-startup').default
+  const openStoryOnStartup = require('./open-story-on-startup')
 
   const mainWindow = createMainWindow()
   mainWindow.once('ready-to-show', () => {

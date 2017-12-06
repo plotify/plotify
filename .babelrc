@@ -6,6 +6,7 @@
       {
         "globals": ["Error", "Array"]
       }
-    ]
+    ],
+    [ "add-module-exports" ]
   ]
 }
