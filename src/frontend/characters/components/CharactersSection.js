@@ -30,10 +30,10 @@ const CharactersSection = (props) => {
     <Typography type='title' color='inherit' className={classes.title} key={1}>
       Charaktere
     </Typography>,
-    <CreateCharacterButton key={2} />,
-    //<IconButton color='contrast' key={3}>
-    //  <SearchIcon />
-    //</IconButton>
+    <CreateCharacterButton key={2} />
+    // <IconButton color='contrast' key={3}>
+    //   <SearchIcon />
+    // </IconButton>
   ])
 
   const profileToolbar = ([
@@ -43,7 +43,7 @@ const CharactersSection = (props) => {
       </Typography>
     </MediaQuery>,
     // <UndoRedoButtons key={1} />,
-    <ToggleEditModeButton key={2} />,
+    <ToggleEditModeButton key={2} />
     // <CharacterProfileMenu key={3} />
   ])
   const toolbar = ([
