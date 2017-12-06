@@ -1,7 +1,10 @@
 import 'babel-polyfill'
 
+import { createMainWindow, getMainWindow } from './main-window'
+
 import { app } from 'electron'
 import createSplashScreen from './splash-screen'
+import openStoryOnStartup from './open-story-on-startup'
 import printWelcomeScreen from './versions'
 
 printWelcomeScreen()
@@ -15,17 +18,14 @@ const initSplashScreen = () => {
 
 const initApp = () => {
   registerRequestHandlers()
-  createMainWindow()
+  initMainWindow()
 }
 
 const registerRequestHandlers = () => {
   require('./request-handlers')()
 }
 
-const createMainWindow = () => {
-  const { createMainWindow } = require('./main-window')
-  const openStoryOnStartup = require('./open-story-on-startup')
-
+const initMainWindow = () => {
   const mainWindow = createMainWindow()
   mainWindow.once('ready-to-show', () => {
     openStoryOnStartup(splashScreen)
@@ -37,7 +37,6 @@ const createMainWindow = () => {
 }
 
 const initActivateHandler = () => {
-  const { getMainWindow } = require('./main-window')
   app.on('activate', () => {
     if (getMainWindow() === null) {
       createMainWindow()

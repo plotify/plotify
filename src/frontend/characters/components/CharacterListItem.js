@@ -1,9 +1,11 @@
+import { ListItem, ListItemAvatar, ListItemText } from 'material-ui/List'
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
-import { ListItem, ListItemText, ListItemAvatar } from 'material-ui/List'
+
 import Avatar from 'material-ui/Avatar'
+import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import classnames from 'classnames'
+import { withStyles } from 'material-ui/styles'
 
 class CharacterListItem extends PureComponent {
   render () {
@@ -14,17 +16,32 @@ class CharacterListItem extends PureComponent {
 
     const onClickHandler = () => onClick(character.id)
 
+    const emptyName = isNameEmpty(character)
+    const name = formatName(character)
+
     return (
       <ListItem className={className} onClick={onClickHandler} button>
         <div className={borderClassName} />
         <ListItemAvatar>
-          <Avatar>{character.name.charAt(0)}</Avatar>
+          <Avatar>{name.charAt(0)}</Avatar>
         </ListItemAvatar>
         <ListItemText
-          className={classes.characterName}
-          primary={character.name} />
+          className={classnames(classes.characterName, { [classes.emptyCharacterName]: emptyName })}
+          primary={name} />
       </ListItem>
     )
+  }
+}
+
+const isNameEmpty = (character) => {
+  return character.name.length === 0
+}
+
+const formatName = (character) => {
+  if (!isNameEmpty(character)) {
+    return character.name
+  } else {
+    return 'Kein Name'
   }
 }
 
@@ -80,6 +97,9 @@ const styles = (theme) => {
         '-webkit-line-clamp': 2,
         '-webkit-box-orient': 'vertical'
       }
+    },
+    emptyCharacterName: {
+      fontStyle: 'italic'
     }
   }
 }

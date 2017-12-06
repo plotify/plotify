@@ -4,45 +4,22 @@ import { OPEN_STORY_SUCCESSFUL } from '../story/action-types'
 import defaultProfile from './default-profile'
 import uuid from 'uuid/v4'
 
-const characters = [
-  { id: uuid(), name: 'Sherlock Holmes' },
-  { id: uuid(), name: 'Dr. Watson' },
-  { id: uuid(), name: 'Mary Morstan' },
-  { id: uuid(), name: 'Professor Moriarty' },
-  { id: uuid(), name: 'Mycroft Holmes' },
-  { id: uuid(), name: 'Irene Adler' },
-  { id: uuid(), name: 'Inspector Lestrade' }
-]
-
-const sortCharacters = (characters) => (
-  characters.slice().sort(compareCharacters)
-)
-
-const compareCharacters = (character1, character2) => {
-  const name1 = character1.name.toUpperCase()
-  const name2 = character2.name.toUpperCase()
-
-  if (name1 < name2) {
-    return -1
-  }
-
-  if (name1 > name2) {
-    return 1
-  }
-
-  return 0
-}
-
 const initialState = {
-  entities: sortCharacters(characters),
+  entities: [],
   selected: null,
   editMode: false,
   createDialogOpen: false,
   profile: defaultProfile
 }
 
+// TODO FIND_CHARACTERS_REQUEST, FIND_CHARACTERS_FAILED
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case t.FIND_CHARACTERS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        entities: sortCharacters(action.payload.characters)
+      })
+
     case t.OPEN_CREATE_CHARACTER_DIALOG:
       return Object.assign({}, state, {
         createDialogOpen: true
@@ -98,6 +75,25 @@ const reducer = (state = initialState, action) => {
     default:
       return state
   }
+}
+
+const sortCharacters = (characters) => (
+  characters.slice().sort(compareCharacters)
+)
+
+const compareCharacters = (character1, character2) => {
+  const name1 = character1.name.toUpperCase()
+  const name2 = character2.name.toUpperCase()
+
+  if (name1 < name2) {
+    return -1
+  }
+
+  if (name1 > name2) {
+    return 1
+  }
+
+  return 0
 }
 
 export default reducer

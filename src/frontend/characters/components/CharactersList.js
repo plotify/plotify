@@ -1,11 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import List from 'material-ui/List'
-import CharacterListItem from './CharacterListItem'
 import { getCharacters, getSelectedCharacterId } from '../selectors'
-import { selectCharacter } from '../actions'
-import { connect } from 'react-redux'
 
+import CharacterListItem from './CharacterListItem'
+import List from 'material-ui/List'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
+import { selectCharacter } from '../actions'
+
+// TODO Empty list message
 const CharactersList = (props) => {
   const { characters, onClick, selected, className } = props
   return (
