@@ -4,7 +4,6 @@ import React, { PureComponent } from 'react'
 import Avatar from 'material-ui/Avatar'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import classnames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 
 class CharacterListItem extends PureComponent {
@@ -26,7 +25,7 @@ class CharacterListItem extends PureComponent {
           <Avatar>{name.charAt(0)}</Avatar>
         </ListItemAvatar>
         <ListItemText
-          className={classnames(classes.characterName, { [classes.emptyCharacterName]: emptyName })}
+          className={classNames(classes.characterName, { [classes.emptyCharacterName]: emptyName })}
           primary={name} />
       </ListItem>
     )
