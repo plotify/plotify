@@ -74,6 +74,7 @@ export const createMenuTemplate = (platform) => {
         { label: 'Plotify beenden', role: 'quit' }
       ]
     },
+    // TODO Evtl. Refactoring: Ein ähnliches Menu wird in events/context-menu.js verwendet.
     {
       label: 'Bearbeiten',
       submenu: [

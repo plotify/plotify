@@ -1,3 +1,4 @@
+import handleContextMenu from './context-menu'
 import handleNewWindow from './new-window'
 import handleWillNavigate from './will-navigate'
 import initEventHandlers from './'
@@ -21,4 +22,10 @@ test('adds event handler for will-navigate events', () => {
   initEventHandlers(window)
   expect(window.webContents.on.mock.calls[1][0]).toEqual('will-navigate')
   expect(window.webContents.on.mock.calls[1][1]).toBe(handleWillNavigate)
+})
+
+test('adds event handler for context-menu events', () => {
+  initEventHandlers(window)
+  expect(window.webContents.on.mock.calls[2][0]).toEqual('context-menu')
+  expect(window.webContents.on.mock.calls[2][1]).toBe(handleContextMenu)
 })
