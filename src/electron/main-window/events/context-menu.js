@@ -10,6 +10,9 @@ const openMenu = (editable, textSelected) => {
   menu.popup()
 }
 
+// TODO Was tun, wenn ein Textfeld nicht bearbeitbar und kein Text ausgewählt ist und
+//      der Benutzer einen Rechtsklick auf das Textfeld ausführt?
+//      Eigentlich soll dann die Option "Alles auswählen" zur Verfügung stehen.
 const handleContextMenu = (event, params) => {
   const { isEditable, selectionText } = params
   const textSelected = selectionText.length > 0
