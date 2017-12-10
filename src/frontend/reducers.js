@@ -5,10 +5,12 @@ import { combineReducers } from 'redux'
 import navigation from './navigation/reducer'
 import story from './story/reducer'
 import view from './view/reducer'
+import welcome from './welcome/reducer'
 
 const appReducer = combineReducers({
   view,
   navigation,
+  welcome,
   about,
   story,
   characters

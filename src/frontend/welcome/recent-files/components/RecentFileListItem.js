@@ -4,15 +4,15 @@ import React, { Component } from 'react'
 import { basename, extname } from 'path'
 
 import DeleteIcon from 'material-ui-icons/Delete'
-import Divider from 'material-ui/Divider'
 import FolderOpenIcon from 'material-ui-icons/FolderOpen'
 import IconButton from 'material-ui/IconButton'
 import MoreIcon from 'material-ui-icons/MoreVert'
-import PinIcon from '../../icons/Pin'
-import PinOffIcon from '../../icons/PinOff'
+import PinIcon from '../../../icons/Pin'
+import PinOffIcon from '../../../icons/PinOff'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { openStory } from '../../story/actions'
+import { openFileInFolder } from '../actions'
+import { openStory } from '../../../story/actions'
 
 class RecentFileListItem extends Component {
   constructor (props) {
@@ -23,6 +23,7 @@ class RecentFileListItem extends Component {
     }
     this.handleOpenMenu = this.handleOpenMenu.bind(this)
     this.handleRequestClose = this.handleRequestClose.bind(this)
+    this.handleOpenStoryInFolder = this.handleOpenStoryInFolder.bind(this)
   }
 
   handleOpenMenu (event) {
@@ -31,6 +32,11 @@ class RecentFileListItem extends Component {
 
   handleRequestClose () {
     this.setState({ menuOpen: false, menuAnchorElement: null })
+  }
+
+  handleOpenStoryInFolder () {
+    this.handleRequestClose()
+    this.props.openStoryInFolder(this.props.path)
   }
 
   render () {
@@ -55,13 +61,12 @@ class RecentFileListItem extends Component {
               </ListItemIcon>
               <ListItemText primary={pinned ? 'Ablösen' : 'Anheften'} />
             </MenuItem>
-            <MenuItem onClick={this.handleRequestClose}>
+            <MenuItem onClick={this.handleOpenStoryInFolder}>
               <ListItemIcon>
                 <FolderOpenIcon />
               </ListItemIcon>
               <ListItemText primary='Verzeichnis öffnen' />
             </MenuItem>
-            <Divider />
             <MenuItem onClick={this.handleRequestClose}>
               <ListItemIcon>
                 <DeleteIcon />
@@ -84,7 +89,8 @@ const format = (path) => {
 RecentFileListItem.propTypes = {
   path: PropTypes.string.isRequired,
   pinned: PropTypes.bool.isRequired,
-  openStory: PropTypes.func.isRequired
+  openStory: PropTypes.func.isRequired,
+  openStoryInFolder: PropTypes.func.isRequired
 }
 
 RecentFileListItem.defaultProps = {
@@ -94,7 +100,8 @@ RecentFileListItem.defaultProps = {
 const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = (dispatch) => ({
-  openStory: (path) => dispatch(openStory(path))
+  openStory: (path) => dispatch(openStory(path)),
+  openStoryInFolder: (path) => dispatch(openFileInFolder(path))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecentFileListItem)
