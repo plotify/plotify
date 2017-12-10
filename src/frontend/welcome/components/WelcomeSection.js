@@ -18,9 +18,7 @@ const WelcomeSection = (props) => {
           <StarterList />
         </Paper>
         <Typography className={classes.title} type='title'>Zuletzt verwendet</Typography>
-        <Paper className={classes.card}>
-          <RecentFilesList />
-        </Paper>
+        <RecentFilesList listClassName={classes.card} />
       </div>
     </Section>
   )
@@ -44,11 +42,11 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 4
   },
   title: {
-    margin: theme.spacing.unit * 2
+    margin: theme.spacing.unit * 2,
+    marginTop: theme.spacing.unit * 4
   },
   card: {
-    margin: theme.spacing.unit * 2,
-    marginBottom: theme.spacing.unit * 4
+    margin: theme.spacing.unit * 2
   }
 })
 

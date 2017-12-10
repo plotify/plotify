@@ -34,10 +34,10 @@ class RecentFileListItem extends Component {
   }
 
   render () {
-    const { file, pinned, openStory } = this.props
+    const { path, pinned, openStory } = this.props
     return (
-      <ListItem button onClick={() => openStory(file)}>
-        <ListItemText primary={format(file)} />
+      <ListItem button onClick={() => openStory(path)}>
+        <ListItemText primary={format(path)} />
         <ListItemSecondaryAction>
           <IconButton
             onClick={this.handleOpenMenu}
@@ -75,14 +75,14 @@ class RecentFileListItem extends Component {
   }
 }
 
-const format = (file) => {
-  const ext = extname(file)
-  const name = basename(file)
+const format = (path) => {
+  const ext = extname(path)
+  const name = basename(path)
   return name.substring(0, name.length - ext.length)
 }
 
 RecentFileListItem.propTypes = {
-  file: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
   pinned: PropTypes.bool.isRequired,
   openStory: PropTypes.func.isRequired
 }
