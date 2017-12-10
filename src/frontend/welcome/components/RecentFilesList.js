@@ -1,6 +1,7 @@
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import List, { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import { basename, extname } from 'path'
 
+import PinCheckbox from './PinCheckbox'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
@@ -19,6 +20,9 @@ const RecentFilesList = (props) => (
     {props.files.map((file, index) => (
       <ListItem button key={index} onClick={() => props.openStory(file)}>
         <ListItemText primary={format(file)} />
+        <ListItemSecondaryAction>
+          <PinCheckbox />
+        </ListItemSecondaryAction>
       </ListItem>
     ))}
   </List>
