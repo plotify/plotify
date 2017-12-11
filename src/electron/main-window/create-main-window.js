@@ -12,12 +12,9 @@ import { setMainWindow } from './main-window'
 setShouldSaveState(isDev)
 registerRequestHandlers()
 
-const menuTemplate = createMenuTemplate(process.platform)
-const menu = Menu.buildFromTemplate(menuTemplate)
+let menu = null
 
 const createMainWindow = () => {
-  Menu.setApplicationMenu(menu)
-
   const mainWindow = new BrowserWindow({
     width: 1000,
     height: 600,
@@ -26,6 +23,14 @@ const createMainWindow = () => {
   })
 
   setMainWindow(mainWindow)
+
+  mainWindow.once('ready-to-show', () => {
+    if (menu === null) {
+      const menuTemplate = createMenuTemplate(process.platform)
+      menu = Menu.buildFromTemplate(menuTemplate)
+      Menu.setApplicationMenu(menu)
+    }
+  })
 
   mainWindow.on('closed', () => {
     setMainWindow(null)
