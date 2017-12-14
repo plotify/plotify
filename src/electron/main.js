@@ -2,10 +2,26 @@ import 'babel-polyfill'
 
 import { createMainWindow, getMainWindow } from './main-window'
 
+import { OPEN_STORY_REQUESTED } from '../shared/story/requests'
 import { app } from 'electron'
 import createSplashScreen from './splash-screen'
 import openStoryOnStartup from './open-story-on-startup'
 import printWelcomeScreen from './versions'
+import { request } from './shared/communication'
+
+// macOS: Open story on startup:
+// Make sure to listen for the open-file event very early in your application startup
+// to handle this case (even before the ready event is emitted).
+let loading = true
+let macOsStoryPath
+app.on('open-file', (event, path) => {
+  event.preventDefault()
+  if (loading) {
+    macOsStoryPath = path
+  } else {
+    request(OPEN_STORY_REQUESTED, path)
+  }
+})
 
 printWelcomeScreen()
 
@@ -28,7 +44,8 @@ const registerRequestHandlers = () => {
 const initMainWindow = () => {
   const mainWindow = createMainWindow()
   mainWindow.once('ready-to-show', () => {
-    openStoryOnStartup(splashScreen)
+    loading = false
+    openStoryOnStartup(macOsStoryPath)
       .then(initActivateHandler)
       .then(() => showMainWindow(mainWindow))
       .then(() => splashScreen.close())
