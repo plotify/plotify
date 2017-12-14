@@ -108,7 +108,13 @@ const config = {
   mac: {
     target: 'dmg',
     category: 'public.app-category.productivity',
-    icon: './mac/icon.icns'
+    icon: './mac/icon.icns',
+    fileAssociations: {
+      ext: 'story',
+      name: 'Plotify Geschichte',
+      icon: './mac/icon.icns',
+      role: 'Editor'
+    }
   },
 
   //
