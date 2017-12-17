@@ -1,88 +1,77 @@
 import ConnectionAlreadyClosedError from './connection-already-closed-error'
+import Lock from 'shared-exclusive-lock'
 
 export default class Database {
   constructor (connection) {
     this._connection = validateConnection(connection)
     this._closed = false
+    this._lock = new Lock()
   }
 
   get closed () {
     return this._closed
   }
 
-  close () {
-    return new Promise((resolve, reject) => {
+  async close () {
+    const release = await this._lock.writeLock()
+    try {
       validateClosedStatus(this)
-      this._connection.close((error) => {
-        if (error) {
-          reject(error)
-        } else {
-          this._closed = true
-          resolve()
-        }
-      })
-    })
+      await close(this._connection)
+      this._closed = true
+    } finally {
+      release()
+    }
   }
 
-  exec (sql) {
-    return new Promise((resolve, reject) => {
+  async exec (sql) {
+    validateSql(sql)
+    const release = await this._lock.writeLock()
+    try {
       validateClosedStatus(this)
-      validateSql(sql)
-      this._connection.exec(sql, (error) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve()
-        }
-      })
-    })
+      await exec(this._connection, sql)
+    } finally {
+      release()
+    }
   }
 
-  run (sql, params) {
-    return new Promise((resolve, reject) => {
+  async run (sql, params) {
+    validateSql(sql)
+    validateParams(params)
+    const release = await this._lock.writeLock()
+    try {
       validateClosedStatus(this)
-      validateSql(sql)
-      validateParams(params)
-      this._connection.run(sql, params, (error) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve()
-        }
-      })
-    })
+      await run(this._connection, sql, params)
+    } finally {
+      release()
+    }
   }
 
-  get (sql, params) {
-    return new Promise((resolve, reject) => {
+  async get (sql, params) {
+    validateSql(sql)
+    validateParams(params)
+    const release = await this._lock.readLock()
+    try {
       validateClosedStatus(this)
-      validateSql(sql)
-      validateParams(params)
-      this._connection.get(sql, params, (error, row) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve(row)
-        }
-      })
-    })
+      return get(this._connection, sql, params)
+    } finally {
+      release()
+    }
   }
 
-  all (sql, params) {
-    return new Promise((resolve, reject) => {
+  async all (sql, params) {
+    validateSql(sql)
+    validateParams(params)
+    const release = await this._lock.readLock()
+    try {
       validateClosedStatus(this)
-      validateSql(sql)
-      validateParams(params)
-      this._connection.all(sql, params, (error, rows) => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve(rows)
-        }
-      })
-    })
+      return all(this._connection, sql, params)
+    } finally {
+      release()
+    }
   }
 }
+
+// Validation:
 
 const validateConnection = (connection) => {
   if (connection !== null && typeof connection === 'object') {
@@ -108,4 +97,66 @@ const validateParams = (params) => {
   if (params !== undefined && !Array.isArray(params)) {
     throw new TypeError('params must be an array.')
   }
+}
+
+// Callbacks --> Promises:
+
+const close = (connection) => {
+  return new Promise((resolve, reject) => {
+    connection.close((error) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+const exec = (connection, sql) => {
+  return new Promise((resolve, reject) => {
+    connection.exec(sql, (error) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+const run = (connection, sql, params) => {
+  return new Promise((resolve, reject) => {
+    connection.run(sql, params, (error) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve()
+      }
+    })
+  })
+}
+
+const get = (connection, sql, params) => {
+  return new Promise((resolve, reject) => {
+    connection.get(sql, params, (error, row) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(row)
+      }
+    })
+  })
+}
+
+const all = (connection, sql, params) => {
+  return new Promise((resolve, reject) => {
+    connection.all(sql, params, (error, rows) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(rows)
+      }
+    })
+  })
 }
