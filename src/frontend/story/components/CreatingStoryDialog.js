@@ -14,13 +14,13 @@ import { withStyles } from 'material-ui/styles'
 const CreatingStoryDialog = (props) => {
   const { open, classes, failed, errorMessage, closeDialog } = props
 
-  let onRequestClose = () => {}
+  let onClose = () => {}
   let title = 'Erstelle Geschichte...'
   let message = null
   let actions = null
 
   if (failed) {
-    onRequestClose = closeDialog
+    onClose = closeDialog
     title = 'Die Geschichte konnte nicht erstellt werden.'
     message = (
       <DialogContent>
@@ -35,7 +35,7 @@ const CreatingStoryDialog = (props) => {
   }
 
   return (
-    <Dialog open={open} onRequestClose={onRequestClose}>
+    <Dialog open={open} onClose={onClose}>
       <DialogTitle className={classes.title}>
         <CircularProgress className={failed ? classes.hide : classes.progress} />
         <span>{title}</span>

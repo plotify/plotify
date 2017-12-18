@@ -49,7 +49,7 @@ const AboutDialog = (props) => {
   ]
 
   return (
-    <Dialog open={open} onRequestClose={closeAboutDialog}>
+    <Dialog open={open} onClose={closeAboutDialog}>
       {dialogContent}
       <DialogActions>
         <Button onClick={openContributorsDialog}>Mitwirkende</Button>

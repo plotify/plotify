@@ -1,11 +1,12 @@
+import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog'
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import Dialog, { DialogTitle, DialogContent, DialogContentText, DialogActions } from 'material-ui/Dialog'
-import TextField from 'material-ui/TextField'
-import Button from 'material-ui/Button'
-import { isCreateCharacterDialogOpen } from '../selectors'
 import { closeCreateCharacterDialog, createCharacter } from '../actions'
+
+import Button from 'material-ui/Button'
+import PropTypes from 'prop-types'
+import TextField from 'material-ui/TextField'
+import { connect } from 'react-redux'
+import { isCreateCharacterDialogOpen } from '../selectors'
 
 class CreateCharacterDialog extends Component {
   constructor (props) {
@@ -42,7 +43,7 @@ class CreateCharacterDialog extends Component {
     const { open } = this.props
     const emptyInput = this.state.input.length === 0
     return (
-      <Dialog open={open} onRequestClose={this.close}>
+      <Dialog open={open} onClose={this.close}>
         <DialogTitle>Neuer Charakter</DialogTitle>
         <DialogContent>
           <DialogContentText>

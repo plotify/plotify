@@ -15,7 +15,7 @@ import { openCharactersSection } from '../../characters/actions'
 // <DrawerItem text='Papierkorb' icon={<DeleteIcon />} />
 
 const NavigationDrawer = (props) => (
-  <Drawer open={props.open} onRequestClose={props.onCloseDrawer}>
+  <Drawer open={props.open} onClose={props.onCloseDrawer}>
     <List>
       <DrawerItem text='Charaktere' icon={<PersonIcon />} onClick={props.onOpenCharactersSection} />
     </List>

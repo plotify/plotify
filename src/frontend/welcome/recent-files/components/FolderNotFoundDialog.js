@@ -11,7 +11,7 @@ import { isShowFolderNotFoundDialog } from '../selectors'
 const FolderNotFoundDialog = (props) => {
   const { open, close } = props
   return (
-    <Dialog open={open} onRequestClose={close}>
+    <Dialog open={open} onClose={close}>
       <DialogTitle>Verzeichnis konnte nicht geöffnet werden</DialogTitle>
       <DialogContent>
         <Typography>

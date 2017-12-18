@@ -1,12 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import Dialog, { DialogTitle, DialogContent, DialogActions } from 'material-ui/Dialog'
+import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog'
 import List, { ListItem, ListItemText } from 'material-ui/List'
+
 import Avatar from 'material-ui/Avatar'
 import Button from 'material-ui/Button'
-import { isContributorsDialogOpen } from '../selectors'
+import PropTypes from 'prop-types'
+import React from 'react'
 import { closeContributorsDialog } from '../actions'
+import { connect } from 'react-redux'
+import { isContributorsDialogOpen } from '../selectors'
 
 const contributors = [
   { name: 'Sebastian Schmidt', url: 'https://github.com/SebastianSchmidt', image: './contributors/sebastian-schmidt.jpg' },
@@ -16,7 +17,7 @@ const contributors = [
 ]
 
 const ContributorsDialog = (props) => (
-  <Dialog open={props.open} onRequestClose={props.closeContributorsDialog}>
+  <Dialog open={props.open} onClose={props.closeContributorsDialog}>
     <DialogTitle>Mitwirkende</DialogTitle>
     <DialogContent>
       <List>

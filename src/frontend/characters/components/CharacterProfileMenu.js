@@ -1,14 +1,15 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import IconButton from 'material-ui/IconButton'
-import Menu, { MenuItem } from 'material-ui/Menu'
 import { ListItemIcon, ListItemText } from 'material-ui/List'
+import Menu, { MenuItem } from 'material-ui/Menu'
+import React, { Component } from 'react'
+
 import CopyIcon from 'material-ui-icons/ContentCopy'
 import DeleteIcon from 'material-ui-icons/Delete'
+import IconButton from 'material-ui/IconButton'
 import MoreIcon from 'material-ui-icons/MoreVert'
-import { withStyles } from 'material-ui/styles'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { isCharacterSelected } from '../selectors'
+import { withStyles } from 'material-ui/styles'
 
 class CharacterProfileMenu extends Component {
   constructor (props) {
@@ -44,7 +45,7 @@ class CharacterProfileMenu extends Component {
         <Menu
           open={this.state.open}
           anchorEl={this.state.anchorEl}
-          onRequestClose={this.handleRequestClose}>
+          onClose={this.handleRequestClose}>
           <MenuItem onClick={this.handleRequestClose}>
             <ListItemIcon>
               <CopyIcon />

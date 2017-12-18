@@ -22,7 +22,7 @@ class RecentFileListItem extends Component {
       menuOpen: false
     }
     this.handleOpenMenu = this.handleOpenMenu.bind(this)
-    this.handleRequestClose = this.handleRequestClose.bind(this)
+    this.handleClose = this.handleClose.bind(this)
     this.handleOpenStoryInFolder = this.handleOpenStoryInFolder.bind(this)
   }
 
@@ -30,12 +30,12 @@ class RecentFileListItem extends Component {
     this.setState({ menuOpen: true, menuAnchorElement: event.currentTarget })
   }
 
-  handleRequestClose () {
+  handleClose () {
     this.setState({ menuOpen: false, menuAnchorElement: null })
   }
 
   handleOpenStoryInFolder () {
-    this.handleRequestClose()
+    this.handleClose()
     this.props.openStoryInFolder(this.props.path)
   }
 
@@ -54,8 +54,8 @@ class RecentFileListItem extends Component {
           <Menu
             open={this.state.menuOpen}
             anchorEl={this.state.menuAnchorElement}
-            onRequestClose={this.handleRequestClose}>
-            <MenuItem onClick={this.handleRequestClose}>
+            onClose={this.handleClose}>
+            <MenuItem onClick={this.handleClose}>
               <ListItemIcon>
                 { pinned ? <PinOffIcon /> : <PinIcon /> }
               </ListItemIcon>
@@ -67,7 +67,7 @@ class RecentFileListItem extends Component {
               </ListItemIcon>
               <ListItemText primary='Verzeichnis öffnen' />
             </MenuItem>
-            <MenuItem onClick={this.handleRequestClose}>
+            <MenuItem onClick={this.handleClose}>
               <ListItemIcon>
                 <DeleteIcon />
               </ListItemIcon>
