@@ -1,5 +1,6 @@
 import ConnectionAlreadyClosedError from './connection-already-closed-error'
 import Database from './database'
+import Transaction from './transaction'
 
 let connection
 let database
@@ -344,5 +345,28 @@ describe('#all', () => {
       await database.close()
       return expect(database.all(sql, params)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
+  })
+})
+
+describe('#beginTransaction', () => {
+  test('returns a promise', () => {
+    expect(database.beginTransaction()).toBeInstanceOf(Promise)
+  })
+
+  test('resolves to Transaction object', async () => {
+    const transaction = await database.beginTransaction()
+    expect(transaction).toBeInstanceOf(Transaction)
+  })
+
+  test('starts transaction', async () => {
+    await database.beginTransaction()
+    expect(connection.run.mock.calls.length).toBe(1)
+    expect(connection.run.mock.calls[0][0]).toBe('begin')
+  })
+
+  test('rejects when transaction can not be started', () => {
+    const error = new Error()
+    connection.run = jest.fn(() => { throw error })
+    return expect(database.beginTransaction()).rejects.toBe(error)
   })
 })
