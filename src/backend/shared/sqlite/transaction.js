@@ -1,7 +1,9 @@
+import Database from './database'
+
 export default class Transaction {
   constructor (database, releaseTransactionLock) {
     this._database = validateDatabase(database)
-    this._releaseTransactionLock = releaseTransactionLock
+    this._releaseTransactionLock = validateReleaseTransactionLock(releaseTransactionLock)
     this._closed = false
   }
 
@@ -41,10 +43,18 @@ export default class Transaction {
 }
 
 const validateDatabase = (database) => {
-  if (database !== null && typeof database === 'object') {
+  if (database instanceof Database) {
     return database
   } else {
     throw new TypeError('database must be an object.')
+  }
+}
+
+const validateReleaseTransactionLock = (releaseTransactionLock) => {
+  if (typeof releaseTransactionLock === 'function') {
+    return releaseTransactionLock
+  } else {
+    throw new TypeError('releaseTransactionLock must be a function.')
   }
 }
 
