@@ -1,11 +1,14 @@
 import ConnectionAlreadyClosedError from './connection-already-closed-error'
 import Lock from 'shared-exclusive-lock'
+import Transaction from './transaction'
 
 export default class Database {
   constructor (connection) {
     this._connection = validateConnection(connection)
     this._closed = false
     this._lock = new Lock()
+    this._transactionLock = new Lock()
+    this._transaction = null
   }
 
   get closed () {
@@ -23,50 +26,70 @@ export default class Database {
     }
   }
 
+  async beginTransaction () {
+    const releaseTransactionLock = await this._transactionLock.writeLock()
+    try {
+      this._transaction = new Transaction(this, releaseTransactionLock)
+      await this._transaction.run('begin')
+      return this._transaction
+    } catch (error) {
+      releaseTransactionLock()
+      throw error
+    }
+  }
+
   async exec (sql) {
     validateSql(sql)
-    const release = await this._lock.writeLock()
+    const releaseTransactionLock = await handleTransaction(this)
+    const releaseWriteLock = await this._lock.writeLock()
     try {
       validateClosedStatus(this)
       await exec(this._connection, sql)
     } finally {
-      release()
+      releaseWriteLock()
+      releaseTransactionLock()
     }
   }
 
-  async run (sql, params) {
+  async run (sql, params, transaction) {
     validateSql(sql)
     validateParams(params)
-    const release = await this._lock.writeLock()
+    const releaseTransactionLock = await handleTransaction(this, transaction)
+    const releaseWriteLock = await this._lock.writeLock()
     try {
       validateClosedStatus(this)
       await run(this._connection, sql, params)
     } finally {
-      release()
+      releaseWriteLock()
+      releaseTransactionLock()
     }
   }
 
-  async get (sql, params) {
+  async get (sql, params, transaction) {
     validateSql(sql)
     validateParams(params)
-    const release = await this._lock.readLock()
+    const releaseTransactionLock = await handleTransaction(this, transaction)
+    const releaseReadLock = await this._lock.readLock()
     try {
       validateClosedStatus(this)
       return get(this._connection, sql, params)
     } finally {
-      release()
+      releaseReadLock()
+      releaseTransactionLock()
     }
   }
 
-  async all (sql, params) {
+  async all (sql, params, transaction) {
     validateSql(sql)
     validateParams(params)
-    const release = await this._lock.readLock()
+    const releaseTransactionLock = await handleTransaction(this, transaction)
+    const releaseReadLock = await this._lock.readLock()
     try {
       validateClosedStatus(this)
       return all(this._connection, sql, params)
     } finally {
-      release()
+      releaseReadLock()
+      releaseTransactionLock()
     }
   }
 }
@@ -159,4 +182,14 @@ const all = (connection, sql, params) => {
       }
     })
   })
+}
+
+// Transactions:
+
+const handleTransaction = async (database, transaction) => {
+  if (database._transaction === transaction) {
+    return () => {}
+  } else {
+    return database._transactionLock.readLock()
+  }
 }
