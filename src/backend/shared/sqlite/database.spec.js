@@ -429,6 +429,29 @@ describe('#beginTransaction', () => {
     connection.run = jest.fn(() => { throw error })
     return expect(database.beginTransaction()).rejects.toBe(error)
   })
+
+  test('receives transaction lock', async (done) => {
+    const transaction = await database.beginTransaction()
+    database.close().then(() => done.fail())
+    database.exec('UPDATE foo SET bar = "example"').then(() => done.fail())
+    database.run('UPDATE foo SET bar = "example"').then(() => done.fail())
+    database.get('SELECT foo FROM bar').then(() => done.fail())
+    database.all('SELECT foo FROM bar').then(() => done.fail())
+    await wait(500)
+    transaction.get('SELECT foo FROM bar').then(() => done())
+  })
+
+  test('releases transaction lock on commit', async (done) => {
+    const transaction = await database.beginTransaction()
+    database.get('SELECT foo FROM bar').then(() => done())
+    transaction.commit()
+  })
+
+  test('releases transaction lock on rollback', async (done) => {
+    const transaction = await database.beginTransaction()
+    database.get('SELECT foo FROM bar').then(() => done())
+    transaction.rollback()
+  })
 })
 
 const testReceivesWriteLock = async (done, name, sql, params) => {

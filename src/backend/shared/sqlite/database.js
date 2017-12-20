@@ -16,13 +16,15 @@ export default class Database {
   }
 
   async close () {
-    const release = await this._lock.writeLock()
+    const releaseTransactionLock = await handleTransaction(this)
+    const releaseWriteLock = await this._lock.writeLock()
     try {
       validateClosedStatus(this)
       await close(this._connection)
       this._closed = true
     } finally {
-      release()
+      releaseWriteLock()
+      releaseTransactionLock()
     }
   }
 
