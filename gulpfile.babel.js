@@ -4,7 +4,7 @@ import gulp from './gulp'
 import sequence from 'run-sequence'
 
 gulp.task('default', () => {
-  sequence('preparation', 'tests', 'compile', 'assets', 'electron')
+  sequence('preparation', 'compile', 'assets', 'electron')
 })
 
 gulp.task('test', () => {
