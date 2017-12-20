@@ -72,7 +72,7 @@ export default class Database {
     const releaseReadLock = await this._lock.readLock()
     try {
       validateClosedStatus(this)
-      return get(this._connection, sql, params)
+      return await get(this._connection, sql, params)
     } finally {
       releaseReadLock()
       releaseTransactionLock()
@@ -86,7 +86,7 @@ export default class Database {
     const releaseReadLock = await this._lock.readLock()
     try {
       validateClosedStatus(this)
-      return all(this._connection, sql, params)
+      return await all(this._connection, sql, params)
     } finally {
       releaseReadLock()
       releaseTransactionLock()

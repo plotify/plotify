@@ -68,6 +68,10 @@ describe('#close', () => {
     await database.close()
     return expect(database.close()).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
   })
+
+  test('receives write lock', async (done) => {
+    await testReceivesWriteLock(done, 'close')
+  })
 })
 
 describe('#exec', () => {
@@ -109,6 +113,14 @@ describe('#exec', () => {
     await database.close()
     return expect(database.exec(sql)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
   })
+
+  test('receives write lock', async (done) => {
+    await testReceivesWriteLock(done, 'exec', sql)
+  })
+
+  test('releases write lock', async (done) => {
+    await testReleasesWriteLock(done, 'exec', sql)
+  })
 })
 
 describe('#run', () => {
@@ -141,6 +153,14 @@ describe('#run', () => {
       await database.close()
       return expect(database.run(sql)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
+
+    test('receives write lock', async (done) => {
+      await testReceivesWriteLock(done, 'run', sql)
+    })
+
+    test('releases write lock', async (done) => {
+      await testReleasesWriteLock(done, 'run', sql)
+    })
   })
 
   describe('with SQL statement and with parameters', () => {
@@ -168,6 +188,14 @@ describe('#run', () => {
     test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
       await database.close()
       return expect(database.run(sql, params)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
+    })
+
+    test('receives write lock', async (done) => {
+      await testReceivesWriteLock(done, 'run', sql, params)
+    })
+
+    test('releases write lock', async (done) => {
+      await testReleasesWriteLock(done, 'run', sql, params)
     })
   })
 
@@ -224,6 +252,14 @@ describe('#get', () => {
       await database.close()
       return expect(database.get(sql)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
+
+    test('receives read lock', async (done) => {
+      await testReceivesReadLock(done, 'get', sql)
+    })
+
+    test('releases read lock', async (done) => {
+      await testReleasesReadLock(done, 'get', sql)
+    })
   })
 
   describe('with SQL statement and with parameters', () => {
@@ -256,6 +292,14 @@ describe('#get', () => {
     test('rejects to ConnectionAlreadyClosedError when the connection was already closed', async () => {
       await database.close()
       return expect(database.get(sql, params)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
+    })
+
+    test('receives read lock', async (done) => {
+      await testReceivesReadLock(done, 'get', sql, params)
+    })
+
+    test('releases read lock', async (done) => {
+      await testReleasesReadLock(done, 'get', sql, params)
     })
   })
 
@@ -312,6 +356,14 @@ describe('#all', () => {
       await database.close()
       return expect(database.all(sql)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
+
+    test('receives read lock', async (done) => {
+      await testReceivesReadLock(done, 'all', sql)
+    })
+
+    test('releases read lock', async (done) => {
+      await testReleasesReadLock(done, 'all', sql)
+    })
   })
 
   describe('with SQL statement and with parameters', () => {
@@ -345,6 +397,14 @@ describe('#all', () => {
       await database.close()
       return expect(database.all(sql, params)).rejects.toHaveProperty('name', ConnectionAlreadyClosedError.name)
     })
+
+    test('receives read lock', async (done) => {
+      await testReceivesReadLock(done, 'all', sql, params)
+    })
+
+    test('releases read lock', async (done) => {
+      await testReleasesReadLock(done, 'all', sql, params)
+    })
   })
 })
 
@@ -370,3 +430,42 @@ describe('#beginTransaction', () => {
     return expect(database.beginTransaction()).rejects.toBe(error)
   })
 })
+
+const testReceivesWriteLock = async (done, name, sql, params) => {
+  connection[name] = jest.fn()
+  database[name](sql, params)
+  database.get('SELECT foo FROM bar').then(() => done.fail())
+  await wait(500)
+  done()
+}
+
+const testReleasesWriteLock = async (done, name, sql, params) => {
+  connection[name] = jest.fn()
+  database[name](sql)
+  database.get('SELECT foo FROM bar').then(() => done())
+  await wait(100)
+  const callbackPosition = (name !== 'exec' ? 2 : 1)
+  connection[name].mock.calls[0][callbackPosition]()
+}
+
+const testReceivesReadLock = async (done, name, sql, params) => {
+  connection[name] = jest.fn()
+  database[name](sql, params)
+  database.exec('UPDATE foo SET bar = "example"').then(() => done.fail())
+  await wait(500)
+  done()
+}
+
+const testReleasesReadLock = async (done, name, sql, params) => {
+  connection[name] = jest.fn()
+  database[name](sql)
+  database.exec(sql).then(() => done())
+  await wait(100)
+  connection[name].mock.calls[0][2]()
+}
+
+const wait = (milliseconds) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, milliseconds)
+  })
+}
