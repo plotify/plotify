@@ -1,10 +1,10 @@
 import 'babel-polyfill'
 
+import { closeSplashScreen, showSplashScreen } from './splash-screen'
 import { createMainWindow, getMainWindow } from './main-window'
 
 import { OPEN_STORY_REQUESTED } from '../shared/story/requests'
 import { app } from 'electron'
-import createSplashScreen from './splash-screen'
 import openStoryOnStartup from './open-story-on-startup'
 import printWelcomeScreen from './versions'
 import { request } from './shared/communication'
@@ -25,11 +25,8 @@ app.on('open-file', (event, path) => {
 
 printWelcomeScreen()
 
-let splashScreen
-
 const initSplashScreen = () => {
-  splashScreen = createSplashScreen()
-  splashScreen.once('ready-to-show', initApp)
+  showSplashScreen().once('ready-to-show', initApp)
 }
 
 const initApp = () => {
@@ -48,7 +45,7 @@ const initMainWindow = () => {
     openStoryOnStartup(macOsStoryPath)
       .then(initActivateHandler)
       .then(() => showMainWindow(mainWindow))
-      .then(() => splashScreen.close())
+      .then(() => closeSplashScreen())
       .catch(error => console.log(error))
   })
 }
