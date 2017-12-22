@@ -14,6 +14,13 @@ export const showSplashScreen = () => {
   return splashScreen
 }
 
+export const focusSplashScreenIfExisting = () => {
+  if (splashScreen !== null && loading > 0) {
+    splashScreen.restore()
+    splashScreen.focus()
+  }
+}
+
 export const closeSplashScreen = () => {
   loading--
   if (loading <= 0) {
