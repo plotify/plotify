@@ -14,6 +14,10 @@ import { withStyles } from 'material-ui/styles'
 const productName = require('../package.json').productName
 
 class App extends React.Component {
+  componentDidMount () {
+    document.title = productName
+  }
+
   componentWillUpdate (nextProps) {
     if (nextProps.path) {
       document.title = basename(nextProps.path) + ' - ' + productName
