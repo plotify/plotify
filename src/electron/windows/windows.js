@@ -16,12 +16,14 @@ export const getNumberOfWindows = () => {
 }
 
 export const addWindow = (browserWindow) => {
-  windows.set(windows.webContents, browserWindow)
+  windows.set(browserWindow.webContents, browserWindow)
   readyStatus.set(browserWindow, false)
 }
 
 export const removeWindow = (browserWindow) => {
-  return windows.delete(browserWindow.webContents)
+  removeWindowValueFromMap(windows, browserWindow)
+  removeWindowStoryPath(browserWindow)
+  readyStatus.delete(browserWindow)
 }
 
 export const getWindowByWebContents = (webContents) => {
@@ -42,4 +44,18 @@ export const getWindowByStoryPath = (storyPath) => {
 
 export const setWindowStoryPath = (browserWindow, storyPath) => {
   storyPaths.set(storyPath, browserWindow)
+}
+
+export const removeWindowStoryPath = (browserWindow) => {
+  removeWindowValueFromMap(storyPaths, browserWindow)
+}
+
+const removeWindowValueFromMap = (map, browserWindow) => {
+  for (let entry of map.entries()) {
+    const key = entry[0]
+    const value = entry[1]
+    if (value === browserWindow) {
+      map.delete(key)
+    }
+  }
 }

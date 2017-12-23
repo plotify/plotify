@@ -1,2 +1,2 @@
 export { default as createOrFocus } from './create-or-focus'
-export { getWindowByWebContents } from './windows'
+export { getWindowByWebContents, setWindowStoryPath, removeWindowStoryPath } from './windows'

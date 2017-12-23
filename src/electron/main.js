@@ -11,13 +11,11 @@ let loadingBackend = true
 let storyPaths = new Set()
 
 const isSecondInstance = app.makeSingleInstance((argv, _) => {
-  const path = getStoryPathFromArguments(argv)
+  const paths = getStoryPathsFromArguments(argv)
   if (loadingBackend) {
-    if (path) {
-      storyPaths.add(path)
-    }
+    paths.forEach((path) => storyPaths.add(path))
   } else {
-    createOrFocus(path)
+    paths.forEach(createOrFocus)
   }
 })
 
@@ -51,7 +49,8 @@ const registerRequestHandlers = () => {
 
 const initMainWindow = () => {
   loadingBackend = false
-  storyPaths.add(getStoryPathFromArguments(process.argv))
+  getStoryPathsFromArguments(process.argv).forEach((path) => storyPaths.add(path))
+  addDefaultPathIfEmpty(storyPaths)
   storyPaths.forEach(createOrFocus)
   closeSplashScreen()
   /*
@@ -67,11 +66,17 @@ const initMainWindow = () => {
   */
 }
 
-const getStoryPathFromArguments = (argv) => {
+const getStoryPathsFromArguments = (argv) => {
   if (isDev) {
-    return ''
+    return []
   } else {
-    return argv.slice(1).join('')
+    return argv.slice(1)
+  }
+}
+
+const addDefaultPathIfEmpty = (paths) => {
+  if (paths.size === 0) {
+    paths.add('')
   }
 }
 

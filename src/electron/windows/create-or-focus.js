@@ -1,5 +1,5 @@
 import { OPEN_STORY_FINISHED, OPEN_STORY_REQUESTED } from '../../shared/story/requests'
-import { addWindow, getWindowByStoryPath, isWindowReady, setWindowIsReady, setWindowStoryPath } from './windows'
+import { addWindow, getWindowByStoryPath, isWindowReady, removeWindow, setWindowIsReady, setWindowStoryPath } from './windows'
 import { closeSplashScreen, focusSplashScreenIfExisting, showSplashScreen } from '../splash-screen'
 import { request, requestHandlerOnce } from '../shared/communication'
 
@@ -7,7 +7,6 @@ import { BrowserWindow } from 'electron'
 import { format } from 'url'
 import initEventHandlers from './events'
 import path from 'path'
-import { setMainWindow } from '../main-window/main-window'
 
 // TODO Save state
 // TODO Menu
@@ -33,9 +32,6 @@ const createOrFocus = (storyPath = '') => {
   setWindowStoryPath(window, storyPath)
   initEventHandlers(window)
 
-  // TODO Remove after refactoring:
-  setMainWindow(window)
-
   window.loadURL(format({
     pathname: path.join(__dirname, '../../frontend/static/index.html'),
     protocol: 'file:',
@@ -49,6 +45,10 @@ const createOrFocus = (storyPath = '') => {
     } else {
       showWindow(window)
     }
+  })
+
+  window.once('closed', () => {
+    removeWindow(window)
   })
 }
 
