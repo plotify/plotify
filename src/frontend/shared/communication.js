@@ -8,7 +8,7 @@ export const request = (name, payload) => (
 )
 
 export const requestHandler = (name, handler) => (
-  requestHandlerBase(ipcRenderer, name, (resolve, reject, payload) => {
+  requestHandlerBase(ipcRenderer, name, (resolve, reject, _, payload) => {
     const store = getStore()
     handler(resolve, reject, payload, store.dispatch, store.getState())
   })

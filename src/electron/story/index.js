@@ -1,1 +1,1 @@
-export { getCurrentStory } from './current'
+export { getStoryByWindow } from './current'

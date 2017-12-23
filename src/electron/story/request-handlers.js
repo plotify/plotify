@@ -4,14 +4,14 @@ import createStory from './create'
 import openStory from './open'
 import { requestHandler } from '../shared/communication'
 
-const handleCreateStory = (resolve, reject) => {
-  createStory()
+const handleCreateStory = (resolve, reject, senderWindow) => {
+  createStory(senderWindow)
     .then(story => resolve(story ? story.path : undefined))
     .catch(error => reject(error.message))
 }
 
-const handleOpenStory = (resolve, reject, path) => {
-  openStory(path)
+const handleOpenStory = (resolve, reject, senderWindow, path) => {
+  openStory(senderWindow, path)
     .then(story => resolve(story ? story.path : undefined))
     .catch(error => reject(error.message))
 }

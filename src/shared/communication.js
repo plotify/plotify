@@ -40,14 +40,14 @@ export const requestHandlerOnceBase = (receiver, name, handler) => {
 
 const receiverHandler = (handler, event, request) => {
   const { payload, responseChannel } = request
-  callHandler(handler, payload)
+  callHandler(handler, event.sender, payload)
     .then(payload => sendResponse(event.sender, responseChannel, payload, true))
     .catch(payload => sendResponse(event.sender, responseChannel, payload, false))
 }
 
-const callHandler = (handler, payload) => {
+const callHandler = (handler, sender, payload) => {
   return new Promise((resolve, reject) => {
-    handler(resolve, reject, payload)
+    handler(resolve, reject, sender, payload)
   })
 }
 

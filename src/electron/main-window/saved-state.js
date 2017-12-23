@@ -17,6 +17,7 @@ export const saveState = (state) => {
   }
 }
 
+// TODO Save: senderWindow
 const handleGetSavedState = (resolve, reject) => {
   if (savedState) {
     resolve(savedState)

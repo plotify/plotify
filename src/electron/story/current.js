@@ -1,7 +1,18 @@
-let currentStory = null
+// key: BrowserWindow, value: Story
+const stories = new Map()
 
-export const getCurrentStory = () => (currentStory)
+export const getStories = () => {
+  return stories.values()
+}
 
-export const setCurrentStory = (story) => {
-  currentStory = story
+export const setStoryOfWindow = (browserWindow, story) => {
+  stories.set(browserWindow, story)
+}
+
+export const removeStoryByWindow = (browserWindow) => {
+  return stories.delete(browserWindow)
+}
+
+export const getStoryByWindow = (browserWindow) => {
+  return stories.get(browserWindow)
 }

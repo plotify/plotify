@@ -7,6 +7,8 @@ import { OPEN_ABOUT_DIALOG } from '../../shared/about/requests'
 import isDev from 'electron-is-dev'
 import { request } from '../shared/communication'
 
+// TODO request(receiverWindow, ...)
+
 // Workaround: Unter Unity aktualisiert sich die Checkbox nicht.
 const unityWorkaround = () => {
   Menu.setApplicationMenu(Menu.getApplicationMenu())

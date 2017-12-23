@@ -1,6 +1,6 @@
 import { InvalidStoryFileError, UnsupportedStoryFileVersionError, openStory } from '../../backend/story'
 import { app, dialog } from 'electron'
-import { getCurrentStory, setCurrentStory } from './current'
+import { getStoryByWindow, setStoryOfWindow } from './current'
 
 import { getMainWindow } from '../main-window'
 
@@ -13,7 +13,7 @@ const options = {
   ]
 }
 
-const open = async (path) => {
+const open = async (senderWindow, path) => {
   if (path === undefined) {
     const files = dialog.showOpenDialog(getMainWindow(), options)
     if (!files) {
@@ -22,15 +22,15 @@ const open = async (path) => {
     path = files[0]
   }
 
-  const currentPath = getCurrentStory() ? getCurrentStory().path : undefined
+  const currentPath = getStoryByWindow(senderWindow) ? getStoryByWindow(senderWindow).path : undefined
   if (path === currentPath) {
     return
   }
 
   try {
     const story = await openStory(path)
-    await closeCurrentStory()
-    setCurrentStory(story)
+    await closeCurrentStory(senderWindow)
+    setStoryOfWindow(senderWindow, story)
     return story
   } catch (error) {
     throw errorMessage(error)
@@ -38,8 +38,8 @@ const open = async (path) => {
 }
 
 // TODO Sicherstellen, dass noch ungespeicherte Änderungen gespeichert werden.
-const closeCurrentStory = async () => {
-  const currentStory = getCurrentStory()
+const closeCurrentStory = async (senderWindow) => {
+  const currentStory = getStoryByWindow(senderWindow)
   if (currentStory) {
     await currentStory.database.close()
   }

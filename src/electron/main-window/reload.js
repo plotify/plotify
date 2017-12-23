@@ -4,17 +4,18 @@ import { request } from '../shared/communication'
 import { saveState } from './saved-state'
 import watch from 'node-watch'
 
-const initReload = (mainWindow) => {
+const initReload = (window) => {
   const frontend = path.join(__dirname, '../../frontend/')
   watch(frontend, { recursive: true }, () => {
-    request(GET_STATE)
-      .then(state => reload(mainWindow, state))
+    request(window, GET_STATE)
+      .then(state => reload(window, state))
   })
 }
 
-const reload = (mainWindow, state) => {
+const reload = (window, state) => {
+  // TODO saveState --> window
   saveState(state)
-  mainWindow.webContents.reloadIgnoringCache()
+  window.webContents.reloadIgnoringCache()
 }
 
 export default initReload

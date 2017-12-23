@@ -45,7 +45,7 @@ const createOrFocus = (storyPath = '') => {
   window.once('ready-to-show', () => {
     setWindowIsReady(window)
     if (storyPath !== '') {
-      openStory(storyPath).then(() => showWindow(window))
+      openStory(window, storyPath).then(() => showWindow(window))
     } else {
       showWindow(window)
     }
@@ -74,12 +74,12 @@ const showWindow = (window) => {
   closeSplashScreen()
 }
 
-const openStory = (storyPath) => {
+const openStory = (window, storyPath) => {
   return new Promise((resolve, reject) => {
     requestHandlerOnce(OPEN_STORY_FINISHED, () => {
       resolve()
     })
-    request(OPEN_STORY_REQUESTED, storyPath)
+    request(window, OPEN_STORY_REQUESTED, storyPath)
   })
 }
 
