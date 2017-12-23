@@ -43,6 +43,7 @@ export const getWindowByStoryPath = (storyPath) => {
 }
 
 export const setWindowStoryPath = (browserWindow, storyPath) => {
+  removeWindowStoryPath(browserWindow)
   storyPaths.set(storyPath, browserWindow)
 }
 

@@ -12,6 +12,9 @@ let storyPaths = new Set()
 
 const isSecondInstance = app.makeSingleInstance((argv, _) => {
   const paths = getStoryPathsFromArguments(argv)
+  if (paths.length === 0) {
+    paths.push('')
+  }
   if (loadingBackend) {
     paths.forEach((path) => storyPaths.add(path))
   } else {
