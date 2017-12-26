@@ -15,6 +15,8 @@ export const openStory = (path) => {
 
     dispatch(openStoryStarted())
 
+    let openError
+
     try {
       path = await request(OPEN_STORY, path)
 
@@ -27,10 +29,11 @@ export const openStory = (path) => {
 
       dispatch(closeOpenStoryDialog())
     } catch (error) {
+      openError = error
       dispatch(openStoryFailed(error))
     }
 
-    request(OPEN_STORY_FINISHED)
+    request(OPEN_STORY_FINISHED, openError)
   }
 }
 

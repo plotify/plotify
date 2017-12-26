@@ -1,9 +1,9 @@
+import { BrowserWindow, dialog } from 'electron'
 import { OPEN_STORY_FINISHED, OPEN_STORY_REQUESTED } from '../../shared/story/requests'
 import { addWindow, getWindowByStoryPath, isWindowReady, removeWindow, setWindowIsReady, setWindowStoryPath } from './windows'
 import { closeSplashScreen, focusSplashScreenIfExisting, showSplashScreen } from '../splash-screen'
 import { request, requestHandlerOnce } from '../shared/communication'
 
-import { BrowserWindow } from 'electron'
 import { format } from 'url'
 import initEventHandlers from './events'
 import path from 'path'
@@ -41,7 +41,9 @@ const createOrFocus = (storyPath = '') => {
   window.once('ready-to-show', () => {
     setWindowIsReady(window)
     if (storyPath !== '') {
-      openStory(window, storyPath).then(() => showWindow(window))
+      openStory(window, storyPath)
+        .then(() => showWindow(window))
+        .catch((error) => showErrorAndCloseWindow(window, error))
     } else {
       showWindow(window)
     }
@@ -76,11 +78,28 @@ const showWindow = (window) => {
 
 const openStory = (window, storyPath) => {
   return new Promise((resolve, reject) => {
-    requestHandlerOnce(OPEN_STORY_FINISHED, () => {
-      resolve()
+    requestHandlerOnce(OPEN_STORY_FINISHED, (handlerResolve, _, __, error) => {
+      handlerResolve()
+      if (error) {
+        reject(error)
+      } else {
+        resolve()
+      }
     })
     request(window, OPEN_STORY_REQUESTED, storyPath)
   })
+}
+
+const showErrorAndCloseWindow = (window, error) => {
+  removeWindow(window)
+  dialog.showMessageBox({
+    type: 'error',
+    title: 'Die Geschichte konnte nicht geöffnet werden.',
+    message: error,
+    buttons: ['Schließen'],
+    defaultId: 0
+  }, () => window.destroy())
+  closeSplashScreen()
 }
 
 /*
