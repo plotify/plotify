@@ -9,9 +9,7 @@ import initEventHandlers from './events'
 import initMenu from '../menu'
 import path from 'path'
 
-// TODO Save state
-// TODO closed-Event
-// TODO reload
+// TODO Save state & reload
 const createOrFocus = (storyPath = '') => {
   if (getWindowByStoryPath(storyPath)) {
     focusExistingWindowOrSplashScreen(storyPath)
@@ -47,10 +45,6 @@ const createOrFocus = (storyPath = '') => {
     } else {
       showWindow(window)
     }
-  })
-
-  window.once('closed', () => {
-    removeWindow(window)
   })
 }
 
@@ -107,10 +101,6 @@ const showErrorAndCloseWindow = (window, error) => {
 }
 
 /*
-  mainWindow.on('closed', () => {
-    setMainWindow(null)
-  })
-
   setShouldSaveState(isDev)
   registerRequestHandlers()
   if (isDev) {

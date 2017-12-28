@@ -1,3 +1,4 @@
+import handleClosed from './closed'
 import handleContextMenu from './context-menu'
 import handleNewWindow from './new-window'
 import handleWillNavigate from './will-navigate'
@@ -6,10 +7,17 @@ import initEventHandlers from './'
 let window
 beforeEach(() => {
   window = {
+    once: jest.fn(),
     webContents: {
       on: jest.fn()
     }
   }
+})
+
+test('adds event handler for closed event', () => {
+  initEventHandlers(window)
+  expect(window.once.mock.calls[0][0]).toEqual('closed')
+  expect(window.once.mock.calls[0][1]).toBe(handleClosed)
 })
 
 test('adds event handler for new-window events', () => {
