@@ -1,6 +1,7 @@
 import handleClosed from './closed'
 import handleContextMenu from './context-menu'
 import handleNewWindow from './new-window'
+import handleReadyToShow from './ready-to-show'
 import handleWillNavigate from './will-navigate'
 import initEventHandlers from './'
 
@@ -14,10 +15,16 @@ beforeEach(() => {
   }
 })
 
+test('adds event handler for ready-to-show event', () => {
+  initEventHandlers(window)
+  expect(window.once.mock.calls[0][0]).toEqual('ready-to-show')
+  expect(window.once.mock.calls[0][1]).toBe(handleReadyToShow)
+})
+
 test('adds event handler for closed event', () => {
   initEventHandlers(window)
-  expect(window.once.mock.calls[0][0]).toEqual('closed')
-  expect(window.once.mock.calls[0][1]).toBe(handleClosed)
+  expect(window.once.mock.calls[1][0]).toEqual('closed')
+  expect(window.once.mock.calls[1][1]).toBe(handleClosed)
 })
 
 test('adds event handler for new-window events', () => {

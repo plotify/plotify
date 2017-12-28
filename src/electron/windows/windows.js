@@ -31,7 +31,11 @@ export const getWindowByWebContents = (webContents) => {
 }
 
 export const isWindowReady = (browserWindow) => {
-  return readyStatus.get(browserWindow)
+  if (readyStatus.get(browserWindow)) {
+    return true
+  } else {
+    return false
+  }
 }
 
 export const setWindowIsReady = (browserWindow) => {
