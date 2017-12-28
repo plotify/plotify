@@ -1,8 +1,7 @@
 import { InvalidStoryFileError, UnsupportedStoryFileVersionError, openStory } from '../../backend/story'
 import { app, dialog } from 'electron'
-import { getStoryByWindow, setStoryOfWindow } from './current'
-
-import { getMainWindow } from '../main-window'
+import { createOrFocus, getWindowStoryPath, setWindowStoryPath } from '../windows'
+import { getStoryByWindow, isLoadingStory, setLoadingStory, setStoryOfWindow } from './current'
 
 const options = {
   title: 'Geschichte öffnen',
@@ -15,33 +14,37 @@ const options = {
 
 const open = async (senderWindow, path) => {
   if (path === undefined) {
-    const files = dialog.showOpenDialog(getMainWindow(), options)
+    const files = dialog.showOpenDialog(senderWindow, options)
     if (!files) {
       return
     }
     path = files[0]
   }
 
-  const currentPath = getStoryByWindow(senderWindow) ? getStoryByWindow(senderWindow).path : undefined
-  if (path === currentPath) {
+  // Kann in diesem Fenster eine Geschichte geöffnet werden oder muss ein anderes Fenster verwendet werden?
+  const senderWindowPath = getWindowStoryPath(senderWindow)
+  if (senderWindowPath !== '' && senderWindowPath !== path) {
+    createOrFocus(path)
     return
   }
 
+  // Wird die Geschichte in diesem Fenster bereits geladen oder ist bereits geöffnet?
+  if (senderWindowPath === path && (isLoadingStory(senderWindow) || getStoryByWindow(senderWindow) !== undefined)) {
+    return
+  }
+
+  setWindowStoryPath(senderWindow, path)
+  setLoadingStory(senderWindow, true)
+
   try {
     const story = await openStory(path)
-    await closeCurrentStory(senderWindow)
     setStoryOfWindow(senderWindow, story)
     return story
   } catch (error) {
+    setWindowStoryPath(senderWindow, '')
     throw errorMessage(error)
-  }
-}
-
-// TODO Sicherstellen, dass noch ungespeicherte Änderungen gespeichert werden.
-const closeCurrentStory = async (senderWindow) => {
-  const currentStory = getStoryByWindow(senderWindow)
-  if (currentStory) {
-    await currentStory.database.close()
+  } finally {
+    setLoadingStory(senderWindow, false)
   }
 }
 

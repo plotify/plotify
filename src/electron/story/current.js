@@ -3,6 +3,9 @@ import { removeWindowStoryPath, setWindowStoryPath } from '../windows'
 // key: BrowserWindow, value: Story
 const stories = new Map()
 
+// key: BrowserWindow, value: Story
+const storiesLoading = new Map()
+
 export const getStories = () => {
   return stories.values()
 }
@@ -22,4 +25,16 @@ export const removeStoryByWindow = (browserWindow) => {
 
 export const getStoryByWindow = (browserWindow) => {
   return stories.get(browserWindow)
+}
+
+export const isLoadingStory = (browserWindow) => {
+  if (storiesLoading.has(browserWindow)) {
+    return storiesLoading.get(browserWindow)
+  } else {
+    return false
+  }
+}
+
+export const setLoadingStory = (browserWindow, loading) => {
+  storiesLoading.set(browserWindow, loading)
 }

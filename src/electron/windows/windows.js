@@ -51,6 +51,16 @@ export const removeWindowStoryPath = (browserWindow) => {
   removeWindowValueFromMap(storyPaths, browserWindow)
 }
 
+export const getWindowStoryPath = (browserWindow) => {
+  for (let entry of storyPaths.entries()) {
+    const path = entry[0]
+    const window = entry[1]
+    if (window === browserWindow) {
+      return path
+    }
+  }
+}
+
 const removeWindowValueFromMap = (map, browserWindow) => {
   for (let entry of map.entries()) {
     const key = entry[0]

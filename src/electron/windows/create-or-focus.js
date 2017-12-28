@@ -59,17 +59,21 @@ const createOrFocus = (storyPath = '') => {
 const focusExistingWindowOrSplashScreen = (storyPath) => {
   const window = getWindowByStoryPath(storyPath)
   if (isWindowReady(window)) {
-    const maximized = window.isMaximized()
-    if (window.isMinimized()) {
-      window.restore()
-    }
-    if (maximized) {
-      window.maximize()
-    }
-    window.focus()
+    focusWindow(window)
   } else {
     focusSplashScreenIfExisting()
   }
+}
+
+const focusWindow = (window) => {
+  const maximized = window.isMaximized()
+  if (window.isMinimized()) {
+    window.restore()
+  }
+  if (maximized) {
+    window.maximize()
+  }
+  window.focus()
 }
 
 const showWindow = (window) => {
