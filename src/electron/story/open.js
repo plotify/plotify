@@ -1,6 +1,6 @@
 import { InvalidStoryFileError, UnsupportedStoryFileVersionError, openStory } from '../../backend/story'
 import { app, dialog } from 'electron'
-import { createOrFocus, getWindowStoryPath, setWindowStoryPath } from '../windows'
+import { createOrFocus, getWindowByStoryPath, getWindowStoryPath, setWindowStoryPath } from '../windows'
 import { getStoryByWindow, isLoadingStory, setLoadingStory, setStoryOfWindow } from './current'
 
 const options = {
@@ -24,6 +24,13 @@ const open = async (senderWindow, path) => {
   // Kann in diesem Fenster eine Geschichte geöffnet werden oder muss ein anderes Fenster verwendet werden?
   const senderWindowPath = getWindowStoryPath(senderWindow)
   if (senderWindowPath !== '' && senderWindowPath !== path) {
+    createOrFocus(path)
+    return
+  }
+
+  // Wird die Geschichte in einem anderen Fenster bereits geladen oder ist bereits geöffnet?
+  const otherWindow = getWindowByStoryPath(path)
+  if (senderWindow !== otherWindow && otherWindow !== undefined) {
     createOrFocus(path)
     return
   }
