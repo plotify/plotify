@@ -56,17 +56,6 @@ const createWindows = () => {
   addDefaultPathIfEmpty(storyPaths)
   storyPaths.forEach(createOrFocus)
   closeSplashScreen()
-  /*
-  const mainWindow = createMainWindow()
-  mainWindow.once('ready-to-show', () => {
-    loading = false
-    openStoryOnStartup(macOsStoryPath)
-      .then(initActivateHandler)
-      .then(() => showMainWindow(mainWindow))
-      .then(() => closeSplashScreen())
-      .catch(error => console.log(error))
-  })
-  */
 }
 
 const getStoryPathsFromArguments = (argv) => {
@@ -82,21 +71,6 @@ const addDefaultPathIfEmpty = (paths) => {
     paths.add('')
   }
 }
-
-/*
-const initActivateHandler = () => {
-  app.on('activate', () => {
-    if (getMainWindow() === null) {
-      createMainWindow()
-    }
-  })
-}
-
-const showMainWindow = (mainWindow) => {
-  mainWindow.maximize()
-  mainWindow.show()
-}
-*/
 
 app.on('ready', initSplashScreen)
 

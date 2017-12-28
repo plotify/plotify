@@ -10,10 +10,8 @@ import initMenu from '../menu'
 import path from 'path'
 
 // TODO Save state
-// TODO Menu
 // TODO closed-Event
 // TODO reload
-// TODO activate event (wahrscheinlich besser in main.js)
 const createOrFocus = (storyPath = '') => {
   if (getWindowByStoryPath(storyPath)) {
     focusExistingWindowOrSplashScreen(storyPath)
@@ -109,14 +107,6 @@ const showErrorAndCloseWindow = (window, error) => {
 }
 
 /*
-  mainWindow.once('ready-to-show', () => {
-    if (menu === null) {
-      const menuTemplate = createMenuTemplate(process.platform)
-      menu = Menu.buildFromTemplate(menuTemplate)
-      Menu.setApplicationMenu(menu)
-    }
-  })
-
   mainWindow.on('closed', () => {
     setMainWindow(null)
   })
