@@ -15,6 +15,10 @@ export default class Story {
   get database () {
     return this._database
   }
+
+  close () {
+    return this._database.close()
+  }
 }
 
 const validateDatabase = (database) => {

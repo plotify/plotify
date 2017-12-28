@@ -49,3 +49,15 @@ describe('#database', () => {
     expect(story.database).toBe(database)
   })
 })
+
+describe('#close', () => {
+  test('returns a promise', () => {
+    expect(story.close()).toBeInstanceOf(Promise)
+  })
+
+  test('closes database', async () => {
+    expect(database.closed).toBe(false)
+    await story.close()
+    expect(database.closed).toBe(true)
+  })
+})
