@@ -8,6 +8,7 @@ import view from './view'
 
 let initialized = false
 
+// TODO macOS-spezifisches Menü
 const initMenu = () => {
   if (initialized) {
     Menu.setApplicationMenu(Menu.getApplicationMenu())

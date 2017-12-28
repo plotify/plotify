@@ -1,3 +1,5 @@
+// TODO Rückgängig
+// TODO Wiederherstellen
 const edit = () => ({
   label: 'Bearbeiten',
   submenu: [

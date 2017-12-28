@@ -1,6 +1,7 @@
 import { OPEN_ABOUT_DIALOG } from '../../shared/about/requests'
 import { request } from '../shared/communication'
 
+// TODO Feedback geben
 const help = () => ({
   label: 'Hilfe',
   submenu: [
