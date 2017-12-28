@@ -6,6 +6,7 @@ import { request, requestHandlerOnce } from '../shared/communication'
 
 import { format } from 'url'
 import initEventHandlers from './events'
+import initMenu from '../menu'
 import path from 'path'
 
 // TODO Save state
@@ -31,6 +32,7 @@ const createOrFocus = (storyPath = '') => {
   addWindow(window)
   setWindowStoryPath(window, storyPath)
   initEventHandlers(window)
+  initMenu()
 
   window.loadURL(format({
     pathname: path.join(__dirname, '../../frontend/static/index.html'),

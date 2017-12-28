@@ -43,14 +43,14 @@ const initSplashScreen = () => {
 
 const initApp = () => {
   registerRequestHandlers()
-  initMainWindow()
+  createWindows()
 }
 
 const registerRequestHandlers = () => {
   require('./request-handlers')()
 }
 
-const initMainWindow = () => {
+const createWindows = () => {
   loadingBackend = false
   getStoryPathsFromArguments(process.argv).forEach((path) => storyPaths.add(path))
   addDefaultPathIfEmpty(storyPaths)
