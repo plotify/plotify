@@ -46,22 +46,44 @@ const defaultProfile = [
   {
     id: '5',
     title: 'Gesellschaft',
-    entries: ['Herkunft', 'Sprache', 'Wohnort', 'Beruf', 'Stand']
+    entries: [
+      {title: 'Herkunft', value: ''},
+      {title: 'Sprache', value: ''},
+      {title: 'Wohnort', value: ''},
+      {title: 'Beruf', value: ''},
+      {title: 'Stand', value: ''}
+    ]
   },
   {
     id: '6',
     title: 'Innere Eigenschaften',
-    entries: ['Charakter', 'Interessen', 'Abneigungen', 'Moral', 'Träume & Wünsche', 'Ziele', 'Innerer Konflikt']
+    entries: [
+      {title: 'Charakter', value: ''},
+      {title: 'Interessen', value: ''},
+      {title: 'Abneigungen', value: ''},
+      {title: 'Moral', value: ''},
+      {title: 'Träume & Wünsche', value: ''},
+      {title: 'Ziele', value: ''},
+      {title: 'Innerer Konflikt', value: ''}
+    ]
   },
   {
     id: '7',
     title: 'Veränderungen',
-    entries: ['Kindheit', 'Jugend', 'Erwachsenenalter', 'Hohes Alter']
+    entries: [
+      {title: 'Kindheit', value: ''},
+      {title: 'Jugend', value: ''},
+      {title: 'Erwachsenenalter', value: ''},
+      {title: 'Hohes Alter', value: ''}
+    ]
   },
   {
     id: '8',
     title: 'Sonstiges',
-    entries: ['Fähigkeiten', 'Anmerkungen']
+    entries: [
+      {title: 'Fähigkeiten', value: ''},
+      {title: 'Anmerkungen', value: ''}
+    ]
   }
 ]
 

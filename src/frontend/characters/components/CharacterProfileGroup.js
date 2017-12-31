@@ -27,7 +27,7 @@ const CharacterProfileGroup = (props) => {
         <Paper className={paperClass}>
           {group
             .entries
-            .filter(entry => entry.value)
+            .filter(entry => editMode ? true : entry.value)
             .map((entry, i) => (
               <CharacterProfileEntry
                 className={classes.profileEntry}
