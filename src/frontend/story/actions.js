@@ -122,9 +122,7 @@ export const closeStoryPreparation = () => {
     }
     dispatch(closeStoryPreparationStarted())
     // TODO Speichere ungespeicherte Änderungen.
-    // TODO Remove setTimeout
-    // request(CLOSE_STORY_PREPARATION_FINISHED)
-    setTimeout(() => request(CLOSE_STORY_PREPARATION_FINISHED), 3000)
+    request(CLOSE_STORY_PREPARATION_FINISHED)
   }
 }
 
