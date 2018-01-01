@@ -37,3 +37,7 @@ export const isCreatingStoryFailed = (state) => (
 export const getCreatingStoryErrorMessage = (state) => (
   state.story.creatingStoryErrorMessage
 )
+
+export const isClosingStory = (state) => (
+  state.story.closingStory === true
+)

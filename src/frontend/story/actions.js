@@ -1,7 +1,7 @@
 import * as t from './action-types'
 
-import { CREATE_STORY, OPEN_STORY, OPEN_STORY_FINISHED } from '../../shared/story/requests'
-import { isCreatingStory, isOpeningStory } from './selectors'
+import { CLOSE_STORY_PREPARATION_FINISHED, CREATE_STORY, OPEN_STORY, OPEN_STORY_FINISHED } from '../../shared/story/requests'
+import { isClosingStory, isCreatingStory, isOpeningStory } from './selectors'
 
 import { openCharactersSection } from '../characters/actions'
 import { request } from '../shared/communication'
@@ -112,5 +112,23 @@ const createStoryCanceled = () => ({
 
 export const closeCreateStoryDialog = () => ({
   type: t.CLOSE_CREATE_STORY_DIALOG,
+  payload: {}
+})
+
+export const closeStoryPreparation = () => {
+  return async (dispatch, getState) => {
+    if (isClosingStory(getState())) {
+      return
+    }
+    dispatch(closeStoryPreparationStarted())
+    // TODO Speichere ungespeicherte Änderungen.
+    // TODO Remove setTimeout
+    // request(CLOSE_STORY_PREPARATION_FINISHED)
+    setTimeout(() => request(CLOSE_STORY_PREPARATION_FINISHED), 3000)
+  }
+}
+
+const closeStoryPreparationStarted = () => ({
+  type: t.CLOSE_STORY_PREPARATION_STARTED,
   payload: {}
 })

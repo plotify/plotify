@@ -9,7 +9,8 @@ const initialState = {
   creatingStory: false,
   showCreateStoryDialog: false,
   creatingStoryFailed: false,
-  creatingStoryErrorMessage: null
+  creatingStoryErrorMessage: null,
+  closingStory: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -74,6 +75,13 @@ const reducer = (state = initialState, action) => {
 
     case t.CLOSE_CREATE_STORY_DIALOG:
       return Object.assign({}, state, {
+        showCreateStoryDialog: false
+      })
+
+    case t.CLOSE_STORY_PREPARATION_STARTED:
+      return Object.assign({}, state, {
+        closingStory: true,
+        showOpenStoryDialog: false,
         showCreateStoryDialog: false
       })
 

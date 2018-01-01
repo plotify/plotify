@@ -1,6 +1,6 @@
 import * as t from './actionTypes'
 
-import { CREATE_STORY_STARTED, OPEN_STORY_STARTED } from '../story/action-types'
+import { CLOSE_STORY_PREPARATION_STARTED, CREATE_STORY_STARTED, OPEN_STORY_STARTED } from '../story/action-types'
 
 const initialState = {
   aboutOpen: false,
@@ -31,6 +31,7 @@ const reducer = (state = initialState, action) => {
 
     case CREATE_STORY_STARTED:
     case OPEN_STORY_STARTED:
+    case CLOSE_STORY_PREPARATION_STARTED:
       return initialState
 
     default:

@@ -1,6 +1,7 @@
 import * as t from './actionTypes'
 
-import { OPEN_STORY_SUCCESSFUL } from '../story/action-types'
+import { CLOSE_STORY_PREPARATION_STARTED, OPEN_STORY_SUCCESSFUL } from '../story/action-types'
+
 import defaultProfile from './default-profile'
 import uuid from 'uuid/v4'
 
@@ -26,6 +27,7 @@ const reducer = (state = initialState, action) => {
       })
 
     case t.CLOSE_CREATE_CHARACTER_DIALOG:
+    case CLOSE_STORY_PREPARATION_STARTED:
       return Object.assign({}, state, {
         createDialogOpen: false
       })

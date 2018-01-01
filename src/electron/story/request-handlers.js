@@ -1,5 +1,6 @@
-import { CREATE_STORY, OPEN_STORY } from '../../shared/story/requests'
+import { CLOSE_STORY_PREPARATION_FINISHED, CREATE_STORY, OPEN_STORY } from '../../shared/story/requests'
 
+import closeStory from './close'
 import createStory from './create'
 import openStory from './open'
 import { requestHandler } from '../shared/communication'
@@ -16,9 +17,15 @@ const handleOpenStory = (resolve, reject, senderWindow, path) => {
     .catch(error => reject(error.message))
 }
 
+const handleCloseStory = (resolve, _, senderWindow) => {
+  closeStory(senderWindow)
+    .then(() => resolve())
+}
+
 const registerRequestHandlers = () => {
   requestHandler(CREATE_STORY, handleCreateStory)
   requestHandler(OPEN_STORY, handleOpenStory)
+  requestHandler(CLOSE_STORY_PREPARATION_FINISHED, handleCloseStory)
 }
 
 export default registerRequestHandlers

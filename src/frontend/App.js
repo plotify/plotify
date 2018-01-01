@@ -1,5 +1,6 @@
 import AboutDialog from './about/components/AboutDialog'
 import CharactersSection from './characters/components/CharactersSection'
+import ClosingStoryDialog from './story/components/ClosingStoryDialog'
 import CreatingStoryDialog from './story/components/CreatingStoryDialog'
 import NavigationDrawer from './navigation/components/NavigationDrawer'
 import OpeningStoryDialog from './story/components/OpeningStoryDialog'
@@ -33,6 +34,7 @@ class App extends React.Component {
         <AboutDialog />
         <OpeningStoryDialog />
         <CreatingStoryDialog />
+        <ClosingStoryDialog />
         <WelcomeSection />
         <CharactersSection />
       </div>

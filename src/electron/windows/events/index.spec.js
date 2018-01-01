@@ -1,3 +1,4 @@
+import handleClose from './close'
 import handleClosed from './closed'
 import handleContextMenu from './context-menu'
 import handleNewWindow from './new-window'
@@ -8,6 +9,7 @@ import initEventHandlers from './'
 let window
 beforeEach(() => {
   window = {
+    on: jest.fn(),
     once: jest.fn(),
     webContents: {
       on: jest.fn()
@@ -19,6 +21,12 @@ test('adds event handler for ready-to-show event', () => {
   initEventHandlers(window)
   expect(window.once.mock.calls[0][0]).toEqual('ready-to-show')
   expect(window.once.mock.calls[0][1]).toBe(handleReadyToShow)
+})
+
+test('adds event handler for close events', () => {
+  initEventHandlers(window)
+  expect(window.on.mock.calls[0][0]).toEqual('close')
+  expect(window.on.mock.calls[0][1]).toBe(handleClose)
 })
 
 test('adds event handler for closed event', () => {
