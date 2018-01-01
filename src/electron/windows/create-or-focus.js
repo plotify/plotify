@@ -5,9 +5,10 @@ import { BrowserWindow } from 'electron'
 import { format } from 'url'
 import initEventHandlers from './events'
 import initMenu from '../menu'
+import { initReload } from '../development'
+import isDev from 'electron-is-dev'
 import path from 'path'
 
-// TODO Save state & reload
 const createOrFocus = (storyPath = '') => {
   if (getWindowByStoryPath(storyPath)) {
     focusExistingWindowOrSplashScreen(storyPath)
@@ -27,6 +28,10 @@ const createOrFocus = (storyPath = '') => {
   setWindowStoryPath(window, storyPath)
   initEventHandlers(window)
   initMenu()
+
+  if (isDev) {
+    initReload(window)
+  }
 
   window.loadURL(format({
     pathname: path.join(__dirname, '../../frontend/static/index.html'),

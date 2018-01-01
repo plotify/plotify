@@ -1,3 +1,5 @@
+import { removeState } from '../development'
+
 // key: webContents, value: BrowserWindow
 const windows = new Map()
 
@@ -24,6 +26,7 @@ export const removeWindow = (browserWindow) => {
   removeWindowValueFromMap(windows, browserWindow)
   removeWindowStoryPath(browserWindow)
   readyStatus.delete(browserWindow)
+  removeState(browserWindow)
 }
 
 export const getWindowByWebContents = (webContents) => {
