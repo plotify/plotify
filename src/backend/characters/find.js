@@ -15,7 +15,7 @@ const find = async (database, deleted, filter = undefined) => {
 const toCharacter = (row) => ({
   id: row.id,
   name: row.name,
-  deleted: row.deleted
+  deleted: row.deleted === 1
 })
 
 const createFilter = (filter) => {
