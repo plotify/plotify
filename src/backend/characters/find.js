@@ -20,7 +20,8 @@ const toCharacter = (row) => ({
 
 const createFilter = (filter) => {
   if (filter !== undefined && filter.length > 0) {
-    return (character) => character.name.toLowerCase().includes(filter)
+    const lowerCaseFilter = filter.toLowerCase()
+    return (character) => character.name.toLowerCase().includes(lowerCaseFilter)
   } else {
     return (character) => true
   }
