@@ -26,6 +26,31 @@ describe('with no filter', () => {
   })
 })
 
+describe('with filter', () => {
+  describe('with not deleted', () => {
+    describe('returns all characters with matching names', () => {
+      test('single matching character', async () => {
+        const characters = await find(story.database, false, 'Max')
+        expect(characters.length).toBe(1)
+        expect(characters).toContainEqual(characterMatcher('Max Mustermann', false))
+      })
+
+      test('multiple matching characters', async () => {
+        const characters = await find(story.database, false, 'Muster')
+        expect(characters.length).toBe(2)
+        expect(characters).toContainEqual(characterMatcher('Max Mustermann', false))
+        expect(characters).toContainEqual(characterMatcher('Erika Musterfrau', false))
+      })
+
+      test('ignors upper and lower case', async () => {
+        const characters = await find(story.database, false, 'mAx')
+        expect(characters.length).toBe(1)
+        expect(characters).toContainEqual(characterMatcher('Max Mustermann', false))
+      })
+    })
+  })
+})
+
 const characterMatcher = (name, deleted) => {
   return { name, deleted, id: expect.any(String) }
 }
