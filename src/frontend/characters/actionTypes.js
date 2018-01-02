@@ -5,7 +5,9 @@ export const FIND_CHARACTERS_FAILED = 'characters/find-characters/failed'
 export const OPEN_CREATE_CHARACTER_DIALOG = 'characters/open-create-character-dialog'
 export const CLOSE_CREATE_CHARACTER_DIALOG = 'characters/close-create-character-dialog'
 
-export const CREATE_CHARACTER = 'characters/create-character'
+export const CREATE_CHARACTER_REQUEST = 'characters/create-character'
+export const CREATE_CHARACTER_SUCCESSFUL = 'characters/create-character/successful'
+export const CREATE_CHARACTER_FAILED = 'characters/create-character/failed'
 
 export const SELECT_CHARACTER = 'characters/select-character'
 export const DESELECT_CHARACTER = 'characters/deselect-character'

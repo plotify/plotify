@@ -3,7 +3,6 @@ import * as t from './actionTypes'
 import { CLOSE_STORY_PREPARATION_STARTED, OPEN_STORY_SUCCESSFUL } from '../story/action-types'
 
 import defaultProfile from './default-profile'
-import uuid from 'uuid/v4'
 
 const initialState = {
   entities: [],
@@ -13,7 +12,7 @@ const initialState = {
   profile: defaultProfile
 }
 
-// TODO FIND_CHARACTERS_REQUEST, FIND_CHARACTERS_FAILED
+// TODO FIND_CHARACTERS_REQUEST, FIND_CHARACTERS_FAILED, CREATE_CHARACTER_REQUEST, CREATE_CHARACTER_FAILED
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.FIND_CHARACTERS_SUCCESSFUL:
@@ -32,18 +31,16 @@ const reducer = (state = initialState, action) => {
         createDialogOpen: false
       })
 
-    case t.CREATE_CHARACTER:
-      const id = uuid()
+    case t.CREATE_CHARACTER_SUCCESSFUL:
       const entities = [
         ...state.entities,
         {
-          id: id,
+          id: action.payload.id,
           name: action.payload.name
         }
       ]
       return Object.assign({}, state, {
-        entities: sortCharacters(entities),
-        selected: id
+        entities: sortCharacters(entities)
       })
 
     case t.SELECT_CHARACTER:
