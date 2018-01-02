@@ -21,7 +21,7 @@ class App extends React.Component {
 
   componentWillUpdate (nextProps) {
     if (nextProps.path) {
-      document.title = basename(nextProps.path) + ' - ' + productName
+      document.title = basename(nextProps.path, '.story') + ' - ' + productName
     } else {
       document.title = productName
     }
