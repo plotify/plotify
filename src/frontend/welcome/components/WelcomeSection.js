@@ -1,3 +1,4 @@
+import AppIcon from './AppIcon'
 import Paper from 'material-ui/Paper'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -13,7 +14,7 @@ const WelcomeSection = (props) => {
   return (
     <Section id={WELCOME_SECTION} hideAppBar>
       <div className={classes.wrapper}>
-        <img className={classes.icon} src='./app-icon.png' />
+        <AppIcon className={classes.icon} />
         <Paper className={classes.card}>
           <StarterList />
         </Paper>
