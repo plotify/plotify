@@ -82,6 +82,7 @@ const generateLicenseFile = async (context) => {
 
 const config = {
   appId: 'org.plotify',
+  copyright: 'Copyright © 2017 - 2018 Sebastian Schmidt & Jasper Meyer',
   directories: {
     app: paths.build.app,
     output: paths.build.dist,
