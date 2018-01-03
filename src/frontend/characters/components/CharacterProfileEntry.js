@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
+import AutosavingTextField from '../../shared/AutosavingTextField'
 import PropTypes from 'prop-types'
-import TextField from 'material-ui/TextField'
 import classNames from 'classnames'
 import { withStyles } from 'material-ui/styles'
 
@@ -26,7 +26,7 @@ class CharacterProfileEntry extends Component {
     }
     return (
       <div className={classNames(classes.entry, className)}>
-        <TextField
+        <AutosavingTextField
           className={classes.textField}
           label={entry.title}
           defaultValue={entry.value}

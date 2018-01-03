@@ -9,7 +9,6 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 
-// TODO: let edit mode contain empty entries
 const CharacterProfileGroup = (props) => {
   const { className, group, classes, paperClass, editMode } = props
   const isVisible = editMode || group.entries.filter(entry => !!entry.value).length !== 0
