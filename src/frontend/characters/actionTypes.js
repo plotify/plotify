@@ -14,3 +14,7 @@ export const DESELECT_CHARACTER = 'characters/deselect-character'
 
 export const ENABLE_CHARACTER_EDIT_MODE = 'characters/enable-character-edit-mode'
 export const DISABLE_CHARACTER_EDIT_MODE = 'characters/disable-character-edit-mode'
+
+export const LOAD_PROFILE_REQUEST = 'characters/load-profile'
+export const LOAD_PROFILE_SUCCESSFUL = 'characters/load-profile/successful'
+export const LOAD_PROFILE_FAILED = 'characters/load-profile/failed'

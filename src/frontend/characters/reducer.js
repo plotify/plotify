@@ -2,17 +2,17 @@ import * as t from './actionTypes'
 
 import { CLOSE_STORY_PREPARATION_STARTED, OPEN_STORY_SUCCESSFUL } from '../story/action-types'
 
-import defaultProfile from './default-profile'
-
 const initialState = {
   entities: [],
   selected: null,
   editMode: false,
   createDialogOpen: false,
-  profile: defaultProfile
+  profile: []
 }
 
-// TODO FIND_CHARACTERS_REQUEST, FIND_CHARACTERS_FAILED, CREATE_CHARACTER_REQUEST, CREATE_CHARACTER_FAILED
+// TODO FIND_CHARACTERS_REQUEST, FIND_CHARACTERS_FAILED
+// TODO CREATE_CHARACTER_REQUEST, CREATE_CHARACTER_FAILED
+// TODO LOAD_PROFILE_REQUEST, LOAD_PROFILE_FAILED
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.FIND_CHARACTERS_SUCCESSFUL:
@@ -51,7 +51,14 @@ const reducer = (state = initialState, action) => {
     case t.DESELECT_CHARACTER:
       return Object.assign({}, state, {
         selected: null,
-        editMode: false
+        editMode: false,
+        profile: []
+      })
+
+    // TODO Vergleiche action.payload.id mit selected
+    case t.LOAD_PROFILE_SUCCESSFUL:
+      return Object.assign({}, state, {
+        profile: action.payload.profile
       })
 
     case t.ENABLE_CHARACTER_EDIT_MODE:

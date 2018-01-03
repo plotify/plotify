@@ -1,6 +1,6 @@
 import * as t from './actionTypes'
 
-import { CREATE_CHARACTER, FIND_CHARACTERS } from '../../shared/characters/requests'
+import { CREATE_CHARACTER, FIND_CHARACTERS, GET_PROFILE } from '../../shared/characters/requests'
 
 import { CHARACTERS_SECTION } from './constants'
 import { request } from '../shared/communication'
@@ -79,14 +79,46 @@ export const closeCreateCharacterDialog = () => ({
   payload: {}
 })
 
-export const selectCharacter = (id) => ({
-  type: t.SELECT_CHARACTER,
-  payload: { id }
-})
+export const selectCharacter = (id) => {
+  return async (dispatch) => {
+    dispatch({
+      type: t.SELECT_CHARACTER,
+      payload: { id }
+    })
+    dispatch(loadProfile(id))
+  }
+}
 
 export const deselectCharacter = () => ({
   type: t.DESELECT_CHARACTER,
   payload: {}
+})
+
+const loadProfile = (id) => {
+  return async (dispatch) => {
+    dispatch(loadProfileRequest(id))
+    try {
+      const profile = await request(GET_PROFILE, id)
+      dispatch(loadProfileSuccessful(id, profile))
+    } catch (error) {
+      dispatch(loadProfileFailed(error))
+    }
+  }
+}
+
+const loadProfileRequest = (id) => ({
+  type: t.LOAD_PROFILE_REQUEST,
+  payload: { id }
+})
+
+const loadProfileSuccessful = (id, profile) => ({
+  type: t.LOAD_PROFILE_SUCCESSFUL,
+  payload: { id, profile }
+})
+
+const loadProfileFailed = (id, message) => ({
+  type: t.LOAD_PROFILE_FAILED,
+  payload: { id, message }
 })
 
 export const enableCharacterEditMode = () => ({
