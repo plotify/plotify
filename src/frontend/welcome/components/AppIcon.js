@@ -1,4 +1,4 @@
-import * as Animated from "animated/lib/targets/react-dom";
+import * as Animated from 'animated/lib/targets/react-dom'
 
 import React, { Component } from 'react'
 
@@ -15,7 +15,7 @@ export default class AppIcon extends Component {
     this.rotate = this.state.rotation.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg']
-    });
+    })
     // this.rotate.addListener(v => console.log(v));
   }
 
@@ -26,7 +26,7 @@ export default class AppIcon extends Component {
       {
         toValue: 1
       }
-    ).start();
+    ).start()
   }
 
   render () {
