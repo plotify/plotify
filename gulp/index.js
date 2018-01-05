@@ -1,4 +1,5 @@
 import './tasks/preparation'
+import './tasks/lint'
 import './tasks/tests'
 import './tasks/assets'
 import './tasks/compile'
