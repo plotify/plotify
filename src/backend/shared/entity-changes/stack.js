@@ -23,13 +23,13 @@ const removeSql = (type) => {
   const sequenceTable = type.sequenceTable.name
   const entityId = type.sequenceTable.entityIdColumn
   return `
-  DELETE FROM ${sequenceTable}
-  WHERE ${entityId} = ? AND
-        stack = ? AND
-        position = ? AND
-        type = ? AND
-        type_id = ? AND
-        history_id = ?
+    DELETE FROM ${sequenceTable}
+    WHERE ${entityId} = ? AND
+          stack = ? AND
+          position = ? AND
+          type = ? AND
+          type_id = ? AND
+          history_id = ?
   `
 }
 

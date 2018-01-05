@@ -1,9 +1,10 @@
 import { validateDatabase } from '../shared/validation'
 
-const sql =
-  'SELECT c.id AS id, h.name AS name, h.deleted AS deleted ' +
-  'FROM character_history AS h, character AS c             ' +
-  'WHERE c.presence_history_id = h.id AND h.deleted = ?;   '
+const sql = `
+  SELECT c.id AS id, h.name AS name, h.deleted AS deleted
+  FROM character_history AS h, character AS c
+  WHERE c.presence_history_id = h.id AND h.deleted = ?
+`
 
 const find = async (database, deleted, filter = undefined) => {
   validateDatabase(database)
