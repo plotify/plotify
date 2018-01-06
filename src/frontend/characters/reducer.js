@@ -13,8 +13,31 @@ const initialState = {
 // TODO FIND_CHARACTERS_REQUEST, FIND_CHARACTERS_FAILED
 // TODO CREATE_CHARACTER_REQUEST, CREATE_CHARACTER_FAILED
 // TODO LOAD_PROFILE_REQUEST, LOAD_PROFILE_FAILED
+// TODO UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_FAILED
+// TODO: flatten profile state
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case t.UPDATE_PROFILE_ENTRY_SUCCESSFUL: {
+      // FIXME: this is a mess
+      let entryIndex
+      const group2Change = state.profile.findIndex(group => {
+        let i
+        const e = group.entries.find((entry, eI) => {
+          i = eI
+          return entry.id === action.payload.id
+        })
+        if (e) {
+          entryIndex = i
+          return e
+        }
+      })
+      const p = [...state.profile]
+      p[group2Change].entries[entryIndex].value = action.payload.value
+      return {
+        ...state,
+        profile: p
+      }
+    }
     case t.FIND_CHARACTERS_SUCCESSFUL:
       return Object.assign({}, state, {
         entities: sortCharacters(action.payload.characters)

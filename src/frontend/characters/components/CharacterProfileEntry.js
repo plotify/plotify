@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 
 import AutosavingTextField from '../../shared/AutosavingTextField'
 import PropTypes from 'prop-types'
-import { UPDATE_ENTRY } from '../../../shared/characters/requests'
 import classNames from 'classnames'
-import { request } from '../../shared/communication'
+import { connect } from 'react-redux'
+import { updateEntry } from '../actions'
 import { withStyles } from 'material-ui/styles'
 
 class CharacterProfileEntry extends Component {
@@ -33,12 +33,7 @@ class CharacterProfileEntry extends Component {
           defaultValue={entry.value}
           disabled={!editMode}
           InputProps={inputProps}
-          onSave={async (value) => {
-            await request(UPDATE_ENTRY, {
-              value,
-              id: this.props.entry.id
-            })
-          }}
+          onSave={(value) => this.props.update(entry.id, value)}
           fullWidth
           multiline
         />
@@ -77,4 +72,11 @@ const styles = (theme) => ({
   }
 })
 
-export default withStyles(styles)(CharacterProfileEntry)
+const mapStateToProps = (state) => ({
+
+})
+const mapDispatchToProps = (dispatch) => ({
+  update: (id, value) => dispatch(updateEntry(id, value))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CharacterProfileEntry))

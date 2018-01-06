@@ -18,3 +18,7 @@ export const DISABLE_CHARACTER_EDIT_MODE = 'characters/disable-character-edit-mo
 export const LOAD_PROFILE_REQUEST = 'characters/load-profile'
 export const LOAD_PROFILE_SUCCESSFUL = 'characters/load-profile/successful'
 export const LOAD_PROFILE_FAILED = 'characters/load-profile/failed'
+
+export const UPDATE_PROFILE_ENTRY_REQUEST = 'characters/update-profile-entry'
+export const UPDATE_PROFILE_ENTRY_SUCCESSFUL = 'characters/update-profile-entry/successful'
+export const UPDATE_PROFILE_ENTRY_FAILED = 'characters/update-profile-entry/failed'

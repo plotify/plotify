@@ -1,6 +1,11 @@
 import * as t from './actionTypes'
 
-import { CREATE_CHARACTER, FIND_CHARACTERS, GET_PROFILE } from '../../shared/characters/requests'
+import {
+    CREATE_CHARACTER,
+    FIND_CHARACTERS,
+    GET_PROFILE,
+    UPDATE_ENTRY
+} from '../../shared/characters/requests'
 
 import { CHARACTERS_SECTION } from './constants'
 import { request } from '../shared/communication'
@@ -130,3 +135,34 @@ export const disableCharacterEditMode = () => ({
   type: t.DISABLE_CHARACTER_EDIT_MODE,
   payload: {}
 })
+
+const updateEntryRequest = (id, value) => ({
+  type: t.UPDATE_PROFILE_ENTRY_REQUEST,
+  payload: {}
+})
+
+const updateEntrySuccessful = (id, value) => ({
+  type: t.UPDATE_PROFILE_ENTRY_SUCCESSFUL,
+  payload: { id, value }
+})
+
+const updateEntryFailed = (message) => ({
+  type: t.UPDATE_PROFILE_ENTRY_FAILED,
+  payload: { message }
+})
+
+export const updateEntry = (id, value) => {
+  return async (dispatch) => {
+    dispatch(updateEntryRequest(id, value))
+    try {
+      console.log('updateEntry', id, value)
+      // execution
+      await request(UPDATE_ENTRY, { id, value })
+      // success
+      dispatch(updateEntrySuccessful(id, value))
+    } catch (e) {
+      // failed
+      dispatch(updateEntryFailed(e))
+    }
+  }
+}

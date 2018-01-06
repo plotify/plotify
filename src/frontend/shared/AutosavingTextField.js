@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import { withStyles } from 'material-ui/styles'
 
-// TODO: anchor dirty indicator to textfield
 class AutosavingTextField extends Component {
   constructor (props) {
     super(props)
@@ -13,8 +12,7 @@ class AutosavingTextField extends Component {
       savedValue: this.props.defaultValue,
       dirty: false,
       timer: null,
-      saving: false,
-      anchor: null
+      saving: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSave = this.handleSave.bind(this)
@@ -26,7 +24,6 @@ class AutosavingTextField extends Component {
   }
 
   async handleChange (e) {
-    if (!this.state.anchor) this.setState({ anchor: e.currentTarget })
     const dirty = this.state.savedValue !== e.target.value
     await this.setState({
       dirty,
@@ -78,7 +75,7 @@ class AutosavingTextField extends Component {
     return (
       <React.Fragment>
         <TextField
-          label={this.state.dirty ? label + ' ✍' : label}
+          label={this.state.dirty ? label + ' •' : label}
           value={this.state.value}
           InputLabelProps={{className: classes.inputLabel}}
           InputProps={InputProps}
