@@ -122,13 +122,6 @@ const styles = theme => ({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     transition: '200ms'
-  },
-  dirty: {
-    height: theme.spacing.unit,
-    width: theme.spacing.unit,
-    background: theme.palette.primary[700],
-    borderRadius: '50%'
-    // position: 'absolute'
   }
 })
 
