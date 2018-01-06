@@ -2,7 +2,9 @@ import React, { Component } from 'react'
 
 import AutosavingTextField from '../../shared/AutosavingTextField'
 import PropTypes from 'prop-types'
+import { UPDATE_ENTRY } from '../../../shared/characters/requests'
 import classNames from 'classnames'
+import { request } from '../../shared/communication'
 import { withStyles } from 'material-ui/styles'
 
 class CharacterProfileEntry extends Component {
@@ -27,11 +29,16 @@ class CharacterProfileEntry extends Component {
     return (
       <div className={classNames(classes.entry, className)}>
         <AutosavingTextField
-          className={classes.textField}
           label={entry.title}
           defaultValue={entry.value}
           disabled={!editMode}
           InputProps={inputProps}
+          onSave={async (value) => {
+            await request(UPDATE_ENTRY, {
+              value,
+              id: this.props.entry.id
+            })
+          }}
           fullWidth
           multiline
         />
@@ -67,8 +74,6 @@ const styles = (theme) => ({
     '&:hover': {
       cursor: 'text'
     }
-  },
-  textField: {
   }
 })
 

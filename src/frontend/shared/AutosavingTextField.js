@@ -4,54 +4,117 @@ import PropTypes from 'prop-types'
 import TextField from 'material-ui/TextField'
 import { withStyles } from 'material-ui/styles'
 
+// TODO: anchor dirty indicator to textfield
 class AutosavingTextField extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      // dirty = savedState != currentState
+      value: this.props.defaultValue,
+      savedValue: this.props.defaultValue,
       dirty: false,
-      value: this.props.defaultValue
+      timer: null,
+      saving: false,
+      anchor: null
     }
     this.handleChange = this.handleChange.bind(this)
+    this.handleSave = this.handleSave.bind(this)
+    this.startTimer = this.startTimer.bind(this)
   }
 
-  componentWillUpdate (_, nextState) {
+  componentWillUnmount () {
+    this.handleSave()
+  }
 
+  async handleChange (e) {
+    if (!this.state.anchor) this.setState({ anchor: e.currentTarget })
+    const dirty = this.state.savedValue !== e.target.value
+    await this.setState({
+      dirty,
+      value: e.target.value
+    })
+    if (dirty) this.startTimer()
+  }
+
+  startTimer () {
+    clearTimeout(this.state.timer)
+    const timer = setTimeout(this.handleSave, this.props.editThreshold)
+    this.setState({ timer })
   }
 
   /**
-   * TODO: apply necessary changes before unmounting.
+   * Verifies the current state of the value (dirty etc.)
+   * and calls parents save function.
    */
-  componentWillUnmount () {
-  }
-
-  handleChange (e) {
-    this.setState({ value: e.target.value })
+  async handleSave () {
+    const { dirty, saving, value, timer } = this.state
+    if (saving) console.warn('Aborting save call. Saving already in progress.')
+    if (dirty && !saving) {
+      try {
+        this.setState({ saving: true })
+        await this.props.onSave(value)
+        this.setState({
+          savedValue: value,
+          dirty: false
+        })
+        console.log('after saved state', this.state)
+        clearTimeout(timer)
+      } catch (e) {
+        // TODO: error handling
+        console.error(e)
+      }
+      this.setState({ saving: false })
+    }
   }
 
   render () {
-    const { defaultValue, onSave, ...other } = this.props
+    const {
+      classes,
+      fullWidth,
+      multiline,
+      disabled,
+      InputProps,
+      label
+    } = this.props
     return (
-      <TextField
-        onFocus={() => {}}
-        onBlur={() => {}}
-        onChange={this.handleChange}
-        value={this.state.value}
-        {...other}
-      />
+      <React.Fragment>
+        <TextField
+          label={this.state.dirty ? label + ' ✍' : label}
+          value={this.state.value}
+          InputLabelProps={{className: classes.inputLabel}}
+          InputProps={InputProps}
+          fullWidth={fullWidth}
+          disabled={disabled}
+          multiline={multiline}
+          onFocus={() => {}}
+          onBlur={this.handleSave}
+          onChange={this.handleChange}
+        />
+      </React.Fragment>
     )
   }
 }
 
 AutosavingTextField.propTypes = {
+  fullWidth: PropTypes.bool,
+  multiline: PropTypes.bool,
+  disabled: PropTypes.bool,
+  InputProps: PropTypes.object,
+  defaultValue: PropTypes.any,
+  label: PropTypes.any,
   /**
    * Save Function to ensure auto save.
    */
-  onSave: PropTypes.func.isRequired
+  onSave: PropTypes.func.isRequired,
+
+  /**
+   * Threshold defines the maximum timeframe (in ms) between
+   * edits until a save procedure will be initiated.
+   */
+  editThreshold: PropTypes.number
 }
 
 AutosavingTextField.defaultProps = {
-
+  editThreshold: 1200
 }
 
 const styles = theme => ({
@@ -62,6 +125,13 @@ const styles = theme => ({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     transition: '200ms'
+  },
+  dirty: {
+    height: theme.spacing.unit,
+    width: theme.spacing.unit,
+    background: theme.palette.primary[700],
+    borderRadius: '50%'
+    // position: 'absolute'
   }
 })
 
