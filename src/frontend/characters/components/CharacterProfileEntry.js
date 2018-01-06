@@ -30,7 +30,6 @@ class CharacterProfileEntry extends Component {
           className={classes.textField}
           label={entry.title}
           defaultValue={entry.value}
-          InputLabelProps={{className: classes.inputLabel}}
           disabled={!editMode}
           InputProps={inputProps}
           fullWidth
@@ -68,14 +67,6 @@ const styles = (theme) => ({
     '&:hover': {
       cursor: 'text'
     }
-  },
-  inputLabel: {
-    width: '100%',
-    overflowX: 'hidden',
-    padding: '1px 1px 1px 0',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    transition: '200ms'
   },
   textField: {
   }
