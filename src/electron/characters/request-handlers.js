@@ -1,5 +1,5 @@
-import { CREATE_CHARACTER, FIND_CHARACTERS, GET_PROFILE, UPDATE_ENTRY } from '../../shared/characters/requests'
-import { createCharacter, findCharacters, getProfile, updateEntry } from '../../backend/characters'
+import { CREATE_CHARACTER, FIND_CHARACTERS, GET_PROFILE, UPDATE_CHARACTER, UPDATE_ENTRY } from '../../shared/characters/requests'
+import { createCharacter, findCharacters, getProfile, updateCharacter, updateEntry } from '../../backend/characters'
 
 import { getStoryByWindow } from '../story'
 import { requestHandler } from '../shared/communication'
@@ -25,6 +25,13 @@ const handleGetProfile = (resolve, reject, senderWindow, characterId) => {
     .catch((error) => reject(error.message))
 }
 
+const handleUpdateCharacter = (resolve, reject, senderWindow, character) => {
+  const database = getStoryByWindow(senderWindow).database
+  updateCharacter(database, character)
+    .then(() => resolve())
+    .catch((error) => reject(error.message))
+}
+
 const handleUpdateEntry = (resolve, reject, senderWindow, entry) => {
   const database = getStoryByWindow(senderWindow).database
   updateEntry(database, entry)
@@ -36,6 +43,7 @@ const registerRequestHandlers = () => {
   requestHandler(CREATE_CHARACTER, handleCreateCharacter)
   requestHandler(FIND_CHARACTERS, handleFindCharacters)
   requestHandler(GET_PROFILE, handleGetProfile)
+  requestHandler(UPDATE_CHARACTER, handleUpdateCharacter)
   requestHandler(UPDATE_ENTRY, handleUpdateEntry)
 }
 

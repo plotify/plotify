@@ -46,7 +46,13 @@ const validateEntry = (entry) => {
 
 const getCurrentEntry = async (transaction, entry) => {
   const params = [entry.id]
-  return transaction.get(currentSql, params)
+  const result = await transaction.get(currentSql, params)
+  if (result) {
+    return {
+      ...result,
+      deleted: result.deleted === 1
+    }
+  }
 }
 
 const containsChanges = (currentEntry, updatedEntry) => (
@@ -58,7 +64,7 @@ const containsChanges = (currentEntry, updatedEntry) => (
 )
 
 const addHistoryEntry = async (transaction, entry) => {
-  const params = [entry.id, entry.groupId, entry.title, entry.value, entry.position, entry.deleted]
+  const params = [entry.id, entry.groupId, entry.title, entry.value, entry.position, entry.deleted ? 1 : 0]
   return transaction.run(addSql, params)
 }
 

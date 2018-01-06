@@ -31,6 +31,13 @@ describe('with changed value', () => {
 })
 
 describe('without changes', () => {
+  test('does not change profile', async () => {
+    const entry = { ...profile[0].entries[0] }
+    await updateEntry(story.database, entry)
+    const profileAfterUpdate = await getProfile(story.database, characterId)
+    expect(JSON.stringify(profileAfterUpdate)).toEqual(JSON.stringify(profile))
+  })
+
   test('does not change history', async () => {
     const pastBeforeUpdate = await getStack(Stack.PAST, story.database, ENTRY_TYPE, characterId)
     const futureBeforeUpdate = await getStack(Stack.FUTURE, story.database, ENTRY_TYPE, characterId)
@@ -52,17 +59,34 @@ describe('without id', () => {
 
   test('does not change profile', async (done) => {
     try {
-      const entry = { ...profile[0].entries[0] }
-      entry.value = 'Changed!'
-      entry.id = undefined
+      const entry = { ...profile[0].entries[0], id: undefined, value: 'Changed!' }
       await updateEntry(story.database, entry)
       done.fail()
     } catch (error) {
       // Expected error.
     }
 
-    let profileAfterError = await getProfile(story.database, characterId)
+    const profileAfterError = await getProfile(story.database, characterId)
     expect(JSON.stringify(profileAfterError)).toEqual(JSON.stringify(profile))
+    done()
+  })
+
+  test('does not change history', async (done) => {
+    const pastBeforeUpdate = await getStack(Stack.PAST, story.database, ENTRY_TYPE, characterId)
+    const futureBeforeUpdate = await getStack(Stack.FUTURE, story.database, ENTRY_TYPE, characterId)
+
+    try {
+      const entry = { ...profile[0].entries[0], id: undefined, value: 'Changed!' }
+      await updateEntry(story.database, entry)
+      done.fail()
+    } catch (error) {
+      // Expected error.
+    }
+
+    const pastAfterUpdate = await getStack(Stack.PAST, story.database, ENTRY_TYPE, characterId)
+    const futureAfterUpdate = await getStack(Stack.FUTURE, story.database, ENTRY_TYPE, characterId)
+    expect(JSON.stringify(pastBeforeUpdate)).toEqual(JSON.stringify(pastAfterUpdate))
+    expect(JSON.stringify(futureBeforeUpdate)).toEqual(JSON.stringify(futureAfterUpdate))
     done()
   })
 })
