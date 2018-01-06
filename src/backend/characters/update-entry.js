@@ -4,7 +4,7 @@ import uuid from 'uuid/v4'
 import { validateDatabase } from '../shared/validation'
 
 const currentSql = `
-  SELECT h.id, h.group_id AS groupId, h.title, h.value, h.position, h.deleted,
+  SELECT h.group_id AS groupId, h.title, h.value, h.position, h.deleted,
          e.character_id AS characterId
   FROM ${ENTRY_TYPE.historyTable} AS h,
        ${ENTRY_TYPE.entityTable} AS e
