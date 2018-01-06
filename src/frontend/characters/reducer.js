@@ -45,7 +45,9 @@ const reducer = (state = initialState, action) => {
 
     case t.SELECT_CHARACTER:
       return Object.assign({}, state, {
-        selected: action.payload.id
+        selected: action.payload.id,
+        editMode: false,
+        profile: []
       })
 
     case t.DESELECT_CHARACTER:
