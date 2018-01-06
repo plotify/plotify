@@ -32,7 +32,7 @@ const CharacterProfileGroup = (props) => {
                 className={classes.profileEntry}
                 entry={entry}
                 key={i}
-                disabled={!editMode}
+                editMode={editMode}
               />
             ))}
         </Paper>

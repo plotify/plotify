@@ -7,9 +7,9 @@ import { withStyles } from 'material-ui/styles'
 
 class CharacterProfileEntry extends Component {
   render () {
-    const { classes, className, entry, disabled } = this.props
+    const { classes, className, entry, editMode } = this.props
     let inputProps
-    if (disabled) {
+    if (!editMode) {
       inputProps = {
         disableUnderline: true,
         classes: {
@@ -31,7 +31,7 @@ class CharacterProfileEntry extends Component {
           label={entry.title}
           defaultValue={entry.value}
           InputLabelProps={{className: classes.inputLabel}}
-          disabled={disabled}
+          disabled={!editMode}
           InputProps={inputProps}
           fullWidth
           multiline
@@ -45,11 +45,11 @@ CharacterProfileEntry.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
   entry: PropTypes.object.isRequired,
-  disabled: PropTypes.bool.isRequired
+  editMode: PropTypes.bool.isRequired
 }
 
 CharacterProfileEntry.defaultProps = {
-  disabled: true
+  editMode: true
 }
 
 const styles = (theme) => ({
