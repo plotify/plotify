@@ -31,6 +31,18 @@ export const getProfile = (state) => (
   state.characters.profile
 )
 
+export const isProfileEmpty = (state) => {
+  const profile = getProfile(state)
+  const l = profile.length
+  if (l === 0) return true
+
+  profile.forEach(group => {
+    const groupEmpty = group.entries.filter(e => e.value !== '')
+    if (!groupEmpty) return false
+  })
+  return true
+}
+
 export const getProfileGroupById = (state, id) => (
   getProfile(state).find(group => group.id === id)
 )
