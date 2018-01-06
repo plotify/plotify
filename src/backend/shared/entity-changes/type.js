@@ -1,15 +1,3 @@
-/* TODO REMOVE:
-const example = {
-  id: 0,
-  sequenceTable: {
-    name: 'character_changes_sequence',
-    entityIdColumn: 'character_id'
-  },
-  entityTable: 'character',
-  historyTable: 'character_history'
-}
-*/
-
 export const validateType = (type) => {
   if (!isPositiveNumber(type.id)) {
     throw new TypeError()
