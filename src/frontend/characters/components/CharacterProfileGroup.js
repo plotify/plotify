@@ -27,11 +27,11 @@ const CharacterProfileGroup = (props) => {
           {group
             .entries
             .filter(entry => editMode ? true : entry.value)
-            .map((entry, i) => (
+            .map((entry) => (
               <CharacterProfileEntry
                 className={classes.profileEntry}
                 entry={entry}
-                key={i}
+                key={entry.id}
                 editMode={editMode}
               />
             ))}

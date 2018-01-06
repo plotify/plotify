@@ -12,11 +12,6 @@ const CharacterProfile = ({ classes, className, profile, editMode, profileEmpty 
   return (
     <div className={classNames(className, classes.root)}>
       <div className={classes.wrapper}>
-        {!editMode && profileEmpty &&
-          <ProfileEmptyHint
-            className={classes.profileEmptyHint}
-          />
-        }
         {profile.map((item, index) => (
           <CharacterProfileGroup
             key={index}
@@ -25,6 +20,11 @@ const CharacterProfile = ({ classes, className, profile, editMode, profileEmpty 
             paperClass={classes.profilePaperClass}
           />
         ))}
+        {!editMode && profileEmpty &&
+          <ProfileEmptyHint
+            className={classes.profileEmptyHint}
+          />
+        }
       </div>
     </div>
   )
@@ -41,7 +41,9 @@ const styles = (theme) => {
       boxSizing: 'border-box'
     },
     wrapper: {
-      flex: '0.5 0.1 400px'
+      flex: '0.5 0.1 400px',
+      display: 'flex',
+      flexDirection: 'column'
     },
     profileGroup: {
       padding: theme.spacing.unit * 2
@@ -53,6 +55,7 @@ const styles = (theme) => {
       maxWidth: '850px' // Maximale Breite zu Testzwecken in der Demo.
     },
     profileEmptyHint: {
+      flex: 1,
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',

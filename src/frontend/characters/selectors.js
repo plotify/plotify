@@ -33,16 +33,22 @@ export const getProfile = (state) => (
 
 export const isProfileEmpty = (state) => {
   const profile = getProfile(state)
-  const l = profile.length
-  if (l === 0) return true
-
+  let result = true
+  if (profile.length === 0) return result
   profile.forEach(group => {
-    const groupEmpty = group.entries.filter(e => e.value !== '')
-    if (!groupEmpty) return false
+    group.entries.forEach(e => {
+      if (e.value !== '') {
+        result = false
+      }
+    })
   })
-  return true
+  return result
 }
 
 export const getProfileGroupById = (state, id) => (
   getProfile(state).find(group => group.id === id)
+)
+
+export const getFilteredGroupEntries = (state, id) => (
+  getProfile(state).find(group => group.id === id).entries.filter(entry => isCharacterEditModeEnabled(state) ? true : entry.value)
 )
