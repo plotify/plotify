@@ -1,13 +1,15 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { disableCharacterEditMode, enableCharacterEditMode } from '../actions'
+import { isCharacterEditModeEnabled, isCharacterSelected } from '../selectors'
+
+import EditIcon from 'material-ui-icons/Edit'
+import IconButton from 'material-ui/IconButton'
 import PropTypes from 'prop-types'
 import Tooltip from 'material-ui/Tooltip'
-import IconButton from 'material-ui/IconButton'
-import EditIcon from 'material-ui-icons/Edit'
+import { Typography } from 'material-ui'
 import ViewIcon from 'material-ui-icons/RemoveRedEye'
-import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
-import { isCharacterSelected, isCharacterEditModeEnabled } from '../selectors'
-import { enableCharacterEditMode, disableCharacterEditMode } from '../actions'
+import { withStyles } from 'material-ui/styles'
 
 const ToggleEditModeButton = (props) => {
   const {
@@ -21,23 +23,47 @@ const ToggleEditModeButton = (props) => {
   if (editModeEnabled) {
     return (
       <Tooltip title='Charakter nicht mehr bearbeiten' placement='bottom' className={className}>
-        <IconButton
-          onClick={disableCharacterEditMode}
-          color='contrast'
-          aria-label='view'>
-          <ViewIcon />
-        </IconButton>
+        <Fragment>
+          {props.type === 'text' &&
+            <Typography
+              className={props.classes.button}
+              type='button'
+              onClick={disableCharacterEditMode}>
+              fertig
+            </Typography>
+          }
+          {props.type === 'icon' &&
+            <IconButton
+              onClick={disableCharacterEditMode}
+              color='contrast'
+              aria-label='view'>
+              <ViewIcon />
+            </IconButton>
+          }
+        </Fragment>
       </Tooltip>
     )
   } else {
     return (
       <Tooltip title='Charakter bearbeiten' placement='bottom' className={className}>
-        <IconButton
-          onClick={enableCharacterEditMode}
-          color='contrast'
-          aria-label='edit'>
-          <EditIcon />
-        </IconButton>
+        <Fragment>
+          {props.type === 'text' &&
+            <Typography
+              className={props.classes.button}
+              type='button'
+              onClick={enableCharacterEditMode}>
+              bearbeiten
+            </Typography>
+          }
+          {props.type === 'icon' &&
+            <IconButton
+              onClick={enableCharacterEditMode}
+              color='contrast'
+              aria-label='edit'>
+              <EditIcon />
+            </IconButton>
+          }
+        </Fragment>
       </Tooltip>
     )
   }
@@ -48,12 +74,22 @@ ToggleEditModeButton.propTypes = {
   characterSelected: PropTypes.bool.isRequired,
   editModeEnabled: PropTypes.bool.isRequired,
   enableCharacterEditMode: PropTypes.func.isRequired,
-  disableCharacterEditMode: PropTypes.func.isRequired
+  disableCharacterEditMode: PropTypes.func.isRequired,
+  type: PropTypes.oneOf(['text', 'icon']).isRequired
+}
+
+ToggleEditModeButton.defaultProps = {
+  type: 'text'
 }
 
 const style = (theme) => ({
   noCharacterSelected: {
     display: 'none'
+  },
+  button: {
+    '&:hover': {
+      cursor: 'pointer'
+    }
   }
 })
 
