@@ -51,7 +51,7 @@ const styles = (theme) => {
       justifyContent: 'space-around',
       flexDirection: 'row',
       paddingTop: theme.spacing.unit * 2,
-      paddingBottom: theme.spacing.unit * 2,
+      paddingRight: theme.spacing.unit * 3,
       boxSizing: 'border-box'
     },
     wrapper: {
@@ -60,13 +60,15 @@ const styles = (theme) => {
       flexDirection: 'column'
     },
     profileGroup: {
+      width: '100%',
+      maxWidth: '850px',
+      margin: '0 auto',
       padding: theme.spacing.unit * 2
     },
     profilePaperClass: {
       display: 'flex',
       flexDirection: 'row',
-      flexWrap: 'wrap',
-      maxWidth: '850px' // Maximale Breite zu Testzwecken in der Demo.
+      flexWrap: 'wrap'
     },
     profileEmptyHint: {
       flex: 1,

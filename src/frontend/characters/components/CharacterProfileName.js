@@ -45,7 +45,8 @@ const CharacterProfileName = ({characterId, name, editMode, update, classes}) =>
 const styles = (theme) => ({
   root: {
     alignSelf: 'center',
-    padding: theme.spacing.unit * 3
+    padding: theme.spacing.unit * 3,
+    marginRight: -(theme.spacing.unit * 3)
   },
   size: {
     fontSize: 30,
