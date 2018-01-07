@@ -18,21 +18,21 @@ afterAll(async () => {
 
 test('returns not deleted groups and entries', async () => {
   const profile = await getProfile(story.database, characterId)
-  expect(profile).toEqual(defaultProfile.map(toGroup))
+
+  expect(profile.groupOrder.length).toBe(defaultProfile.length)
+  for (let groupIndex = 0; groupIndex < profile.groupOrder.length; groupIndex++) {
+    const groupId = profile.groupOrder[groupIndex]
+    const group = profile.groups[groupId]
+    expect(group.id.length).toBeGreaterThan(1)
+    expect(group.title).toEqual(defaultProfile[groupIndex].title)
+    expect(group.entries.length).toBe(defaultProfile[groupIndex].entries.length)
+
+    for (let entryIndex = 0; entryIndex < group.entries.length; entryIndex++) {
+      const entryId = group.entries[entryIndex]
+      const entry = profile.entries[entryId]
+      expect(entry.id.length).toBeGreaterThan(1)
+      expect(entry.title).toEqual(defaultProfile[groupIndex].entries[entryIndex])
+      expect(entry.value).toEqual('')
+    }
+  }
 })
-
-const toGroup = (group) => {
-  return {
-    id: expect.any(String),
-    title: group.title,
-    entries: group.entries.map(toEntry)
-  }
-}
-
-const toEntry = (entry) => {
-  return {
-    id: expect.any(String),
-    title: entry,
-    value: ''
-  }
-}

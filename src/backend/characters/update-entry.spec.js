@@ -15,22 +15,29 @@ beforeEach(async () => {
   profile = await getProfile(story.database, characterId)
 })
 
+const getFirstEntry = () => {
+  const firstGroupId = profile.groupOrder[0]
+  const firstGroup = profile.groups[firstGroupId]
+  const firstEntryId = firstGroup.entries[0]
+  return profile.entries[firstEntryId]
+}
+
 describe('with changed value', () => {
   test('updates value', async () => {
-    const entry = profile[0].entries[0]
+    const entry = getFirstEntry()
     expect(entry.value).toBe('')
     entry.value = 'Hello world'
     await updateEntry(story.database, entry)
 
     profile = await getProfile(story.database, characterId)
-    const updatedEntry = profile[0].entries[0]
+    const updatedEntry = getFirstEntry()
     expect(updatedEntry).toEqual({ ...entry, id: expect.any(String) })
   })
 })
 
 describe('without changes', () => {
   test('does not change profile', async () => {
-    const entry = { ...profile[0].entries[0] }
+    const entry = getFirstEntry()
     await updateEntry(story.database, entry)
     const profileAfterUpdate = await getProfile(story.database, characterId)
     expect(JSON.stringify(profileAfterUpdate)).toEqual(JSON.stringify(profile))
@@ -40,7 +47,7 @@ describe('without changes', () => {
     const pastBeforeUpdate = await getStack(Stack.PAST, story.database, ENTRY_TYPE, characterId)
     const futureBeforeUpdate = await getStack(Stack.FUTURE, story.database, ENTRY_TYPE, characterId)
 
-    const entry = { ...profile[0].entries[0] }
+    const entry = getFirstEntry()
     await updateEntry(story.database, entry)
 
     const pastAfterUpdate = await getStack(Stack.PAST, story.database, ENTRY_TYPE, characterId)
@@ -57,7 +64,7 @@ describe('without id', () => {
 
   test('does not change profile', async (done) => {
     try {
-      const entry = { ...profile[0].entries[0], id: undefined, value: 'Changed!' }
+      const entry = { ...getFirstEntry(), id: undefined, value: 'Changed!' }
       await updateEntry(story.database, entry)
       done.fail()
     } catch (error) {
@@ -74,7 +81,7 @@ describe('without id', () => {
     const futureBeforeUpdate = await getStack(Stack.FUTURE, story.database, ENTRY_TYPE, characterId)
 
     try {
-      const entry = { ...profile[0].entries[0], id: undefined, value: 'Changed!' }
+      const entry = { ...getFirstEntry(), id: undefined, value: 'Changed!' }
       await updateEntry(story.database, entry)
       done.fail()
     } catch (error) {
