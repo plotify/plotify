@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { getProfileEntry, isProfileEntryEmpty } from '../selectors'
 
 import AutosavingTextField from '../../shared/AutosavingTextField'
 import PropTypes from 'prop-types'
@@ -9,7 +10,7 @@ import { withStyles } from 'material-ui/styles'
 
 class CharacterProfileEntry extends Component {
   render () {
-    const { classes, className, entry, editMode } = this.props
+    const { classes, className, entry, editMode, visible } = this.props
     let inputProps
     if (!editMode) {
       inputProps = {
@@ -26,6 +27,7 @@ class CharacterProfileEntry extends Component {
         }
       }
     }
+    if (!visible) return null
     return (
       <div className={classNames(classes.entry, className)}>
         <AutosavingTextField
@@ -45,12 +47,9 @@ class CharacterProfileEntry extends Component {
 CharacterProfileEntry.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
+  enryId: PropTypes.string.isRequired,
   entry: PropTypes.object.isRequired,
   editMode: PropTypes.bool.isRequired
-}
-
-CharacterProfileEntry.defaultProps = {
-  editMode: true
 }
 
 const styles = (theme) => ({
@@ -72,9 +71,11 @@ const styles = (theme) => ({
   }
 })
 
-const mapStateToProps = (state) => ({
-
+const mapStateToProps = (state, ownProps) => ({
+  entry: getProfileEntry(state, ownProps.entryId),
+  visible: ownProps.editMode || !isProfileEntryEmpty(state, ownProps.entryId)
 })
+
 const mapDispatchToProps = (dispatch) => ({
   update: (id, value) => dispatch(updateEntry(id, value))
 })

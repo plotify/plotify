@@ -53,7 +53,7 @@ class AutosavingTextField extends Component {
           savedValue: value,
           dirty: false
         })
-        console.log('after saved state', this.state)
+        console.log('AutoSavingTextField: after saved state', this.state)
         clearTimeout(timer)
       } catch (e) {
         // TODO: error handling
