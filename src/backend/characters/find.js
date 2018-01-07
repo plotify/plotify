@@ -1,31 +1,34 @@
 import { validateDatabase } from '../shared/validation'
 
 const sql = `
-  SELECT c.id AS id, h.name AS name, h.deleted AS deleted
+  SELECT c.id
   FROM character_history AS h, character AS c
-  WHERE c.presence_history_id = h.id AND h.deleted = ?
+  WHERE c.presence_history_id = h.id AND
+        h.deleted = ? AND
+        h.name LIKE ?
 `
 
 const find = async (database, deleted, filter = undefined) => {
   validateDatabase(database)
-  const params = [deleted ? 1 : 0]
+  const params = [toDeleted(deleted), toFilter(filter)]
   const rows = await database.all(sql, params)
-  return rows.map(toCharacter).filter(createFilter(filter))
+  return rows.map(toIds)
 }
 
-const toCharacter = (row) => ({
-  id: row.id,
-  name: row.name,
-  deleted: row.deleted === 1
-})
+const toDeleted = (deleted) => (
+  deleted ? 1 : 0
+)
 
-const createFilter = (filter) => {
-  if (filter !== undefined && filter.length > 0) {
-    const lowerCaseFilter = filter.toLowerCase()
-    return (character) => character.name.toLowerCase().includes(lowerCaseFilter)
+const toFilter = (filter) => {
+  if (filter === undefined) {
+    return '%'
   } else {
-    return (character) => true
+    return '%' + filter + '%'
   }
+}
+
+const toIds = (row) => {
+  return row.id
 }
 
 export default find

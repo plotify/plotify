@@ -4,11 +4,13 @@ import find from './find'
 import { tmpNameSync } from 'tmp'
 
 let story
+let character1
+let character2
 beforeAll(async () => {
   const path = tmpNameSync({ postfix: '.story' })
   story = await createStory(path)
-  await createCharacter(story.database, 'Max Mustermann')
-  await createCharacter(story.database, 'Erika Musterfrau')
+  character1 = await createCharacter(story.database, 'Max Mustermann')
+  character2 = await createCharacter(story.database, 'Erika Musterfrau')
 })
 
 afterAll(async () => {
@@ -20,8 +22,8 @@ describe('with no filter', () => {
     test('returns all not deleted characters', async () => {
       const characters = await find(story.database, false)
       expect(characters.length).toBe(2)
-      expect(characters).toContainEqual(characterMatcher('Max Mustermann', false))
-      expect(characters).toContainEqual(characterMatcher('Erika Musterfrau', false))
+      expect(characters).toContain(character1)
+      expect(characters).toContain(character2)
     })
   })
 })
@@ -32,25 +34,21 @@ describe('with filter', () => {
       test('single matching character', async () => {
         const characters = await find(story.database, false, 'Max')
         expect(characters.length).toBe(1)
-        expect(characters).toContainEqual(characterMatcher('Max Mustermann', false))
+        expect(characters).toContain(character1)
       })
 
       test('multiple matching characters', async () => {
         const characters = await find(story.database, false, 'Muster')
         expect(characters.length).toBe(2)
-        expect(characters).toContainEqual(characterMatcher('Max Mustermann', false))
-        expect(characters).toContainEqual(characterMatcher('Erika Musterfrau', false))
+        expect(characters).toContain(character1)
+        expect(characters).toContain(character2)
       })
 
       test('ignors upper and lower case', async () => {
         const characters = await find(story.database, false, 'mAx')
         expect(characters.length).toBe(1)
-        expect(characters).toContainEqual(characterMatcher('Max Mustermann', false))
+        expect(characters).toContain(character1)
       })
     })
   })
 })
-
-const characterMatcher = (name, deleted) => {
-  return { name, deleted, id: expect.any(String) }
-}

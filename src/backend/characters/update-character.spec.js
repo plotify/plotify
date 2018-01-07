@@ -3,7 +3,7 @@ import { Stack, getStack } from '../shared/entity-changes/stack'
 import { CHARACTER_TYPE } from './types'
 import createCharacter from './create'
 import { createStory } from '../story'
-import find from './find'
+import getCharacters from './get-characters'
 import { tmpNameSync } from 'tmp'
 import updateCharacter from './update-character'
 
@@ -94,8 +94,6 @@ describe('without id', () => {
 })
 
 const getCharacter = async () => {
-  const characters = await find(story.database, false)
-  if (characters[0].id === characterId) {
-    return characters[0]
-  }
+  const characters = await getCharacters(story.database)
+  return characters[characterId]
 }
