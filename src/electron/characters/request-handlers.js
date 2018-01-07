@@ -20,9 +20,21 @@ const handleCreateCharacter = (resolve, reject, senderWindow, name) => {
 
 const handleFindCharacters = (resolve, reject, senderWindow, { deleted, filter }) => {
   const database = getStoryByWindow(senderWindow).database
+  // TODO Temporary workaround:
+  Promise.all([
+    findCharacters(database, deleted, filter),
+    getCharacters(database)
+  ]).then((result) => {
+    const allCharacters = result[1]
+    const foundCharacters = result[0]
+    const transformed = foundCharacters.map((id) => allCharacters[id])
+    resolve(transformed)
+  }).catch((error) => reject(error.message))
+  /*
   findCharacters(database, deleted, filter)
     .then((characters) => resolve(characters))
     .catch((error) => reject(error.message))
+  */
 }
 
 const handleGetProfile = (resolve, reject, senderWindow, characterId) => {
