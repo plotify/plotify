@@ -1,4 +1,8 @@
-import { createCharacter, findCharacters, getProfile, updateCharacter, updateEntry } from './'
+import { createCharacter, findCharacters, getCharacters, getProfile, updateCharacter, updateEntry } from './'
+
+test('exports getCharacters function', () => {
+  expect(getCharacters).toBeInstanceOf(Function)
+})
 
 test('exports findCharacters function', () => {
   expect(findCharacters).toBeInstanceOf(Function)
