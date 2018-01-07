@@ -1,5 +1,6 @@
 import 'babel-polyfill'
 
+import { closePreferences, initPreferences } from './preferences'
 import { closeSplashScreen, showSplashScreen } from './splash-screen'
 
 import { app } from 'electron'
@@ -43,7 +44,9 @@ const initSplashScreen = () => {
 
 const initApp = () => {
   registerRequestHandlers()
-  createWindows()
+  initPreferences().then(() => {
+    createWindows()
+  })
 }
 
 const registerRequestHandlers = () => {
@@ -76,6 +79,8 @@ app.on('ready', initSplashScreen)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit()
+    closePreferences()
+      .then(() => app.quit())
+      .catch(() => app.quit())
   }
 })

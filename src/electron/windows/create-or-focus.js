@@ -60,12 +60,4 @@ const focusWindow = (window) => {
   window.focus()
 }
 
-/*
-  setShouldSaveState(isDev)
-  registerRequestHandlers()
-  if (isDev) {
-    initReload(mainWindow)
-  }
-*/
-
 export default createOrFocus
