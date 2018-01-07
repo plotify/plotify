@@ -1,7 +1,7 @@
-import createCharacter from './create'
+import { createCharacter, getProfile } from './'
+
 import { createStory } from '../story'
 import defaultProfile from './default-profile'
-import getProfile from './get-profile'
 import { tmpNameSync } from 'tmp'
 
 let story

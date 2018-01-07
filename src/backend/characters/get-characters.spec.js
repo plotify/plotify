@@ -1,6 +1,6 @@
-import createCharacter from './create'
+import { createCharacter, getCharacters } from './'
+
 import { createStory } from '../story'
-import getCharacters from './get-characters'
 import { tmpNameSync } from 'tmp'
 
 let story

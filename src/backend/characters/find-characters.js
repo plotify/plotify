@@ -8,7 +8,7 @@ const sql = `
         h.name LIKE ?
 `
 
-const find = async (database, deleted, filter = undefined) => {
+const findCharacters = async (database, deleted, filter = undefined) => {
   validateDatabase(database)
   const params = [toDeleted(deleted), toFilter(filter)]
   const rows = await database.all(sql, params)
@@ -31,4 +31,4 @@ const toIds = (row) => {
   return row.id
 }
 
-export default find
+export default findCharacters

@@ -1,9 +1,8 @@
 import { Stack, getStack } from '../shared/entity-changes/stack'
+import { createCharacter, getCharacters } from './'
 
 import { CHARACTER_TYPE } from './types'
-import createCharacter from './create'
 import { createStory } from '../story'
-import getCharacters from './get-characters'
 import { tmpNameSync } from 'tmp'
 import updateCharacter from './update-character'
 
