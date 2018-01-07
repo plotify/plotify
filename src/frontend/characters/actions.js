@@ -5,6 +5,7 @@ import {
     FIND_CHARACTERS,
     GET_CHARACTERS,
     GET_PROFILE,
+    UPDATE_CHARACTER,
     UPDATE_ENTRY
 } from '../../shared/characters/requests'
 
@@ -189,6 +190,34 @@ export const updateEntry = (id, value) => {
       dispatch(updateEntrySuccessful(id, value))
     } catch (e) {
       dispatch(updateEntryFailed(e))
+    }
+  }
+}
+
+const updateCharacterNameRequest = (id) => ({
+  type: t.UPDATE_CHARACTER_NAME,
+  payload: { id }
+})
+
+const updateCharacterNameSuccessful = (id, name) => ({
+  type: t.UPDATE_CHARACTER_NAME_SUCCESSFUL,
+  payload: { id, name }
+})
+
+const updateCharacterNameFailed = (id, message) => ({
+  type: t.UPDATE_CHARACTER_NAME_FAILED,
+  payload: { id, message }
+})
+
+export const updateCharacterName = (id, name) => {
+  return async (dispatch) => {
+    try {
+      dispatch(updateCharacterNameRequest(id))
+      await request(UPDATE_CHARACTER, { id, name })
+      dispatch(updateCharacterNameSuccessful(id, name))
+    } catch (error) {
+      console.log(error)
+      dispatch(updateCharacterNameFailed(id, error))
     }
   }
 }

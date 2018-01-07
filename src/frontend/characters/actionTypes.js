@@ -26,3 +26,7 @@ export const LOAD_PROFILE_FAILED = 'characters/load-profile/failed'
 export const UPDATE_PROFILE_ENTRY_REQUEST = 'characters/update-profile-entry'
 export const UPDATE_PROFILE_ENTRY_SUCCESSFUL = 'characters/update-profile-entry/successful'
 export const UPDATE_PROFILE_ENTRY_FAILED = 'characters/update-profile-entry/failed'
+
+export const UPDATE_CHARACTER_NAME = 'characters/update-character-name'
+export const UPDATE_CHARACTER_NAME_SUCCESSFUL = 'characters/update-character-name/successful'
+export const UPDATE_CHARACTER_NAME_FAILED = 'characters/update-character-name/failed'

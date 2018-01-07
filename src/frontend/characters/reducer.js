@@ -22,6 +22,7 @@ const initialState = {
 // TODO CREATE_CHARACTER_REQUEST, CREATE_CHARACTER_FAILED
 // TODO LOAD_PROFILE_REQUEST, LOAD_PROFILE_FAILED
 // TODO UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_FAILED
+// TODO UPDATE_CHARACTER_NAME_REQUEST, UPDATE_CHARACTER_NAME_FAILED
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.UPDATE_PROFILE_ENTRY_SUCCESSFUL: {
@@ -36,6 +37,19 @@ const reducer = (state = initialState, action) => {
               ...state.profile.entries[id],
               value: action.payload.value
             }
+          }
+        }
+      }
+    }
+    case t.UPDATE_CHARACTER_NAME_SUCCESSFUL: {
+      console.log('UPDATED:', action.payload)
+      return {
+        ...state,
+        entities: {
+          ...state.entities,
+          [action.payload.id]: {
+            ...state.entities[action.payload.id],
+            name: action.payload.name
           }
         }
       }

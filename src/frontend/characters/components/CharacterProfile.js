@@ -6,16 +6,26 @@ import {
 
 import CharacterProfileGroup from './CharacterProfileGroup'
 import ProfileEmptyHint from './ProfileEmptyHint'
+import ProfileName from './CharacterProfileName'
 import PropTypes from 'prop-types'
 import React from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 
-const CharacterProfile = ({ classes, className, profile, editMode, profileEmpty, groups }) => {
+const CharacterProfile = ({
+  classes,
+  className,
+  profile,
+  editMode,
+  profileEmpty,
+  groups,
+  name
+}) => {
   return (
     <div className={classNames(className, classes.root)}>
       <div className={classes.wrapper}>
+        <ProfileName />
         {groups.map(id => (
           <CharacterProfileGroup
             key={id}
