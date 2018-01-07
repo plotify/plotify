@@ -18,6 +18,7 @@ afterAll(async () => {
 
 test('returns not deleted groups and entries', async () => {
   const profile = await getProfile(story.database, characterId)
+  expect(profile.characterId).toEqual(characterId)
 
   expect(profile.groupOrder.length).toBe(defaultProfile.length)
   for (let groupIndex = 0; groupIndex < profile.groupOrder.length; groupIndex++) {

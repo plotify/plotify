@@ -23,7 +23,7 @@ const getProfile = async (database, characterId) => {
   const entries = toEntries(allEntries)
   addEntriesToGroups(allEntries, groups)
   return {
-    id: characterId,
+    characterId,
     groupOrder,
     groups,
     entries
