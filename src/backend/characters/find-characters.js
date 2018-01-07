@@ -6,6 +6,7 @@ const sql = `
   WHERE c.presence_history_id = h.id AND
         h.deleted = ? AND
         h.name LIKE ?
+  ORDER BY h.name
 `
 
 const findCharacters = async (database, deleted, filter = undefined) => {
