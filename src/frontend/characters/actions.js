@@ -27,6 +27,7 @@ export const createCharacter = (name) => {
       const id = await request(CREATE_CHARACTER, name)
       dispatch(createCharacterSuccessful(id, name))
       dispatch(selectCharacter(id))
+      dispatch(findCharacters())
     } catch (error) {
       dispatch(createCharacterFailed(error))
     }

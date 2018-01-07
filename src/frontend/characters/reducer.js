@@ -25,7 +25,7 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.UPDATE_PROFILE_ENTRY_SUCCESSFUL: {
-      const {id} = action.payload
+      const { id } = action.payload
       return {
         ...state,
         profile: {
@@ -63,16 +63,15 @@ const reducer = (state = initialState, action) => {
       })
 
     case t.CREATE_CHARACTER_SUCCESSFUL:
-      const entities = [
+      const entities = {
         ...state.entities,
-        {
+        [action.payload.id]: {
           id: action.payload.id,
-          name: action.payload.name
+          name: action.payload.name,
+          deleted: false
         }
-      ]
-      return Object.assign({}, state, {
-        entities: sortCharacters(entities)
-      })
+      }
+      return Object.assign({}, state, { entities })
 
     case t.SELECT_CHARACTER:
       return Object.assign({}, state, {
@@ -114,25 +113,6 @@ const reducer = (state = initialState, action) => {
     default:
       return state
   }
-}
-
-const sortCharacters = (characters) => (
-  characters.slice().sort(compareCharacters)
-)
-
-const compareCharacters = (character1, character2) => {
-  const name1 = character1.name.toUpperCase()
-  const name2 = character2.name.toUpperCase()
-
-  if (name1 < name2) {
-    return -1
-  }
-
-  if (name1 > name2) {
-    return 1
-  }
-
-  return 0
 }
 
 export default reducer

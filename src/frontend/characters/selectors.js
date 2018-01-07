@@ -20,7 +20,7 @@ export const getSelectedCharacterName = (state) => {
   let result
   if (isCharacterSelected(state)) {
     const id = getSelectedCharacterId(state)
-    result = state.characters.entities.find(character => character.id === id).name
+    result = state.characters.entities[id]
   }
   return result
 }
