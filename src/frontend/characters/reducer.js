@@ -42,7 +42,6 @@ const reducer = (state = initialState, action) => {
       }
     }
     case t.UPDATE_CHARACTER_NAME_SUCCESSFUL: {
-      console.log('UPDATED:', action.payload)
       return {
         ...state,
         entities: {

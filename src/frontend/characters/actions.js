@@ -167,6 +167,18 @@ export const disableCharacterEditMode = () => ({
   payload: {}
 })
 
+export const updateEntry = (id, value) => {
+  return async (dispatch) => {
+    dispatch(updateEntryRequest(id, value))
+    try {
+      await request(UPDATE_ENTRY, { id, value })
+      dispatch(updateEntrySuccessful(id, value))
+    } catch (error) {
+      dispatch(updateEntryFailed(error))
+    }
+  }
+}
+
 const updateEntryRequest = (id, value) => ({
   type: t.UPDATE_PROFILE_ENTRY_REQUEST,
   payload: {}
@@ -182,14 +194,15 @@ const updateEntryFailed = (message) => ({
   payload: { message }
 })
 
-export const updateEntry = (id, value) => {
+export const updateCharacterName = (id, name) => {
   return async (dispatch) => {
-    dispatch(updateEntryRequest(id, value))
     try {
-      await request(UPDATE_ENTRY, { id, value })
-      dispatch(updateEntrySuccessful(id, value))
-    } catch (e) {
-      dispatch(updateEntryFailed(e))
+      dispatch(updateCharacterNameRequest(id))
+      await request(UPDATE_CHARACTER, { id, name })
+      dispatch(updateCharacterNameSuccessful(id, name))
+      dispatch(findCharacters())
+    } catch (error) {
+      dispatch(updateCharacterNameFailed(id, error))
     }
   }
 }
@@ -208,16 +221,3 @@ const updateCharacterNameFailed = (id, message) => ({
   type: t.UPDATE_CHARACTER_NAME_FAILED,
   payload: { id, message }
 })
-
-export const updateCharacterName = (id, name) => {
-  return async (dispatch) => {
-    try {
-      dispatch(updateCharacterNameRequest(id))
-      await request(UPDATE_CHARACTER, { id, name })
-      dispatch(updateCharacterNameSuccessful(id, name))
-    } catch (error) {
-      console.log(error)
-      dispatch(updateCharacterNameFailed(id, error))
-    }
-  }
-}
