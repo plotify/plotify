@@ -1,4 +1,5 @@
-import { Database } from '../sqlite'
+import { Database, Transaction } from '../sqlite'
+
 import validateDatabase from './validate-database'
 
 let database
@@ -10,6 +11,11 @@ beforeEach(() => {
 
 test('returns Database when called with Database object', () => {
   expect(validateDatabase(database)).toBe(database)
+})
+
+test('returns Transaction when called with Transaction object', () => {
+  const transaction = new Transaction(database, () => {})
+  expect(validateDatabase(transaction)).toBe(transaction)
 })
 
 test('throws TypeError when called without argument', () => {
