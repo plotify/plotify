@@ -1,10 +1,12 @@
 import {
     getProfileGroupIds,
     isCharacterEditModeEnabled,
-    isProfileEmpty
+    isProfileEmpty,
+    isProfileFetching
 } from '../selectors'
 
 import CharacterProfileGroup from './CharacterProfileGroup'
+import { CircularProgress } from 'material-ui/Progress'
 import ProfileEmptyHint from './ProfileEmptyHint'
 import ProfileName from './CharacterProfileName'
 import PropTypes from 'prop-types'
@@ -20,12 +22,21 @@ const CharacterProfile = ({
   editMode,
   profileEmpty,
   groups,
-  name
+  name,
+  fetching
 }) => {
   return (
     <div className={classNames(className, classes.root)}>
       <div className={classes.wrapper}>
         <ProfileName />
+        <div className={
+          classNames(
+            classes.profileEmptyHint,
+            { [classes.hidden]: !fetching }
+          )
+        }>
+          <CircularProgress />
+        </div>
         {groups.map(id => (
           <CharacterProfileGroup
             key={id}
@@ -34,7 +45,7 @@ const CharacterProfile = ({
             paperClass={classes.profilePaperClass}
           />
         ))}
-        {!editMode && profileEmpty &&
+        {!editMode && profileEmpty && !fetching &&
           <ProfileEmptyHint
             className={classes.profileEmptyHint}
           />
@@ -78,6 +89,9 @@ const styles = (theme) => {
       alignItems: 'center',
       height: '100%',
       width: '100%'
+    },
+    hidden: {
+      display: 'none'
     }
   }
 }
@@ -91,7 +105,8 @@ CharacterProfile.propTypes = {
 const mapStateToProps = (state) => ({
   groups: getProfileGroupIds(state),
   editMode: isCharacterEditModeEnabled(state),
-  profileEmpty: isProfileEmpty(state)
+  profileEmpty: isProfileEmpty(state),
+  fetching: isProfileFetching(state)
 })
 
 export default connect(mapStateToProps)(withStyles(styles)(CharacterProfile))

@@ -53,6 +53,10 @@ export const isProfileEmpty = (state) => {
   return result
 }
 
+export const isProfileFetching = (state) => (
+  state.characters.profileFetching === true
+)
+
 export const getProfileGroups = (state) => (
   getProfile(state).groups
 )
