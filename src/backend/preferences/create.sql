@@ -23,7 +23,7 @@ CREATE TABLE `window` (
 INSERT INTO `window` ( `id` ) VALUES ( 1 );
 
 CREATE TABLE `recently_opened_files` (
-  `path`,        TEXT    NOT NULL,
+  `path`         TEXT    NOT NULL,
   `last_opened`  TEXT    NOT NULL,
   `pinned`       INTEGER NOT NULL DEFAULT    0 CHECK(pinned = 0 OR pinned = 1),
   PRIMARY KEY(path)
