@@ -1,14 +1,31 @@
+import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../../shared/view/requests'
 import { OPEN_STORY_FINISHED, OPEN_STORY_REQUESTED } from '../../../shared/story/requests'
 import { getWindowStoryPath, removeWindow, setWindowIsReady } from '../windows'
 import { request, requestHandlerOnce } from '../../shared/communication'
 
 import { closeSplashScreen } from '../../splash-screen'
 import { dialog } from 'electron'
+import { isDarkThemeEnabled } from '../../preferences'
 
 const handleReadyToShow = (event) => {
   const window = event.sender
   const storyPath = getWindowStoryPath(window)
   setWindowIsReady(window)
+  enableOrDisableDarkTheme(window)
+    .then(() => handleReadyWindow(window, storyPath))
+    .catch(() => handleReadyWindow(window, storyPath))
+}
+
+const enableOrDisableDarkTheme = async (window) => {
+  const enabled = await isDarkThemeEnabled()
+  if (enabled) {
+    await request(window, ENABLE_DARK_THEME)
+  } else {
+    await request(window, DISABLE_DARK_THEME)
+  }
+}
+
+const handleReadyWindow = (window, storyPath) => {
   if (storyPath !== '') {
     openStory(window, storyPath)
       .then(() => showWindow(window))
