@@ -39,9 +39,23 @@ const handleFindCharacters = (resolve, reject, senderWindow, { deleted, filter }
 
 const handleGetProfile = (resolve, reject, senderWindow, characterId) => {
   const database = getStoryByWindow(senderWindow).database
+  // TODO Temporary workaround: toLegacyStructure(profile)
   getProfile(database, characterId)
-    .then((profile) => resolve(profile))
+    .then((profile) => resolve(toLegacyStructure(profile)))
     .catch((error) => reject(error.message))
+}
+
+// TODO Temporary workaround:
+const toLegacyStructure = (profile) => {
+  return profile.groupOrder.map((groupId) => ({
+    id: groupId,
+    title: profile.groups[groupId].title,
+    entries: profile.groups[groupId].entries.map((entryId) => ({
+      id: entryId,
+      title: profile.entries[entryId].title,
+      value: profile.entries[entryId].value
+    }))
+  }))
 }
 
 const handleUpdateCharacter = (resolve, reject, senderWindow, character) => {
