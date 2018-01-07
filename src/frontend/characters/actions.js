@@ -3,6 +3,7 @@ import * as t from './actionTypes'
 import {
     CREATE_CHARACTER,
     FIND_CHARACTERS,
+    GET_CHARACTERS,
     GET_PROFILE,
     UPDATE_ENTRY
 } from '../../shared/characters/requests'
@@ -14,7 +15,7 @@ import { setSection } from '../navigation/actions'
 export const openCharactersSection = () => {
   return async (dispatch) => {
     dispatch(setSection(CHARACTERS_SECTION))
-    dispatch(findCharacters())
+    dispatch(getCharacters())
   }
 }
 
@@ -44,6 +45,34 @@ const createCharacterSuccessful = (id, name) => ({
 
 const createCharacterFailed = (message) => ({
   type: t.CREATE_CHARACTER_FAILED,
+  payload: { message }
+})
+
+export const getCharacters = () => {
+  return async (dispatch) => {
+    dispatch(getCharactersRequest())
+    try {
+      const characters = await request(GET_CHARACTERS)
+      dispatch(getCharactersSuccessful(characters))
+      dispatch(findCharacters())
+    } catch (error) {
+      dispatch(getCharactersFailed(error))
+    }
+  }
+}
+
+const getCharactersRequest = () => ({
+  type: t.GET_CHARACTERS_REQUEST,
+  payload: {}
+})
+
+const getCharactersSuccessful = (characters) => ({
+  type: t.GET_CHARACTERS_SUCCESSFUL,
+  payload: { characters }
+})
+
+const getCharactersFailed = (message) => ({
+  type: t.GET_CHARACTERS_FAILED,
   payload: { message }
 })
 

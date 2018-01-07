@@ -1,4 +1,4 @@
-import { getCharacters, getSelectedCharacterId } from '../selectors'
+import { getFilteredCharacters, getSelectedCharacterId } from '../selectors'
 
 import CharacterListEmptyItem from './CharacterListEmptyItem'
 import CharacterListItem from './CharacterListItem'
@@ -38,7 +38,7 @@ CharactersList.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  characters: getCharacters(state),
+  characters: getFilteredCharacters(state),
   selected: getSelectedCharacterId(state)
 })
 

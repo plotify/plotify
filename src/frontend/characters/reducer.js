@@ -3,18 +3,21 @@ import * as t from './actionTypes'
 import { CLOSE_STORY_PREPARATION_STARTED, OPEN_STORY_SUCCESSFUL } from '../story/action-types'
 
 const initialProfile = {
+  id: undefined,
   groupOrder: [],
   groups: {},
   entries: {}
 }
 const initialState = {
-  entities: [],
+  entities: {},
+  list: [],
   selected: null,
   editMode: false,
   createDialogOpen: false,
   profile: initialProfile
 }
 
+// TODO GET_CHARACTERS_REQUEST, GET_CHARACTERS_FAILED
 // TODO FIND_CHARACTERS_REQUEST, FIND_CHARACTERS_FAILED
 // TODO CREATE_CHARACTER_REQUEST, CREATE_CHARACTER_FAILED
 // TODO LOAD_PROFILE_REQUEST, LOAD_PROFILE_FAILED
@@ -37,9 +40,15 @@ const reducer = (state = initialState, action) => {
         }
       }
     }
+
+    case t.GET_CHARACTERS_SUCCESSFUL:
+      return Object.assign({}, state, {
+        entities: action.payload.characters
+      })
+
     case t.FIND_CHARACTERS_SUCCESSFUL:
       return Object.assign({}, state, {
-        entities: sortCharacters(action.payload.characters)
+        list: action.payload.characters
       })
 
     case t.OPEN_CREATE_CHARACTER_DIALOG:

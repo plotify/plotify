@@ -1,3 +1,7 @@
+export const GET_CHARACTERS_REQUEST = 'characters/get-characters'
+export const GET_CHARACTERS_SUCCESSFUL = 'characters/get-characters/successful'
+export const GET_CHARACTERS_FAILED = 'characters/get-characters/failed'
+
 export const FIND_CHARACTERS_REQUEST = 'characters/find-characters'
 export const FIND_CHARACTERS_SUCCESSFUL = 'characters/find-characters/successful'
 export const FIND_CHARACTERS_FAILED = 'characters/find-characters/failed'

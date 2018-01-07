@@ -2,8 +2,10 @@ export const isCreateCharacterDialogOpen = (state) => (
   state.characters.createDialogOpen === true
 )
 
-export const getCharacters = (state) => (
-  state.characters.entities
+export const getFilteredCharacters = (state) => (
+  state.characters.list
+    .map((id) => state.characters.entities[id])
+    .filter((character) => character !== undefined)
 )
 
 export const isCharacterSelected = (state) => (
