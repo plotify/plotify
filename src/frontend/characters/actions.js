@@ -155,13 +155,9 @@ export const updateEntry = (id, value) => {
   return async (dispatch) => {
     dispatch(updateEntryRequest(id, value))
     try {
-      console.log('updateEntry', id, value)
-      // execution
       await request(UPDATE_ENTRY, { id, value })
-      // success
       dispatch(updateEntrySuccessful(id, value))
     } catch (e) {
-      // failed
       dispatch(updateEntryFailed(e))
     }
   }

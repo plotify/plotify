@@ -1,4 +1,4 @@
-import { getProfileGroupById, isCharacterEditModeEnabled } from '../selectors'
+import { getProfileGroup, isCharacterEditModeEnabled, isProfileGroupEmpty } from '../selectors'
 
 import CharacterProfileEntry from './CharacterProfileEntry'
 import Paper from 'material-ui/Paper'
@@ -10,35 +10,32 @@ import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 
 const CharacterProfileGroup = (props) => {
-  const { className, group, classes, paperClass, editMode } = props
-  const isVisible = editMode || group.entries.filter(entry => !!entry.value).length !== 0
-  if (!isVisible) {
-    return null
-  } else {
-    return (
-      <div className={classNames(className, classes.wrapper)}>
-        <Typography
-          type='title'
-          className={classes.title}
-          gutterBottom>
-          {group.title}
-        </Typography>
-        <Paper className={paperClass}>
-          {group
-            .entries
-            .filter(entry => editMode ? true : entry.value)
-            .map((entry) => (
-              <CharacterProfileEntry
-                className={classes.profileEntry}
-                entry={entry}
-                key={entry.id}
-                editMode={editMode}
-              />
-            ))}
-        </Paper>
-      </div>
-    )
-  }
+  const { className, group, classes, paperClass, editMode, visible } = props
+  if (!visible) return null
+  return (
+    <div className={classNames(className, classes.wrapper)}>
+      <Typography
+        type='title'
+        className={classes.title}
+        gutterBottom>
+        {group.title}
+      </Typography>
+      <Paper className={paperClass}>
+        {group
+          .entries
+          // TODO: move edit mode switch to profile
+          // .filter(entry => editMode ? true : entry.value)
+          .map((entry) => (
+            <CharacterProfileEntry
+              className={classes.profileEntry}
+              entryId={entry}
+              key={entry}
+              editMode={editMode}
+          />
+          ))}
+      </Paper>
+    </div>
+  )
 }
 
 CharacterProfileGroup.propTypes = {
@@ -66,9 +63,13 @@ const styles = (theme) => ({
   }
 })
 
-const mapStateToProps = (state, ownProps) => ({
-  editMode: isCharacterEditModeEnabled(state),
-  group: getProfileGroupById(state, ownProps.groupId)
-})
+const mapStateToProps = (state, ownProps) => {
+  const editMode = isCharacterEditModeEnabled(state)
+  return {
+    editMode,
+    group: getProfileGroup(state, ownProps.groupId),
+    visible: editMode || !isProfileGroupEmpty(state, ownProps.groupId)
+  }
+}
 
 export default connect(mapStateToProps)(withStyles(styles)(CharacterProfileGroup))

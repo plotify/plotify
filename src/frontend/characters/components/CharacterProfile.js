@@ -1,4 +1,8 @@
-import { getProfile, isCharacterEditModeEnabled, isProfileEmpty } from '../selectors'
+import {
+    getProfileGroupIds,
+    isCharacterEditModeEnabled,
+    isProfileEmpty
+} from '../selectors'
 
 import CharacterProfileGroup from './CharacterProfileGroup'
 import ProfileEmptyHint from './ProfileEmptyHint'
@@ -8,14 +12,14 @@ import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
 
-const CharacterProfile = ({ classes, className, profile, editMode, profileEmpty }) => {
+const CharacterProfile = ({ classes, className, profile, editMode, profileEmpty, groups }) => {
   return (
     <div className={classNames(className, classes.root)}>
       <div className={classes.wrapper}>
-        {profile.map((item, index) => (
+        {groups.map(id => (
           <CharacterProfileGroup
-            key={index}
-            groupId={item.id}
+            key={id}
+            groupId={id}
             className={classes.profileGroup}
             paperClass={classes.profilePaperClass}
           />
@@ -69,11 +73,11 @@ const styles = (theme) => {
 CharacterProfile.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string.isRequired,
-  profile: PropTypes.array.isRequired
+  groups: PropTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  profile: getProfile(state),
+  groups: getProfileGroupIds(state),
   editMode: isCharacterEditModeEnabled(state),
   profileEmpty: isProfileEmpty(state)
 })

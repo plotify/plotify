@@ -31,24 +31,48 @@ export const getProfile = (state) => (
   state.characters.profile
 )
 
+export const getProfileGroupIds = (state) => (
+  getProfile(state).groupOrder
+)
+
+export const getProfileEntries = (state) => (
+  getProfile(state).entries
+)
+
 export const isProfileEmpty = (state) => {
-  const profile = getProfile(state)
+  const entries = getProfileEntries(state)
   let result = true
-  if (profile.length === 0) return result
-  profile.forEach(group => {
-    group.entries.forEach(e => {
-      if (e.value !== '') {
-        result = false
-      }
-    })
+  if (entries.length === 0) return result
+  Object.keys(entries).forEach(e => {
+    if (result && !isProfileEntryEmpty(state, e)) {
+      result = false
+    }
   })
   return result
 }
 
-export const getProfileGroupById = (state, id) => (
-  getProfile(state).find(group => group.id === id)
+export const getProfileGroups = (state) => (
+  getProfile(state).groups
 )
 
-export const getFilteredGroupEntries = (state, id) => (
-  getProfile(state).find(group => group.id === id).entries.filter(entry => isCharacterEditModeEnabled(state) ? true : entry.value)
+export const getProfileGroup = (state, groupId) => (
+  getProfileGroups(state)[groupId]
+)
+
+export const isProfileGroupEmpty = (state, groupId) => {
+  let result = true
+  getProfileGroup(state, groupId).entries.forEach(e => {
+    if (result && !isProfileEntryEmpty(state, e)) {
+      result = false
+    }
+  })
+  return result
+}
+
+export const getProfileEntry = (state, entryId) => (
+  getProfileEntries(state)[entryId] || {}
+)
+
+export const isProfileEntryEmpty = (state, entryId) => (
+  getProfileEntry(state, entryId).value === ''
 )

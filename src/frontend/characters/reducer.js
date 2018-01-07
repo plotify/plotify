@@ -2,40 +2,39 @@ import * as t from './actionTypes'
 
 import { CLOSE_STORY_PREPARATION_STARTED, OPEN_STORY_SUCCESSFUL } from '../story/action-types'
 
+const initialProfile = {
+  groupOrder: [],
+  groups: {},
+  entries: {}
+}
 const initialState = {
   entities: [],
   selected: null,
   editMode: false,
   createDialogOpen: false,
-  profile: []
+  profile: initialProfile
 }
 
 // TODO FIND_CHARACTERS_REQUEST, FIND_CHARACTERS_FAILED
 // TODO CREATE_CHARACTER_REQUEST, CREATE_CHARACTER_FAILED
 // TODO LOAD_PROFILE_REQUEST, LOAD_PROFILE_FAILED
 // TODO UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_FAILED
-// TODO: flatten profile state
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.UPDATE_PROFILE_ENTRY_SUCCESSFUL: {
-      // FIXME: this is a mess
-      let entryIndex
-      const group2Change = state.profile.findIndex(group => {
-        let i
-        const e = group.entries.find((entry, eI) => {
-          i = eI
-          return entry.id === action.payload.id
-        })
-        if (e) {
-          entryIndex = i
-          return e
-        }
-      })
-      const p = [...state.profile]
-      p[group2Change].entries[entryIndex].value = action.payload.value
+      const {id} = action.payload
       return {
         ...state,
-        profile: p
+        profile: {
+          ...state.profile,
+          entries: {
+            ...state.profile.entries,
+            [id]: {
+              ...state.profile.entries[id],
+              value: action.payload.value
+            }
+          }
+        }
       }
     }
     case t.FIND_CHARACTERS_SUCCESSFUL:
@@ -70,22 +69,22 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         selected: action.payload.id,
         editMode: false,
-        profile: []
+        profile: initialProfile
       })
 
     case t.DESELECT_CHARACTER:
       return Object.assign({}, state, {
         selected: null,
         editMode: false,
-        profile: []
+        profile: initialProfile
       })
 
     // TODO Vergleiche action.payload.id mit selected
     case t.LOAD_PROFILE_SUCCESSFUL:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         profile: action.payload.profile
-      })
-
+      }
     case t.ENABLE_CHARACTER_EDIT_MODE:
       if (state.selected !== null) {
         return Object.assign({}, state, {
