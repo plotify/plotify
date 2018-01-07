@@ -1,5 +1,6 @@
 import { getCharacters, getSelectedCharacterId } from '../selectors'
 
+import CharacterListEmptyItem from './CharacterListEmptyItem'
 import CharacterListItem from './CharacterListItem'
 import List from 'material-ui/List'
 import PropTypes from 'prop-types'
@@ -7,19 +8,24 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { selectCharacter } from '../actions'
 
-// TODO Empty list message
 const CharactersList = (props) => {
   const { characters, onClick, selected, className } = props
+  let items
+  if (characters.length > 0) {
+    items = characters.map((character) => (
+      <CharacterListItem
+        key={character.id}
+        character={character}
+        onClick={onClick}
+        selected={character.id === selected}
+      />
+    ))
+  } else {
+    items = (<CharacterListEmptyItem />)
+  }
   return (
     <List className={className}>
-      {characters.map((character) => (
-        <CharacterListItem
-          key={character.id}
-          character={character}
-          onClick={onClick}
-          selected={character.id === selected}
-        />
-      ))}
+      {items}
     </List>
   )
 }
