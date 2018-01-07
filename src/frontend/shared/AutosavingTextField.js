@@ -75,7 +75,7 @@ class AutosavingTextField extends Component {
     return (
       <React.Fragment>
         <TextField
-          label={this.state.dirty ? label + ' •' : label}
+          label={this.state.dirty && label ? label + ' •' : label}
           value={this.state.value}
           InputLabelProps={{className: classes.inputLabel}}
           InputProps={InputProps}
