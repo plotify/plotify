@@ -47,7 +47,7 @@ class CharacterProfileEntry extends Component {
 CharacterProfileEntry.propTypes = {
   classes: PropTypes.object.isRequired,
   className: PropTypes.string,
-  enryId: PropTypes.string.isRequired,
+  entryId: PropTypes.string.isRequired,
   entry: PropTypes.object.isRequired,
   editMode: PropTypes.bool.isRequired
 }
