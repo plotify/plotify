@@ -10,41 +10,70 @@
 </p>
 
 <p align="center">
-  <img src="docs/assets/screenshot-0.1.0-win.png" alt="Plotify Version 0.1.0 Windows" />
+    <a href="https://github.com/plotify/plotify/releases">
+        <img src="https://img.shields.io/github/release/plotify/plotify.svg" alt="Latest release" />
+    </a>
+    <a href="https://github.com/plotify/plotify/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/plotify/plotify.svg" alt="License" />
+    </a>
+    <a href="https://github.com/plotify/plotify/releases">
+        <img src="https://img.shields.io/github/downloads/plotify/plotify/total.svg" alt="Downloads" />
+    </a>
 </p>
 
+---
 
-## Download
+## Stand der Entwicklung
+
+Im letzten Jahr haben wir einen ersten Prototypen von Plotify veröffentlicht.
+Auf Basis des umfangreichen Feedbacks arbeiten wir aktuell daran den Prototypen weiterzuentwickeln.
+Unser Ziel ist es, eine stabile Version von Plotify zu entwickeln, mit der Schriftsteller/innen Steckbriefe für die Charaktere ihrer Geschichten erstellen können.
+Auf Basis dieser Version wollen wir zukünftig den Funktionsumfang von Plotify ausweiten, damit Schriftsteller/innen ihre gesamten Geschichten in Plotify planen können.
+
+
+## Download der aktuellen Testversion
 
 **Achtung: Plotify befindet sich noch in einer sehr frühen Entwicklungsphase.**
+**Dies ist eine Testversion, die nicht für den produktiven Einsatz vorgesehen ist.**
 **Es sollten keine Informationen ausschließlich in Plotify gespeichert werden.**
 
 Lade dir Plotify kostenlos für dein Betriebssystem herunter:
 
 <table>
     <tr>
-        <td align="center" width="50%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-windows-x64.exe">
+        <td align="center" width="33%">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-windows-x64.exe">
                 <img src="docs/assets/windows-logo.png" />
             </a>
          </td>
-        <td align="center" width="50%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-linux-amd64.deb">
+        <td align="center" width="33%">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-linux-amd64.deb">
                 <img src="docs/assets/linux-logo.png" />
+            </a>
+        </td>
+        <td align="center" width="33%">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-macos-x64.dmg">
+                <img src="docs/assets/macos-logo.png" />
             </a>
         </td>
     </tr>
     <tr>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-windows-x64.exe">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-windows-x64.exe">
                 <b>Windows</b><br />
                 Windows 7, 8, 10
             </a>
         </td>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-linux-amd64.deb">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-linux-amd64.deb">
                 <b>Linux</b><br />
                 Ubuntu, Linux Mint, elementary OS
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-macos-x64.dmg">
+                <b>macOS</b><br />
+                macOS 10.9+
             </a>
         </td>
     </tr>
