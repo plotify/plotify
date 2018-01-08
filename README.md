@@ -33,11 +33,9 @@ Auf Basis dieser Version wollen wir zukünftig den Funktionsumfang von Plotify a
 
 ## Download der aktuellen Testversion
 
-**Achtung: Plotify befindet sich noch in einer sehr frühen Entwicklungsphase.**
-**Dies ist eine Testversion, die nicht für den produktiven Einsatz vorgesehen ist.**
-**Es sollten keine Informationen ausschließlich in Plotify gespeichert werden.**
-
-Lade dir Plotify kostenlos für dein Betriebssystem herunter:
+Plotify befindet sich noch in einer sehr frühen Entwicklungsphase.
+Dies ist eine Testversion, die nicht für den produktiven Einsatz vorgesehen ist.
+Es sollten keine Informationen ausschließlich in Plotify gespeichert werden.
 
 <table>
     <tr>
