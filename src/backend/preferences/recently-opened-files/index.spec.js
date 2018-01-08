@@ -1,4 +1,4 @@
-import { addOrUpdateRecentlyOpenedFile, getRecentlyOpenedFiles } from './'
+import { addOrUpdateRecentlyOpenedFile, getRecentlyOpenedFiles, removeRecentlyOpenedFile } from './'
 
 test('exports getRecentlyOpenedFiles function', () => {
   expect(getRecentlyOpenedFiles).toBeInstanceOf(Function)
@@ -6,4 +6,8 @@ test('exports getRecentlyOpenedFiles function', () => {
 
 test('exports addOrUpdateRecentlyOpenedFile function', () => {
   expect(addOrUpdateRecentlyOpenedFile).toBeInstanceOf(Function)
+})
+
+test('exports removeRecentlyOpenedFile function', () => {
+  expect(removeRecentlyOpenedFile).toBeInstanceOf(Function)
 })
