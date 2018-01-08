@@ -2,15 +2,13 @@ import AppIcon from './AppIcon'
 import Paper from 'material-ui/Paper'
 import PropTypes from 'prop-types'
 import React from 'react'
+import RecentFilesList from '../recent-files/components/RecentFilesList'
 import Section from '../../navigation/components/Section'
 import StarterList from './StarterList'
+import Typography from 'material-ui/Typography'
 import { WELCOME_SECTION } from '../constants'
 import { withStyles } from 'material-ui/styles'
 
-// import RecentFilesList from '../recent-files/components/RecentFilesList'
-// import Typography from 'material-ui/Typography'
-// <Typography className={classes.title} type='title'>Zuletzt verwendet</Typography>
-// <RecentFilesList listClassName={classes.card} />
 const WelcomeSection = (props) => {
   const { classes } = props
   return (
@@ -20,6 +18,8 @@ const WelcomeSection = (props) => {
         <Paper className={classes.card}>
           <StarterList />
         </Paper>
+        <Typography className={classes.title} type='title'>Zuletzt verwendet</Typography>
+        <RecentFilesList listClassName={classes.card} />
       </div>
     </Section>
   )

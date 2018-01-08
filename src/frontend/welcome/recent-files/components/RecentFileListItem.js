@@ -1,14 +1,7 @@
-import { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
-import Menu, { MenuItem } from 'material-ui/Menu'
+import { ListItem, ListItemText } from 'material-ui/List'
 import React, { Component } from 'react'
 import { basename, extname } from 'path'
 
-import DeleteIcon from 'material-ui-icons/Delete'
-import FolderOpenIcon from 'material-ui-icons/FolderOpen'
-import IconButton from 'material-ui/IconButton'
-import MoreIcon from 'material-ui-icons/MoreVert'
-import PinIcon from '../../../icons/Pin'
-import PinOffIcon from '../../../icons/PinOff'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { openFileInFolder } from '../actions'
@@ -40,10 +33,24 @@ class RecentFileListItem extends Component {
   }
 
   render () {
-    const { path, pinned, openStory } = this.props
+    const { path, openStory } = this.props
     return (
       <ListItem button onClick={() => openStory(path)}>
         <ListItemText primary={format(path)} />
+      </ListItem>
+    )
+  }
+}
+
+/*
+import { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
+import Menu, { MenuItem } from 'material-ui/Menu'
+import DeleteIcon from 'material-ui-icons/Delete'
+import FolderOpenIcon from 'material-ui-icons/FolderOpen'
+import IconButton from 'material-ui/IconButton'
+import MoreIcon from 'material-ui-icons/MoreVert'
+import PinIcon from '../../../icons/Pin'
+import PinOffIcon from '../../../icons/PinOff'
         <ListItemSecondaryAction>
           <IconButton
             onClick={this.handleOpenMenu}
@@ -75,10 +82,7 @@ class RecentFileListItem extends Component {
             </MenuItem>
           </Menu>
         </ListItemSecondaryAction>
-      </ListItem>
-    )
-  }
-}
+*/
 
 const format = (path) => {
   const ext = extname(path)

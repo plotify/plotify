@@ -1,6 +1,35 @@
 import * as t from './action-types'
 
+import { GET_RECENTLY_OPENED_FILES } from '../../../shared/preferences/requests'
+import { request } from '../../shared/communication'
 import { shell } from 'electron'
+
+export const getRecentlyOpenedFiles = () => {
+  return async (dispatch) => {
+    dispatch(getRecentlyOpenedFilesRequest())
+    try {
+      const files = await request(GET_RECENTLY_OPENED_FILES)
+      dispatch(getRecentlyOpenedFilesSuccessful(files))
+    } catch (error) {
+      dispatch(getRecentlyOpenedFilesFailed(error.message))
+    }
+  }
+}
+
+const getRecentlyOpenedFilesRequest = () => ({
+  type: t.GET_RECENTLY_OPENED_FILES_REQUEST,
+  payload: {}
+})
+
+const getRecentlyOpenedFilesSuccessful = (files) => ({
+  type: t.GET_RECENTLY_OPENED_FILES_SUCCESSFUL,
+  payload: { files }
+})
+
+const getRecentlyOpenedFilesFailed = (message) => ({
+  type: t.GET_RECENTLY_OPENED_FILES_FAILED,
+  payload: { message }
+})
 
 export const openFileInFolder = (path) => {
   return async (dispatch) => {

@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ThemeProvider from './view/components/ThemeProvider'
+import { openWelcomeSection } from './welcome/actions'
 import reducers from './reducers'
 import registerRequestHandlers from './request-handlers'
 import { request } from './shared/communication'
@@ -38,4 +39,5 @@ request(GET_SAVED_STATE)
  .catch(() => Promise.resolve(undefined))
  .then(() => render())
 
+store.dispatch(openWelcomeSection())
 render()
