@@ -1,4 +1,4 @@
-import { addOrUpdateRecentlyOpenedFile, closePreferences, getRecentlyOpenedFiles, initPreferences, isDarkThemeEnabled, registerRequestHandlers, setDarkThemeEnabled } from './'
+import { addOrUpdateRecentlyOpenedFile, closePreferences, getRecentlyOpenedFiles, initPreferences, isDarkThemeEnabled, registerRequestHandlers, removeRecentlyOpenedFile, setDarkThemeEnabled } from './'
 
 test('exports initPreferences function', () => {
   expect(initPreferences).toBeInstanceOf(Function)
@@ -18,6 +18,10 @@ test('exports getRecentlyOpenedFiles function', () => {
 
 test('exports addOrUpdateRecentlyOpenedFile function', () => {
   expect(addOrUpdateRecentlyOpenedFile).toBeInstanceOf(Function)
+})
+
+test('exports removeRecentlyOpenedFile function', () => {
+  expect(removeRecentlyOpenedFile).toBeInstanceOf(Function)
 })
 
 test('exports closePreferences function', () => {

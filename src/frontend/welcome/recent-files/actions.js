@@ -1,6 +1,7 @@
 import * as t from './action-types'
 
-import { GET_RECENTLY_OPENED_FILES } from '../../../shared/preferences/requests'
+import { GET_RECENTLY_OPENED_FILES, REMOVE_RECENTLY_OPENED_FILE } from '../../../shared/preferences/requests'
+
 import { request } from '../../shared/communication'
 import { shell } from 'electron'
 
@@ -28,6 +29,33 @@ const getRecentlyOpenedFilesSuccessful = (files) => ({
 
 const getRecentlyOpenedFilesFailed = (message) => ({
   type: t.GET_RECENTLY_OPENED_FILES_FAILED,
+  payload: { message }
+})
+
+export const removeRecentlyOpenedFile = (path) => {
+  return async (dispatch) => {
+    dispatch(removeRecentlyOpenedFileRequest(path))
+    try {
+      await request(REMOVE_RECENTLY_OPENED_FILE, path)
+      dispatch(removeRecentlyOpenedFileSuccessful(path))
+    } catch (error) {
+      dispatch(removeRecentlyOpenedFileFailed(error.message))
+    }
+  }
+}
+
+const removeRecentlyOpenedFileRequest = (path) => ({
+  type: t.REMOVE_RECENTLY_OPENED_FILE_REQUEST,
+  payload: { path }
+})
+
+const removeRecentlyOpenedFileSuccessful = (path) => ({
+  type: t.REMOVE_RECENTLY_OPENED_FILE_SUCCESSFUL,
+  payload: { path }
+})
+
+const removeRecentlyOpenedFileFailed = (message) => ({
+  type: t.REMOVE_RECENTLY_OPENED_FILE_FAILED,
   payload: { message }
 })
 

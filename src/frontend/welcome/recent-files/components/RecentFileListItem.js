@@ -2,13 +2,14 @@ import { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'm
 import Menu, { MenuItem } from 'material-ui/Menu'
 import React, { Component } from 'react'
 import { basename, extname } from 'path'
+import { openFileInFolder, removeRecentlyOpenedFile } from '../actions'
 
+import DeleteIcon from 'material-ui-icons/Delete'
 import FolderOpenIcon from 'material-ui-icons/FolderOpen'
 import IconButton from 'material-ui/IconButton'
 import MoreIcon from 'material-ui-icons/MoreVert'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { openFileInFolder } from '../actions'
 import { openStory } from '../../../story/actions'
 
 class RecentFileListItem extends Component {
@@ -21,6 +22,7 @@ class RecentFileListItem extends Component {
     this.handleOpenMenu = this.handleOpenMenu.bind(this)
     this.handleClose = this.handleClose.bind(this)
     this.handleOpenStoryInFolder = this.handleOpenStoryInFolder.bind(this)
+    this.handleRemoveStory = this.handleRemoveStory.bind(this)
   }
 
   handleOpenMenu (event) {
@@ -34,6 +36,11 @@ class RecentFileListItem extends Component {
   handleOpenStoryInFolder () {
     this.handleClose()
     this.props.openStoryInFolder(this.props.path)
+  }
+
+  handleRemoveStory () {
+    this.handleClose()
+    this.props.removeStory(this.props.path)
   }
 
   render () {
@@ -58,6 +65,12 @@ class RecentFileListItem extends Component {
               </ListItemIcon>
               <ListItemText primary='Verzeichnis öffnen' />
             </MenuItem>
+            <MenuItem onClick={this.handleRemoveStory}>
+              <ListItemIcon>
+                <DeleteIcon />
+              </ListItemIcon>
+              <ListItemText primary='Aus Liste entfernen' />
+            </MenuItem>
           </Menu>
         </ListItemSecondaryAction>
       </ListItem>
@@ -66,7 +79,6 @@ class RecentFileListItem extends Component {
 }
 
 /*
-import DeleteIcon from 'material-ui-icons/Delete'
 import PinIcon from '../../../icons/Pin'
 import PinOffIcon from '../../../icons/PinOff'
             <MenuItem onClick={this.handleClose}>
@@ -74,12 +86,6 @@ import PinOffIcon from '../../../icons/PinOff'
                 { pinned ? <PinOffIcon /> : <PinIcon /> }
               </ListItemIcon>
               <ListItemText primary={pinned ? 'Ablösen' : 'Anheften'} />
-            </MenuItem>
-            <MenuItem onClick={this.handleClose}>
-              <ListItemIcon>
-                <DeleteIcon />
-              </ListItemIcon>
-              <ListItemText primary='Aus Liste entfernen' />
             </MenuItem>
 */
 
@@ -93,7 +99,8 @@ RecentFileListItem.propTypes = {
   path: PropTypes.string.isRequired,
   pinned: PropTypes.bool.isRequired,
   openStory: PropTypes.func.isRequired,
-  openStoryInFolder: PropTypes.func.isRequired
+  openStoryInFolder: PropTypes.func.isRequired,
+  removeStory: PropTypes.func.isRequired
 }
 
 RecentFileListItem.defaultProps = {
@@ -104,7 +111,8 @@ const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = (dispatch) => ({
   openStory: (path) => dispatch(openStory(path)),
-  openStoryInFolder: (path) => dispatch(openFileInFolder(path))
+  openStoryInFolder: (path) => dispatch(openFileInFolder(path)),
+  removeStory: (path) => dispatch(removeRecentlyOpenedFile(path))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecentFileListItem)

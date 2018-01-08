@@ -1,6 +1,7 @@
 import {
   addOrUpdateRecentlyOpenedFile as _addOrUpdateRecentlyOpenedFile,
-  getRecentlyOpenedFiles as _getRecentlyOpenedFiles
+  getRecentlyOpenedFiles as _getRecentlyOpenedFiles,
+  removeRecentlyOpenedFile as _removeRecentlyOpenedFile
 } from '../../backend/preferences/recently-opened-files'
 
 import { app } from 'electron'
@@ -13,4 +14,8 @@ export const getRecentlyOpenedFiles = async () => {
 export const addOrUpdateRecentlyOpenedFile = async (file) => {
   await _addOrUpdateRecentlyOpenedFile(getPreferences(), file)
   app.addRecentDocument(file.path)
+}
+
+export const removeRecentlyOpenedFile = async (path) => {
+  await _removeRecentlyOpenedFile(getPreferences(), path)
 }
