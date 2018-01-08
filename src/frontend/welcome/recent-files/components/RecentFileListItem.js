@@ -1,7 +1,11 @@
-import { ListItem, ListItemText } from 'material-ui/List'
+import { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
+import Menu, { MenuItem } from 'material-ui/Menu'
 import React, { Component } from 'react'
 import { basename, extname } from 'path'
 
+import FolderOpenIcon from 'material-ui-icons/FolderOpen'
+import IconButton from 'material-ui/IconButton'
+import MoreIcon from 'material-ui-icons/MoreVert'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { openFileInFolder } from '../actions'
@@ -37,20 +41,6 @@ class RecentFileListItem extends Component {
     return (
       <ListItem button onClick={() => openStory(path)}>
         <ListItemText primary={format(path)} />
-      </ListItem>
-    )
-  }
-}
-
-/*
-import { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
-import Menu, { MenuItem } from 'material-ui/Menu'
-import DeleteIcon from 'material-ui-icons/Delete'
-import FolderOpenIcon from 'material-ui-icons/FolderOpen'
-import IconButton from 'material-ui/IconButton'
-import MoreIcon from 'material-ui-icons/MoreVert'
-import PinIcon from '../../../icons/Pin'
-import PinOffIcon from '../../../icons/PinOff'
         <ListItemSecondaryAction>
           <IconButton
             onClick={this.handleOpenMenu}
@@ -62,17 +52,28 @@ import PinOffIcon from '../../../icons/PinOff'
             open={this.state.menuOpen}
             anchorEl={this.state.menuAnchorElement}
             onClose={this.handleClose}>
-            <MenuItem onClick={this.handleClose}>
-              <ListItemIcon>
-                { pinned ? <PinOffIcon /> : <PinIcon /> }
-              </ListItemIcon>
-              <ListItemText primary={pinned ? 'Ablösen' : 'Anheften'} />
-            </MenuItem>
             <MenuItem onClick={this.handleOpenStoryInFolder}>
               <ListItemIcon>
                 <FolderOpenIcon />
               </ListItemIcon>
               <ListItemText primary='Verzeichnis öffnen' />
+            </MenuItem>
+          </Menu>
+        </ListItemSecondaryAction>
+      </ListItem>
+    )
+  }
+}
+
+/*
+import DeleteIcon from 'material-ui-icons/Delete'
+import PinIcon from '../../../icons/Pin'
+import PinOffIcon from '../../../icons/PinOff'
+            <MenuItem onClick={this.handleClose}>
+              <ListItemIcon>
+                { pinned ? <PinOffIcon /> : <PinIcon /> }
+              </ListItemIcon>
+              <ListItemText primary={pinned ? 'Ablösen' : 'Anheften'} />
             </MenuItem>
             <MenuItem onClick={this.handleClose}>
               <ListItemIcon>
@@ -80,8 +81,6 @@ import PinOffIcon from '../../../icons/PinOff'
               </ListItemIcon>
               <ListItemText primary='Aus Liste entfernen' />
             </MenuItem>
-          </Menu>
-        </ListItemSecondaryAction>
 */
 
 const format = (path) => {
