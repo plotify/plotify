@@ -19,8 +19,9 @@ const addOrUpdate = async (database, file) => {
   validateFile(file)
   const transaction = await database.beginTransaction()
   try {
+    const defaultFile = { lastOpened: new Date().toISOString(), pinned: false }
     const currentFile = await findFile(transaction, file)
-    const updatedFile = { ...currentFile, ...file }
+    const updatedFile = { ...defaultFile, ...currentFile, ...file }
     if (containsChanges(currentFile, updatedFile)) {
       await handleChanges(transaction, currentFile, updatedFile)
     } else {
