@@ -9,6 +9,7 @@ const paths = {
     dist: './build/dist'
   },
   packageJson: './package.json',
+  licenseFile: './LICENSE',
   bin: './node_modules/.bin'
 }
 

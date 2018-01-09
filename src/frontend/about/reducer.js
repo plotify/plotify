@@ -4,7 +4,9 @@ import { CLOSE_STORY_PREPARATION_STARTED, CREATE_STORY_STARTED, OPEN_STORY_START
 
 const initialState = {
   aboutOpen: false,
-  contributorsOpen: false
+  contributorsOpen: false,
+  licenseOpen: false,
+  licenseText: 'Wird geladen...'
 }
 
 const reducer = (state = initialState, action) => {
@@ -13,7 +15,6 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         aboutOpen: true
       })
-
     case t.CLOSE_ABOUT_DIALOG:
       return Object.assign({}, state, {
         aboutOpen: false
@@ -23,10 +24,19 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         contributorsOpen: true
       })
-
     case t.CLOSE_CONTRIBUTORS_DIALOG:
       return Object.assign({}, state, {
         contributorsOpen: false
+      })
+
+    case t.OPEN_LICENSE_DIALOG:
+      return Object.assign({}, state, {
+        licenseOpen: true,
+        licenseText: action.payload.text
+      })
+    case t.CLOSE_LICENSE_DIALOG:
+      return Object.assign({}, state, {
+        licenseOpen: false
       })
 
     case CREATE_STORY_STARTED:
