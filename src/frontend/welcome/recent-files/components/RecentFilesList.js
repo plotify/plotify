@@ -19,7 +19,7 @@ const RecentFilesList = (props) => {
 const list = (key, files, className) => [
   <Paper key={key} className={className}>
     {files.map((file, index) => (
-      <RecentFileListItem key={index} path={file.path} pinned={file.pinned} />
+      <RecentFileListItem key={index} path={file.path} pinned={file.pinned} removing={file.removing} />
     ))}
     <FolderNotFoundDialog />
   </Paper>

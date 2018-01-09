@@ -6,14 +6,22 @@ const initialState = {
 }
 
 // TODO GET_RECENTLY_OPENED_FILES_REQUEST, GET_RECENTLY_OPENED_FILES_FAILED
-// TODO REMOVE_RECENTLY_OPENED_FILE_REQUEST, REMOVE_RECENTLY_OPENED_FILE_FAILED
+// TODO Fehlermeldung bei: REMOVE_RECENTLY_OPENED_FILE_FAILED
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.GET_RECENTLY_OPENED_FILES_SUCCESSFUL:
       return Object.assign({}, state, {
-        files: action.payload.files
+        files: action.payload.files.map((file) => ({ ...file, removing: false }))
       })
 
+    case t.REMOVE_RECENTLY_OPENED_FILE_REQUEST:
+      return Object.assign({}, state, {
+        files: updateRemoving(state, action.payload.path, true)
+      })
+    case t.REMOVE_RECENTLY_OPENED_FILE_FAILED:
+      return Object.assign({}, state, {
+        files: updateRemoving(state, action.payload.path, false)
+      })
     case t.REMOVE_RECENTLY_OPENED_FILE_SUCCESSFUL:
       return Object.assign({}, state, {
         files: state.files.filter(file => file.path !== action.payload.path)
@@ -31,6 +39,16 @@ const reducer = (state = initialState, action) => {
     default:
       return state
   }
+}
+
+const updateRemoving = (state, path, removing) => {
+  return state.files.map((file) => {
+    if (file.path === path) {
+      return { ...file, removing }
+    } else {
+      return file
+    }
+  })
 }
 
 export default reducer

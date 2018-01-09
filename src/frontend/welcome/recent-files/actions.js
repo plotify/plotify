@@ -37,9 +37,10 @@ export const removeRecentlyOpenedFile = (path) => {
     dispatch(removeRecentlyOpenedFileRequest(path))
     try {
       await request(REMOVE_RECENTLY_OPENED_FILE, path)
-      dispatch(removeRecentlyOpenedFileSuccessful(path))
+      // Verzögerung beim Entfernen der Datei, damit die Animation noch vollständig durchgeführt wird:
+      setTimeout(() => dispatch(removeRecentlyOpenedFileSuccessful(path)), 150)
     } catch (error) {
-      dispatch(removeRecentlyOpenedFileFailed(error.message))
+      setTimeout(() => dispatch(removeRecentlyOpenedFileFailed(path, error.message)), 150)
     }
   }
 }
@@ -54,9 +55,9 @@ const removeRecentlyOpenedFileSuccessful = (path) => ({
   payload: { path }
 })
 
-const removeRecentlyOpenedFileFailed = (message) => ({
+const removeRecentlyOpenedFileFailed = (path, message) => ({
   type: t.REMOVE_RECENTLY_OPENED_FILE_FAILED,
-  payload: { message }
+  payload: { path, message }
 })
 
 export const openFileInFolder = (path) => {
