@@ -5,6 +5,7 @@ import { closeSplashScreen, showSplashScreen } from './splash-screen'
 
 import { app } from 'electron'
 import { createOrFocus } from './windows'
+import initDevToolsExtensions from './dev-tools-extensions'
 import isDev from 'electron-is-dev'
 import printWelcomeScreen from './versions'
 
@@ -43,10 +44,15 @@ const initSplashScreen = () => {
 }
 
 const initApp = () => {
-  registerRequestHandlers()
-  initPreferences().then(() => {
-    createWindows()
-  })
+  const init = () => {
+    registerRequestHandlers()
+    initPreferences().then(() => {
+      createWindows()
+    })
+  }
+  initDevToolsExtensions()
+    .then(() => init())
+    .catch(() => init())
 }
 
 const registerRequestHandlers = () => {
