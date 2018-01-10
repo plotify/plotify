@@ -3,16 +3,38 @@ import { CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../shared/story
 import { getRecentlyOpenedFiles } from '../preferences'
 import { request } from '../shared/communication'
 
-const file = async () => ({
+const file = async () => {
+  if (process.platform === 'darwin') {
+    return darwin()
+  } else {
+    return win32()
+  }
+}
+
+const win32 = async () => {
+  const recentFiles = await recentFilesMenu()
+  return {
+    label: 'Datei',
+    submenu: [
+      { label: 'Neu...', click: createStory },
+      { label: 'Öffnen...', click: openStory },
+      { type: 'separator' },
+      ...recentFiles,
+      { type: 'separator' },
+      { label: 'Beenden', role: 'quit' }
+    ]
+  }
+}
+
+const darwin = async () => ({
   label: 'Datei',
   submenu: [
-    { label: 'Neu...', click: createStory },
+    { label: 'Neue Geschichte', click: createStory },
     { label: 'Öffnen...', click: openStory },
     {
-      label: 'Zuletzt geöffnet',
+      label: 'Kürzlich geöffnet',
       submenu: await recentFilesMenu()
-    },
-    { type: 'separator' }
+    }
   ]
 })
 
