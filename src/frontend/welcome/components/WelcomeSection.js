@@ -2,7 +2,7 @@ import AppIcon from './AppIcon'
 import Paper from 'material-ui/Paper'
 import PropTypes from 'prop-types'
 import React from 'react'
-import RecentFilesList from '../recent-files/components/RecentFilesList'
+import RecentFiles from '../recent-files/components/RecentFiles'
 import Section from '../../navigation/components/Section'
 import StarterList from './StarterList'
 import Typography from 'material-ui/Typography'
@@ -19,7 +19,7 @@ const WelcomeSection = (props) => {
           <StarterList />
         </Paper>
         <Typography className={classes.title} type='title'>Zuletzt verwendet</Typography>
-        <RecentFilesList listClassName={classes.card} />
+        <RecentFiles listClassName={classes.card} />
       </div>
     </Section>
   )
