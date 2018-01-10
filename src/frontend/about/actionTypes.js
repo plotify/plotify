@@ -6,4 +6,6 @@ export const CLOSE_CONTRIBUTORS_DIALOG = 'about/close-contributors-dialog'
 
 export const OPEN_LICENSE_DIALOG = 'about/open-license-dialog'
 export const CLOSE_LICENSE_DIALOG = 'about/close-license-dialog'
-export const SET_LICENSE_TEXT = 'about/set-license-text'
+
+export const OPEN_DEPENDENCIES_LICENSES_DIALOG = 'about/open-dependencies-licenses-dialog'
+export const CLOSE_DEPENDENCIES_LICENSES_DIALOG = 'about/close-dependencies-licenses-dialog'

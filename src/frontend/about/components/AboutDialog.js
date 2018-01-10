@@ -3,6 +3,7 @@ import { closeAboutDialog, openContributorsDialog, openLicenseDialog } from '../
 
 import Button from 'material-ui/Button'
 import ContributorsDialog from './ContributorsDialog'
+import DependenciesLicensesDialog from './DependenciesLicensesDialog'
 import LicenseDialog from './LicenseDialog'
 import MediaQuery from 'react-responsive'
 import PropTypes from 'prop-types'
@@ -15,7 +16,6 @@ import { withStyles } from 'material-ui/styles'
 
 const packageJson = require('../../../package.json')
 
-// TODO Lizenz
 const AboutDialog = (props) => {
   const { open, closeAboutDialog, openContributorsDialog, openLicenseDialog, classes } = props
   const openWebsite = () => window.open(packageJson.homepage)
@@ -60,6 +60,7 @@ const AboutDialog = (props) => {
       </DialogActions>
       <ContributorsDialog />
       <LicenseDialog />
+      <DependenciesLicensesDialog />
     </Dialog>
   )
 }

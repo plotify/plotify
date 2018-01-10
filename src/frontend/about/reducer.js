@@ -6,7 +6,9 @@ const initialState = {
   aboutOpen: false,
   contributorsOpen: false,
   licenseOpen: false,
-  licenseText: 'Wird geladen...'
+  licenseText: '',
+  dependenciesLicensesOpen: false,
+  dependenciesLicensesText: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -36,7 +38,19 @@ const reducer = (state = initialState, action) => {
       })
     case t.CLOSE_LICENSE_DIALOG:
       return Object.assign({}, state, {
-        licenseOpen: false
+        licenseOpen: false,
+        licenseText: ''
+      })
+
+    case t.OPEN_DEPENDENCIES_LICENSES_DIALOG:
+      return Object.assign({}, state, {
+        dependenciesLicensesOpen: true,
+        dependenciesLicensesText: action.payload.text
+      })
+    case t.CLOSE_DEPENDENCIES_LICENSES_DIALOG:
+      return Object.assign({}, state, {
+        dependenciesLicensesOpen: false,
+        dependenciesLicensesText: ''
       })
 
     case CREATE_STORY_STARTED:

@@ -1,7 +1,8 @@
 import * as t from './actionTypes'
 
+import { dirname, join } from 'path'
+
 import isDev from 'electron-is-dev'
-import { join } from 'path'
 import { readFile } from 'fs-extra'
 import { remote } from 'electron'
 
@@ -27,7 +28,7 @@ export const closeContributorsDialog = () => ({
 
 export const openLicenseDialog = () => {
   return async (dispatch) => {
-    const text = await readFile(getLicenseFile(), { encoding: 'utf-8' })
+    const text = await loadLicenseText()
     dispatch({
       type: t.OPEN_LICENSE_DIALOG,
       payload: { text }
@@ -40,10 +41,41 @@ export const closeLicenseDialog = () => ({
   payload: {}
 })
 
-const getLicenseFile = () => {
-  let licenseFile = join(remote.app.getAppPath(), './LICENSE')
+export const openDependenciesLicensesDialog = () => {
+  return async (dispatch) => {
+    const text = await loadDependenciesLicensesText()
+    dispatch({
+      type: t.OPEN_DEPENDENCIES_LICENSES_DIALOG,
+      payload: { text }
+    })
+  }
+}
+
+export const closeDependenciesLicensesDialog = () => ({
+  type: t.CLOSE_DEPENDENCIES_LICENSES_DIALOG,
+  payload: {}
+})
+
+const loadLicenseText = async () => {
+  let licenseFile
   if (isDev) {
     licenseFile = './LICENSE'
+  } else {
+    licenseFile = join(remote.app.getAppPath(), './LICENSE')
   }
-  return licenseFile
+  return readFile(licenseFile, { encoding: 'utf-8' })
+}
+
+const loadDependenciesLicensesText = async () => {
+  if (isDev) {
+    return 'Die Lizenzen der Abhängigkeiten können im Entwicklungsmodus nicht angezeigt werden.'
+  } else {
+    const appPathDirectory = dirname(remote.app.getAppPath() + '')
+    const licenseFile = join(appPathDirectory, '../LICENSES.dependencies.txt')
+    try {
+      return readFile(licenseFile, { encoding: 'utf-8' })
+    } catch (error) {
+      return 'Die Datei ' + licenseFile + ' konnte nicht geladen werden.'
+    }
+  }
 }

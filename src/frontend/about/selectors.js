@@ -13,3 +13,11 @@ export const isLicenseDialogOpen = (state) => (
 export const getLicenseText = (state) => (
   state.about.licenseText
 )
+
+export const isDependenciesLicensesOpen = (state) => (
+  state.about.dependenciesLicensesOpen === true
+)
+
+export const getDependenciesLicensesText = (state) => (
+  state.about.dependenciesLicensesText
+)
