@@ -1,4 +1,5 @@
 import { Menu } from 'electron'
+import app from './app'
 import development from './development'
 import edit from './edit'
 import file from './file'
@@ -10,7 +11,7 @@ import view from './view'
 let initialized = false
 
 // TODO macOS-spezifisches Menü
-const initMenu = () => {
+const initMenu = async () => {
   if (initialized) {
     Menu.setApplicationMenu(Menu.getApplicationMenu())
     return
@@ -18,7 +19,10 @@ const initMenu = () => {
 
   const template = []
 
-  template.push(file())
+  if (process.platform === 'darwin') {
+    template.push(app())
+  }
+  template.push(await file())
   template.push(edit())
   template.push(view())
   template.push(help())
