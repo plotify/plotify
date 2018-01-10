@@ -47,6 +47,11 @@ const addRobotoLicense = async (targetFile) => {
 }
 
 const addElectronLicense = async (targetFile, context) => {
+  // Bug #136: Temporary workaround
+  if (process.platform === 'darwin') {
+    return
+  }
+
   const electronLicenseFileAbsolute = join(context.appOutDir, electronLicenseFile)
   const electronLicense = await readFile(electronLicenseFileAbsolute, options)
 
