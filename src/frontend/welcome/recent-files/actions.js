@@ -40,7 +40,9 @@ export const removeRecentlyOpenedFile = (path) => {
       // Verzögerung beim Entfernen der Datei, damit die Animation noch vollständig durchgeführt wird:
       setTimeout(() => dispatch(removeRecentlyOpenedFileSuccessful(path)), 150)
     } catch (error) {
-      setTimeout(() => dispatch(removeRecentlyOpenedFileFailed(path, error.message)), 150)
+      console.log('Error: removeRecentlyOpenedFile:', error)
+      const message = 'Die Datei konnte nicht aus der Liste entfernt werden.'
+      setTimeout(() => dispatch(removeRecentlyOpenedFileFailed(path, message)), 150)
     }
   }
 }
@@ -76,5 +78,10 @@ const openFolderNotFoundDialog = () => ({
 
 export const closeFolderNotFoundDialog = () => ({
   type: t.CLOSE_FOLDER_NOT_FOUND_DIALOG,
+  payload: {}
+})
+
+export const removeError = () => ({
+  type: t.REMOVE_ERROR,
   payload: {}
 })

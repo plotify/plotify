@@ -1,3 +1,4 @@
+import ErrorSnackbar from './ErrorSnackbar'
 import FolderNotFoundDialog from './FolderNotFoundDialog'
 import NoRecentFiles from './NoRecentFiles'
 import Paper from 'material-ui/Paper'
@@ -15,7 +16,8 @@ const RecentFiles = (props) => {
     return [
       (pinnedFiles.length > 0 ? list(0, pinnedFiles, listClassName) : null),
       (notPinnedFiles.length > 0 ? list(1, notPinnedFiles, listClassName) : null),
-      <FolderNotFoundDialog key={2} />
+      <FolderNotFoundDialog key={2} />,
+      <ErrorSnackbar key={3} />
     ]
   } else {
     return (
