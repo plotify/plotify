@@ -7,7 +7,6 @@ const initialState = {
 }
 
 // TODO GET_RECENTLY_OPENED_FILES_REQUEST, GET_RECENTLY_OPENED_FILES_FAILED
-// TODO Fehlermeldung bei: REMOVE_RECENTLY_OPENED_FILE_FAILED
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case t.GET_RECENTLY_OPENED_FILES_SUCCESSFUL:
