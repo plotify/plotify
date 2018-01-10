@@ -1,11 +1,17 @@
+import { createSelector } from 'reselect'
+
 export const isCreateCharacterDialogOpen = (state) => (
   state.characters.createDialogOpen === true
 )
 
-export const getFilteredCharacters = (state) => (
-  state.characters.list
-    .map((id) => state.characters.entities[id])
-    .filter((character) => character !== undefined)
+export const getFilteredCharacters = createSelector(
+  (state) => state.characters.list,
+  (state) => state.characters.entities,
+  (list, entities) => (
+    list
+      .map((id) => entities[id])
+      .filter((character) => character !== undefined)
+  )
 )
 
 export const isCharacterSelected = (state) => (
