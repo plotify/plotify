@@ -9,6 +9,8 @@ import { withStyles } from 'material-ui/styles'
 const RecentFilesList = (props) => {
   const { classes, files } = props
   const transitionClassNames = {
+    enter: classes.enter,
+    enterActive: classes.enterActive,
     exit: classes.exit,
     exitActive: classes.exitActive
   }
@@ -39,8 +41,18 @@ RecentFilesList.propTypes = {
 }
 
 const styles = theme => ({
+  enter: {
+    height: 0,
+    overflow: 'hidden'
+  },
+  enterActive: {
+    height: theme.spacing.unit * 6,
+    transition: theme.transitions.create('height', { duration: theme.transitions.duration.shortest }),
+    overflow: 'hidden'
+  },
   exit: {
-    height: theme.spacing.unit * 6
+    height: theme.spacing.unit * 6,
+    overflow: 'hidden'
   },
   exitActive: {
     height: 0,
