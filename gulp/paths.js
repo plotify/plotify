@@ -8,6 +8,7 @@ const paths = {
     app: './build/app',
     dist: './build/dist'
   },
+  coverage: './coverage',
   packageJson: './package.json',
   licenseFile: './LICENSE',
   bin: './node_modules/.bin'
