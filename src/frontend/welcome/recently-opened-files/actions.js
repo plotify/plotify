@@ -12,7 +12,9 @@ export const getRecentlyOpenedFiles = () => {
       const files = await request(GET_RECENTLY_OPENED_FILES)
       dispatch(getRecentlyOpenedFilesSuccessful(files))
     } catch (error) {
-      dispatch(getRecentlyOpenedFilesFailed(error.message))
+      console.log('Error: getRecentlyOpenedFiles:', error)
+      const message = 'Die zuletzt geöffneten Dateien konnten nicht geladen werden.'
+      dispatch(getRecentlyOpenedFilesFailed(message))
     }
   }
 }
@@ -37,12 +39,11 @@ export const removeRecentlyOpenedFile = (path) => {
     dispatch(removeRecentlyOpenedFileRequest(path))
     try {
       await request(REMOVE_RECENTLY_OPENED_FILE, path)
-      // Verzögerung beim Entfernen der Datei, damit die Animation noch vollständig durchgeführt wird:
-      setTimeout(() => dispatch(removeRecentlyOpenedFileSuccessful(path)), 150)
+      removeRecentlyOpenedFileSuccessful(path)
     } catch (error) {
       console.log('Error: removeRecentlyOpenedFile:', error)
       const message = 'Die Datei konnte nicht aus der Liste entfernt werden.'
-      setTimeout(() => dispatch(removeRecentlyOpenedFileFailed(path, message)), 150)
+      dispatch(removeRecentlyOpenedFileFailed(path, message))
     }
   }
 }

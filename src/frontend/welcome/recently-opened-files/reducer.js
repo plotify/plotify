@@ -6,26 +6,35 @@ const initialState = {
   error: null
 }
 
-// TODO GET_RECENTLY_OPENED_FILES_REQUEST, GET_RECENTLY_OPENED_FILES_FAILED
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case t.GET_RECENTLY_OPENED_FILES_REQUEST:
+      return Object.assign({}, state, {
+        error: null
+      })
+    case t.GET_RECENTLY_OPENED_FILES_FAILED:
+      return Object.assign({}, state, {
+        error: action.payload.message
+      })
     case t.GET_RECENTLY_OPENED_FILES_SUCCESSFUL:
       return Object.assign({}, state, {
-        files: action.payload.files.map((file) => ({ ...file, removing: false }))
+        files: action.payload.files.map((file) => ({ ...file, removing: false })),
+        error: null
       })
 
     case t.REMOVE_RECENTLY_OPENED_FILE_REQUEST:
       return Object.assign({}, state, {
-        files: updateRemoving(state, action.payload.path, true)
+        files: state.files.filter((file) => file.path !== action.payload.path),
+        error: null
       })
     case t.REMOVE_RECENTLY_OPENED_FILE_FAILED:
       return Object.assign({}, state, {
-        files: updateRemoving(state, action.payload.path, false),
+        files: [ ...state.files, { path: action.payload.path, pinned: false } ],
         error: action.payload.message
       })
     case t.REMOVE_RECENTLY_OPENED_FILE_SUCCESSFUL:
       return Object.assign({}, state, {
-        files: state.files.filter(file => file.path !== action.payload.path)
+        error: null
       })
 
     case t.OPEN_FOLDER_NOT_FOUND_DIALOG:
@@ -51,16 +60,6 @@ const reducer = (state = initialState, action) => {
     default:
       return state
   }
-}
-
-const updateRemoving = (state, path, removing) => {
-  return state.files.map((file) => {
-    if (file.path === path) {
-      return { ...file, removing }
-    } else {
-      return file
-    }
-  })
 }
 
 export default reducer
