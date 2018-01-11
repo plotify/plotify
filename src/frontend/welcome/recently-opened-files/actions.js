@@ -85,3 +85,8 @@ export const removeError = () => ({
   type: t.REMOVE_ERROR,
   payload: {}
 })
+
+export const addRecentlyOpenedFile = (file) => ({
+  type: t.ADD_RECENTLY_OPENED_FILE,
+  payload: { file }
+})

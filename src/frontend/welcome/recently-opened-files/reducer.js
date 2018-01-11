@@ -42,6 +42,12 @@ const reducer = (state = initialState, action) => {
         error: null
       })
 
+    case t.ADD_RECENTLY_OPENED_FILE:
+      const files = state.files.filter((file) => file.path !== action.payload.file.path)
+      return Object.assign({}, state, {
+        files: [ action.payload.file, ...files ]
+      })
+
     default:
       return state
   }

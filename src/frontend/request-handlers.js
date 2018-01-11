@@ -1,5 +1,6 @@
 import { GET_STATE } from '../shared/requests'
 import about from './about/request-handlers'
+import recentlyOpenedFiles from './welcome/recently-opened-files/request-handlers'
 import { requestHandler } from './shared/communication'
 import story from './story/request-handlers'
 import view from './view/request-handlers'
@@ -13,6 +14,7 @@ const registerRequestHandlers = () => {
   view()
   about()
   story()
+  recentlyOpenedFiles()
 }
 
 export default registerRequestHandlers
