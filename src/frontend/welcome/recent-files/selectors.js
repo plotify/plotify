@@ -1,5 +1,13 @@
-export const getRecentlyOpenedFiles = (state) => (
-  state.welcome.recentFiles.files
+import { createSelector } from 'reselect'
+
+export const getPinnedFiles = createSelector(
+  (state) => state.welcome.recentFiles.files,
+  (files) => files.filter(file => file.pinned)
+)
+
+export const getNotPinnedFiles = createSelector(
+  (state) => state.welcome.recentFiles.files,
+  (files) => files.filter(file => !file.pinned)
 )
 
 export const isShowFolderNotFoundDialog = (state) => (

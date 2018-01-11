@@ -1,3 +1,5 @@
+import { getNotPinnedFiles, getPinnedFiles } from '../selectors'
+
 import ErrorSnackbar from './ErrorSnackbar'
 import FolderNotFoundDialog from './FolderNotFoundDialog'
 import NoRecentFiles from './NoRecentFiles'
@@ -6,12 +8,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import RecentFilesList from './RecentFilesList'
 import { connect } from 'react-redux'
-import { getRecentlyOpenedFiles } from '../selectors'
 
 const RecentFiles = (props) => {
-  const { files, listClassName } = props
-  const pinnedFiles = files.filter(file => file.pinned)
-  const notPinnedFiles = files.filter(file => !file.pinned)
+  const { pinnedFiles, notPinnedFiles, listClassName } = props
   if (pinnedFiles.length + notPinnedFiles.length > 0) {
     return [
       (pinnedFiles.length > 0 ? list(0, pinnedFiles, listClassName) : null),
@@ -35,12 +34,14 @@ const list = (key, files, className) => [
 ]
 
 RecentFiles.propTypes = {
-  files: PropTypes.arrayOf(PropTypes.object).isRequired,
+  pinnedFiles: PropTypes.arrayOf(PropTypes.object).isRequired,
+  notPinnedFiles: PropTypes.arrayOf(PropTypes.object).isRequired,
   listClassName: PropTypes.string
 }
 
 const mapStateToProps = (state) => ({
-  files: getRecentlyOpenedFiles(state)
+  pinnedFiles: getPinnedFiles(state),
+  notPinnedFiles: getNotPinnedFiles(state)
 })
 
 export default connect(mapStateToProps)(RecentFiles)
