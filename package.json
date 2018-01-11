@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "babel-core": "6.26.0",
-    "babel-jest": "22.0.4",
+    "babel-jest": "22.0.6",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-plugin-transform-builtin-extend": "1.1.2",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
@@ -57,7 +57,7 @@
     "gulp-babel": "7.0.0",
     "gulp-cached": "1.1.1",
     "gulp-clean": "0.3.2",
-    "jest": "22.0.5",
+    "jest": "22.0.6",
     "license-checker": "15.0.0",
     "react-test-renderer": "16.2.0",
     "run-sequence": "2.2.1",
