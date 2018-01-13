@@ -1,7 +1,7 @@
 import { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import React, { Component } from 'react'
-import { basename, extname } from 'path'
+import { basename, dirname, extname } from 'path'
 import { openFileInFolder, removeRecentlyOpenedFile } from '../actions'
 
 import DeleteIcon from 'material-ui-icons/Delete'
@@ -47,7 +47,9 @@ class RecentFileListItem extends Component {
     const { path, openStory } = this.props
     return (
       <ListItem button onClick={() => openStory(path)}>
-        <ListItemText primary={format(path)} />
+        <ListItemText
+          primary={formatName(path)}
+          secondary={formatDirectory(path)} />
         <ListItemSecondaryAction>
           <IconButton
             onClick={this.handleOpenMenu}
@@ -89,10 +91,14 @@ import PinOffIcon from '../../../icons/PinOff'
             </MenuItem>
 */
 
-const format = (path) => {
+const formatName = (path) => {
   const ext = extname(path)
   const name = basename(path)
   return name.substring(0, name.length - ext.length)
+}
+
+const formatDirectory = (path) => {
+  return dirname(path)
 }
 
 RecentFileListItem.propTypes = {

@@ -46,12 +46,12 @@ const styles = theme => ({
     overflow: 'hidden'
   },
   enterActive: {
-    height: theme.spacing.unit * 6,
+    height: '68px',
     transition: theme.transitions.create('height', { duration: theme.transitions.duration.shortest }),
     overflow: 'hidden'
   },
   exit: {
-    height: theme.spacing.unit * 6,
+    height: '68px',
     overflow: 'hidden'
   },
   exitActive: {
