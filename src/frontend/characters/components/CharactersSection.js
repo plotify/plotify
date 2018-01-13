@@ -36,7 +36,7 @@ const CharactersSection = (props) => {
     // </IconButton>
   ])
 
-  const profileToolbar = ([
+  const profileToolbar = characterSelected ? ([
     <MediaQuery maxWidth={759} key={0}>
       <Typography type='title' color='inherit' className={classes.title}>
         {characterSelected && selectedCharacterName}
@@ -45,7 +45,7 @@ const CharactersSection = (props) => {
     // <UndoRedoButtons key={1} />,
     <ToggleEditModeButton key={2} />
     // <CharacterProfileMenu key={3} />
-  ])
+  ]) : null
   const toolbar = ([
     <MediaQuery maxWidth={759} key={1}>
       {!characterSelected &&
