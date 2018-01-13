@@ -50,11 +50,8 @@ App.propTypes = {
 const styles = (theme) => {
   const scrollbarBaseColor = reverseRgb(hexToRgb(theme.palette.background.default))
   return {
-    wrapper: {
-      height: '100%',
-      width: '100%',
-      backgroundColor: theme.palette.background.default,
-      '& *::-webkit-scrollbar': {
+    '@global': {
+      '::-webkit-scrollbar': {
         width: theme.spacing.unit,
         height: theme.spacing.unit,
         background: 'transparent',
@@ -62,12 +59,17 @@ const styles = (theme) => {
           background: toRgba(scrollbarBaseColor, 0.09)
         }
       },
-      '& *::-webkit-scrollbar-thumb': {
+      '::-webkit-scrollbar-thumb': {
         background: toRgba(scrollbarBaseColor, 0.5),
         '&:active': {
           background: toRgba(scrollbarBaseColor, 0.61)
         }
       }
+    },
+    wrapper: {
+      height: '100%',
+      width: '100%',
+      backgroundColor: theme.palette.background.default
     }
   }
 }
