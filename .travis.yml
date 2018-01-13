@@ -20,8 +20,8 @@ before_script:
 
 script:
   - npm run lint
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run coverage ; fi
   - npm run dist
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run coverage ; fi
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run report-coverage ; fi
