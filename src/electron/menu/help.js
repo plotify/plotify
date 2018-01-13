@@ -5,6 +5,13 @@ import { request } from '../shared/communication'
 const help = () => ({
   label: 'Hilfe',
   submenu: [
+    {
+      label: 'Entwicklung',
+      submenu: [
+        { label: 'Werkzeuge', role: 'toggledevtools' }
+      ]
+    },
+    { type: 'separator' },
     { label: 'Über Plotify', click: openAboutDialog }
   ]
 })
