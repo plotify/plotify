@@ -1,7 +1,6 @@
 import { OPEN_ABOUT_DIALOG } from '../../shared/about/requests'
 import { exportState } from '../development'
 import { request } from '../shared/communication'
-import { shell } from 'electron'
 
 const help = () => ({
   label: 'Hilfe',
@@ -9,8 +8,6 @@ const help = () => ({
     {
       label: 'Entwicklung',
       submenu: [
-        { label: 'GitHub', click: openGitHub },
-        { type: 'separator' },
         { label: 'State exportieren...', click: exportStateMenu },
         { type: 'separator' },
         { label: 'Werkzeuge', role: 'toggledevtools' }
@@ -23,11 +20,6 @@ const help = () => ({
 
 const openAboutDialog = (_, window) => {
   request(window, OPEN_ABOUT_DIALOG)
-}
-
-const openGitHub = () => {
-  const packageJson = require('../../package.json')
-  shell.openExternal(packageJson.repository.url)
 }
 
 const exportStateMenu = (_, window) => {
