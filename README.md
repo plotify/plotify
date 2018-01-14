@@ -1,8 +1,6 @@
-<h1 align="center">
+<p align="center">
   <img src="docs/assets/header.png" alt="Plotify" />
-</h1>
-
-<br />
+</p>
 
 
 ## Über Plotify
