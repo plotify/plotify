@@ -1,27 +1,19 @@
-<p align="center">
-  <a href="https://github.com/plotify/plotify"><img src="docs/assets/header.png" alt="Plotify" /></a>
-</p>
+<h1 align="center">
+  <img src="docs/assets/header.png" alt="Plotify" />
+</h1>
+
+<br />
+
+
+## Über Plotify
+
+Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren.
+Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
 
 <p align="center">
-  <strong>
-    Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren.
-    Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
-  </strong>
+  <img src="docs/assets/screenshot-0.2.0-alpha.1-linux.png" alt="Plotify v0.2.0-alpha.1 Linux" height="450" />
 </p>
 
-<p align="center">
-    <a href="https://github.com/plotify/plotify/releases">
-        <img src="https://img.shields.io/github/release/plotify/plotify.svg" alt="Latest release" />
-    </a>
-    <a href="https://github.com/plotify/plotify/blob/master/LICENSE">
-        <img src="https://img.shields.io/github/license/plotify/plotify.svg" alt="License" />
-    </a>
-    <a href="https://github.com/plotify/plotify/releases">
-        <img src="https://img.shields.io/github/downloads/plotify/plotify/total.svg" alt="Downloads" />
-    </a>
-</p>
-
----
 
 ## Stand der Entwicklung
 
