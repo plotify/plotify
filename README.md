@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/assets/screenshot-0.2.0-alpha.1-linux.png?raw=true" alt="Plotify v0.2.0-alpha.1 Linux" width="623" height="450" />
+  <img src="docs/assets/screenshot-0.2.0-alpha.1-linux.png?raw=true" alt="Plotify v0.2.0-alpha.1 Linux" />
 </p>
 
 
