@@ -2,11 +2,10 @@
   <img src="docs/assets/header.png" alt="Plotify" />
 </p>
 
-
-## Über Plotify
-
-Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren.
-Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
+<p align="center">
+  Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren.
+  Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
+</p>
 
 <p align="center">
   <img src="docs/assets/screenshot-0.2.0-alpha.1-linux.png?raw=true" alt="Plotify v0.2.0-alpha.1 Linux" height="450" />
