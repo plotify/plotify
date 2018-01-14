@@ -1,5 +1,6 @@
+import { exportState, importState } from '../development'
+
 import { OPEN_ABOUT_DIALOG } from '../../shared/about/requests'
-import { exportState } from '../development'
 import { request } from '../shared/communication'
 
 const help = () => ({
@@ -9,6 +10,7 @@ const help = () => ({
       label: 'Entwicklung',
       submenu: [
         { label: 'State exportieren...', click: exportStateMenu },
+        { label: 'State importieren...', click: importStateMenu },
         { type: 'separator' },
         { label: 'Werkzeuge', role: 'toggledevtools' }
       ]
@@ -24,6 +26,10 @@ const openAboutDialog = (_, window) => {
 
 const exportStateMenu = (_, window) => {
   exportState(window)
+}
+
+const importStateMenu = (_, window) => {
+  importState(window)
 }
 
 export default help
