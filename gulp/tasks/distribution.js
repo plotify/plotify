@@ -106,7 +106,7 @@ const licenseChecker = (options) => {
 
 const config = {
   appId: 'org.plotify',
-  copyright: 'Copyright © 2017 - 2018 Sebastian Schmidt & Jasper Meyer',
+  copyright: 'Copyright © 2017-2018 Sebastian Schmidt & Jasper Meyer',
   directories: {
     app: paths.build.app,
     output: paths.build.dist,

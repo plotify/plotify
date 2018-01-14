@@ -26,7 +26,7 @@ const AboutDialog = (props) => {
       <Typography type='headline'>{packageJson.productName}</Typography>
       <Typography>Version: {packageJson.version}</Typography>
       <Typography>
-        Copyright © 2017 - 2018 Sebastian Schmidt & Jasper Meyer
+        Copyright © 2017-2018 Sebastian Schmidt & Jasper Meyer
       </Typography>
       <Typography>
         Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft,
