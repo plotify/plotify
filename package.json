@@ -16,6 +16,13 @@
       "email": "jasper.meyer@gmx.net"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plotify/plotify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/plotify/plotify/issues"
+  },
   "main": "electron/main.js",
   "private": true,
   "dependencies": {
