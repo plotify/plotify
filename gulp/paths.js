@@ -1,4 +1,5 @@
 const paths = {
+  root: './',
   src: './src',
   frontend: './src/frontend',
   backend: './src/backend',
