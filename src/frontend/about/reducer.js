@@ -45,12 +45,16 @@ const reducer = (state = initialState, action) => {
     case t.OPEN_DEPENDENCIES_LICENSES_DIALOG:
       return Object.assign({}, state, {
         dependenciesLicensesOpen: true,
-        dependenciesLicensesText: action.payload.text
+        dependenciesLicensesText: 'Der Text wird geladen...'
       })
     case t.CLOSE_DEPENDENCIES_LICENSES_DIALOG:
       return Object.assign({}, state, {
         dependenciesLicensesOpen: false,
         dependenciesLicensesText: ''
+      })
+    case t.SET_DEPENDENCIES_LICENSES_TEXT:
+      return Object.assign({}, state, {
+        dependenciesLicensesText: action.payload.text
       })
 
     case CREATE_STORY_STARTED:
