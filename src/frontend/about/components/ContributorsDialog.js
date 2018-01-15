@@ -10,10 +10,29 @@ import { connect } from 'react-redux'
 import { isContributorsDialogOpen } from '../selectors'
 
 const contributors = [
-  { name: 'Sebastian Schmidt', url: 'https://github.com/SebastianSchmidt', image: './contributors/sebastian-schmidt.jpg' },
-  { name: 'Jasper Meyer', url: 'https://github.com/itsJASPERr', image: './contributors/jasper-meyer.jpg' },
-  { name: 'Gesa Müller', url: 'https://github.com/GesaMueller', image: './contributors/gesa-mueller.jpg' },
-  { name: 'Rebecca Rademacher', url: 'https://github.com/RebeccaRademacher' }
+  {
+    name: 'Sebastian Schmidt',
+    tasks: ['Softwareentwicklung'],
+    url: 'https://github.com/SebastianSchmidt',
+    image: './contributors/sebastian-schmidt.jpg'
+  },
+  {
+    name: 'Jasper Meyer',
+    tasks: ['Softwareentwicklung'],
+    url: 'https://github.com/itsJASPERr',
+    image: './contributors/jasper-meyer.jpg'
+  },
+  {
+    name: 'Gesa Müller',
+    tasks: [],
+    url: 'https://github.com/GesaMueller',
+    image: './contributors/gesa-mueller.jpg'
+  },
+  {
+    name: 'Rebecca Rademacher',
+    tasks: [],
+    url: 'https://github.com/RebeccaRademacher'
+  }
 ]
 
 const ContributorsDialog = (props) => (
@@ -24,7 +43,9 @@ const ContributorsDialog = (props) => (
         {contributors.map((contributor, index) => (
           <ListItem key={index} button onClick={() => window.open(contributor.url)}>
             { contributor.image ? <Avatar src={contributor.image} /> : <Avatar>{contributor.name.charAt(0)}</Avatar> }
-            <ListItemText primary={contributor.name} />
+            <ListItemText
+              primary={contributor.name}
+              secondary={formatTasks(contributor.tasks)} />
           </ListItem>
         ))}
       </List>
@@ -34,6 +55,14 @@ const ContributorsDialog = (props) => (
     </DialogActions>
   </Dialog>
 )
+
+const formatTasks = (tasks) => {
+  if (tasks.length > 0) {
+    return tasks.join(', ')
+  } else {
+    return null
+  }
+}
 
 ContributorsDialog.propTypes = {
   open: PropTypes.bool.isRequired,
