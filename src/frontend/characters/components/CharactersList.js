@@ -1,33 +1,35 @@
+import React, { PureComponent } from 'react'
 import { getFilteredCharacters, getSelectedCharacterId } from '../selectors'
 
 import CharacterListEmptyItem from './CharacterListEmptyItem'
 import CharacterListItem from './CharacterListItem'
 import List from 'material-ui/List'
 import PropTypes from 'prop-types'
-import React from 'react'
 import { connect } from 'react-redux'
 import { selectCharacter } from '../actions'
 
-const CharactersList = (props) => {
-  const { characters, onClick, selected, className } = props
-  let items
-  if (characters.length > 0) {
-    items = characters.map((character) => (
-      <CharacterListItem
-        key={character.id}
-        character={character}
-        onClick={onClick}
-        selected={character.id === selected}
-      />
-    ))
-  } else {
-    items = (<CharacterListEmptyItem />)
+class CharactersList extends PureComponent {
+  render () {
+    const { characters, onClick, selected, className } = this.props
+    let items
+    if (characters.length > 0) {
+      items = characters.map((character) => (
+        <CharacterListItem
+          key={character.id}
+          character={character}
+          onClick={onClick}
+          selected={character.id === selected}
+        />
+      ))
+    } else {
+      items = (<CharacterListEmptyItem />)
+    }
+    return (
+      <List className={className}>
+        {items}
+      </List>
+    )
   }
-  return (
-    <List className={className}>
-      {items}
-    </List>
-  )
 }
 
 CharactersList.propTypes = {

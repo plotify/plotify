@@ -12,9 +12,7 @@ import paths from '../paths'
 
 const ownLicenseFile = 'LICENSE'
 const dependenciesLicenseFile = 'LICENSES.dependencies.txt'
-const electronLicenseFile = 'LICENSE.electron.txt'
 const robotoLicenseFile = 'src/frontend/static/fonts/roboto-license.txt'
-const packageJsonFile = 'package.json'
 
 const options = Object.freeze({ encoding: 'utf-8' })
 const separator = '\n\n--------------------------------------------------------------------------\n\n'
@@ -29,7 +27,6 @@ const generateLicenseFile = async (context) => {
   await copyOwnLicenseFile(context)
   const licenseFile = await createDependenciesLicenseFile(context)
   await addRobotoLicense(licenseFile)
-  await addElectronLicense(licenseFile, context)
   await addDependenciesLicenses(licenseFile)
   console.log('License files generated.')
 }
@@ -46,24 +43,8 @@ const addRobotoLicense = async (targetFile) => {
   await appendFile(targetFile, robotoLicense, options)
 }
 
-const addElectronLicense = async (targetFile, context) => {
-  const electronLicenseFileAbsolute = join(context.appOutDir, electronLicenseFile)
-  const electronLicense = await readFile(electronLicenseFileAbsolute, options)
-
-  const packageJson = JSON.parse(await readFile(packageJsonFile, options))
-  const electronVersion = packageJson.devDependencies.electron
-
-  const electronLicenseWithHeader =
-    separator +
-    'Package:   electron@' + electronVersion + '\n' +
-    'Publisher: GitHub\n' +
-    'License:   MIT\n\n' +
-    electronLicense
-  await appendFile(targetFile, electronLicenseWithHeader, options)
-}
-
 const addDependenciesLicenses = async (targetFile) => {
-  const dependencies = await licenseChecker({ start: paths.build.app })
+  const dependencies = await licenseChecker({ start: paths.root })
 
   for (const name in dependencies) {
     const dependency = dependencies[name]
@@ -101,7 +82,7 @@ const licenseChecker = (options) => {
 
 const config = {
   appId: 'org.plotify',
-  copyright: 'Copyright © 2017 - 2018 Sebastian Schmidt & Jasper Meyer',
+  copyright: 'Copyright © 2017-2018 Sebastian Schmidt & Jasper Meyer',
   directories: {
     app: paths.build.app,
     output: paths.build.dist,

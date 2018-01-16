@@ -1,3 +1,4 @@
-export { getState, saveState, removeState } from './saved-states'
+export { getSavedState, saveState, removeSavedState } from './saved-states'
 export { registerRequestHandlers } from './request-handlers'
 export { initReload } from './reload'
+export { getState, exportState, importState } from './state'

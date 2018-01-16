@@ -1,5 +1,5 @@
 import { WELCOME_SECTION } from './constants'
-import { getRecentlyOpenedFiles } from './recent-files/actions'
+import { getRecentlyOpenedFiles } from './recently-opened-files/actions'
 import { setSection } from '../navigation/actions'
 
 export const openWelcomeSection = () => {

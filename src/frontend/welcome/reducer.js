@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import recentFiles from './recent-files/reducer'
+import recentlyOpenedFiles from './recently-opened-files/reducer'
 
 export default combineReducers({
-  recentFiles
+  recentlyOpenedFiles
 })

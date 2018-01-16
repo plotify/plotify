@@ -8,3 +8,7 @@ export const REMOVE_RECENTLY_OPENED_FILE_FAILED = 'recently-opened-files/remove-
 
 export const OPEN_FOLDER_NOT_FOUND_DIALOG = 'recently-opened-files/open-folder-not-found-dialog'
 export const CLOSE_FOLDER_NOT_FOUND_DIALOG = 'recently-opened-files/close-folder-not-found-dialog'
+
+export const REMOVE_ERROR = 'recently-opened-files/remove-error'
+
+export const ADD_RECENTLY_OPENED_FILE = 'recently-opened-files/add'

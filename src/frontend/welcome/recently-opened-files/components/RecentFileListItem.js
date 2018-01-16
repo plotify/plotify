@@ -1,7 +1,7 @@
 import { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'material-ui/List'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import React, { Component } from 'react'
-import { basename, extname } from 'path'
+import { basename, dirname, extname } from 'path'
 import { openFileInFolder, removeRecentlyOpenedFile } from '../actions'
 
 import DeleteIcon from 'material-ui-icons/Delete'
@@ -9,10 +9,8 @@ import FolderOpenIcon from 'material-ui-icons/FolderOpen'
 import IconButton from 'material-ui/IconButton'
 import MoreIcon from 'material-ui-icons/MoreVert'
 import PropTypes from 'prop-types'
-import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { openStory } from '../../../story/actions'
-import { withStyles } from 'material-ui/styles'
 
 class RecentFileListItem extends Component {
   constructor (props) {
@@ -46,12 +44,12 @@ class RecentFileListItem extends Component {
   }
 
   render () {
-    const { path, removing, openStory, classes } = this.props
-    const className = classNames(classes.container, { [classes.removing]: removing })
-    const containerClasses = { container: className }
+    const { path, openStory } = this.props
     return (
-      <ListItem button onClick={() => openStory(path)} classes={containerClasses}>
-        <ListItemText primary={format(path)} />
+      <ListItem button onClick={() => openStory(path)}>
+        <ListItemText
+          primary={formatName(path)}
+          secondary={formatDirectory(path)} />
         <ListItemSecondaryAction>
           <IconButton
             onClick={this.handleOpenMenu}
@@ -93,34 +91,23 @@ import PinOffIcon from '../../../icons/PinOff'
             </MenuItem>
 */
 
-const format = (path) => {
+const formatName = (path) => {
   const ext = extname(path)
   const name = basename(path)
   return name.substring(0, name.length - ext.length)
 }
 
+const formatDirectory = (path) => {
+  return dirname(path)
+}
+
 RecentFileListItem.propTypes = {
   path: PropTypes.string.isRequired,
   pinned: PropTypes.bool.isRequired,
-  removing: PropTypes.bool.isRequired,
   openStory: PropTypes.func.isRequired,
   openStoryInFolder: PropTypes.func.isRequired,
-  removeStory: PropTypes.func.isRequired,
-  classes: PropTypes.object.isRequired
+  removeStory: PropTypes.func.isRequired
 }
-
-const styles = (theme) => ({
-  container: {
-    height: theme.spacing.unit * 6
-  },
-  removing: {
-    height: 0,
-    transition: theme.transitions.create('height', { duration: theme.transitions.duration.shortest }),
-    overflow: 'hidden'
-  }
-})
-
-const StyledRecentFileListItem = withStyles(styles)(RecentFileListItem)
 
 const mapStateToProps = (state) => ({})
 
@@ -130,4 +117,4 @@ const mapDispatchToProps = (dispatch) => ({
   removeStory: (path) => dispatch(removeRecentlyOpenedFile(path))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(StyledRecentFileListItem)
+export default connect(mapStateToProps, mapDispatchToProps)(RecentFileListItem)

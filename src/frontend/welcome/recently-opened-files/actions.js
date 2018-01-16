@@ -12,7 +12,9 @@ export const getRecentlyOpenedFiles = () => {
       const files = await request(GET_RECENTLY_OPENED_FILES)
       dispatch(getRecentlyOpenedFilesSuccessful(files))
     } catch (error) {
-      dispatch(getRecentlyOpenedFilesFailed(error.message))
+      console.log('Error: getRecentlyOpenedFiles:', error)
+      const message = 'Die zuletzt geöffneten Dateien konnten nicht geladen werden.'
+      dispatch(getRecentlyOpenedFilesFailed(message))
     }
   }
 }
@@ -37,10 +39,11 @@ export const removeRecentlyOpenedFile = (path) => {
     dispatch(removeRecentlyOpenedFileRequest(path))
     try {
       await request(REMOVE_RECENTLY_OPENED_FILE, path)
-      // Verzögerung beim Entfernen der Datei, damit die Animation noch vollständig durchgeführt wird:
-      setTimeout(() => dispatch(removeRecentlyOpenedFileSuccessful(path)), 150)
+      removeRecentlyOpenedFileSuccessful(path)
     } catch (error) {
-      setTimeout(() => dispatch(removeRecentlyOpenedFileFailed(path, error.message)), 150)
+      console.log('Error: removeRecentlyOpenedFile:', error)
+      const message = 'Die Datei konnte nicht aus der Liste entfernt werden.'
+      dispatch(removeRecentlyOpenedFileFailed(path, message))
     }
   }
 }
@@ -77,4 +80,14 @@ const openFolderNotFoundDialog = () => ({
 export const closeFolderNotFoundDialog = () => ({
   type: t.CLOSE_FOLDER_NOT_FOUND_DIALOG,
   payload: {}
+})
+
+export const removeError = () => ({
+  type: t.REMOVE_ERROR,
+  payload: {}
+})
+
+export const addRecentlyOpenedFile = (file) => ({
+  type: t.ADD_RECENTLY_OPENED_FILE,
+  payload: { file }
 })

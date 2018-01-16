@@ -1,11 +1,9 @@
 import { Menu } from 'electron'
 import app from './app'
-import development from './development'
 import edit from './edit'
 import file from './file'
 import help from './help'
 import { isDarkThemeEnabled } from '../preferences'
-import isDev from 'electron-is-dev'
 import view from './view'
 
 let initialized = false
@@ -26,10 +24,6 @@ const initMenu = async () => {
   template.push(edit())
   template.push(view())
   template.push(help())
-
-  if (isDev) {
-    template.splice(template.length - 2, 0, development())
-  }
 
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)

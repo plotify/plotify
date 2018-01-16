@@ -28,7 +28,7 @@ const ToggleEditModeButton = (props) => {
             className={props.classes.button}
             type='button'
             onClick={disableCharacterEditMode}>
-            fertig
+            Fertig
           </Typography>
         }
         {props.type === 'icon' &&
@@ -51,7 +51,7 @@ const ToggleEditModeButton = (props) => {
             className={props.classes.button}
             type='button'
             onClick={enableCharacterEditMode}>
-            bearbeiten
+            Bearbeiten
           </Typography>
         }
         {props.type === 'icon' &&

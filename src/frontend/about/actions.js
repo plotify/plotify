@@ -43,17 +43,23 @@ export const closeLicenseDialog = () => ({
 
 export const openDependenciesLicensesDialog = () => {
   return async (dispatch) => {
-    const text = await loadDependenciesLicensesText()
     dispatch({
       type: t.OPEN_DEPENDENCIES_LICENSES_DIALOG,
-      payload: { text }
+      payload: {}
     })
+    const text = await loadDependenciesLicensesText()
+    dispatch(setDependenciesLicensesText(text))
   }
 }
 
 export const closeDependenciesLicensesDialog = () => ({
   type: t.CLOSE_DEPENDENCIES_LICENSES_DIALOG,
   payload: {}
+})
+
+export const setDependenciesLicensesText = (text) => ({
+  type: t.SET_DEPENDENCIES_LICENSES_TEXT,
+  payload: { text }
 })
 
 const loadLicenseText = async () => {
