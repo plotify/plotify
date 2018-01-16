@@ -10,6 +10,7 @@ import {
 } from '../../shared/characters/requests'
 
 import { CHARACTERS_SECTION } from './constants'
+import { getSelectedCharacterId } from './selectors'
 import { request } from '../shared/communication'
 import { setSection } from '../navigation/actions'
 
@@ -116,7 +117,10 @@ export const closeCreateCharacterDialog = () => ({
 })
 
 export const selectCharacter = (id) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    if (getSelectedCharacterId(getState()) === id) {
+      return
+    }
     dispatch({
       type: t.SELECT_CHARACTER,
       payload: { id }
