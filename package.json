@@ -47,7 +47,7 @@
     "shared-exclusive-lock": "0.2.3",
     "sqlite3": "3.1.13",
     "tmp": "0.0.33",
-    "uuid": "3.1.0"
+    "uuid": "3.2.1"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
