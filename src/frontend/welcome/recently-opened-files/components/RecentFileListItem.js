@@ -2,12 +2,14 @@ import { ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText } from 'm
 import Menu, { MenuItem } from 'material-ui/Menu'
 import React, { Component } from 'react'
 import { basename, dirname, extname } from 'path'
-import { openFileInFolder, removeRecentlyOpenedFile } from '../actions'
+import { openFileInFolder, pinRecentlyOpenedFile, removeRecentlyOpenedFile, unpinRecentlyOpenedFile } from '../actions'
 
 import DeleteIcon from 'material-ui-icons/Delete'
 import FolderOpenIcon from 'material-ui-icons/FolderOpen'
 import IconButton from 'material-ui/IconButton'
 import MoreIcon from 'material-ui-icons/MoreVert'
+import PinIcon from '../../../icons/Pin'
+import PinOffIcon from '../../../icons/PinOff'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { openStory } from '../../../story/actions'
@@ -21,6 +23,8 @@ class RecentFileListItem extends Component {
     }
     this.handleOpenMenu = this.handleOpenMenu.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.handlePinOrUnpin = this.handlePinOrUnpin.bind(this)
+    this.handleOpenStory = this.handleOpenStory.bind(this)
     this.handleOpenStoryInFolder = this.handleOpenStoryInFolder.bind(this)
     this.handleRemoveStory = this.handleRemoveStory.bind(this)
   }
@@ -31,6 +35,20 @@ class RecentFileListItem extends Component {
 
   handleClose () {
     this.setState({ menuOpen: false, menuAnchorElement: null })
+  }
+
+  handlePinOrUnpin () {
+    const { path, pinned, pinStory, unpinStory } = this.props
+    if (pinned) {
+      unpinStory(path)
+    } else {
+      pinStory(path)
+    }
+  }
+
+  handleOpenStory () {
+    const { path, openStory } = this.props
+    openStory(path)
   }
 
   handleOpenStoryInFolder () {
@@ -44,9 +62,9 @@ class RecentFileListItem extends Component {
   }
 
   render () {
-    const { path, openStory } = this.props
+    const { path, pinned } = this.props
     return (
-      <ListItem button onClick={() => openStory(path)}>
+      <ListItem button onClick={this.handleOpenStory}>
         <ListItemText
           primary={formatName(path)}
           secondary={formatDirectory(path)} />
@@ -61,6 +79,12 @@ class RecentFileListItem extends Component {
             open={this.state.menuOpen}
             anchorEl={this.state.menuAnchorElement}
             onClose={this.handleClose}>
+            <MenuItem onClick={this.handlePinOrUnpin}>
+              <ListItemIcon>
+                { pinned ? <PinOffIcon /> : <PinIcon /> }
+              </ListItemIcon>
+              <ListItemText primary={pinned ? 'Ablösen' : 'Anheften'} />
+            </MenuItem>
             <MenuItem onClick={this.handleOpenStoryInFolder}>
               <ListItemIcon>
                 <FolderOpenIcon />
@@ -80,17 +104,6 @@ class RecentFileListItem extends Component {
   }
 }
 
-/*
-import PinIcon from '../../../icons/Pin'
-import PinOffIcon from '../../../icons/PinOff'
-            <MenuItem onClick={this.handleClose}>
-              <ListItemIcon>
-                { pinned ? <PinOffIcon /> : <PinIcon /> }
-              </ListItemIcon>
-              <ListItemText primary={pinned ? 'Ablösen' : 'Anheften'} />
-            </MenuItem>
-*/
-
 const formatName = (path) => {
   const ext = extname(path)
   const name = basename(path)
@@ -106,7 +119,9 @@ RecentFileListItem.propTypes = {
   pinned: PropTypes.bool.isRequired,
   openStory: PropTypes.func.isRequired,
   openStoryInFolder: PropTypes.func.isRequired,
-  removeStory: PropTypes.func.isRequired
+  removeStory: PropTypes.func.isRequired,
+  pinStory: PropTypes.func.isRequired,
+  unpinStory: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({})
@@ -114,7 +129,9 @@ const mapStateToProps = (state) => ({})
 const mapDispatchToProps = (dispatch) => ({
   openStory: (path) => dispatch(openStory(path)),
   openStoryInFolder: (path) => dispatch(openFileInFolder(path)),
-  removeStory: (path) => dispatch(removeRecentlyOpenedFile(path))
+  removeStory: (path) => dispatch(removeRecentlyOpenedFile(path)),
+  pinStory: (path) => dispatch(pinRecentlyOpenedFile(path)),
+  unpinStory: (path) => dispatch(unpinRecentlyOpenedFile(path))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecentFileListItem)

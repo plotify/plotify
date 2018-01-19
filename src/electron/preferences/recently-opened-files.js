@@ -1,7 +1,9 @@
 import {
   addOrUpdateRecentlyOpenedFile as _addOrUpdateRecentlyOpenedFile,
   getRecentlyOpenedFiles as _getRecentlyOpenedFiles,
-  removeRecentlyOpenedFile as _removeRecentlyOpenedFile
+  pinRecentlyOpenedFile as _pinRecentlyOpenedFile,
+  removeRecentlyOpenedFile as _removeRecentlyOpenedFile,
+  unpinRecentlyOpenedFile as _unpinRecentlyOpenedFile
 } from '../../backend/preferences/recently-opened-files'
 
 import { ADD_RECENTLY_OPENED_FILE } from '../../shared/preferences/requests'
@@ -21,6 +23,14 @@ export const addOrUpdateRecentlyOpenedFile = async (file) => {
   if (window) {
     request(window, ADD_RECENTLY_OPENED_FILE, file)
   }
+}
+
+export const pinRecentlyOpenedFile = async (path) => {
+  await _pinRecentlyOpenedFile(getPreferences(), path)
+}
+
+export const unpinRecentlyOpenedFile = async (path) => {
+  await _unpinRecentlyOpenedFile(getPreferences(), path)
 }
 
 export const removeRecentlyOpenedFile = async (path) => {

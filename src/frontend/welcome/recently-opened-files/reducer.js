@@ -6,7 +6,9 @@ const initialState = {
   error: null
 }
 
+// TODO Error pro Aktion
 const reducer = (state = initialState, action) => {
+  let files
   switch (action.type) {
     case t.GET_RECENTLY_OPENED_FILES_REQUEST:
       return Object.assign({}, state, {
@@ -18,7 +20,29 @@ const reducer = (state = initialState, action) => {
       })
     case t.GET_RECENTLY_OPENED_FILES_SUCCESSFUL:
       return Object.assign({}, state, {
-        files: action.payload.files.map((file) => ({ ...file, removing: false })),
+        files: action.payload.files.map((file) => ({ ...file })),
+        error: null
+      })
+
+    case t.PIN_RECENTLY_OPENED_FILE_REQUEST:
+    case t.UNPIN_RECENTLY_OPENED_FILE_REQUEST:
+      files = state.files.filter((file) => file.path !== action.payload.path)
+      files = [{ path: action.payload.path, pinned: action.payload.pin }, ...files]
+      return Object.assign({}, state, {
+        files,
+        error: null
+      })
+    case t.PIN_RECENTLY_OPENED_FILE_FAILED:
+    case t.UNPIN_RECENTLY_OPENED_FILE_FAILED:
+      files = state.files.filter((file) => file.path !== action.payload.path)
+      files = [...files, { path: action.payload.path, pinned: !action.payload.pin }]
+      return Object.assign({}, state, {
+        files,
+        error: action.payload.message
+      })
+    case t.PIN_RECENTLY_OPENED_FILE_SUCCESSFUL:
+    case t.UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL:
+      return Object.assign({}, state, {
         error: null
       })
 
@@ -52,7 +76,7 @@ const reducer = (state = initialState, action) => {
       })
 
     case t.ADD_RECENTLY_OPENED_FILE:
-      const files = state.files.filter((file) => file.path !== action.payload.file.path)
+      files = state.files.filter((file) => file.path !== action.payload.file.path)
       return Object.assign({}, state, {
         files: [ action.payload.file, ...files ]
       })

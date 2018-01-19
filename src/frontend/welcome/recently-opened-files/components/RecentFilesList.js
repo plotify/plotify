@@ -23,8 +23,7 @@ const RecentFilesList = (props) => {
           timeout={1000}>
           <RecentFileListItem
             path={file.path}
-            pinned={file.pinned}
-            removing={file.removing} />
+            pinned={file.pinned} />
         </CSSTransition>
       ))}
     </TransitionGroup>
@@ -35,8 +34,7 @@ RecentFilesList.propTypes = {
   classes: PropTypes.object.isRequired,
   files: PropTypes.arrayOf(PropTypes.shape({
     path: PropTypes.string.isRequired,
-    pinned: PropTypes.bool.isRequired,
-    removing: PropTypes.bool.isRequired
+    pinned: PropTypes.bool.isRequired
   })).isRequired
 }
 
