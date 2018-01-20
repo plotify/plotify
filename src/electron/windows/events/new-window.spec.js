@@ -11,7 +11,7 @@ beforeEach(() => {
 
 describe('with valid url', () => {
   test('opens external application when called with http url', () => {
-    const url = 'http://plotify.org'
+    const url = 'https://plotify.org'
     handleNewWindow(event, url)
     expect(shell.openExternal.mock.calls.length).toBe(1)
     expect(shell.openExternal.mock.calls[0][0]).toEqual(url)
