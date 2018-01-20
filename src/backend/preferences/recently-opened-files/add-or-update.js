@@ -1,5 +1,8 @@
-import { getRecentlyOpenedFiles } from './'
+import { getRecentlyOpenedFiles, removeRecentlyOpenedFile } from './'
+
 import { validateDatabase } from '../../shared/validation'
+
+const MAX_FILES = 25
 
 const addSql = `
   INSERT INTO recently_opened_files
@@ -24,6 +27,8 @@ const addOrUpdate = async (database, file) => {
     const updatedFile = { ...defaultFile, ...currentFile, ...file }
     if (containsChanges(currentFile, updatedFile)) {
       await handleChanges(transaction, currentFile, updatedFile)
+      await shrinkListIfNecessary(transaction)
+      await transaction.commit()
     } else {
       await transaction.rollback()
     }
@@ -76,7 +81,16 @@ const handleChanges = async (transaction, currentFile, updatedFile) => {
     params.unshift(updatedFile.path)
     await transaction.run(addSql, params)
   }
-  await transaction.commit()
+}
+
+const shrinkListIfNecessary = async (transaction) => {
+  const files = await getRecentlyOpenedFiles(transaction)
+  if (files.length > MAX_FILES) {
+    const remove = files.filter((file, index) => index >= MAX_FILES && !file.pinned)
+    for (const file of remove) {
+      await removeRecentlyOpenedFile(transaction, file.path)
+    }
+  }
 }
 
 export default addOrUpdate
