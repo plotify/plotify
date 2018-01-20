@@ -39,6 +39,7 @@ class RecentFileListItem extends Component {
 
   handlePinOrUnpin () {
     const { path, pinned, pinStory, unpinStory } = this.props
+    this.handleClose()
     if (pinned) {
       unpinStory(path)
     } else {
