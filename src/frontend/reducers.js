@@ -19,7 +19,7 @@ const appReducer = combineReducers({
 const rootReducer = (state, action) => {
   switch (action.type) {
     case SET_STATE:
-      return action.payload
+      return action.payload.state
     default:
       return appReducer(state, action)
   }

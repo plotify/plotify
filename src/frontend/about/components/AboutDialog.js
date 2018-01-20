@@ -1,8 +1,10 @@
 import Dialog, { DialogActions, DialogContent } from 'material-ui/Dialog'
-import { closeAboutDialog, openContributorsDialog } from '../actions'
+import { closeAboutDialog, openContributorsDialog, openLicenseDialog } from '../actions'
 
 import Button from 'material-ui/Button'
 import ContributorsDialog from './ContributorsDialog'
+import DependenciesLicensesDialog from './DependenciesLicensesDialog'
+import LicenseDialog from './LicenseDialog'
 import MediaQuery from 'react-responsive'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -14,9 +16,8 @@ import { withStyles } from 'material-ui/styles'
 
 const packageJson = require('../../../package.json')
 
-// TODO Lizenz
 const AboutDialog = (props) => {
-  const { open, closeAboutDialog, openContributorsDialog, classes } = props
+  const { open, closeAboutDialog, openContributorsDialog, openLicenseDialog, classes } = props
   const openWebsite = () => window.open(packageJson.homepage)
 
   const content = [
@@ -25,7 +26,7 @@ const AboutDialog = (props) => {
       <Typography type='headline'>{packageJson.productName}</Typography>
       <Typography>Version: {packageJson.version}</Typography>
       <Typography>
-        Copyright © 2017 - 2018 Sebastian Schmidt & Jasper Meyer
+        Copyright © 2017-2018 Sebastian Schmidt & Jasper Meyer
       </Typography>
       <Typography>
         Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft,
@@ -52,11 +53,14 @@ const AboutDialog = (props) => {
     <Dialog open={open} onClose={closeAboutDialog}>
       {dialogContent}
       <DialogActions>
+        <Button onClick={openLicenseDialog}>Lizenz</Button>
         <Button onClick={openContributorsDialog}>Mitwirkende</Button>
         <Button onClick={openWebsite}>Website</Button>
         <Button onClick={closeAboutDialog}>Schließen</Button>
       </DialogActions>
       <ContributorsDialog />
+      <LicenseDialog />
+      <DependenciesLicensesDialog />
     </Dialog>
   )
 }
@@ -65,6 +69,7 @@ AboutDialog.propTypes = {
   open: PropTypes.bool.isRequired,
   closeAboutDialog: PropTypes.func.isRequired,
   openContributorsDialog: PropTypes.func.isRequired,
+  openLicenseDialog: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired
 }
 
@@ -103,7 +108,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   closeAboutDialog: () => dispatch(closeAboutDialog()),
-  openContributorsDialog: () => dispatch(openContributorsDialog())
+  openContributorsDialog: () => dispatch(openContributorsDialog()),
+  openLicenseDialog: () => dispatch(openLicenseDialog())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(StyledAboutDialog)

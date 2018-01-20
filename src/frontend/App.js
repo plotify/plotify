@@ -47,13 +47,50 @@ App.propTypes = {
   path: PropTypes.string
 }
 
-const styles = (theme) => ({
-  wrapper: {
-    height: '100%',
-    width: '100%',
-    backgroundColor: theme.palette.background.default
+const styles = (theme) => {
+  const scrollbarBaseColor = reverseRgb(hexToRgb(theme.palette.background.default))
+  return {
+    '@global': {
+      '::-webkit-scrollbar': {
+        width: theme.spacing.unit,
+        height: theme.spacing.unit,
+        background: 'transparent',
+        '&:hover': {
+          background: toRgba(scrollbarBaseColor, 0.09)
+        }
+      },
+      '::-webkit-scrollbar-thumb': {
+        background: toRgba(scrollbarBaseColor, 0.5),
+        '&:active': {
+          background: toRgba(scrollbarBaseColor, 0.61)
+        }
+      }
+    },
+    wrapper: {
+      height: '100%',
+      width: '100%',
+      backgroundColor: theme.palette.background.default
+    }
   }
-})
+}
+
+const hexToRgb = (hex) => {
+  const red = parseInt(hex.substring(1, 3), 16)
+  const green = parseInt(hex.substring(3, 5), 16)
+  const blue = parseInt(hex.substring(5, 7), 16)
+  return [red, green, blue]
+}
+
+const reverseRgb = (rgb) => {
+  return rgb.map((color) => 255 - color)
+}
+
+const toRgba = (rgb, opacity) => {
+  const red = rgb[0]
+  const green = rgb[1]
+  const blue = rgb[2]
+  return `rgba(${red}, ${green}, ${blue}, ${opacity})`
+}
 
 const StyledApp = withStyles(styles)(App)
 

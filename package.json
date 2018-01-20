@@ -1,6 +1,6 @@
 {
   "name": "plotify",
-  "version": "0.2.0-alpha.1",
+  "version": "0.2.0-alpha.2",
   "description": "Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren. Behalte stets den Überblick und erschaffe eine fantastische Geschichte!",
   "homepage": "http://plotify.org",
   "productName": "Plotify",
@@ -16,6 +16,13 @@
       "email": "jasper.meyer@gmx.net"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/plotify/plotify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/plotify/plotify/issues"
+  },
   "main": "electron/main.js",
   "private": true,
   "dependencies": {
@@ -24,7 +31,8 @@
     "classnames": "2.2.5",
     "electron-is-dev": "0.3.0",
     "fs-extra": "5.0.0",
-    "material-ui": "1.0.0-beta.27",
+    "jss-global": "3.0.0",
+    "material-ui": "1.0.0-beta.29",
     "material-ui-icons": "1.0.0-beta.17",
     "node-watch": "0.5.5",
     "prop-types": "15.6.0",
@@ -32,16 +40,18 @@
     "react-dom": "16.2.0",
     "react-redux": "5.0.6",
     "react-responsive": "4.0.3",
+    "react-transition-group": "2.2.1",
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
-    "shared-exclusive-lock": "0.2.2",
+    "reselect": "3.0.1",
+    "shared-exclusive-lock": "0.2.3",
     "sqlite3": "3.1.13",
     "tmp": "0.0.33",
-    "uuid": "3.1.0"
+    "uuid": "3.2.1"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
-    "babel-jest": "22.0.4",
+    "babel-jest": "22.1.0",
     "babel-plugin-add-module-exports": "0.2.1",
     "babel-plugin-transform-builtin-extend": "1.1.2",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
@@ -49,14 +59,15 @@
     "babel-preset-react": "6.24.1",
     "check-dependencies": "1.1.0",
     "coveralls": "3.0.0",
+    "del": "3.0.0",
     "electron": "1.7.10",
-    "electron-builder": "19.52.1",
+    "electron-builder": "19.54.0",
+    "electron-devtools-installer": "2.2.3",
     "gulp": "3.9.1",
     "gulp-babel": "7.0.0",
     "gulp-cached": "1.1.1",
-    "gulp-clean": "0.3.2",
-    "jest": "22.0.4",
-    "license-checker": "15.0.0",
+    "jest": "22.1.4",
+    "license-checker": "16.0.0",
     "react-test-renderer": "16.2.0",
     "run-sequence": "2.2.1",
     "standard": "10.0.3"

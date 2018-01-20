@@ -1,50 +1,66 @@
 <p align="center">
-  <a href="https://github.com/plotify/plotify"><img src="docs/assets/header.png" alt="Plotify" /></a>
+  <img src="docs/assets/header.png" alt="Plotify" />
 </p>
 
 <p align="center">
-  <strong>
-    Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren.
-    Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
-  </strong>
+  Plotify ist eine Software für Schriftsteller/innen, die dir dabei hilft, die Charaktere deiner Geschichte zu planen und zu organisieren.
+  Behalte stets den Überblick und erschaffe eine fantastische Geschichte!
 </p>
 
 <p align="center">
-  <img src="docs/assets/screenshot-0.1.0-win.png" alt="Plotify Version 0.1.0 Windows" />
+  <img src="docs/assets/screenshot-0.2.0-alpha.1-linux.png?raw=true" alt="Plotify v0.2.0-alpha.1 Linux" />
 </p>
 
 
-## Download
+## Stand der Entwicklung
 
-**Achtung: Plotify befindet sich noch in einer sehr frühen Entwicklungsphase.**
-**Es sollten keine Informationen ausschließlich in Plotify gespeichert werden.**
+Im letzten Jahr haben wir einen ersten Prototypen von Plotify veröffentlicht.
+Auf Basis des umfangreichen Feedbacks arbeiten wir aktuell daran den Prototypen weiterzuentwickeln.
+Unser Ziel ist es, eine stabile Version von Plotify zu entwickeln, mit der Schriftsteller/innen Steckbriefe für die Charaktere ihrer Geschichten erstellen können.
+Auf Basis dieser Version wollen wir zukünftig den Funktionsumfang von Plotify ausweiten, damit Schriftsteller/innen ihre gesamten Geschichten in Plotify planen können.
 
-Lade dir Plotify kostenlos für dein Betriebssystem herunter:
+
+## Download der aktuellen Testversion
+
+Plotify befindet sich noch in einer sehr frühen Entwicklungsphase.
+Dies ist eine Testversion, die nicht für den produktiven Einsatz vorgesehen ist.
+Es sollten keine Informationen ausschließlich in Plotify gespeichert werden.
 
 <table>
     <tr>
-        <td align="center" width="50%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-windows-x64.exe">
+        <td align="center" width="33%">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-windows-x64.exe">
                 <img src="docs/assets/windows-logo.png" />
             </a>
          </td>
-        <td align="center" width="50%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-linux-amd64.deb">
+        <td align="center" width="33%">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-linux-amd64.deb">
                 <img src="docs/assets/linux-logo.png" />
+            </a>
+        </td>
+        <td align="center" width="33%">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-macos-x64.dmg">
+                <img src="docs/assets/macos-logo.png" />
             </a>
         </td>
     </tr>
     <tr>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-windows-x64.exe">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-windows-x64.exe">
                 <b>Windows</b><br />
                 Windows 7, 8, 10
             </a>
         </td>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.1.0/plotify-0.1.0-linux-amd64.deb">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-linux-amd64.deb">
                 <b>Linux</b><br />
                 Ubuntu, Linux Mint, elementary OS
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.1/plotify-0.2.0-alpha.1-macos-x64.dmg">
+                <b>macOS</b><br />
+                macOS 10.9+
             </a>
         </td>
     </tr>

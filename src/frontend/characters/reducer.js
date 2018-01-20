@@ -14,18 +14,19 @@ const initialState = {
   selected: null,
   editMode: false,
   createDialogOpen: false,
-  profile: initialProfile
+  profile: initialProfile,
+  profileFetching: false
 }
 
 // TODO GET_CHARACTERS_REQUEST, GET_CHARACTERS_FAILED
 // TODO FIND_CHARACTERS_REQUEST, FIND_CHARACTERS_FAILED
 // TODO CREATE_CHARACTER_REQUEST, CREATE_CHARACTER_FAILED
-// TODO LOAD_PROFILE_REQUEST, LOAD_PROFILE_FAILED
+// TODO LOAD_PROFILE_FAILED
 // TODO UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_FAILED
 // TODO UPDATE_CHARACTER_NAME_REQUEST, UPDATE_CHARACTER_NAME_FAILED
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case t.UPDATE_PROFILE_ENTRY_SUCCESSFUL: {
+    case t.UPDATE_PROFILE_ENTRY_SUCCESSFUL:
       const { id } = action.payload
       return {
         ...state,
@@ -40,8 +41,8 @@ const reducer = (state = initialState, action) => {
           }
         }
       }
-    }
-    case t.UPDATE_CHARACTER_NAME_SUCCESSFUL: {
+
+    case t.UPDATE_CHARACTER_NAME_SUCCESSFUL:
       return {
         ...state,
         entities: {
@@ -52,7 +53,6 @@ const reducer = (state = initialState, action) => {
           }
         }
       }
-    }
 
     case t.GET_CHARACTERS_SUCCESSFUL:
       return Object.assign({}, state, {
@@ -100,10 +100,17 @@ const reducer = (state = initialState, action) => {
         profile: initialProfile
       })
 
+    case t.LOAD_PROFILE_REQUEST:
+      return {
+        ...state,
+        profileFetching: true
+      }
+
     // TODO Vergleiche action.payload.id mit selected
     case t.LOAD_PROFILE_SUCCESSFUL:
       return {
         ...state,
+        profileFetching: false,
         profile: action.payload.profile
       }
     case t.ENABLE_CHARACTER_EDIT_MODE:

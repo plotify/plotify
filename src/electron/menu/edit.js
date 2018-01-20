@@ -9,6 +9,7 @@ const edit = () => ({
     { label: 'Ausschneiden', role: 'cut' },
     { label: 'Kopieren', role: 'copy' },
     { label: 'Einfügen', role: 'paste' },
+    { type: 'separator' },
     { label: 'Alles auswählen', role: 'selectall' }
   ]
 })

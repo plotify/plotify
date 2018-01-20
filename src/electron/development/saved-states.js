@@ -1,7 +1,7 @@
 // key: BrowserWindow, value: Object
 const savedStates = new Map()
 
-export const getState = (browserWindow, state) => {
+export const getSavedState = (browserWindow, state) => {
   return savedStates.get(browserWindow)
 }
 
@@ -9,6 +9,6 @@ export const saveState = (browserWindow, state) => {
   savedStates.set(browserWindow, state)
 }
 
-export const removeState = (browserWindow) => {
+export const removeSavedState = (browserWindow) => {
   savedStates.delete(browserWindow)
 }

@@ -1,14 +1,15 @@
 import checkDependencies from 'check-dependencies'
-import clean from 'gulp-clean'
+import del from 'del'
 import gulp from 'gulp'
 import paths from '../paths'
 
 gulp.task('preparation', ['preparation:clean', 'preparation:check-dependencies'])
 
 gulp.task('preparation:clean', () => {
-  return gulp
-    .src(paths.build.root, {read: false})
-    .pipe(clean())
+  return del([
+    paths.build.root,
+    paths.coverage
+  ])
 })
 
 gulp.task('preparation:check-dependencies', () => {

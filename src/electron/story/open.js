@@ -3,6 +3,8 @@ import { app, dialog } from 'electron'
 import { createOrFocus, getWindowByStoryPath, getWindowStoryPath, setWindowStoryPath } from '../windows'
 import { getStoryByWindow, isLoadingStory, setLoadingStory, setStoryOfWindow } from './current'
 
+import { addOrUpdateRecentlyOpenedFile } from '../preferences'
+
 const options = {
   title: 'Geschichte öffnen',
   defaultPath: app.getPath('documents'),
@@ -46,6 +48,7 @@ const open = async (senderWindow, path) => {
   try {
     const story = await openStory(path)
     setStoryOfWindow(senderWindow, story)
+    addOrUpdateRecentlyOpenedFile({ path, lastOpened: new Date().toISOString() }) // Asynchron: Soll das Öffnen der Geschichte nicht verzögern oder verhindern.
     return story
   } catch (error) {
     setWindowStoryPath(senderWindow, '')

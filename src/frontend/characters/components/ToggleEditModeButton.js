@@ -22,49 +22,49 @@ const ToggleEditModeButton = (props) => {
 
   if (editModeEnabled) {
     return (
-      <Tooltip title='Charakter nicht mehr bearbeiten' placement='bottom' className={className}>
-        <Fragment>
-          {props.type === 'text' &&
-            <Typography
-              className={props.classes.button}
-              type='button'
-              onClick={disableCharacterEditMode}>
-              fertig
-            </Typography>
-          }
-          {props.type === 'icon' &&
+      <Fragment>
+        {props.type === 'text' &&
+          <Typography
+            className={props.classes.button}
+            type='button'
+            onClick={disableCharacterEditMode}>
+            Fertig
+          </Typography>
+        }
+        {props.type === 'icon' &&
+          <Tooltip title='Charakter nicht mehr bearbeiten' placement='bottom' className={className}>
             <IconButton
               onClick={disableCharacterEditMode}
               color='contrast'
               aria-label='view'>
               <ViewIcon />
             </IconButton>
-          }
-        </Fragment>
-      </Tooltip>
+          </Tooltip>
+        }
+      </Fragment>
     )
   } else {
     return (
-      <Tooltip title='Charakter bearbeiten' placement='bottom' className={className}>
-        <Fragment>
-          {props.type === 'text' &&
-            <Typography
-              className={props.classes.button}
-              type='button'
-              onClick={enableCharacterEditMode}>
-              bearbeiten
-            </Typography>
-          }
-          {props.type === 'icon' &&
+      <Fragment>
+        {props.type === 'text' &&
+          <Typography
+            className={props.classes.button}
+            type='button'
+            onClick={enableCharacterEditMode}>
+            Bearbeiten
+          </Typography>
+        }
+        {props.type === 'icon' &&
+          <Tooltip title='Charakter bearbeiten' placement='bottom' className={className}>
             <IconButton
               onClick={enableCharacterEditMode}
               color='contrast'
               aria-label='edit'>
               <EditIcon />
             </IconButton>
-          }
-        </Fragment>
-      </Tooltip>
+          </Tooltip>
+        }
+      </Fragment>
     )
   }
 }

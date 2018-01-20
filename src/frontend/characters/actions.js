@@ -10,6 +10,7 @@ import {
 } from '../../shared/characters/requests'
 
 import { CHARACTERS_SECTION } from './constants'
+import { getSelectedCharacterId } from './selectors'
 import { request } from '../shared/communication'
 import { setSection } from '../navigation/actions'
 
@@ -116,7 +117,10 @@ export const closeCreateCharacterDialog = () => ({
 })
 
 export const selectCharacter = (id) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
+    if (getSelectedCharacterId(getState()) === id) {
+      return
+    }
     dispatch({
       type: t.SELECT_CHARACTER,
       payload: { id }
@@ -132,8 +136,8 @@ export const deselectCharacter = () => ({
 
 const loadProfile = (id) => {
   return async (dispatch) => {
-    dispatch(loadProfileRequest(id))
     try {
+      dispatch(loadProfileRequest(id))
       const profile = await request(GET_PROFILE, id)
       dispatch(loadProfileSuccessful(id, profile))
     } catch (error) {
@@ -208,7 +212,7 @@ export const updateCharacterName = (id, name) => {
 }
 
 const updateCharacterNameRequest = (id) => ({
-  type: t.UPDATE_CHARACTER_NAME,
+  type: t.UPDATE_CHARACTER_NAME_REQUEST,
   payload: { id }
 })
 

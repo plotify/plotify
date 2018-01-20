@@ -17,21 +17,18 @@ const robotoLicenseFile = 'src/frontend/static/fonts/roboto-license.txt'
 const options = Object.freeze({ encoding: 'utf-8' })
 const separator = '\n\n--------------------------------------------------------------------------\n\n'
 
-const licenseChecker = (options) => {
-  return new Promise((resolve, reject) => {
-    licenseCheckerDirect.init(options, (error, result) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve(result)
-      }
-    })
-  })
-}
-
 const copyOwnLicenseFile = async (context) => {
   const licenseFile = join(context.appOutDir, ownLicenseFile)
   await copy(ownLicenseFile, licenseFile)
+}
+
+const generateLicenseFile = async (context) => {
+  console.log('Generate license files...')
+  await copyOwnLicenseFile(context)
+  const licenseFile = await createDependenciesLicenseFile(context)
+  await addRobotoLicense(licenseFile)
+  await addDependenciesLicenses(licenseFile)
+  console.log('License files generated.')
 }
 
 const createDependenciesLicenseFile = async (context) => {
@@ -47,7 +44,7 @@ const addRobotoLicense = async (targetFile) => {
 }
 
 const addDependenciesLicenses = async (targetFile) => {
-  const dependencies = await licenseChecker({ start: paths.build.app })
+  const dependencies = await licenseChecker({ start: paths.root })
 
   for (const name in dependencies) {
     const dependency = dependencies[name]
@@ -67,13 +64,16 @@ const addDependenciesLicenses = async (targetFile) => {
   }
 }
 
-const generateLicenseFile = async (context) => {
-  console.log('Generate license files...')
-  await copyOwnLicenseFile(context)
-  const licenseFile = await createDependenciesLicenseFile(context)
-  await addRobotoLicense(licenseFile)
-  await addDependenciesLicenses(licenseFile)
-  console.log('License files generated.')
+const licenseChecker = (options) => {
+  return new Promise((resolve, reject) => {
+    licenseCheckerDirect.init(options, (error, result) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(result)
+      }
+    })
+  })
 }
 
 //
@@ -82,7 +82,7 @@ const generateLicenseFile = async (context) => {
 
 const config = {
   appId: 'org.plotify',
-  copyright: 'Copyright © 2017 - 2018 Sebastian Schmidt & Jasper Meyer',
+  copyright: 'Copyright © 2017-2018 Sebastian Schmidt & Jasper Meyer',
   directories: {
     app: paths.build.app,
     output: paths.build.dist,

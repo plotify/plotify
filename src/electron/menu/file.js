@@ -5,10 +5,10 @@ import { request } from '../shared/communication'
 const file = () => ({
   label: 'Datei',
   submenu: [
-    { label: 'Neue Geschichte', click: createStory },
-    { label: 'Geschichte öffnen', click: openStory },
+    { label: 'Neu...', click: createStory },
+    { label: 'Öffnen...', click: openStory },
     { type: 'separator' },
-    { label: 'Plotify beenden', role: 'quit' }
+    { label: 'Beenden', role: 'quit' }
   ]
 })
 
