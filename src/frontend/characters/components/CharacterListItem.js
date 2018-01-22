@@ -57,7 +57,11 @@ const styles = (theme) => {
   const top = light ? 600 : 700
   const bottom = light ? 100 : 500
 
-  const backgroundColor = light ? theme.palette.primary['50'] : theme.palette.background.contentFrame
+  // TODO theme.palette.background.appBar war ursprünglich theme.palette.background.contentFrame.
+  //      theme.palette.background.contentFrame wurde entfernt.
+  //      Alternative für theme.palette.background.appBar überlegen.
+  //      Die gewünschte Farbe im DarkMode ist: #212121
+  const backgroundColor = light ? theme.palette.primary['50'] : theme.palette.background.appBar
   const borderColor = light ? theme.palette.primary['700'] : theme.palette.grey[600]
 
   return {
