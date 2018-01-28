@@ -46,6 +46,7 @@
     "redux": "3.7.2",
     "redux-thunk": "2.2.0",
     "request": "2.83.0",
+    "request-promise-native": "1.0.5",
     "reselect": "3.0.1",
     "semver": "5.5.0",
     "shared-exclusive-lock": "0.2.3",
