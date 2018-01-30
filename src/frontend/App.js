@@ -6,6 +6,7 @@ import NavigationDrawer from './navigation/components/NavigationDrawer'
 import OpeningStoryDialog from './story/components/OpeningStoryDialog'
 import PropTypes from 'prop-types'
 import React from 'react'
+import UpdateNotificationSnackbar from './updates/components/UpdateNotificationSnackbar'
 import WelcomeSection from './welcome/components/WelcomeSection'
 import { basename } from 'path'
 import { connect } from 'react-redux'
@@ -31,6 +32,7 @@ class App extends React.Component {
     return (
       <div className={this.props.classes.wrapper}>
         <NavigationDrawer />
+        <UpdateNotificationSnackbar />
         <AboutDialog />
         <OpeningStoryDialog />
         <CreatingStoryDialog />

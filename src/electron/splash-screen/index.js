@@ -1,1 +1,7 @@
-export { showSplashScreen, closeSplashScreen, focusSplashScreenIfExisting } from './show-close'
+export {
+  showSplashScreen,
+  closeSplashScreen,
+  focusSplashScreenIfExisting,
+  addListener,
+  removeListener
+} from './show-close'
