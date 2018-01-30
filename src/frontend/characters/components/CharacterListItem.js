@@ -57,16 +57,13 @@ const styles = (theme) => {
   const top = light ? 600 : 700
   const bottom = light ? 100 : 500
 
-  // TODO theme.palette.background.appBar war ursprünglich theme.palette.background.contentFrame.
-  //      theme.palette.background.contentFrame wurde entfernt.
-  //      Alternative für theme.palette.background.appBar überlegen.
-  //      Die gewünschte Farbe im DarkMode ist: #212121
-  const backgroundColor = light ? theme.palette.primary['50'] : theme.palette.background.appBar
+  // TODO Farbe #212121 eventuell in die Palette auslagern.
+  const backgroundColor = light ? theme.palette.primary['50'] : '#212121'
   const borderColor = light ? theme.palette.primary['700'] : theme.palette.grey[600]
 
   return {
     listItem: {
-      height: theme.spacing.unit * 7
+      height: theme.spacing.unit * 9
     },
     selectedListItem: {
       backgroundColor: backgroundColor,
