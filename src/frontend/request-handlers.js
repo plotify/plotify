@@ -5,6 +5,7 @@ import recentlyOpenedFiles from './welcome/recently-opened-files/request-handler
 import { requestHandler } from './shared/communication'
 import { setState } from './actions'
 import story from './story/request-handlers'
+import updates from './updates/request-handlers'
 import view from './view/request-handlers'
 
 const handleGetState = (resolve, _, __, ___, state) => {
@@ -20,6 +21,7 @@ const registerRequestHandlers = () => {
   requestHandler(GET_STATE, handleGetState)
   requestHandler(SET_STATE, handleSetState)
   view()
+  updates()
   about()
   story()
   recentlyOpenedFiles()
