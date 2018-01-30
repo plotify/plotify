@@ -29,7 +29,7 @@ describe('with valid url', () => {
   })
 
   test('prevents default event handling when called with not-local domain', () => {
-    handleWillNavigate(event, 'http://plotify.org')
+    handleWillNavigate(event, 'https://plotify.org')
     expect(event.preventDefault.mock.calls.length).toBe(1)
   })
 

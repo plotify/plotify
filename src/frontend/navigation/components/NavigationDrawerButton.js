@@ -9,7 +9,7 @@ const Button = (props) => (
   <IconButton
     onClick={props.onOpenDrawer}
     className={props.className}
-    color='contrast'
+    color='inherit'
     aria-label='Menu'>
     <MenuIcon />
   </IconButton>

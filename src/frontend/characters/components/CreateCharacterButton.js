@@ -1,15 +1,15 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import Tooltip from 'material-ui/Tooltip'
-import IconButton from 'material-ui/IconButton'
 import AddIcon from 'material-ui-icons/Add'
+import IconButton from 'material-ui/IconButton'
+import PropTypes from 'prop-types'
+import React from 'react'
+import Tooltip from 'material-ui/Tooltip'
+import { connect } from 'react-redux'
 import { openCreateCharacterDialog } from '../actions'
 
 const CreateCharacterButton = (props) => (
   <Tooltip title='Neuen Charakter erstellen' placement='bottom'>
     <IconButton
-      color='contrast'
+      color='inherit'
       aria-label='add'
       onClick={props.onClick}>
       <AddIcon />

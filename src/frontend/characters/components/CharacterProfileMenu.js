@@ -36,7 +36,7 @@ class CharacterProfileMenu extends Component {
     return (
       <div className={className}>
         <IconButton
-          color='contrast'
+          color='inherit'
           aria-owns={this.state.open ? 'simple-menu' : null}
           aria-haspopup='true'
           onClick={this.handleClick}>

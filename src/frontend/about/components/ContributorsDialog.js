@@ -30,7 +30,7 @@ const contributors = [
   },
   {
     name: 'Rebecca Rademacher',
-    tasks: [],
+    tasks: ['Qualitätssicherung'],
     url: 'https://github.com/RebeccaRademacher'
   }
 ]

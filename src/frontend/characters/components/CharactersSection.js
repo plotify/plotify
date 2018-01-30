@@ -31,7 +31,7 @@ const CharactersSection = (props) => {
       Charaktere
     </Typography>,
     <CreateCharacterButton key={2} />
-    // <IconButton color='contrast' key={3}>
+    // <IconButton color='inherit' key={3}>
     //   <SearchIcon />
     // </IconButton>
   ])
@@ -71,7 +71,7 @@ const CharactersSection = (props) => {
     )
     BackButton = (backProps) => (
       <IconButton
-        color='contrast'
+        color='inherit'
         onClick={props.deselectCharacter}
         aria-label='Back'
         {...backProps}

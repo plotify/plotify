@@ -35,7 +35,7 @@ const ToggleEditModeButton = (props) => {
           <Tooltip title='Charakter nicht mehr bearbeiten' placement='bottom' className={className}>
             <IconButton
               onClick={disableCharacterEditMode}
-              color='contrast'
+              color='inherit'
               aria-label='view'>
               <ViewIcon />
             </IconButton>
@@ -58,7 +58,7 @@ const ToggleEditModeButton = (props) => {
           <Tooltip title='Charakter bearbeiten' placement='bottom' className={className}>
             <IconButton
               onClick={enableCharacterEditMode}
-              color='contrast'
+              color='inherit'
               aria-label='edit'>
               <EditIcon />
             </IconButton>

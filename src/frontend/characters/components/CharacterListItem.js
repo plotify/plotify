@@ -57,12 +57,13 @@ const styles = (theme) => {
   const top = light ? 600 : 700
   const bottom = light ? 100 : 500
 
-  const backgroundColor = light ? theme.palette.primary['50'] : theme.palette.background.contentFrame
+  // TODO Farbe #212121 eventuell in die Palette auslagern.
+  const backgroundColor = light ? theme.palette.primary['50'] : '#212121'
   const borderColor = light ? theme.palette.primary['700'] : theme.palette.grey[600]
 
   return {
     listItem: {
-      height: theme.spacing.unit * 7
+      height: theme.spacing.unit * 9
     },
     selectedListItem: {
       backgroundColor: backgroundColor,
