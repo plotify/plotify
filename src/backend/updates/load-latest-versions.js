@@ -2,7 +2,7 @@ import { LATEST_SIG_URL, LATEST_URL } from './constants'
 import { cleartext, signature, verify } from 'openpgp'
 
 import { releases } from '../public-keys'
-import request from 'request-promise-native'
+import request from '../shared/request'
 import validateLatestVersions from './validate-latest-versions'
 
 const loadLatestVersions = async () => {
@@ -25,7 +25,6 @@ const loadSignature = async () => {
   const content = await request(options)
   return signature.read(new Uint8Array(content))
 }
-
 const verifySignature = async (file, signature) => {
   const message = new cleartext.CleartextMessage(file, signature)
   const options = { publicKeys: releases, message, signature }
