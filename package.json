@@ -66,7 +66,7 @@
     "coveralls": "3.0.0",
     "del": "3.0.0",
     "electron": "1.7.11",
-    "electron-builder": "19.55.2",
+    "electron-builder": "19.55.3",
     "electron-devtools-installer": "2.2.3",
     "gulp": "3.9.1",
     "gulp-babel": "7.0.0",
