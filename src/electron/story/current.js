@@ -3,7 +3,7 @@ import { removeWindowStoryPath, setWindowStoryPath } from '../windows'
 // key: BrowserWindow, value: Story
 const stories = new Map()
 
-// key: BrowserWindow, value: Story
+// key: BrowserWindow, value: boolean
 const storiesLoading = new Map()
 
 export const getStories = () => {
