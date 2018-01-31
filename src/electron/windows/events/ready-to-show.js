@@ -6,6 +6,7 @@ import { request, requestHandlerOnce } from '../../shared/communication'
 import { closeSplashScreen } from '../../splash-screen'
 import { dialog } from 'electron'
 import { isDarkThemeEnabled } from '../../preferences'
+import store from '../../store'
 
 const handleReadyToShow = (event) => {
   const window = event.sender
@@ -58,13 +59,13 @@ const showErrorAndCloseWindow = (window, error) => {
     buttons: ['Schließen'],
     defaultId: 0
   }, () => window.destroy())
-  closeSplashScreen()
+  store.dispatch(closeSplashScreen())
 }
 
 const showWindow = (window) => {
   window.maximize()
   window.show()
-  closeSplashScreen()
+  store.dispatch(closeSplashScreen())
 }
 
 export default handleReadyToShow

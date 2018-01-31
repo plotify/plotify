@@ -1,5 +1,5 @@
 import { CLOSE_UPDATE_NOTIFICATION, UPDATE_NOTIFICATION_CLOSED } from '../../shared/updates/requests'
-import { addListener, removeListener } from '../splash-screen'
+// import { addListener, removeListener } from '../splash-screen'
 import { request, requestHandler } from '../shared/communication'
 
 import checkUpdates from './check-updates'
@@ -10,7 +10,7 @@ let initialSplashScreen = true
 const handleSplashScreenEvents = (open) => {
   if (initialSplashScreen && open === false) {
     initialSplashScreen = false
-    removeListener(handleSplashScreenEvents)
+    // removeListener(handleSplashScreenEvents)
     checkUpdates()
   }
 }
@@ -25,6 +25,8 @@ const handleUpdateNotificationClosed = (resolve, _, senderWindow) => {
 }
 
 export const registerRequestHandlers = () => {
-  addListener(handleSplashScreenEvents)
+  // addListener(handleSplashScreenEvents)
+  // TODO Refactor:
+  setTimeout(() => handleSplashScreenEvents(false), 10000)
   requestHandler(UPDATE_NOTIFICATION_CLOSED, handleUpdateNotificationClosed)
 }

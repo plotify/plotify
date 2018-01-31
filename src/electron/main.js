@@ -8,6 +8,7 @@ import { createOrFocus } from './windows'
 import initDevToolsExtensions from './dev-tools-extensions'
 import isDev from 'electron-is-dev'
 import printWelcomeScreen from './versions'
+import store from './store'
 
 let loadingBackend = true
 let storyPaths = new Set()
@@ -39,11 +40,8 @@ app.on('open-file', (event, path) => {
 
 printWelcomeScreen()
 
-const initSplashScreen = () => {
-  showSplashScreen().once('ready-to-show', initApp)
-}
-
 const initApp = () => {
+  store.dispatch(showSplashScreen())
   const init = () => {
     registerRequestHandlers()
     initPreferences().then(() => {
@@ -64,7 +62,7 @@ const createWindows = () => {
   getStoryPathsFromArguments(process.argv).forEach((path) => storyPaths.add(path))
   addDefaultPathIfEmpty(storyPaths)
   storyPaths.forEach(createOrFocus)
-  closeSplashScreen()
+  store.dispatch(closeSplashScreen())
 }
 
 const getStoryPathsFromArguments = (argv) => {
@@ -81,7 +79,7 @@ const addDefaultPathIfEmpty = (paths) => {
   }
 }
 
-app.on('ready', initSplashScreen)
+app.on('ready', initApp)
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
