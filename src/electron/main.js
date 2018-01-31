@@ -8,7 +8,6 @@ import { createOrFocus } from './windows'
 import initDevToolsExtensions from './dev-tools-extensions'
 import isDev from 'electron-is-dev'
 import printWelcomeScreen from './versions'
-import store from './store'
 
 let loadingBackend = true
 let storyPaths = new Set()
@@ -41,7 +40,7 @@ app.on('open-file', (event, path) => {
 printWelcomeScreen()
 
 const initApp = () => {
-  store.dispatch(showSplashScreen())
+  showSplashScreen()
   const init = () => {
     registerRequestHandlers()
     initPreferences().then(() => {
@@ -62,7 +61,7 @@ const createWindows = () => {
   getStoryPathsFromArguments(process.argv).forEach((path) => storyPaths.add(path))
   addDefaultPathIfEmpty(storyPaths)
   storyPaths.forEach(createOrFocus)
-  store.dispatch(closeSplashScreen())
+  closeSplashScreen()
 }
 
 const getStoryPathsFromArguments = (argv) => {

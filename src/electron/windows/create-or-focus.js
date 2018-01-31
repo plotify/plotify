@@ -8,7 +8,6 @@ import initMenu from '../menu'
 import { initReload } from '../development'
 import isDev from 'electron-is-dev'
 import path from 'path'
-import store from '../store'
 
 const createOrFocus = (storyPath = '') => {
   if (getWindowByStoryPath(storyPath)) {
@@ -16,7 +15,7 @@ const createOrFocus = (storyPath = '') => {
     return
   }
 
-  store.dispatch(showSplashScreen())
+  showSplashScreen()
 
   const window = new BrowserWindow({
     width: 1000,
@@ -46,7 +45,7 @@ const focusExistingWindowOrSplashScreen = (storyPath) => {
   if (isWindowReady(window)) {
     focusWindow(window)
   } else {
-    store.dispatch(focusSplashScreenIfExisting())
+    focusSplashScreenIfExisting()
   }
 }
 
