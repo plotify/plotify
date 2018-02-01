@@ -6,14 +6,15 @@ import create from './create'
 
 export const showSplashScreen = () => (dispatch, getState) => {
   dispatch(incrementLoadingProcesses())
-  const window = getWindow(getState())
+  let window = getWindow(getState())
   if (window === null) {
-    const newWindow = create()
-    dispatch(setWindow(newWindow))
+    window = create()
+    dispatch(setWindow(window))
   } else {
     window.restore()
     window.focus()
   }
+  return window
 }
 
 export const focusSplashScreenIfExisting = () => (dispatch, getState) => {

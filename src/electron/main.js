@@ -39,21 +39,23 @@ app.on('open-file', (event, path) => {
 
 printWelcomeScreen()
 
-const initApp = () => {
-  showSplashScreen()
-  const init = () => {
-    registerRequestHandlers()
-    initPreferences().then(() => {
-      createWindows()
-    })
-  }
-  initDevToolsExtensions()
-    .then(() => init())
-    .catch(() => init())
+const initSplashScreen = () => {
+  const splashScreen = showSplashScreen()
+  splashScreen.on('ready-to-show', initDebugTools)
 }
 
-const registerRequestHandlers = () => {
+const initDebugTools = async () => {
+  try {
+    await initDevToolsExtensions()
+  } finally {
+    initApp()
+  }
+}
+
+const initApp = async () => {
   require('./request-handlers')()
+  await initPreferences()
+  createWindows()
 }
 
 const createWindows = () => {
@@ -78,12 +80,14 @@ const addDefaultPathIfEmpty = (paths) => {
   }
 }
 
-app.on('ready', initApp)
+app.on('ready', initSplashScreen)
 
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
   if (process.platform !== 'darwin') {
-    closePreferences()
-      .then(() => app.quit())
-      .catch(() => app.quit())
+    try {
+      await closePreferences()
+    } finally {
+      app.quit()
+    }
   }
 })
