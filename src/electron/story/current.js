@@ -1,4 +1,4 @@
-import { removeWindowStoryPath, setWindowStoryPath } from '../windows'
+import { setWindowStoryPath } from '../windows'
 
 // key: BrowserWindow, value: Story
 const stories = new Map()
@@ -13,9 +13,9 @@ export const getStories = () => {
 export const setStoryOfWindow = (browserWindow, story) => {
   stories.set(browserWindow, story)
   if (story) {
-    setWindowStoryPath(browserWindow, story.path)
+    setWindowStoryPath(browserWindow.id, story.path)
   } else {
-    removeWindowStoryPath(browserWindow)
+    setWindowStoryPath(browserWindow.id, '')
   }
 }
 

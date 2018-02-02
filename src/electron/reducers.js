@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 import splashScreen from './splash-screen/reducer'
+import { reducer as windows } from './windows'
 
 const rootReducer = combineReducers({
-  splashScreen
+  splashScreen,
+  windows
 })
 
 export default rootReducer

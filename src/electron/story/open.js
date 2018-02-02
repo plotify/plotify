@@ -24,7 +24,7 @@ const open = async (senderWindow, path) => {
   }
 
   // Kann in diesem Fenster eine Geschichte geöffnet werden oder muss ein anderes Fenster verwendet werden?
-  const senderWindowPath = getWindowStoryPath(senderWindow)
+  const senderWindowPath = getWindowStoryPath(senderWindow.id)
   if (senderWindowPath !== '' && senderWindowPath !== path) {
     createOrFocus(path)
     return
@@ -42,7 +42,7 @@ const open = async (senderWindow, path) => {
     return
   }
 
-  setWindowStoryPath(senderWindow, path)
+  setWindowStoryPath(senderWindow.id, path)
   setLoadingStory(senderWindow, true)
 
   try {

@@ -27,6 +27,6 @@ const handleUpdateNotificationClosed = (resolve, _, senderWindow) => {
 export const registerRequestHandlers = () => {
   // addListener(handleSplashScreenEvents)
   // TODO Refactor:
-  setTimeout(() => handleSplashScreenEvents(false), 10000)
+  setTimeout(() => handleSplashScreenEvents(false), 100000)
   requestHandler(UPDATE_NOTIFICATION_CLOSED, handleUpdateNotificationClosed)
 }
