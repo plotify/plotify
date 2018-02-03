@@ -5,7 +5,7 @@ import { closeSplashScreen, showSplashScreen } from './splash-screen'
 
 import { app } from 'electron'
 import { createOrFocus } from './windows'
-import initDevToolsExtensions from './dev-tools-extensions'
+import { initDevToolsExtensions } from './development'
 import isDev from 'electron-is-dev'
 import printWelcomeScreen from './versions'
 
