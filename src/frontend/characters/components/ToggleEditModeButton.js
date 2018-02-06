@@ -26,7 +26,7 @@ const ToggleEditModeButton = (props) => {
         {props.type === 'text' &&
           <Typography
             className={props.classes.button}
-            type='button'
+            variant='button'
             onClick={disableCharacterEditMode}>
             Fertig
           </Typography>
@@ -49,7 +49,7 @@ const ToggleEditModeButton = (props) => {
         {props.type === 'text' &&
           <Typography
             className={props.classes.button}
-            type='button'
+            variant='button'
             onClick={enableCharacterEditMode}>
             Bearbeiten
           </Typography>
