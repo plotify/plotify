@@ -2,6 +2,7 @@ import AboutDialog from './about/components/AboutDialog'
 import CharactersSection from './characters/components/CharactersSection'
 import ClosingStoryDialog from './story/components/ClosingStoryDialog'
 import CreatingStoryDialog from './story/components/CreatingStoryDialog'
+import FullScreenHint from './view/components/FullScreenHint'
 import NavigationDrawer from './navigation/components/NavigationDrawer'
 import OpeningStoryDialog from './story/components/OpeningStoryDialog'
 import PropTypes from 'prop-types'
@@ -34,6 +35,7 @@ class App extends React.Component {
         <NavigationDrawer />
         <UpdateNotificationSnackbar />
         <AboutDialog />
+        <FullScreenHint />
         <OpeningStoryDialog />
         <CreatingStoryDialog />
         <ClosingStoryDialog />
