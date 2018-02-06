@@ -27,7 +27,7 @@ const CharactersSection = (props) => {
   const { classes, characterSelected, selectedCharacterName } = props
 
   const listToolbar = ([
-    <Typography type='title' color='inherit' className={classes.title} key={1}>
+    <Typography variant='title' color='inherit' className={classes.title} key={1}>
       Charaktere
     </Typography>,
     <CreateCharacterButton key={2} />
@@ -38,7 +38,7 @@ const CharactersSection = (props) => {
 
   const profileToolbar = characterSelected ? ([
     <MediaQuery maxWidth={759} key={0}>
-      <Typography type='title' color='inherit' className={classes.title}>
+      <Typography variant='title' color='inherit' className={classes.title}>
         {characterSelected && selectedCharacterName}
       </Typography>
     </MediaQuery>,
