@@ -19,3 +19,4 @@ export const createOrFocus = bind(_createOrFocus)
 export const setWindowStoryPath = bind(_setWindowStoryPath)
 
 export { default as reducer } from './reducer'
+export { registerRequestHandlers } from './request-handlers'

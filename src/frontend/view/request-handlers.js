@@ -1,5 +1,5 @@
-import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../shared/view/requests'
-import { disableDarkTheme, enableDarkTheme } from './actions'
+import { DISABLE_DARK_THEME, ENABLE_DARK_THEME, FULL_SCREEN_ENTERED, FULL_SCREEN_LEFT } from '../../shared/view/requests'
+import { closeFullScreenHint, disableDarkTheme, enableDarkTheme, showFullScreenHint } from './actions'
 
 import { requestHandler } from '../shared/communication'
 
@@ -13,9 +13,21 @@ const handleDisableDarkTheme = (resolve, _, __, dispatch) => {
   resolve()
 }
 
+const handleFullScreenEntered = (resolve, _, __, dispatch) => {
+  dispatch(showFullScreenHint())
+  resolve()
+}
+
+const handleFullScreenLeft = (resolve, _, __, dispatch) => {
+  dispatch(closeFullScreenHint())
+  resolve()
+}
+
 const registerRequestHandlers = () => {
   requestHandler(ENABLE_DARK_THEME, handleEnableDarkTheme)
   requestHandler(DISABLE_DARK_THEME, handleDisableDarkTheme)
+  requestHandler(FULL_SCREEN_ENTERED, handleFullScreenEntered)
+  requestHandler(FULL_SCREEN_LEFT, handleFullScreenLeft)
 }
 
 export default registerRequestHandlers
