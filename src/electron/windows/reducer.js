@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) => {
 
     case t.REMOVE_WINDOW:
       window = action.payload.window
-      id = Object.keys(state).find((id) => state[id].window === window)
+      id = Object.keys(state).find((id) => state[id].instance === window)
       const clone = { ...state }
       delete clone[id]
       return clone

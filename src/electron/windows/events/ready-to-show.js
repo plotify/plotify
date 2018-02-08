@@ -57,7 +57,7 @@ const openStory = (window, storyPath) => {
 }
 
 const showErrorAndCloseWindow = (window, error) => (dispatch) => {
-  dispatch(removeWindow(window.id))
+  dispatch(removeWindow(window))
   dialog.showMessageBox({
     type: 'error',
     title: 'Die Geschichte konnte nicht geöffnet werden.',
