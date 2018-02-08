@@ -9,7 +9,7 @@ let updatesChecked = false
 let unsubscribe = null
 
 const waitForAnyWindowToBeReady = () => {
-  if (updatesChecked === false && isAnyWindowReady()) {
+  if (updatesChecked === false && isAnyWindowReady(store.getState())) {
     updatesChecked = true
     unsubscribe()
     setTimeout(checkUpdates, 1000)
@@ -17,7 +17,7 @@ const waitForAnyWindowToBeReady = () => {
 }
 
 const handleUpdateNotificationClosed = (resolve, _, senderWindow) => {
-  for (const window of getWindows()) {
+  for (const window of getWindows(store.getState())) {
     if (window !== senderWindow) {
       request(window, CLOSE_UPDATE_NOTIFICATION)
     }

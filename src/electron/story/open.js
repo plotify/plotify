@@ -25,16 +25,16 @@ const open = (senderWindow, path) => async (dispatch, getState) => {
   }
 
   // Kann in diesem Fenster eine Geschichte geöffnet werden oder muss ein anderes Fenster verwendet werden?
-  const senderWindowPath = getWindowStoryPath(senderWindow.id)
+  const senderWindowPath = getWindowStoryPath(getState(), senderWindow.id)
   if (senderWindowPath !== '' && senderWindowPath !== path) {
-    createOrFocus(path)
+    dispatch(createOrFocus(path))
     return
   }
 
   // Wird die Geschichte in einem anderen Fenster bereits geladen oder ist bereits geöffnet?
-  const otherWindow = getWindowByStoryPath(path)
+  const otherWindow = getWindowByStoryPath(getState(), path)
   if (senderWindow !== otherWindow && otherWindow !== undefined) {
-    createOrFocus(path)
+    dispatch(createOrFocus(path))
     return
   }
 
@@ -44,7 +44,7 @@ const open = (senderWindow, path) => async (dispatch, getState) => {
     return
   }
 
-  setWindowStoryPath(senderWindow.id, path)
+  dispatch(setWindowStoryPath(senderWindow.id, path))
   dispatch(addLoadingStory(path, senderWindow.id))
 
   try {

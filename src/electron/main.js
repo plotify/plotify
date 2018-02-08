@@ -8,6 +8,7 @@ import { createOrFocus } from './windows'
 import { initDevToolsExtensions } from './development'
 import isDev from 'electron-is-dev'
 import printWelcomeScreen from './versions'
+import store from './store'
 
 let loadingBackend = true
 let storyPaths = new Set()
@@ -20,7 +21,7 @@ const isSecondInstance = app.makeSingleInstance((argv, _) => {
   if (loadingBackend) {
     paths.forEach((path) => storyPaths.add(path))
   } else {
-    paths.forEach(createOrFocus)
+    paths.forEach((path) => store.dispatch(createOrFocus(path)))
   }
 })
 
@@ -33,7 +34,7 @@ app.on('open-file', (event, path) => {
   if (loadingBackend) {
     storyPaths.add(path)
   } else {
-    createOrFocus(path)
+    store.dispatch(createOrFocus(path))
   }
 })
 
@@ -62,7 +63,7 @@ const createWindows = () => {
   loadingBackend = false
   getStoryPathsFromArguments(process.argv).forEach((path) => storyPaths.add(path))
   addDefaultPathIfEmpty(storyPaths)
-  storyPaths.forEach(createOrFocus)
+  storyPaths.forEach((path) => store.dispatch(createOrFocus(path)))
   closeSplashScreen()
 }
 
