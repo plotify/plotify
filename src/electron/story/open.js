@@ -53,6 +53,7 @@ const open = (senderWindow, path) => async (dispatch, getState) => {
     addOrUpdateRecentlyOpenedFile({ path, lastOpened: new Date().toISOString() }) // Asynchron: Soll das Öffnen der Geschichte nicht verzögern oder verhindern.
     return story
   } catch (error) {
+    dispatch(setWindowStoryPath(senderWindow.id, ''))
     dispatch(removeStoryByWindowId(senderWindow.id))
     throw errorMessage(error)
   }
