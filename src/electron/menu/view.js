@@ -4,8 +4,8 @@ import { Menu } from 'electron'
 import { getWindows } from '../windows'
 import { request } from '../shared/communication'
 import { setDarkThemeEnabled } from '../preferences'
+import store from '../store'
 
-// TODO Nachtmodus checked=true/false abhängig davon, ob der Nachtmodus bereits aktiviert ist.
 const view = () => ({
   label: 'Ansicht',
   submenu: [
@@ -19,11 +19,10 @@ const view = () => ({
   ]
 })
 
-// TODO Theme von neuen Fenstern setzen.
 const toggleDarkTheme = (menuItem, window, _) => {
   setDarkThemeEnabled(menuItem.checked)
   const name = menuItem.checked ? ENABLE_DARK_THEME : DISABLE_DARK_THEME
-  for (let window of getWindows()) {
+  for (let window of getWindows(store.getState())) {
     request(window, name)
   }
   unityWorkaround()

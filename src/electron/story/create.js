@@ -3,7 +3,7 @@ import { existsSync, unlink } from 'fs-extra'
 
 import { createStory } from '../../backend/story'
 import { extname } from 'path'
-import { getStories } from './current'
+import { getStoryPaths } from './selectors'
 
 const options = {
   title: 'Neue Geschichte',
@@ -13,7 +13,7 @@ const options = {
   ]
 }
 
-const create = async (senderWindow) => {
+const create = (senderWindow) => async (_, getState) => {
   const file = dialog.showSaveDialog(senderWindow, options)
   if (!file) {
     return
@@ -28,7 +28,7 @@ const create = async (senderWindow) => {
   checkCurrentStoryPath(path)
 
   try {
-    await deleteFileIfExists(path)
+    await deleteFileIfExists(getState, path)
     const story = await createStory(path)
     await story.database.close()
     return story
@@ -47,8 +47,8 @@ const CANT_CREATE_FILE_ERROR_MESSAGE =
   'Die Datei für die Geschichte konnte nicht erstellt werden. ' +
   'Hast du die notwendigen Berechtigungen, um eine Datei in dem ausgewählten Verzeichnis zu erstellen?'
 
-const checkCurrentStoryPath = (path) => {
-  for (let story of getStories()) {
+const checkCurrentStoryPath = (getState, path) => {
+  for (let story of getStoryPaths(getState())) {
     if (path === story.path) {
       throw new Error(OVERWRITE_FILE_ERROR_MESSAGE)
     }

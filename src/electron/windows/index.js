@@ -1,3 +1,4 @@
-export { default as createOrFocus } from './create-or-focus'
-export { getWindows, getWindowByWebContents, getWindowByStoryPath, setWindowStoryPath, removeWindowStoryPath, getWindowStoryPath } from './windows'
+export { default as reducer } from './reducer'
+export { setWindowStoryPath, createOrFocus } from './actions'
+export { getWindowByStoryPath, getWindowStoryPath, getWindows, isAnyWindowReady } from './selectors'
 export { registerRequestHandlers } from './request-handlers'

@@ -1,13 +1,14 @@
-import { getStoryByWindow, removeStoryByWindow } from './current'
+import { getStoryByWindowId } from './selectors'
+import { removeStoryByWindowId } from './actions'
 
-const close = async (window) => {
-  const story = getStoryByWindow(window)
+const close = (window) => async (dispatch, getState) => {
+  const story = getStoryByWindowId(getState(), window.id)
   try {
     if (story) {
       await story.close()
     }
   } finally {
-    removeStoryByWindow(window)
+    dispatch(removeStoryByWindowId(window.id))
     window.destroy()
   }
 }

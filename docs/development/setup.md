@@ -7,7 +7,7 @@ In diesem Dokument ist beschrieben, welche Software für die Weiterentwicklung v
 
 1. Benötigte Software installieren:
     1. [Git](https://git-scm.com/download/linux)
-    2. [Node.js 7.x](https://nodejs.org/en/download/package-manager/)
+    2. [Node.js 8.x](https://nodejs.org/en/download/package-manager/)
     3. [Python 2.7.x](https://www.python.org/)
     4. [make](https://www.gnu.org/software/make/)
     5. [GCC](https://gcc.gnu.org)
@@ -26,7 +26,7 @@ In diesem Dokument ist beschrieben, welche Software für die Weiterentwicklung v
 
 1. Benötigte Software installieren:
     1. [Git](https://git-scm.com/download/win)
-    2. [Node.js 7.x](https://nodejs.org/download/release/v7.10.1/node-v7.10.1-x64.msi)
+    2. [Node.js 8.x](https://nodejs.org/dist/v8.9.4/node-v8.9.4-x86.msi)
     3. [C++ Build Tools Windows](https://github.com/felixrieseberg/windows-build-tools#readme)
 2. Pfad zur Installation von Python zur PATH-Umgebungsvariable von Windows hinzufügen:
    `C:\Users\%username%\.windows-build-tools\python27\`
@@ -45,7 +45,7 @@ In diesem Dokument ist beschrieben, welche Software für die Weiterentwicklung v
 
 1. Benötigte Software installieren:
     1. [Git](https://git-scm.com/download/mac)
-    2. [Node.js 7.x](https://nodejs.org/download/release/v7.10.1/node-v7.10.1.pkg)
+    2. [Node.js 8.x](https://nodejs.org/dist/v8.9.4/node-v8.9.4.pkg)
     3. [Python 2.7.x](https://www.python.org/) (Vermutlich bereits installiert.)
     4. [Xcode](https://developer.apple.com/xcode/)
     5. `Command Line Tools` über Xcode: `Xcode -> Preferences -> Downloads`

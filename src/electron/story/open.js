@@ -1,7 +1,8 @@
 import { InvalidStoryFileError, UnsupportedStoryFileVersionError, openStory } from '../../backend/story'
+import { addLoadingStory, removeStoryByWindowId, setStoryLoaded } from './actions'
 import { app, dialog } from 'electron'
 import { createOrFocus, getWindowByStoryPath, getWindowStoryPath, setWindowStoryPath } from '../windows'
-import { getStoryByWindow, isLoadingStory, setLoadingStory, setStoryOfWindow } from './current'
+import { getStoryByWindowId, isStoryLoading } from './selectors'
 
 import { addOrUpdateRecentlyOpenedFile } from '../preferences'
 
@@ -14,7 +15,7 @@ const options = {
   ]
 }
 
-const open = async (senderWindow, path) => {
+const open = (senderWindow, path) => async (dispatch, getState) => {
   if (path === undefined) {
     const files = dialog.showOpenDialog(senderWindow, options)
     if (!files) {
@@ -24,37 +25,37 @@ const open = async (senderWindow, path) => {
   }
 
   // Kann in diesem Fenster eine Geschichte geöffnet werden oder muss ein anderes Fenster verwendet werden?
-  const senderWindowPath = getWindowStoryPath(senderWindow)
+  const senderWindowPath = getWindowStoryPath(getState(), senderWindow.id)
   if (senderWindowPath !== '' && senderWindowPath !== path) {
-    createOrFocus(path)
+    dispatch(createOrFocus(path))
     return
   }
 
   // Wird die Geschichte in einem anderen Fenster bereits geladen oder ist bereits geöffnet?
-  const otherWindow = getWindowByStoryPath(path)
+  const otherWindow = getWindowByStoryPath(getState(), path)
   if (senderWindow !== otherWindow && otherWindow !== undefined) {
-    createOrFocus(path)
+    dispatch(createOrFocus(path))
     return
   }
 
   // Wird die Geschichte in diesem Fenster bereits geladen oder ist bereits geöffnet?
-  if (senderWindowPath === path && (isLoadingStory(senderWindow) || getStoryByWindow(senderWindow) !== undefined)) {
+  if (senderWindowPath === path &&
+        (isStoryLoading(getState(), path) || getStoryByWindowId(getState(), senderWindow.id) !== undefined)) {
     return
   }
 
-  setWindowStoryPath(senderWindow, path)
-  setLoadingStory(senderWindow, true)
+  dispatch(setWindowStoryPath(senderWindow.id, path))
+  dispatch(addLoadingStory(path, senderWindow.id))
 
   try {
     const story = await openStory(path)
-    setStoryOfWindow(senderWindow, story)
+    dispatch(setStoryLoaded(path, story))
     addOrUpdateRecentlyOpenedFile({ path, lastOpened: new Date().toISOString() }) // Asynchron: Soll das Öffnen der Geschichte nicht verzögern oder verhindern.
     return story
   } catch (error) {
-    setWindowStoryPath(senderWindow, '')
+    dispatch(setWindowStoryPath(senderWindow.id, ''))
+    dispatch(removeStoryByWindowId(senderWindow.id))
     throw errorMessage(error)
-  } finally {
-    setLoadingStory(senderWindow, false)
   }
 }
 
