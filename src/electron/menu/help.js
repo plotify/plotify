@@ -20,7 +20,7 @@ const help = () => ({
   ]
 })
 
-const openAboutDialog = (_, window) => {
+export const openAboutDialog = (_, window, __) => {
   request(window, OPEN_ABOUT_DIALOG)
 }
 
