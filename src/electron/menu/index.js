@@ -3,6 +3,7 @@ import edit from './edit'
 import file from './file'
 import help from './help'
 import { isDarkThemeEnabled } from '../preferences'
+import store from '../store'
 import view from './view'
 
 let initialized = false
@@ -25,17 +26,16 @@ const initMenu = () => {
   Menu.setApplicationMenu(menu)
   initialized = true
 
-  isDarkThemeEnabled().then((enabled) => {
-    for (const item of menu.items) {
-      if (item.label === 'Ansicht') {
-        for (const childItem of item.submenu.items) {
-          if (childItem.label === 'Nachtmodus') {
-            childItem.checked = enabled
-          }
+  const enabled = isDarkThemeEnabled(store.getState())
+  for (const item of menu.items) {
+    if (item.label === 'Ansicht') {
+      for (const childItem of item.submenu.items) {
+        if (childItem.label === 'Nachtmodus') {
+          childItem.checked = enabled
         }
       }
     }
-  })
+  }
 }
 
 export default initMenu

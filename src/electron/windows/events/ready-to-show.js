@@ -14,15 +14,14 @@ const handleReadyToShow = (event) => async (dispatch, getState) => {
 
   dispatch(setWindowIsReady(window.id))
   try {
-    await enableOrDisableDarkTheme(window)
+    await enableOrDisableDarkTheme(getState, window)
   } finally {
     dispatch(handleReadyWindow(window, storyPath))
   }
 }
 
-const enableOrDisableDarkTheme = async (window) => {
-  const enabled = await isDarkThemeEnabled()
-  if (enabled) {
+const enableOrDisableDarkTheme = async (getState, window) => {
+  if (isDarkThemeEnabled(getState())) {
     await request(window, ENABLE_DARK_THEME)
   } else {
     await request(window, DISABLE_DARK_THEME)

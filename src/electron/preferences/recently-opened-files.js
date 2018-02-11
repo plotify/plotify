@@ -8,17 +8,18 @@ import {
 
 import { ADD_RECENTLY_OPENED_FILE } from '../../shared/preferences/requests'
 import { app } from 'electron'
-import { getPreferences } from './current'
+import { getPreferencesDatabase } from './database'
 import { getWindowByStoryPath } from '../windows'
 import { request } from '../shared/communication'
 import store from '../store'
 
 export const getRecentlyOpenedFiles = async () => {
-  return _getRecentlyOpenedFiles(getPreferences())
+  return _getRecentlyOpenedFiles(getPreferencesDatabase(store.getState()))
 }
 
 export const addOrUpdateRecentlyOpenedFile = async (file) => {
-  await _addOrUpdateRecentlyOpenedFile(getPreferences(), file)
+  const database = getPreferencesDatabase(store.getState())
+  await _addOrUpdateRecentlyOpenedFile(database, file)
   app.addRecentDocument(file.path)
   const window = getWindowByStoryPath(store.getState(), '')
   if (window) {
@@ -27,13 +28,16 @@ export const addOrUpdateRecentlyOpenedFile = async (file) => {
 }
 
 export const pinRecentlyOpenedFile = async (path) => {
-  await _pinRecentlyOpenedFile(getPreferences(), path)
+  const database = getPreferencesDatabase(store.getState())
+  await _pinRecentlyOpenedFile(database, path)
 }
 
 export const unpinRecentlyOpenedFile = async (path) => {
-  await _unpinRecentlyOpenedFile(getPreferences(), path)
+  const database = getPreferencesDatabase(store.getState())
+  await _unpinRecentlyOpenedFile(database, path)
 }
 
 export const removeRecentlyOpenedFile = async (path) => {
-  await _removeRecentlyOpenedFile(getPreferences(), path)
+  const database = getPreferencesDatabase(store.getState())
+  await _removeRecentlyOpenedFile(database, path)
 }

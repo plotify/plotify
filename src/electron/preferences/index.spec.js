@@ -1,15 +1,27 @@
-import { addOrUpdateRecentlyOpenedFile, closePreferences, getRecentlyOpenedFiles, initPreferences, isDarkThemeEnabled, registerRequestHandlers, removeRecentlyOpenedFile, setDarkThemeEnabled } from './'
+import { addOrUpdateRecentlyOpenedFile, closePreferences, disableDarkTheme, enableDarkTheme, getRecentlyOpenedFiles, isDarkThemeEnabled, openPreferences, pinRecentlyOpenedFile, reducer, registerRequestHandlers, removeRecentlyOpenedFile, unpinRecentlyOpenedFile } from './'
 
-test('exports initPreferences function', () => {
-  expect(initPreferences).toBeInstanceOf(Function)
+test('exports reducer function', () => {
+  expect(reducer).toBeInstanceOf(Function)
+})
+
+test('exports openPreferences function', () => {
+  expect(openPreferences).toBeInstanceOf(Function)
+})
+
+test('exports closePreferences function', () => {
+  expect(closePreferences).toBeInstanceOf(Function)
 })
 
 test('exports isDarkThemeEnabled function', () => {
   expect(isDarkThemeEnabled).toBeInstanceOf(Function)
 })
 
-test('exports setDarkThemeEnabled function', () => {
-  expect(setDarkThemeEnabled).toBeInstanceOf(Function)
+test('exports enableDarkTheme function', () => {
+  expect(enableDarkTheme).toBeInstanceOf(Function)
+})
+
+test('exports disableDarkTheme function', () => {
+  expect(disableDarkTheme).toBeInstanceOf(Function)
 })
 
 test('exports getRecentlyOpenedFiles function', () => {
@@ -24,8 +36,12 @@ test('exports removeRecentlyOpenedFile function', () => {
   expect(removeRecentlyOpenedFile).toBeInstanceOf(Function)
 })
 
-test('exports closePreferences function', () => {
-  expect(closePreferences).toBeInstanceOf(Function)
+test('exports pinRecentlyOpenedFile function', () => {
+  expect(pinRecentlyOpenedFile).toBeInstanceOf(Function)
+})
+
+test('exports unpinRecentlyOpenedFile function', () => {
+  expect(unpinRecentlyOpenedFile).toBeInstanceOf(Function)
 })
 
 test('exports registerRequestHandlers function', () => {

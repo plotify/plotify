@@ -1,9 +1,9 @@
 import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../shared/view/requests'
+import { disableDarkTheme, enableDarkTheme } from '../preferences'
 
 import { Menu } from 'electron'
 import { getWindows } from '../windows'
 import { request } from '../shared/communication'
-import { setDarkThemeEnabled } from '../preferences'
 import store from '../store'
 
 const view = () => ({
@@ -20,7 +20,11 @@ const view = () => ({
 })
 
 const toggleDarkTheme = (menuItem, window, _) => {
-  setDarkThemeEnabled(menuItem.checked)
+  if (menuItem.checked) {
+    store.dispatch(enableDarkTheme())
+  } else {
+    store.dispatch(disableDarkTheme())
+  }
   const name = menuItem.checked ? ENABLE_DARK_THEME : DISABLE_DARK_THEME
   for (let window of getWindows(store.getState())) {
     request(window, name)
