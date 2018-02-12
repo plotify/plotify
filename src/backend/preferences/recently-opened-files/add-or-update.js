@@ -32,6 +32,7 @@ const addOrUpdate = async (database, file) => {
     } else {
       await transaction.rollback()
     }
+    return updatedFile
   } catch (error) {
     await transaction.rollback()
     throw error

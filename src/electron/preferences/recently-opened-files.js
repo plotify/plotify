@@ -19,11 +19,11 @@ export const getRecentlyOpenedFiles = async () => {
 
 export const addOrUpdateRecentlyOpenedFile = async (file) => {
   const database = getPreferencesDatabase(store.getState())
-  await _addOrUpdateRecentlyOpenedFile(database, file)
-  app.addRecentDocument(file.path)
+  const updatedFile = await _addOrUpdateRecentlyOpenedFile(database, file)
+  app.addRecentDocument(updatedFile.path)
   const window = getWindowByStoryPath(store.getState(), '')
   if (window) {
-    request(window, ADD_RECENTLY_OPENED_FILE, file)
+    request(window, ADD_RECENTLY_OPENED_FILE, updatedFile)
   }
 }
 
