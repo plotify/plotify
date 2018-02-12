@@ -13,8 +13,14 @@ export const isWindowReady = (state, id) =>
 
 export const isAnyWindowReady = (state) =>
   Object.values(state.windows)
-    .filter((window) => window.ready === true)
-    .length > 0
+    .find((window) => window.ready === true) !== undefined
+
+export const isWindowFocused = (state, id) =>
+  state.windows[id].focused === true
+
+export const isAnyWindowFocused = (state) =>
+  Object.values(state.windows)
+    .find((window) => window.focused === true) !== undefined
 
 export const getWindowByStoryPath = (state, storyPath) => {
   const id = Object.keys(state.windows).find((id) => state.windows[id].storyPath === storyPath)

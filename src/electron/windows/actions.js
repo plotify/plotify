@@ -85,3 +85,8 @@ export const setWindowStoryPath = (id, storyPath) => ({
   type: t.SET_WINDOW_STORY_PATH,
   payload: { id, storyPath }
 })
+
+export const setWindowFocusStatus = (id, status) => ({
+  type: t.SET_WINDOW_FOCUS_STATUS,
+  payload: { id, status }
+})

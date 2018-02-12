@@ -13,7 +13,8 @@ const reducer = (state = initialState, action) => {
       window = {
         instance: action.payload.window,
         ready: false,
-        storyPath: ''
+        storyPath: '',
+        focused: false
       }
       return { ...state, [id]: window }
 
@@ -33,6 +34,11 @@ const reducer = (state = initialState, action) => {
       id = action.payload.id
       storyPath = action.payload.storyPath
       window = { ...state[id], storyPath }
+      return { ...state, [id]: window }
+
+    case t.SET_WINDOW_FOCUS_STATUS:
+      id = action.payload.id
+      window = { ...state[id], focused: action.payload.status === true }
       return { ...state, [id]: window }
 
     default:
