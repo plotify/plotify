@@ -1,4 +1,4 @@
-import { addOrUpdateRecentlyOpenedFile, closePreferences, disableDarkTheme, enableDarkTheme, getRecentlyOpenedFiles, isDarkThemeEnabled, openPreferences, pinRecentlyOpenedFile, reducer, registerRequestHandlers, removeRecentlyOpenedFile, unpinRecentlyOpenedFile } from './'
+import { SET_DARK_THEME_ENABLED, addOrUpdateRecentlyOpenedFile, closePreferences, disableDarkTheme, enableDarkTheme, getRecentlyOpenedFiles, isDarkThemeEnabled, openPreferences, pinRecentlyOpenedFile, reducer, registerRequestHandlers, removeRecentlyOpenedFile, unpinRecentlyOpenedFile } from './'
 
 test('exports reducer function', () => {
   expect(reducer).toBeInstanceOf(Function)
@@ -22,6 +22,10 @@ test('exports enableDarkTheme function', () => {
 
 test('exports disableDarkTheme function', () => {
   expect(disableDarkTheme).toBeInstanceOf(Function)
+})
+
+test('exports SET_DARK_THEME_ENABLED constant', () => {
+  expect(typeof SET_DARK_THEME_ENABLED).toEqual('string')
 })
 
 test('exports getRecentlyOpenedFiles function', () => {
