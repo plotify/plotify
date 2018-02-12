@@ -3,18 +3,23 @@ export {
 } from './reducer'
 
 export {
-  setWindowStoryPath,
-  createOrFocus
-} from './actions'
-
-export {
   getWindowByStoryPath,
   getWindowStoryPath,
   getWindows,
   isAnyWindowReady,
   isWindowFocused,
-  isAnyWindowFocused
+  isAnyWindowFocused,
+  getFocusedWindow
 } from './selectors'
+
+export {
+  setWindowStoryPath,
+  createOrFocus
+} from './actions'
+
+export {
+  WINDOW_FOCUS_CHANGED
+} from './action-types'
 
 export {
   registerRequestHandlers

@@ -90,3 +90,8 @@ export const setWindowFocusStatus = (id, status) => ({
   type: t.SET_WINDOW_FOCUS_STATUS,
   payload: { id, status }
 })
+
+export const windowFocusChanged = () => ({
+  type: t.WINDOW_FOCUS_CHANGED,
+  payload: {}
+})
