@@ -2,7 +2,7 @@ import { CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../shared/story
 
 import { request } from '../shared/communication'
 
-const file = () => ({
+const fileMenu = () => ({
   label: 'Datei',
   submenu: [
     { label: 'Neu...', click: createStory },
@@ -12,12 +12,21 @@ const file = () => ({
   ]
 })
 
-const createStory = (_, window, __) => {
+const createStory = (_, window) => {
   request(window, CREATE_STORY_REQUESTED)
 }
 
-const openStory = (_, window, __) => {
+const openStory = (_, window) => {
   request(window, OPEN_STORY_REQUESTED)
 }
 
-export default file
+const initialState = fileMenu()
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    default:
+      return state
+  }
+}
+
+export default reducer

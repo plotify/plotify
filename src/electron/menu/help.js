@@ -3,7 +3,7 @@ import { exportState, importState } from '../development'
 import { OPEN_ABOUT_DIALOG } from '../../shared/about/requests'
 import { request } from '../shared/communication'
 
-const help = () => ({
+const helpMenu = () => ({
   label: 'Hilfe',
   submenu: [
     {
@@ -32,4 +32,13 @@ const importStateMenu = (_, window) => {
   importState(window)
 }
 
-export default help
+const initialState = helpMenu()
+
+const reducer = (state = initialState, action) => {
+  switch (action.type) {
+    default:
+      return state
+  }
+}
+
+export default reducer

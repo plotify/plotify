@@ -6,7 +6,7 @@ import { getWindowByStoryPath, isWindowReady } from './selectors'
 import { BrowserWindow } from 'electron'
 import { format } from 'url'
 import initEventHandlers from './events'
-import initMenu from '../menu'
+import { initMenu } from '../menu'
 import { initReload } from '../development'
 import isDev from 'electron-is-dev'
 import path from 'path'
@@ -84,4 +84,9 @@ export const setWindowIsReady = (id) => ({
 export const setWindowStoryPath = (id, storyPath) => ({
   type: t.SET_WINDOW_STORY_PATH,
   payload: { id, storyPath }
+})
+
+export const setWindowFocusStatus = (id, status) => ({
+  type: t.SET_WINDOW_FOCUS_STATUS,
+  payload: { id, status }
 })
