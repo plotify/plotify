@@ -1,7 +1,8 @@
 import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../shared/view/requests'
-import { SET_DARK_THEME_ENABLED, disableDarkTheme, enableDarkTheme } from '../preferences'
+import { disableDarkTheme, enableDarkTheme, isDarkThemeEnabled } from '../preferences'
 
 import { bind as _ } from '../shared/redux'
+import { createSelector } from 'reselect'
 import { getWindows } from '../windows'
 import { request } from '../shared/communication'
 
@@ -38,15 +39,9 @@ const toggleDarkTheme = (menuItem) => (dispatch, getState) => {
 const enabledState = viewMenu(true)
 const disabledState = viewMenu(false)
 
-const initialState = disabledState
+const selector = createSelector(
+  isDarkThemeEnabled,
+  (enabled) => enabled ? enabledState : disabledState
+)
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_DARK_THEME_ENABLED:
-      return action.payload.enabled ? enabledState : disabledState
-    default:
-      return state
-  }
-}
-
-export default reducer
+export default selector

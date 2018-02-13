@@ -1,3 +1,5 @@
+import { getFocusedWindow } from '../windows'
+
 export const getStoryPaths = (state) =>
   Object.keys(state.stories)
 
@@ -9,3 +11,8 @@ export const getStoryByWindowId = (state, windowId) => {
 
 export const isStoryLoading = (state, path) =>
   state.stories[path] ? state.stories[path].loading === true : false
+
+export const isStoryOpenInFocusedWindow = (state) => {
+  const window = getFocusedWindow(state)
+  return (window && getStoryByWindowId(state, window.id)) !== undefined
+}

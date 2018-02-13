@@ -1,6 +1,5 @@
-import { removeStoryByWindowId, storyClosed } from './actions'
-
 import { getStoryByWindowId } from './selectors'
+import { removeStoryByWindowId } from './actions'
 
 const close = (window) => async (dispatch, getState) => {
   const story = getStoryByWindowId(getState(), window.id)
@@ -10,7 +9,6 @@ const close = (window) => async (dispatch, getState) => {
     }
   } finally {
     dispatch(removeStoryByWindowId(window.id))
-    dispatch(storyClosed(story.path))
     window.destroy()
   }
 }

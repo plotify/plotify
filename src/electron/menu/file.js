@@ -1,9 +1,8 @@
 import { CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../shared/story/requests'
-import { STORY_CLOSED, STORY_OPENED, getStoryByWindowId } from '../story'
-import { WINDOW_FOCUS_CHANGED, getFocusedWindow } from '../windows'
 
+import { createSelector } from 'reselect'
+import { isStoryOpenInFocusedWindow } from '../story'
 import { request } from '../shared/communication'
-import store from '../store'
 
 const fileMenu = (openStoryInFocusedWindow) => ({
   label: 'Datei',
@@ -27,23 +26,9 @@ const openStory = (_, window) => {
 const openStoryInFocusedWindow = fileMenu(true)
 const noStoryInFocusedWindow = fileMenu(false)
 
-const initialState = noStoryInFocusedWindow
+const selector = createSelector(
+  isStoryOpenInFocusedWindow,
+  (open) => open ? openStoryInFocusedWindow : noStoryInFocusedWindow
+)
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case WINDOW_FOCUS_CHANGED:
-    case STORY_OPENED:
-    case STORY_CLOSED:
-      const globalState = store.getState()
-      const window = getFocusedWindow(globalState)
-      if (window && getStoryByWindowId(globalState, window.id)) {
-        return openStoryInFocusedWindow
-      } else {
-        return noStoryInFocusedWindow
-      }
-    default:
-      return state
-  }
-}
-
-export default reducer
+export default selector

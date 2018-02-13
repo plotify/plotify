@@ -1,5 +1,3 @@
 export const ADD_LOADING_STORY = 'stories/add-loading-story'
 export const SET_STORY_LOADED = 'stories/set-story-loaded'
-export const STORY_OPENED = 'stories/story-opened'
 export const REMOVE_STORY_BY_WINDOW_ID = 'stories/remove-story-by-window-id'
-export const STORY_CLOSED = 'stories/story-closed'

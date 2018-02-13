@@ -1,5 +1,5 @@
 import { InvalidStoryFileError, UnsupportedStoryFileVersionError, openStory } from '../../backend/story'
-import { addLoadingStory, removeStoryByWindowId, setStoryLoaded, storyOpened } from './actions'
+import { addLoadingStory, removeStoryByWindowId, setStoryLoaded } from './actions'
 import { app, dialog } from 'electron'
 import { createOrFocus, getWindowByStoryPath, getWindowStoryPath, setWindowStoryPath } from '../windows'
 import { getStoryByWindowId, isStoryLoading } from './selectors'
@@ -50,7 +50,6 @@ const open = (senderWindow, path) => async (dispatch, getState) => {
   try {
     const story = await openStory(path)
     dispatch(setStoryLoaded(path, story))
-    dispatch(storyOpened(path))
     addOrUpdateRecentlyOpenedFile({ path, lastOpened: new Date().toISOString() }) // Asynchron: Soll das Öffnen der Geschichte nicht verzögern oder verhindern.
     return story
   } catch (error) {
