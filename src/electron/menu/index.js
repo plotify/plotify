@@ -1,4 +1,6 @@
 import { Menu } from 'electron'
+import applyChanges from './apply-changes'
+import calculateChanges from './calculate-changes'
 import { createSelector } from 'reselect'
 import edit from './edit'
 import file from './file'
@@ -22,9 +24,14 @@ export const initMenu = () => {
 
 const handleStateChanges = () => {
   const newTemplate = templateCreator(store.getState())
-  if (prevTemplate === null || prevTemplate !== newTemplate) {
+
+  if (prevTemplate === null) {
     const menu = Menu.buildFromTemplate(newTemplate)
     Menu.setApplicationMenu(menu)
+  } else if (prevTemplate !== newTemplate) {
+    const changes = calculateChanges(prevTemplate, newTemplate)
+    applyChanges(Menu.getApplicationMenu(), changes)
   }
+
   prevTemplate = newTemplate
 }
