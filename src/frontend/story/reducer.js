@@ -85,6 +85,9 @@ const reducer = (state = initialState, action) => {
         showCreateStoryDialog: false
       })
 
+    case t.STORY_CLOSED:
+      return initialState
+
     default:
       return state
   }

@@ -1,7 +1,11 @@
+import { createOrFocus, getWindowByStoryPath, setWindowStoryPath } from '../windows'
+
+import { STORY_CLOSED } from '../../shared/story/requests'
 import { getStoryByWindowId } from './selectors'
 import { removeStoryByWindowId } from './actions'
+import { request } from '../shared/communication'
 
-const close = (window) => async (dispatch, getState) => {
+const close = (window, closeWindow, focusWelcomeWindow) => async (dispatch, getState) => {
   const story = getStoryByWindowId(getState(), window.id)
   try {
     if (story) {
@@ -9,7 +13,18 @@ const close = (window) => async (dispatch, getState) => {
     }
   } finally {
     dispatch(removeStoryByWindowId(window.id))
-    window.destroy()
+
+    const welcomeWindowExisting = getWindowByStoryPath(getState(), '') !== undefined
+    if (closeWindow || welcomeWindowExisting) {
+      window.destroy()
+    } else {
+      dispatch(setWindowStoryPath(window.id, ''))
+      request(window, STORY_CLOSED)
+    }
+
+    if (focusWelcomeWindow) {
+      dispatch(createOrFocus(''))
+    }
   }
 }
 

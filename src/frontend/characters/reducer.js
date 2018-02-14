@@ -1,6 +1,6 @@
 import * as t from './actionTypes'
 
-import { CLOSE_STORY_PREPARATION_STARTED, OPEN_STORY_SUCCESSFUL } from '../story/action-types'
+import { CLOSE_STORY_PREPARATION_STARTED, OPEN_STORY_SUCCESSFUL, STORY_CLOSED } from '../story/action-types'
 
 const initialProfile = {
   id: undefined,
@@ -128,6 +128,7 @@ const reducer = (state = initialState, action) => {
       })
 
     case OPEN_STORY_SUCCESSFUL:
+    case STORY_CLOSED:
       return initialState
 
     default:

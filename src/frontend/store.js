@@ -8,13 +8,13 @@ import thunk from 'redux-thunk'
 const middleware = [thunk]
 
 if (isDev) {
-  middleware.push(loggingMiddleware(true))
+  middleware.push(loggingMiddleware())
 }
 
 const store = createStore(reducers, applyMiddleware(...middleware))
 
 if (isDev) {
-  logInitialState(store, true)
+  logInitialState(store)
 }
 
 export default store

@@ -1,12 +1,15 @@
-import { CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../shared/story/requests'
+import { CLOSE_STORY_PREPARATION_REQUESTED, CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../shared/story/requests'
 
+import { createSelector } from 'reselect'
+import { isStoryOpenInFocusedWindow } from '../story'
 import { request } from '../shared/communication'
 
-const fileMenu = () => ({
+const fileMenu = (openStoryInFocusedWindow) => ({
   label: 'Datei',
   submenu: [
     { label: 'Neu...', click: createStory },
     { label: 'Öffnen...', click: openStory },
+    { label: 'Schließen', enabled: openStoryInFocusedWindow, click: closeStory },
     { type: 'separator' },
     { label: 'Beenden', role: 'quit' }
   ]
@@ -20,13 +23,18 @@ const openStory = (_, window) => {
   request(window, OPEN_STORY_REQUESTED)
 }
 
-const initialState = fileMenu()
-
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state
-  }
+const closeStory = (_, window) => {
+  const closeWindow = false
+  const focusWelcomeWindow = true
+  request(window, CLOSE_STORY_PREPARATION_REQUESTED, { closeWindow, focusWelcomeWindow })
 }
 
-export default reducer
+const openStoryInFocusedWindow = fileMenu(true)
+const noStoryInFocusedWindow = fileMenu(false)
+
+const selector = createSelector(
+  isStoryOpenInFocusedWindow,
+  (open) => open ? openStoryInFocusedWindow : noStoryInFocusedWindow
+)
+
+export default selector

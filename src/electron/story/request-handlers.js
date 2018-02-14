@@ -18,8 +18,8 @@ const handleOpenStory = (resolve, reject, senderWindow, path) => (dispatch) => {
     .catch(error => reject(error.message))
 }
 
-const handleCloseStory = (resolve, _, senderWindow) => (dispatch) => {
-  dispatch(closeStory(senderWindow))
+const handleCloseStory = (resolve, _, senderWindow, { closeWindow, focusWelcomeWindow }) => (dispatch) => {
+  dispatch(closeStory(senderWindow, closeWindow, focusWelcomeWindow))
     .then(() => resolve())
 }
 

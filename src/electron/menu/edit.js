@@ -1,6 +1,6 @@
 // TODO Rückgängig
 // TODO Wiederherstellen
-const editMenu = () => ({
+const menu = () => ({
   label: 'Bearbeiten',
   submenu: [
     // { label: 'Rückgängig', role: 'undo' },
@@ -14,13 +14,6 @@ const editMenu = () => ({
   ]
 })
 
-const initialState = editMenu()
+const staticMenu = menu()
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    default:
-      return state
-  }
-}
-
-export default reducer
+export default () => staticMenu

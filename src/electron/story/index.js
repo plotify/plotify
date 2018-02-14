@@ -1,2 +1,2 @@
 export { default as reducer } from './reducer'
-export { getStoryByWindowId } from './selectors'
+export { getStoryByWindowId, isStoryOpenInFocusedWindow } from './selectors'
