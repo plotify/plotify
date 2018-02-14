@@ -7,7 +7,9 @@ const handleClose = (event) => (dispatch, getState) => {
   const storyPath = getWindowStoryPath(getState(), window.id)
   if (storyPath !== undefined && storyPath !== '') {
     event.preventDefault()
-    request(window, CLOSE_STORY_PREPARATION_REQUESTED)
+    const closeWindow = true
+    const focusWelcomeWindow = false
+    request(window, CLOSE_STORY_PREPARATION_REQUESTED, { closeWindow, focusWelcomeWindow })
   }
 }
 

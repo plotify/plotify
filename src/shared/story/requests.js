@@ -8,3 +8,4 @@ export const OPEN_STORY_FINISHED = 'story/open-story-finished'
 
 export const CLOSE_STORY_PREPARATION_REQUESTED = 'story/close-story-preparation-requested'
 export const CLOSE_STORY_PREPARATION_FINISHED = 'story/close-story-preparation-finised'
+export const STORY_CLOSED = 'story/story-closed'

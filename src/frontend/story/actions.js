@@ -4,6 +4,7 @@ import { CLOSE_STORY_PREPARATION_FINISHED, CREATE_STORY, OPEN_STORY, OPEN_STORY_
 import { isClosingStory, isCreatingStory, isOpeningStory } from './selectors'
 
 import { openCharactersSection } from '../characters/actions'
+import { openWelcomeSection } from '../welcome/actions'
 import { request } from '../shared/communication'
 
 export const openStory = (path) => {
@@ -115,18 +116,24 @@ export const closeCreateStoryDialog = () => ({
   payload: {}
 })
 
-export const closeStoryPreparation = () => {
-  return async (dispatch, getState) => {
-    if (isClosingStory(getState())) {
-      return
-    }
-    dispatch(closeStoryPreparationStarted())
-    // TODO Speichere ungespeicherte Änderungen.
-    request(CLOSE_STORY_PREPARATION_FINISHED)
+export const closeStoryPreparation = (closeWindow, focusWelcomeWindow) => async (dispatch, getState) => {
+  if (isClosingStory(getState())) {
+    return
   }
+  dispatch(closeStoryPreparationStarted())
+  // TODO Sichergehen, dass ungespeicherte Änderungen gespeichert wurden.
+  request(CLOSE_STORY_PREPARATION_FINISHED, { closeWindow, focusWelcomeWindow })
 }
 
 const closeStoryPreparationStarted = () => ({
   type: t.CLOSE_STORY_PREPARATION_STARTED,
   payload: {}
 })
+
+export const storyClosed = () => async (dispatch) => {
+  await dispatch(openWelcomeSection())
+  dispatch({
+    type: t.STORY_CLOSED,
+    payload: {}
+  })
+}
