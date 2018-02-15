@@ -1,14 +1,8 @@
-import * as t from './action-types'
+import { SET_PREFERENCES_DATABASE } from './action-types'
+import { createReducer } from '../../../shared/redux'
 
 const initialState = null
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case t.SET_PREFERENCES_DATABASE:
-      return action.payload.database
-    default:
-      return state
-  }
-}
-
-export default reducer
+export default createReducer(initialState, {
+  [SET_PREFERENCES_DATABASE]: (_, { database }) => database
+})

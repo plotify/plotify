@@ -1,31 +1,22 @@
-import * as t from './action-types'
+import { DECREMENT_LOADING_PROCESSES, INCREMENT_LOADING_PROCESSES, SET_WINDOW } from './action-types'
+
+import { createReducer } from '../../shared/redux'
 
 const initialState = {
   window: null,
   loadingProcesses: 0
 }
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case t.INCREMENT_LOADING_PROCESSES:
-      const loadingProcesses = state.loadingProcesses + 1
-      return { ...state, loadingProcesses }
+export default createReducer(initialState, {
+  [INCREMENT_LOADING_PROCESSES]: (state) => ({
+    ...state,
+    loadingProcesses: state.loadingProcesses + 1
+  }),
 
-    case t.DECREMENT_LOADING_PROCESSES:
-      if (state.loadingProcesses > 0) {
-        const loadingProcesses = state.loadingProcesses - 1
-        return { ...state, loadingProcesses }
-      } else {
-        return state
-      }
+  [DECREMENT_LOADING_PROCESSES]: (state) => ({
+    ...state,
+    loadingProcesses: state.loadingProcesses > 0 ? state.loadingProcesses - 1 : 0
+  }),
 
-    case t.SET_WINDOW:
-      const window = action.payload.window
-      return { ...state, window }
-
-    default:
-      return state
-  }
-}
-
-export default reducer
+  [SET_WINDOW]: (state, { window }) => ({ ...state, window })
+})
