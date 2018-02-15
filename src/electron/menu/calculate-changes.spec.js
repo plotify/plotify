@@ -1,4 +1,4 @@
-import calculateChanges from './calculate-changes'
+import { COMPLETE_REBUILD, calculateChanges } from './calculate-changes'
 
 test('single property in a single entry has changed', () => {
   const oldTemplate = [
@@ -200,7 +200,7 @@ test('multiple properties in multiple entries have changed', () => {
   })
 })
 
-test('ignores all properties except for visible, checked and enabled', () => {
+test('complete rebuild if a property changes except for visible, checked and enabled', () => {
   const oldTemplate = [
     {
       label: 'Datei',
@@ -222,5 +222,69 @@ test('ignores all properties except for visible, checked and enabled', () => {
     }
   ]
   const changes = calculateChanges(oldTemplate, newTemplate)
-  expect(changes.length).toBe(0)
+  expect(changes.length).toBe(1)
+  expect(changes[0]).toBe(COMPLETE_REBUILD)
+})
+
+test('complete rebuild if the number of menu items of a menu have been changed', () => {
+  const oldTemplate = [
+    {
+      label: 'Datei',
+      submenu: [
+        {
+          label: 'Lorem ipsum'
+        }
+      ]
+    }
+  ]
+  const newTemplate = [
+    {
+      label: 'Datei',
+      submenu: [
+        {
+          label: 'Lorem ipsum'
+        },
+        {
+          label: 'Hello world'
+        }
+      ]
+    }
+  ]
+  const changes = calculateChanges(oldTemplate, newTemplate)
+  expect(changes.length).toBe(1)
+  expect(changes[0]).toBe(COMPLETE_REBUILD)
+})
+
+test('complete rebuild if the number of menu categories have been changed', () => {
+  const oldTemplate = [
+    {
+      label: 'Datei',
+      submenu: [
+        {
+          label: 'Lorem ipsum'
+        }
+      ]
+    }
+  ]
+  const newTemplate = [
+    {
+      label: 'Datei',
+      submenu: [
+        {
+          label: 'Lorem ipsum'
+        }
+      ]
+    },
+    {
+      label: 'Bearbeiten',
+      submenu: [
+        {
+          label: 'Hello world'
+        }
+      ]
+    }
+  ]
+  const changes = calculateChanges(oldTemplate, newTemplate)
+  expect(changes.length).toBe(1)
+  expect(changes[0]).toBe(COMPLETE_REBUILD)
 })
