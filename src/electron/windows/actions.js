@@ -55,7 +55,7 @@ const focusExistingWindowOrSplashScreen = (state, window) => {
   }
 }
 
-const focusWindow = (window) => {
+export const focusWindow = (window) => {
   const maximized = window.isMaximized()
   if (window.isMinimized()) {
     window.restore()

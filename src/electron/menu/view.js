@@ -1,10 +1,10 @@
 import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../shared/view/requests'
 import { disableDarkTheme, enableDarkTheme, isDarkThemeEnabled } from '../preferences'
 
-import { bind as _ } from '../shared/redux'
 import { createSelector } from 'reselect'
 import { getWindows } from '../windows'
 import { request } from '../shared/communication'
+import store from '../store'
 
 const viewMenu = (darkThemeEnabled) => ({
   label: 'Ansicht',
@@ -17,21 +17,22 @@ const viewMenu = (darkThemeEnabled) => ({
       label: 'Nachtmodus',
       type: 'checkbox',
       checked: darkThemeEnabled,
-      click: _(toggleDarkTheme)
+      click: toggleDarkTheme
     },
     { type: 'separator' },
     { label: 'Vollbild', role: 'togglefullscreen' }
   ]
 })
 
-const toggleDarkTheme = (menuItem) => (dispatch, getState) => {
+// Keine anonyme Funktion, damit kein kompletter Neuaufbau der Menüleiste notwendig ist.
+const toggleDarkTheme = (menuItem) => {
   if (menuItem.checked) {
-    dispatch(enableDarkTheme())
+    store.dispatch(enableDarkTheme())
   } else {
-    dispatch(disableDarkTheme())
+    store.dispatch(disableDarkTheme())
   }
   const name = menuItem.checked ? ENABLE_DARK_THEME : DISABLE_DARK_THEME
-  for (let window of getWindows(getState())) {
+  for (let window of getWindows(store.getState())) {
     request(window, name)
   }
 }

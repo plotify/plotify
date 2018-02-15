@@ -9,12 +9,14 @@ export {
   isAnyWindowReady,
   isWindowFocused,
   isAnyWindowFocused,
-  getFocusedWindow
+  getFocusedWindow,
+  getWindowEntities
 } from './selectors'
 
 export {
   setWindowStoryPath,
-  createOrFocus
+  createOrFocus,
+  focusWindow
 } from './actions'
 
 export {

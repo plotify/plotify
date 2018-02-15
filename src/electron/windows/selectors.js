@@ -1,3 +1,10 @@
+import { createSelector } from 'reselect'
+
+export const getWindowEntities = createSelector(
+  (state) => state.windows,
+  (windows) => Object.values(windows)
+)
+
 export const getWindows = (state) =>
   Object.values(state.windows)
     .map((window) => window.instance)
