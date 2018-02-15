@@ -7,35 +7,33 @@ import { openCharactersSection } from '../characters/actions'
 import { openWelcomeSection } from '../welcome/actions'
 import { request } from '../shared/communication'
 
-export const openStory = (path) => {
-  return async (dispatch, getState) => {
-    if (isOpeningStory(getState()) || isCreatingStory(getState())) {
-      request(OPEN_STORY_FINISHED)
-      return
-    }
-
-    dispatch(openStoryStarted())
-
-    let openError
-
-    try {
-      path = await request(OPEN_STORY, path)
-
-      if (path) {
-        dispatch(openStorySuccessful(path))
-        dispatch(openCharactersSection())
-      } else {
-        dispatch(openStoryCanceled())
-      }
-
-      dispatch(closeOpenStoryDialog())
-    } catch (error) {
-      openError = error
-      dispatch(openStoryFailed(error))
-    }
-
-    request(OPEN_STORY_FINISHED, openError)
+export const openStory = (path) => async (dispatch, getState) => {
+  if (isOpeningStory(getState()) || isCreatingStory(getState())) {
+    request(OPEN_STORY_FINISHED)
+    return
   }
+
+  dispatch(openStoryStarted())
+
+  let openError
+
+  try {
+    path = await request(OPEN_STORY, path)
+
+    if (path) {
+      dispatch(openStorySuccessful(path))
+      dispatch(openCharactersSection())
+    } else {
+      dispatch(openStoryCanceled())
+    }
+
+    dispatch(closeOpenStoryDialog())
+  } catch (error) {
+    openError = error
+    dispatch(openStoryFailed(error))
+  }
+
+  request(OPEN_STORY_FINISHED, openError)
 }
 
 const openStoryStarted = () => ({
@@ -63,31 +61,29 @@ export const closeOpenStoryDialog = () => ({
   paylaod: {}
 })
 
-export const createStory = () => {
-  return async (dispatch, getState) => {
-    if (isOpeningStory(getState()) || isCreatingStory(getState())) {
-      return
+export const createStory = () => async (dispatch, getState) => {
+  if (isOpeningStory(getState()) || isCreatingStory(getState())) {
+    return
+  }
+
+  dispatch(createStoryStarted())
+
+  try {
+    const path = await request(CREATE_STORY)
+
+    if (path) {
+      dispatch(createStorySuccessful())
+    } else {
+      dispatch(createStoryCanceled())
     }
 
-    dispatch(createStoryStarted())
+    dispatch(closeCreateStoryDialog())
 
-    try {
-      const path = await request(CREATE_STORY)
-
-      if (path) {
-        dispatch(createStorySuccessful())
-      } else {
-        dispatch(createStoryCanceled())
-      }
-
-      dispatch(closeCreateStoryDialog())
-
-      if (path) {
-        dispatch(openStory(path))
-      }
-    } catch (error) {
-      dispatch(createStoryFailed(error))
+    if (path) {
+      dispatch(openStory(path))
     }
+  } catch (error) {
+    dispatch(createStoryFailed(error))
   }
 }
 

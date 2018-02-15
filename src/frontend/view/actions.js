@@ -23,6 +23,6 @@ export const closeFullScreenHint = () => ({
   payload: {}
 })
 
-export const leaveFullScreen = () => async () => {
-  await request(LEAVE_FULL_SCREEN)
+export const leaveFullScreen = () => () => {
+  request(LEAVE_FULL_SCREEN)
 }
