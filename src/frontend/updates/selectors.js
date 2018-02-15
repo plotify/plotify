@@ -1,7 +1,5 @@
-export const isUpdateNotificationOpen = (state) => (
+export const isUpdateNotificationOpen = (state) =>
   state.updates.open === true
-)
 
-export const getUpdateNotificationUrl = (state) => (
+export const getUpdateNotificationUrl = (state) =>
   state.updates.url
-)
