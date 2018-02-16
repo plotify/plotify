@@ -1,4 +1,4 @@
-import * as t from './actionTypes'
+import * as t from './action-types'
 
 import { LEAVE_FULL_SCREEN } from '../../shared/view/requests'
 import { request } from '../shared/communication'

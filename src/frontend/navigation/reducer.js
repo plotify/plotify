@@ -1,7 +1,7 @@
-import { CLOSE_NAVIGATION_DRAWER, OPEN_NAVIGATION_DRAWER, SET_SECTION } from './actionTypes'
+import { CLOSE_NAVIGATION_DRAWER, OPEN_NAVIGATION_DRAWER, SET_SECTION } from './action-types'
 import { CREATE_STORY_STARTED, OPEN_STORY_STARTED } from '../story/action-types'
 
-import { OPEN_ABOUT_DIALOG } from '../about/actionTypes'
+import { OPEN_ABOUT_DIALOG } from '../about/action-types'
 import { WELCOME_SECTION } from '../welcome/constants'
 import { createReducer } from '../../shared/redux'
 

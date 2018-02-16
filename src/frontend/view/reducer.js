@@ -4,7 +4,7 @@ import {
   ENABLE_DARK_THEME,
   SHOW_FULL_SCREEN_HINT,
   TOGGLE_DARK_THEME
-} from './actionTypes'
+} from './action-types'
 
 import { createReducer } from '../../shared/redux'
 
