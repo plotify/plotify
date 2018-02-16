@@ -25,10 +25,10 @@ const create = (senderWindow) => async (_, getState) => {
   } else {
     path = file + '.story'
   }
-  checkCurrentStoryPath(path)
+  checkCurrentStoryPath(getState(), path)
 
   try {
-    await deleteFileIfExists(getState, path)
+    await deleteFileIfExists(path)
     const story = await createStory(path)
     await story.database.close()
     return story
@@ -47,9 +47,9 @@ const CANT_CREATE_FILE_ERROR_MESSAGE =
   'Die Datei für die Geschichte konnte nicht erstellt werden. ' +
   'Hast du die notwendigen Berechtigungen, um eine Datei in dem ausgewählten Verzeichnis zu erstellen?'
 
-const checkCurrentStoryPath = (getState, path) => {
-  for (let story of getStoryPaths(getState())) {
-    if (path === story.path) {
+const checkCurrentStoryPath = (state, path) => {
+  for (let storyPath of getStoryPaths(state)) {
+    if (path === storyPath) {
       throw new Error(OVERWRITE_FILE_ERROR_MESSAGE)
     }
   }

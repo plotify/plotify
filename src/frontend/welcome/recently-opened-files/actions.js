@@ -10,17 +10,15 @@ import {
 import { request } from '../../shared/communication'
 import { shell } from 'electron'
 
-export const getRecentlyOpenedFiles = () => {
-  return async (dispatch) => {
-    dispatch(getRecentlyOpenedFilesRequest())
-    try {
-      const files = await request(GET_RECENTLY_OPENED_FILES)
-      dispatch(getRecentlyOpenedFilesSuccessful(files))
-    } catch (error) {
-      console.log('Error: getRecentlyOpenedFiles:', error)
-      const message = 'Die zuletzt geöffneten Dateien konnten nicht geladen werden.'
-      dispatch(getRecentlyOpenedFilesFailed(message))
-    }
+export const getRecentlyOpenedFiles = () => async (dispatch) => {
+  dispatch(getRecentlyOpenedFilesRequest())
+  try {
+    const files = await request(GET_RECENTLY_OPENED_FILES)
+    dispatch(getRecentlyOpenedFilesSuccessful(files))
+  } catch (error) {
+    console.log('Error: getRecentlyOpenedFiles:', error)
+    const message = 'Die zuletzt geöffneten Dateien konnten nicht geladen werden.'
+    dispatch(getRecentlyOpenedFilesFailed(message))
   }
 }
 
@@ -39,72 +37,66 @@ const getRecentlyOpenedFilesFailed = (message) => ({
   payload: { message }
 })
 
-export const pinRecentlyOpenedFile = (path) => {
-  return async (dispatch) => {
-    dispatch(pinRecentlyOpenedFileRequest(path))
-    try {
-      await request(PIN_RECENTLY_OPENED_FILE, path)
-      dispatch(pinRecentlyOpenedFileSuccessful(path))
-    } catch (error) {
-      const message = 'Die Datei konnte nicht angeheftet werden.'
-      dispatch(pinRecentlyOpenedFileFailed(path, message))
-    }
+export const pinRecentlyOpenedFile = (path) => async (dispatch) => {
+  dispatch(pinRecentlyOpenedFileRequest(path))
+  try {
+    await request(PIN_RECENTLY_OPENED_FILE, path)
+    dispatch(pinRecentlyOpenedFileSuccessful(path))
+  } catch (error) {
+    const message = 'Die Datei konnte nicht angeheftet werden.'
+    dispatch(pinRecentlyOpenedFileFailed(path, message))
   }
 }
 
 const pinRecentlyOpenedFileRequest = (path) => ({
-  type: t.PIN_RECENTLY_OPENED_FILE_REQUEST,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_REQUEST,
   payload: { path, pin: true }
 })
 
 const pinRecentlyOpenedFileSuccessful = (path) => ({
-  type: t.PIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
   payload: { path, pin: true }
 })
 
 const pinRecentlyOpenedFileFailed = (path, message) => ({
-  type: t.PIN_RECENTLY_OPENED_FILE_FAILED,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED,
   payload: { path, message, pin: true }
 })
 
-export const unpinRecentlyOpenedFile = (path) => {
-  return async (dispatch) => {
-    dispatch(unpinRecentlyOpenedFileRequest(path))
-    try {
-      await request(UNPIN_RECENTLY_OPENED_FILE, path)
-      dispatch(unpinRecentlyOpenedFileSuccessful(path))
-    } catch (error) {
-      const message = 'Die Datei konnte nicht gelöst werden.'
-      dispatch(unpinRecentlyOpenedFileFailed(path, message))
-    }
+export const unpinRecentlyOpenedFile = (path) => async (dispatch) => {
+  dispatch(unpinRecentlyOpenedFileRequest(path))
+  try {
+    await request(UNPIN_RECENTLY_OPENED_FILE, path)
+    dispatch(unpinRecentlyOpenedFileSuccessful(path))
+  } catch (error) {
+    const message = 'Die Datei konnte nicht gelöst werden.'
+    dispatch(unpinRecentlyOpenedFileFailed(path, message))
   }
 }
 
 const unpinRecentlyOpenedFileRequest = (path) => ({
-  type: t.UNPIN_RECENTLY_OPENED_FILE_REQUEST,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_REQUEST,
   payload: { path, pin: false }
 })
 
 const unpinRecentlyOpenedFileSuccessful = (path) => ({
-  type: t.UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
   payload: { path, pin: false }
 })
 
 const unpinRecentlyOpenedFileFailed = (path, message) => ({
-  type: t.UNPIN_RECENTLY_OPENED_FILE_FAILED,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED,
   payload: { path, message, pin: false }
 })
 
-export const removeRecentlyOpenedFile = (path) => {
-  return async (dispatch) => {
-    dispatch(removeRecentlyOpenedFileRequest(path))
-    try {
-      await request(REMOVE_RECENTLY_OPENED_FILE, path)
-      removeRecentlyOpenedFileSuccessful(path)
-    } catch (error) {
-      const message = 'Die Datei konnte nicht aus der Liste entfernt werden.'
-      dispatch(removeRecentlyOpenedFileFailed(path, message))
-    }
+export const removeRecentlyOpenedFile = (path) => async (dispatch) => {
+  dispatch(removeRecentlyOpenedFileRequest(path))
+  try {
+    await request(REMOVE_RECENTLY_OPENED_FILE, path)
+    removeRecentlyOpenedFileSuccessful(path)
+  } catch (error) {
+    const message = 'Die Datei konnte nicht aus der Liste entfernt werden.'
+    dispatch(removeRecentlyOpenedFileFailed(path, message))
   }
 }
 
@@ -123,12 +115,10 @@ const removeRecentlyOpenedFileFailed = (path, message) => ({
   payload: { path, message }
 })
 
-export const openFileInFolder = (path) => {
-  return async (dispatch) => {
-    const successful = shell.showItemInFolder(path)
-    if (!successful) {
-      dispatch(openFolderNotFoundDialog())
-    }
+export const openFileInFolder = (path) => async (dispatch) => {
+  const successful = shell.showItemInFolder(path)
+  if (!successful) {
+    dispatch(openFolderNotFoundDialog())
   }
 }
 

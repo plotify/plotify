@@ -1,4 +1,4 @@
-import * as t from './actionTypes'
+import * as t from './action-types'
 
 import { LEAVE_FULL_SCREEN } from '../../shared/view/requests'
 import { request } from '../shared/communication'
@@ -23,6 +23,6 @@ export const closeFullScreenHint = () => ({
   payload: {}
 })
 
-export const leaveFullScreen = () => async () => {
-  await request(LEAVE_FULL_SCREEN)
+export const leaveFullScreen = () => () => {
+  request(LEAVE_FULL_SCREEN)
 }

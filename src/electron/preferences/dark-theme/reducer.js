@@ -1,14 +1,8 @@
-import * as t from './action-types'
+import { SET_DARK_THEME_ENABLED } from './action-types'
+import { createReducer } from '../../../shared/redux'
 
 const initialState = false
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case t.SET_DARK_THEME_ENABLED:
-      return action.payload.enabled === true
-    default:
-      return state
-  }
-}
-
-export default reducer
+export default createReducer(initialState, {
+  [SET_DARK_THEME_ENABLED]: (_, { enabled }) => enabled === true
+})

@@ -10,24 +10,20 @@ export const showUpdateNotification = (update) => ({
   payload: { update }
 })
 
-export const openUpdateNotificationUrl = () => {
-  return async (dispatch, getState) => {
-    const state = getState()
-    if (isUpdateNotificationOpen(state)) {
-      window.open(getUpdateNotificationUrl(state))
-      dispatch(closeUpdateNotification())
-    }
+export const openUpdateNotificationUrl = () => (dispatch, getState) => {
+  const state = getState()
+  if (isUpdateNotificationOpen(state)) {
+    window.open(getUpdateNotificationUrl(state))
+    dispatch(closeUpdateNotification())
   }
 }
 
-export const closeUpdateNotification = () => {
-  return async (dispatch, getState) => {
-    if (isUpdateNotificationOpen(getState())) {
-      dispatch({
-        type: t.CLOSE_UPDATE_NOTIFICATION,
-        payload: {}
-      })
-      request(UPDATE_NOTIFICATION_CLOSED)
-    }
+export const closeUpdateNotification = () => (dispatch, getState) => {
+  if (isUpdateNotificationOpen(getState())) {
+    dispatch({
+      type: t.CLOSE_UPDATE_NOTIFICATION,
+      payload: {}
+    })
+    request(UPDATE_NOTIFICATION_CLOSED)
   }
 }

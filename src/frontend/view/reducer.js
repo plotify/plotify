@@ -1,27 +1,38 @@
-import * as t from './actionTypes'
+import {
+  CLOSE_FULL_SCREEN_HINT,
+  DISABLE_DARK_THEME,
+  ENABLE_DARK_THEME,
+  SHOW_FULL_SCREEN_HINT,
+  TOGGLE_DARK_THEME
+} from './action-types'
+
+import { createReducer } from '../../shared/redux'
 
 const initialState = {
   darkTheme: false,
   fullScreenHintOpen: false
 }
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case t.TOGGLE_DARK_THEME:
-      return { ...state, darkTheme: !state.darkTheme }
-    case t.ENABLE_DARK_THEME:
-      return { ...state, darkTheme: true }
-    case t.DISABLE_DARK_THEME:
-      return { ...state, darkTheme: false }
+export default createReducer(initialState, {
+  [TOGGLE_DARK_THEME]: (state) => ({
+    ...state,
+    darkTheme: !state.darkTheme
+  }),
+  [ENABLE_DARK_THEME]: (state) => ({
+    ...state,
+    darkTheme: true
+  }),
+  [DISABLE_DARK_THEME]: (state) => ({
+    ...state,
+    darkTheme: false
+  }),
 
-    case t.SHOW_FULL_SCREEN_HINT:
-      return { ...state, fullScreenHintOpen: true }
-    case t.CLOSE_FULL_SCREEN_HINT:
-      return { ...state, fullScreenHintOpen: false }
-
-    default:
-      return state
-  }
-}
-
-export default reducer
+  [SHOW_FULL_SCREEN_HINT]: (state) => ({
+    ...state,
+    fullScreenHintOpen: true
+  }),
+  [CLOSE_FULL_SCREEN_HINT]: (state) => ({
+    ...state,
+    fullScreenHintOpen: false
+  })
+})

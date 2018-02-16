@@ -1,4 +1,4 @@
-import * as t from './actionTypes'
+import * as t from './action-types'
 
 import { dirname, join } from 'path'
 
@@ -41,15 +41,13 @@ export const closeLicenseDialog = () => ({
   payload: {}
 })
 
-export const openDependenciesLicensesDialog = () => {
-  return async (dispatch) => {
-    dispatch({
-      type: t.OPEN_DEPENDENCIES_LICENSES_DIALOG,
-      payload: {}
-    })
-    const text = await loadDependenciesLicensesText()
-    dispatch(setDependenciesLicensesText(text))
-  }
+export const openDependenciesLicensesDialog = () => async (dispatch) => {
+  dispatch({
+    type: t.OPEN_DEPENDENCIES_LICENSES_DIALOG,
+    payload: {}
+  })
+  const text = await loadDependenciesLicensesText()
+  dispatch(setDependenciesLicensesText(text))
 }
 
 export const closeDependenciesLicensesDialog = () => ({

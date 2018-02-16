@@ -10,15 +10,12 @@ export const getNotPinnedFiles = createSelector(
   (files) => files.filter(file => !file.pinned)
 )
 
-export const isShowFolderNotFoundDialog = (state) => (
+export const isShowFolderNotFoundDialog = (state) =>
   state.welcome.recentlyOpenedFiles.showFolderNotFoundDialog === true
-)
 
-export const isError = (state) => (
+export const isError = (state) =>
   typeof state.welcome.recentlyOpenedFiles.error === 'string' &&
   state.welcome.recentlyOpenedFiles.error.length > 0
-)
 
-export const getErrorMessage = (state) => (
+export const getErrorMessage = (state) =>
   state.welcome.recentlyOpenedFiles.error
-)
