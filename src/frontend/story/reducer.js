@@ -1,4 +1,19 @@
-import * as t from './action-types'
+import {
+  CLOSE_CREATE_STORY_DIALOG,
+  CLOSE_OPEN_STORY_DIALOG,
+  CLOSE_STORY_PREPARATION_STARTED,
+  CREATE_STORY_CANCELED,
+  CREATE_STORY_FAILED,
+  CREATE_STORY_STARTED,
+  CREATE_STORY_SUCCESSFUL,
+  OPEN_STORY_CANCELED,
+  OPEN_STORY_FAILED,
+  OPEN_STORY_STARTED,
+  OPEN_STORY_SUCCESSFUL,
+  STORY_CLOSED
+} from './action-types'
+
+import { createReducer } from '../../shared/redux'
 
 const initialState = {
   openStory: null,
@@ -13,84 +28,67 @@ const initialState = {
   closingStory: false
 }
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case t.OPEN_STORY_STARTED:
-      return Object.assign({}, state, {
-        openingStory: true,
-        showOpenStoryDialog: true,
-        openingStoryFailed: false,
-        openingStoryErrorMessage: null,
-        showCreateStoryDialog: false
-      })
+export default createReducer(initialState, {
+  [OPEN_STORY_STARTED]: (state) => ({
+    ...state,
+    openingStory: true,
+    showOpenStoryDialog: true,
+    openingStoryFailed: false,
+    openingStoryErrorMessage: null,
+    showCreateStoryDialog: false
+  }),
+  [OPEN_STORY_SUCCESSFUL]: (state, { path }) => ({
+    ...state,
+    openStory: path,
+    openingStory: false
+  }),
+  [OPEN_STORY_FAILED]: (state, { message }) => ({
+    ...state,
+    openingStory: false,
+    openingStoryFailed: true,
+    openingStoryErrorMessage: message
+  }),
+  [OPEN_STORY_CANCELED]: (state) => ({
+    ...state,
+    openingStory: false,
+    openingStoryFailed: false
+  }),
+  [CLOSE_OPEN_STORY_DIALOG]: (state) => ({
+    ...state,
+    showOpenStoryDialog: false
+  }),
 
-    case t.OPEN_STORY_SUCCESSFUL:
-      return Object.assign({}, state, {
-        openStory: action.payload.path,
-        openingStory: false
-      })
+  [CREATE_STORY_STARTED]: (state) => ({
+    ...state,
+    creatingStory: true,
+    showCreateStoryDialog: true,
+    showOpenStoryDialog: false
+  }),
+  [CREATE_STORY_SUCCESSFUL]: (state) => ({
+    ...state,
+    creatingStory: false
+  }),
+  [CREATE_STORY_FAILED]: (state, { message }) => ({
+    ...state,
+    creatingStory: false,
+    creatingStoryFailed: true,
+    creatingStoryErrorMessage: message
+  }),
+  [CREATE_STORY_CANCELED]: (state) => ({
+    ...state,
+    creatingStory: false,
+    creatingStoryFailed: false
+  }),
+  [CLOSE_CREATE_STORY_DIALOG]: (state) => ({
+    ...state,
+    showCreateStoryDialog: false
+  }),
 
-    case t.OPEN_STORY_FAILED:
-      return Object.assign({}, state, {
-        openingStory: false,
-        openingStoryFailed: true,
-        openingStoryErrorMessage: action.payload.message
-      })
-
-    case t.OPEN_STORY_CANCELED:
-      return Object.assign({}, state, {
-        openingStory: false,
-        openingStoryFailed: false
-      })
-
-    case t.CLOSE_OPEN_STORY_DIALOG:
-      return Object.assign({}, state, {
-        showOpenStoryDialog: false
-      })
-
-    case t.CREATE_STORY_STARTED:
-      return Object.assign({}, state, {
-        creatingStory: true,
-        showCreateStoryDialog: true,
-        showOpenStoryDialog: false
-      })
-
-    case t.CREATE_STORY_SUCCESSFUL:
-      return Object.assign({}, state, {
-        creatingStory: false
-      })
-
-    case t.CREATE_STORY_FAILED:
-      return Object.assign({}, state, {
-        creatingStory: false,
-        creatingStoryFailed: true,
-        creatingStoryErrorMessage: action.payload.message
-      })
-
-    case t.CREATE_STORY_CANCELED:
-      return Object.assign({}, state, {
-        creatingStory: false,
-        creatingStoryFailed: false
-      })
-
-    case t.CLOSE_CREATE_STORY_DIALOG:
-      return Object.assign({}, state, {
-        showCreateStoryDialog: false
-      })
-
-    case t.CLOSE_STORY_PREPARATION_STARTED:
-      return Object.assign({}, state, {
-        closingStory: true,
-        showOpenStoryDialog: false,
-        showCreateStoryDialog: false
-      })
-
-    case t.STORY_CLOSED:
-      return initialState
-
-    default:
-      return state
-  }
-}
-
-export default reducer
+  [CLOSE_STORY_PREPARATION_STARTED]: (state) => ({
+    ...state,
+    closingStory: true,
+    showOpenStoryDialog: false,
+    showCreateStoryDialog: false
+  }),
+  [STORY_CLOSED]: () => initialState
+})

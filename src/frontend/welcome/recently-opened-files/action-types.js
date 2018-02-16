@@ -2,13 +2,9 @@ export const GET_RECENTLY_OPENED_FILES_REQUEST = 'recently-opened-files/get'
 export const GET_RECENTLY_OPENED_FILES_SUCCESSFUL = 'recently-opened-files/get/successful'
 export const GET_RECENTLY_OPENED_FILES_FAILED = 'recently-opened-files/get/failed'
 
-export const PIN_RECENTLY_OPENED_FILE_REQUEST = 'recently-opened-files/pin'
-export const PIN_RECENTLY_OPENED_FILE_SUCCESSFUL = 'recently-opened-files/pin/successful'
-export const PIN_RECENTLY_OPENED_FILE_FAILED = 'recently-opened-files/pin/failed'
-
-export const UNPIN_RECENTLY_OPENED_FILE_REQUEST = 'recently-opened-files/unpin'
-export const UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL = 'recently-opened-files/unpin/successful'
-export const UNPIN_RECENTLY_OPENED_FILE_FAILED = 'recently-opened-files/unpin/failed'
+export const PIN_UNPIN_RECENTLY_OPENED_FILE_REQUEST = 'recently-opened-files/pin-unpin'
+export const PIN_UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL = 'recently-opened-files/pin-unpin/successful'
+export const PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED = 'recently-opened-files/pin-unpin/failed'
 
 export const REMOVE_RECENTLY_OPENED_FILE_REQUEST = 'recently-opened-files/remove'
 export const REMOVE_RECENTLY_OPENED_FILE_SUCCESSFUL = 'recently-opened-files/remove/successful'

@@ -1,25 +1,22 @@
-import * as t from './action-types'
+import { CLOSE_UPDATE_NOTIFICATION, SHOW_UPDATE_NOTIFICATION } from './action-types'
+
+import { createReducer } from '../../shared/redux'
 
 const initialState = {
   open: false,
   url: null
 }
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case t.SHOW_UPDATE_NOTIFICATION:
-      return Object.assign({}, state, {
-        open: true,
-        url: action.payload.update.url
-      })
-    case t.CLOSE_UPDATE_NOTIFICATION:
-      return Object.assign({}, state, {
-        open: false,
-        url: null
-      })
-    default:
-      return state
-  }
-}
+export default createReducer(initialState, {
+  [SHOW_UPDATE_NOTIFICATION]: (state, { update }) => ({
+    ...state,
+    open: true,
+    url: update.url
+  }),
 
-export default reducer
+  [CLOSE_UPDATE_NOTIFICATION]: (state) => ({
+    ...state,
+    open: false,
+    url: null
+  })
+})

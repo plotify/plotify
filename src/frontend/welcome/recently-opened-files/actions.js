@@ -49,17 +49,17 @@ export const pinRecentlyOpenedFile = (path) => async (dispatch) => {
 }
 
 const pinRecentlyOpenedFileRequest = (path) => ({
-  type: t.PIN_RECENTLY_OPENED_FILE_REQUEST,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_REQUEST,
   payload: { path, pin: true }
 })
 
 const pinRecentlyOpenedFileSuccessful = (path) => ({
-  type: t.PIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
   payload: { path, pin: true }
 })
 
 const pinRecentlyOpenedFileFailed = (path, message) => ({
-  type: t.PIN_RECENTLY_OPENED_FILE_FAILED,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED,
   payload: { path, message, pin: true }
 })
 
@@ -75,17 +75,17 @@ export const unpinRecentlyOpenedFile = (path) => async (dispatch) => {
 }
 
 const unpinRecentlyOpenedFileRequest = (path) => ({
-  type: t.UNPIN_RECENTLY_OPENED_FILE_REQUEST,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_REQUEST,
   payload: { path, pin: false }
 })
 
 const unpinRecentlyOpenedFileSuccessful = (path) => ({
-  type: t.UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
   payload: { path, pin: false }
 })
 
 const unpinRecentlyOpenedFileFailed = (path, message) => ({
-  type: t.UNPIN_RECENTLY_OPENED_FILE_FAILED,
+  type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED,
   payload: { path, message, pin: false }
 })
 

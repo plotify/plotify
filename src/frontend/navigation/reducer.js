@@ -1,37 +1,33 @@
-import * as t from './actionTypes'
-
+import { CLOSE_NAVIGATION_DRAWER, OPEN_NAVIGATION_DRAWER, SET_SECTION } from './actionTypes'
 import { CREATE_STORY_STARTED, OPEN_STORY_STARTED } from '../story/action-types'
 
+import { OPEN_ABOUT_DIALOG } from '../about/actionTypes'
 import { WELCOME_SECTION } from '../welcome/constants'
+import { createReducer } from '../../shared/redux'
 
 const initialState = {
   section: WELCOME_SECTION,
   drawerOpen: false
 }
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case t.SET_SECTION:
-      return Object.assign({}, state, {
-        section: action.payload.id,
-        drawerOpen: false
-      })
+const closeDrawer = (state) => ({
+  ...state,
+  drawerOpen: false
+})
 
-    case t.OPEN_NAVIGATION_DRAWER:
-      return Object.assign({}, state, {
-        drawerOpen: true
-      })
+export default createReducer(initialState, {
+  [SET_SECTION]: (state, { id }) => ({
+    ...state,
+    section: id,
+    drawerOpen: false
+  }),
 
-    case t.CLOSE_NAVIGATION_DRAWER:
-    case OPEN_STORY_STARTED:
-    case CREATE_STORY_STARTED:
-      return Object.assign({}, state, {
-        drawerOpen: false
-      })
-
-    default:
-      return state
-  }
-}
-
-export default reducer
+  [OPEN_NAVIGATION_DRAWER]: (state) => ({
+    ...state,
+    drawerOpen: true
+  }),
+  [CLOSE_NAVIGATION_DRAWER]: closeDrawer,
+  [OPEN_ABOUT_DIALOG]: closeDrawer,
+  [OPEN_STORY_STARTED]: closeDrawer,
+  [CREATE_STORY_STARTED]: closeDrawer
+})
