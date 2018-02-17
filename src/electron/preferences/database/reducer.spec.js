@@ -13,6 +13,10 @@ test('initial state', () => {
 
 test('setPreferncesDatabase', async () => {
   const db = jest.fn()
+
   await store.dispatch(setPreferncesDatabase(db))
   expect(getPreferencesDatabase(store.getState())).toBe(db)
+
+  await store.dispatch(setPreferncesDatabase(null))
+  expect(getPreferencesDatabase(store.getState())).toBe(null)
 })
