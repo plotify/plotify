@@ -1,6 +1,11 @@
+import { createStore } from '../../store'
 import { isDarkThemeEnabled } from './selectors'
 import { setDarkThemeEnabled } from './actions'
-import store from '../../store'
+
+let store
+beforeEach(() => {
+  store = createStore()
+})
 
 test('initial state', () => {
   expect(isDarkThemeEnabled(store.getState())).toBe(false)

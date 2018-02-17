@@ -1,6 +1,11 @@
+import { createStore } from '../../store'
 import { getPreferencesDatabase } from './selectors'
 import { setPreferncesDatabase } from './actions'
-import store from '../../store'
+
+let store
+beforeEach(() => {
+  store = createStore()
+})
 
 test('initial state', () => {
   expect(getPreferencesDatabase(store.getState())).toBe(null)
