@@ -36,7 +36,7 @@ export const openStory = (path) => async (dispatch, getState) => {
   request(OPEN_STORY_FINISHED, openError)
 }
 
-const openStoryStarted = () => ({
+export const openStoryStarted = () => ({
   type: t.OPEN_STORY_STARTED,
   payload: {}
 })
@@ -87,7 +87,7 @@ export const createStory = () => async (dispatch, getState) => {
   }
 }
 
-const createStoryStarted = () => ({
+export const createStoryStarted = () => ({
   type: t.CREATE_STORY_STARTED,
   payload: {}
 })
@@ -121,7 +121,7 @@ export const closeStoryPreparation = (closeWindow, focusWelcomeWindow) => async 
   request(CLOSE_STORY_PREPARATION_FINISHED, { closeWindow, focusWelcomeWindow })
 }
 
-const closeStoryPreparationStarted = () => ({
+export const closeStoryPreparationStarted = () => ({
   type: t.CLOSE_STORY_PREPARATION_STARTED,
   payload: {}
 })
