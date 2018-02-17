@@ -41,7 +41,7 @@ app.on('open-file', (event, path) => {
 printWelcomeScreen()
 
 const initSplashScreen = () => {
-  const splashScreen = showSplashScreen()
+  const splashScreen = store.dispatch(showSplashScreen())
   splashScreen.on('ready-to-show', initDebugTools)
 }
 
@@ -64,7 +64,7 @@ const createWindows = () => {
   getStoryPathsFromArguments(process.argv).forEach((path) => storyPaths.add(path))
   addDefaultPathIfEmpty(storyPaths)
   storyPaths.forEach((path) => store.dispatch(createOrFocus(path)))
-  closeSplashScreen()
+  store.dispatch(closeSplashScreen())
 }
 
 const getStoryPathsFromArguments = (argv) => {

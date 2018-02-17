@@ -1,6 +1,2 @@
-import * as actions from './actions'
-
-import { bindActionCreators } from 'redux'
-import store from '../store'
-
-export default bindActionCreators(actions, store.dispatch)
+export { default as reducer } from './reducer'
+export { showSplashScreen, closeSplashScreen, focusSplashScreenIfExisting } from './actions'
