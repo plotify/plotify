@@ -6,6 +6,7 @@ import { closeSplashScreen, showSplashScreen } from './splash-screen'
 import { app } from 'electron'
 import { createOrFocus } from './windows'
 import { initDevToolsExtensions } from './development'
+import { initMenu } from './menu'
 import isDev from 'electron-is-dev'
 import printWelcomeScreen from './versions'
 import store from './store'
@@ -54,6 +55,7 @@ const initDebugTools = async () => {
 }
 
 const initApp = async () => {
+  initMenu()
   require('./request-handlers')()
   await store.dispatch(openPreferences())
   createWindows()

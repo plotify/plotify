@@ -6,7 +6,6 @@ import { getWindowByStoryPath, isWindowReady } from './selectors'
 import { BrowserWindow } from 'electron'
 import { format } from 'url'
 import initEventHandlers from './events'
-import { initMenu } from '../menu'
 import { initReload } from '../development'
 import isDev from 'electron-is-dev'
 import path from 'path'
@@ -34,7 +33,6 @@ const createNewWindow = (dispatch, storyPath) => {
   dispatch(addWindow(window))
   dispatch(setWindowStoryPath(window.id, storyPath))
   initEventHandlers(window)
-  initMenu()
 
   if (isDev) {
     initReload(window)
