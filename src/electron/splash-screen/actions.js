@@ -35,17 +35,17 @@ export const closeSplashScreen = () => (dispatch, getState) => {
   }
 }
 
-const incrementLoadingProcesses = () => ({
+export const incrementLoadingProcesses = () => ({
   type: t.INCREMENT_LOADING_PROCESSES,
   payload: {}
 })
 
-const decrementLoadingProcesses = () => ({
+export const decrementLoadingProcesses = () => ({
   type: t.DECREMENT_LOADING_PROCESSES,
   payload: {}
 })
 
-const setWindow = (window) => ({
+export const setWindow = (window) => ({
   type: t.SET_WINDOW,
   payload: { window }
 })
