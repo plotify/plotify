@@ -41,17 +41,17 @@ export const openStoryStarted = () => ({
   payload: {}
 })
 
-const openStorySuccessful = (path) => ({
+export const openStorySuccessful = (path) => ({
   type: t.OPEN_STORY_SUCCESSFUL,
   payload: { path }
 })
 
-const openStoryFailed = (message) => ({
+export const openStoryFailed = (message) => ({
   type: t.OPEN_STORY_FAILED,
   payload: { message }
 })
 
-const openStoryCanceled = () => ({
+export const openStoryCanceled = () => ({
   type: t.OPEN_STORY_CANCELED,
   payload: {}
 })
@@ -92,17 +92,17 @@ export const createStoryStarted = () => ({
   payload: {}
 })
 
-const createStorySuccessful = () => ({
+export const createStorySuccessful = () => ({
   type: t.CREATE_STORY_SUCCESSFUL,
   payload: {}
 })
 
-const createStoryFailed = (message) => ({
+export const createStoryFailed = (message) => ({
   type: t.CREATE_STORY_FAILED,
   payload: { message }
 })
 
-const createStoryCanceled = () => ({
+export const createStoryCanceled = () => ({
   type: t.CREATE_STORY_CANCELED,
   payload: {}
 })
@@ -128,8 +128,10 @@ export const closeStoryPreparationStarted = () => ({
 
 export const storyClosed = () => async (dispatch) => {
   await dispatch(openWelcomeSection())
-  dispatch({
-    type: t.STORY_CLOSED,
-    payload: {}
-  })
+  await dispatch(_storyClosed())
 }
+
+export const _storyClosed = () => ({
+  type: t.STORY_CLOSED,
+  payload: {}
+})
