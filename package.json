@@ -75,7 +75,7 @@
     "license-checker": "16.0.0",
     "react-test-renderer": "16.2.0",
     "run-sequence": "2.2.1",
-    "standard": "10.0.3"
+    "standard": "11.0.0"
   },
   "scripts": {
     "start": "gulp",

@@ -1,12 +1,12 @@
 import * as t from './action-types'
 
 import {
-    CREATE_CHARACTER,
-    FIND_CHARACTERS,
-    GET_CHARACTERS,
-    GET_PROFILE,
-    UPDATE_CHARACTER,
-    UPDATE_ENTRY
+  CREATE_CHARACTER,
+  FIND_CHARACTERS,
+  GET_CHARACTERS,
+  GET_PROFILE,
+  UPDATE_CHARACTER,
+  UPDATE_ENTRY
 } from '../../shared/characters/requests'
 
 import { CHARACTERS_SECTION } from './constants'
