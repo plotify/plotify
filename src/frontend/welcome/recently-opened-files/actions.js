@@ -22,17 +22,17 @@ export const getRecentlyOpenedFiles = () => async (dispatch) => {
   }
 }
 
-const getRecentlyOpenedFilesRequest = () => ({
+export const getRecentlyOpenedFilesRequest = () => ({
   type: t.GET_RECENTLY_OPENED_FILES_REQUEST,
   payload: {}
 })
 
-const getRecentlyOpenedFilesSuccessful = (files) => ({
+export const getRecentlyOpenedFilesSuccessful = (files) => ({
   type: t.GET_RECENTLY_OPENED_FILES_SUCCESSFUL,
   payload: { files }
 })
 
-const getRecentlyOpenedFilesFailed = (message) => ({
+export const getRecentlyOpenedFilesFailed = (message) => ({
   type: t.GET_RECENTLY_OPENED_FILES_FAILED,
   payload: { message }
 })
@@ -48,17 +48,17 @@ export const pinRecentlyOpenedFile = (path) => async (dispatch) => {
   }
 }
 
-const pinRecentlyOpenedFileRequest = (path) => ({
+export const pinRecentlyOpenedFileRequest = (path) => ({
   type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_REQUEST,
   payload: { path, pin: true }
 })
 
-const pinRecentlyOpenedFileSuccessful = (path) => ({
+export const pinRecentlyOpenedFileSuccessful = (path) => ({
   type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
   payload: { path, pin: true }
 })
 
-const pinRecentlyOpenedFileFailed = (path, message) => ({
+export const pinRecentlyOpenedFileFailed = (path, message) => ({
   type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED,
   payload: { path, message, pin: true }
 })
@@ -74,17 +74,17 @@ export const unpinRecentlyOpenedFile = (path) => async (dispatch) => {
   }
 }
 
-const unpinRecentlyOpenedFileRequest = (path) => ({
+export const unpinRecentlyOpenedFileRequest = (path) => ({
   type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_REQUEST,
   payload: { path, pin: false }
 })
 
-const unpinRecentlyOpenedFileSuccessful = (path) => ({
+export const unpinRecentlyOpenedFileSuccessful = (path) => ({
   type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
   payload: { path, pin: false }
 })
 
-const unpinRecentlyOpenedFileFailed = (path, message) => ({
+export const unpinRecentlyOpenedFileFailed = (path, message) => ({
   type: t.PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED,
   payload: { path, message, pin: false }
 })
@@ -100,17 +100,17 @@ export const removeRecentlyOpenedFile = (path) => async (dispatch) => {
   }
 }
 
-const removeRecentlyOpenedFileRequest = (path) => ({
+export const removeRecentlyOpenedFileRequest = (path) => ({
   type: t.REMOVE_RECENTLY_OPENED_FILE_REQUEST,
   payload: { path }
 })
 
-const removeRecentlyOpenedFileSuccessful = (path) => ({
+export const removeRecentlyOpenedFileSuccessful = (path) => ({
   type: t.REMOVE_RECENTLY_OPENED_FILE_SUCCESSFUL,
   payload: { path }
 })
 
-const removeRecentlyOpenedFileFailed = (path, message) => ({
+export const removeRecentlyOpenedFileFailed = (path, message) => ({
   type: t.REMOVE_RECENTLY_OPENED_FILE_FAILED,
   payload: { path, message }
 })
@@ -122,7 +122,7 @@ export const openFileInFolder = (path) => async (dispatch) => {
   }
 }
 
-const openFolderNotFoundDialog = () => ({
+export const openFolderNotFoundDialog = () => ({
   type: t.OPEN_FOLDER_NOT_FOUND_DIALOG,
   payload: {}
 })
