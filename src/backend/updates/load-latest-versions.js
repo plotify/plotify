@@ -29,7 +29,7 @@ const verifySignature = async (file, signature) => {
   const message = new cleartext.CleartextMessage(file, signature)
   const options = { publicKeys: releases, message, signature }
   const verified = await verify(options)
-  if (!verified.signatures[0].valid) {
+  if (verified.signatures[0].valid !== true) {
     throw new Error('Invalid signature.')
   }
 }
