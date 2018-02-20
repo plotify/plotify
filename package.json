@@ -26,7 +26,6 @@
   "main": "electron/main.js",
   "private": true,
   "dependencies": {
-    "animated": "0.2.1",
     "babel-polyfill": "6.26.0",
     "classnames": "2.2.5",
     "electron-is-dev": "0.3.0",
