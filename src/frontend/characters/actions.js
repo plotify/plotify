@@ -37,7 +37,7 @@ const createCharacterRequest = () => ({
   payload: {}
 })
 
-const createCharacterSuccessful = (id, name) => ({
+export const createCharacterSuccessful = (id, name) => ({
   type: t.CREATE_CHARACTER_SUCCESSFUL,
   payload: { id, name }
 })
@@ -63,7 +63,7 @@ const getCharactersRequest = () => ({
   payload: {}
 })
 
-const getCharactersSuccessful = (characters) => ({
+export const getCharactersSuccessful = (characters) => ({
   type: t.GET_CHARACTERS_SUCCESSFUL,
   payload: { characters }
 })
@@ -88,7 +88,7 @@ const findCharactersRequest = () => ({
   payload: {}
 })
 
-const findCharactersSuccessful = (characters) => ({
+export const findCharactersSuccessful = (characters) => ({
   type: t.FIND_CHARACTERS_SUCCESSFUL,
   payload: { characters }
 })
@@ -110,13 +110,15 @@ export const closeCreateCharacterDialog = () => ({
 
 export const selectCharacter = (id) => (dispatch, getState) => {
   if (getSelectedCharacterId(getState()) !== id) {
-    dispatch({
-      type: t.SELECT_CHARACTER,
-      payload: { id }
-    })
+    dispatch(_selectCharacter(id))
     dispatch(loadProfile(id))
   }
 }
+
+export const _selectCharacter = (id) => ({
+  type: t.SELECT_CHARACTER,
+  payload: { id }
+})
 
 export const deselectCharacter = () => ({
   type: t.DESELECT_CHARACTER,
@@ -133,12 +135,12 @@ const loadProfile = (id) => async (dispatch) => {
   }
 }
 
-const loadProfileRequest = (id) => ({
+export const loadProfileRequest = (id) => ({
   type: t.LOAD_PROFILE_REQUEST,
   payload: { id }
 })
 
-const loadProfileSuccessful = (id, profile) => ({
+export const loadProfileSuccessful = (id, profile) => ({
   type: t.LOAD_PROFILE_SUCCESSFUL,
   payload: { id, profile }
 })
@@ -168,12 +170,12 @@ export const updateEntry = (id, value) => async (dispatch) => {
   }
 }
 
-const updateEntryRequest = (id, value) => ({
+export const updateEntryRequest = (id, value) => ({
   type: t.UPDATE_PROFILE_ENTRY_REQUEST,
-  payload: {}
+  payload: { id, value }
 })
 
-const updateEntrySuccessful = (id, value) => ({
+export const updateEntrySuccessful = (id, value) => ({
   type: t.UPDATE_PROFILE_ENTRY_SUCCESSFUL,
   payload: { id, value }
 })
@@ -194,12 +196,12 @@ export const updateCharacterName = (id, name) => async (dispatch) => {
   }
 }
 
-const updateCharacterNameRequest = (id) => ({
+export const updateCharacterNameRequest = (id) => ({
   type: t.UPDATE_CHARACTER_NAME_REQUEST,
   payload: { id }
 })
 
-const updateCharacterNameSuccessful = (id, name) => ({
+export const updateCharacterNameSuccessful = (id, name) => ({
   type: t.UPDATE_CHARACTER_NAME_SUCCESSFUL,
   payload: { id, name }
 })
