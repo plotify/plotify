@@ -9,7 +9,7 @@ import {
   pinRecentlyOpenedFile,
   removeRecentlyOpenedFile,
   unpinRecentlyOpenedFile
-} from './'
+} from './recently-opened-files'
 
 import { requestHandler } from '../shared/communication'
 

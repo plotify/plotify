@@ -2,8 +2,7 @@ import {
   CLOSE_FULL_SCREEN_HINT,
   DISABLE_DARK_THEME,
   ENABLE_DARK_THEME,
-  SHOW_FULL_SCREEN_HINT,
-  TOGGLE_DARK_THEME
+  SHOW_FULL_SCREEN_HINT
 } from './action-types'
 
 import { createReducer } from '../../shared/redux'
@@ -14,10 +13,6 @@ const initialState = {
 }
 
 export default createReducer(initialState, {
-  [TOGGLE_DARK_THEME]: (state) => ({
-    ...state,
-    darkTheme: !state.darkTheme
-  }),
   [ENABLE_DARK_THEME]: (state) => ({
     ...state,
     darkTheme: true

@@ -16,7 +16,7 @@ const handleReadyToShow = (event) => async (dispatch, getState) => {
   try {
     await enableOrDisableDarkTheme(getState, window)
   } finally {
-    dispatch(handleReadyWindow(window, storyPath))
+    await handleReadyWindow(dispatch, window, storyPath)
   }
 }
 
@@ -28,16 +28,16 @@ const enableOrDisableDarkTheme = async (getState, window) => {
   }
 }
 
-const handleReadyWindow = (window, storyPath) => async (dispatch) => {
+const handleReadyWindow = async (dispatch, window, storyPath) => {
   if (storyPath !== '') {
     try {
       await openStory(window, storyPath)
-      showWindow(window)
+      showWindow(dispatch, window)
     } catch (error) {
-      dispatch(showErrorAndCloseWindow(window, error))
+      showErrorAndCloseWindow(dispatch, window, error)
     }
   } else {
-    showWindow(window)
+    showWindow(dispatch, window)
   }
 }
 
@@ -55,7 +55,7 @@ const openStory = (window, storyPath) => {
   })
 }
 
-const showErrorAndCloseWindow = (window, error) => (dispatch) => {
+const showErrorAndCloseWindow = (dispatch, window, error) => {
   dispatch(removeWindow(window))
   dialog.showMessageBox({
     type: 'error',
@@ -64,13 +64,13 @@ const showErrorAndCloseWindow = (window, error) => (dispatch) => {
     buttons: ['Schließen'],
     defaultId: 0
   }, () => window.destroy())
-  closeSplashScreen()
+  dispatch(closeSplashScreen())
 }
 
-const showWindow = (window) => {
+const showWindow = (dispatch, window) => {
   window.maximize()
   window.show()
-  closeSplashScreen()
+  dispatch(closeSplashScreen())
 }
 
 export default handleReadyToShow

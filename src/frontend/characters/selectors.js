@@ -41,7 +41,6 @@ export const getProfileEntries = (state) =>
 export const isProfileEmpty = (state) => {
   const entries = getProfileEntries(state)
   let result = true
-  if (entries.length === 0) return result
   Object.keys(entries).forEach(e => {
     if (result && !isProfileEntryEmpty(state, e)) {
       result = false

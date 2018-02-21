@@ -20,10 +20,12 @@ export const openUpdateNotificationUrl = () => (dispatch, getState) => {
 
 export const closeUpdateNotification = () => (dispatch, getState) => {
   if (isUpdateNotificationOpen(getState())) {
-    dispatch({
-      type: t.CLOSE_UPDATE_NOTIFICATION,
-      payload: {}
-    })
+    dispatch(_closeUpdateNotification())
     request(UPDATE_NOTIFICATION_CLOSED)
   }
 }
+
+export const _closeUpdateNotification = () => ({
+  type: t.CLOSE_UPDATE_NOTIFICATION,
+  payload: {}
+})

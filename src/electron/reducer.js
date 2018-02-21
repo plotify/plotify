@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { reducer as preferences } from './preferences'
-import splashScreen from './splash-screen/reducer'
+import { reducer as splashScreen } from './splash-screen'
 import { reducer as stories } from './story'
 import { reducer as windows } from './windows'
 

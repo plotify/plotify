@@ -34,7 +34,7 @@ export const closePreferences = () => async (dispatch, getState) => {
   dispatch(setPreferncesDatabase(null))
 }
 
-const setPreferncesDatabase = (database) => ({
+export const setPreferncesDatabase = (database) => ({
   type: t.SET_PREFERENCES_DATABASE,
   payload: { database }
 })

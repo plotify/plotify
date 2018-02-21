@@ -16,7 +16,9 @@ export {
 export {
   setWindowStoryPath,
   createOrFocus,
-  focusWindow
+  focusWindow,
+  addWindow,
+  setWindowFocusStatus
 } from './actions'
 
 export {

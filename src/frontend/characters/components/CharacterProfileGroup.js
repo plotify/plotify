@@ -31,7 +31,7 @@ const CharacterProfileGroup = (props) => {
               entryId={entry}
               key={entry}
               editMode={editMode}
-          />
+            />
           ))}
       </Paper>
     </div>

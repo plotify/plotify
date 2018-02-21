@@ -6,7 +6,6 @@ import { getWindowByStoryPath, isWindowReady } from './selectors'
 import { BrowserWindow } from 'electron'
 import { format } from 'url'
 import initEventHandlers from './events'
-import { initMenu } from '../menu'
 import { initReload } from '../development'
 import isDev from 'electron-is-dev'
 import path from 'path'
@@ -15,14 +14,14 @@ export const createOrFocus = (storyPath = '') => (dispatch, getState) => {
   const state = getState()
   let window = getWindowByStoryPath(state, storyPath)
   if (window) {
-    focusExistingWindowOrSplashScreen(state, window)
+    focusExistingWindowOrSplashScreen(dispatch, state, window)
   } else {
     createNewWindow(dispatch, storyPath)
   }
 }
 
 const createNewWindow = (dispatch, storyPath) => {
-  showSplashScreen()
+  dispatch(showSplashScreen())
 
   const window = new BrowserWindow({
     width: 1000,
@@ -34,7 +33,6 @@ const createNewWindow = (dispatch, storyPath) => {
   dispatch(addWindow(window))
   dispatch(setWindowStoryPath(window.id, storyPath))
   initEventHandlers(window)
-  initMenu()
 
   if (isDev) {
     initReload(window)
@@ -47,11 +45,11 @@ const createNewWindow = (dispatch, storyPath) => {
   }))
 }
 
-const focusExistingWindowOrSplashScreen = (state, window) => {
+const focusExistingWindowOrSplashScreen = (dispatch, state, window) => {
   if (isWindowReady(state, window.id)) {
     focusWindow(window)
   } else {
-    focusSplashScreenIfExisting()
+    dispatch(focusSplashScreenIfExisting())
   }
 }
 

@@ -26,9 +26,9 @@ const render = () => {
 }
 
 request(GET_SAVED_STATE)
- .then(state => store.dispatch(setState(state)))
- .catch(() => Promise.resolve(undefined))
- .then(() => render())
+  .then(state => store.dispatch(setState(state)))
+  .catch(() => Promise.resolve(undefined))
+  .then(() => render())
 
 store.dispatch(openWelcomeSection())
 render()

@@ -48,13 +48,13 @@ export default createReducer(initialState, {
       error: null
     }
   },
-  [PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED]: (state, { path, pin }) => {
+  [PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED]: (state, { path, pin, message }) => {
     const files = state.files.filter((file) => file.path !== path)
     const file = { path, pinned: !pin }
     return {
       ...state,
       files: [ ...files, file ],
-      error: null
+      error: message
     }
   },
   [PIN_UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL]: removeError,

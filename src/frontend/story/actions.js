@@ -36,22 +36,22 @@ export const openStory = (path) => async (dispatch, getState) => {
   request(OPEN_STORY_FINISHED, openError)
 }
 
-const openStoryStarted = () => ({
+export const openStoryStarted = () => ({
   type: t.OPEN_STORY_STARTED,
   payload: {}
 })
 
-const openStorySuccessful = (path) => ({
+export const openStorySuccessful = (path) => ({
   type: t.OPEN_STORY_SUCCESSFUL,
   payload: { path }
 })
 
-const openStoryFailed = (message) => ({
+export const openStoryFailed = (message) => ({
   type: t.OPEN_STORY_FAILED,
   payload: { message }
 })
 
-const openStoryCanceled = () => ({
+export const openStoryCanceled = () => ({
   type: t.OPEN_STORY_CANCELED,
   payload: {}
 })
@@ -87,22 +87,22 @@ export const createStory = () => async (dispatch, getState) => {
   }
 }
 
-const createStoryStarted = () => ({
+export const createStoryStarted = () => ({
   type: t.CREATE_STORY_STARTED,
   payload: {}
 })
 
-const createStorySuccessful = () => ({
+export const createStorySuccessful = () => ({
   type: t.CREATE_STORY_SUCCESSFUL,
   payload: {}
 })
 
-const createStoryFailed = (message) => ({
+export const createStoryFailed = (message) => ({
   type: t.CREATE_STORY_FAILED,
   payload: { message }
 })
 
-const createStoryCanceled = () => ({
+export const createStoryCanceled = () => ({
   type: t.CREATE_STORY_CANCELED,
   payload: {}
 })
@@ -121,15 +121,17 @@ export const closeStoryPreparation = (closeWindow, focusWelcomeWindow) => async 
   request(CLOSE_STORY_PREPARATION_FINISHED, { closeWindow, focusWelcomeWindow })
 }
 
-const closeStoryPreparationStarted = () => ({
+export const closeStoryPreparationStarted = () => ({
   type: t.CLOSE_STORY_PREPARATION_STARTED,
   payload: {}
 })
 
 export const storyClosed = () => async (dispatch) => {
   await dispatch(openWelcomeSection())
-  dispatch({
-    type: t.STORY_CLOSED,
-    payload: {}
-  })
+  await dispatch(_storyClosed())
 }
+
+export const _storyClosed = () => ({
+  type: t.STORY_CLOSED,
+  payload: {}
+})
