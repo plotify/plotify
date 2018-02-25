@@ -1,5 +1,5 @@
-import { getRecentlyOpenedFiles, removeRecentlyOpenedFile } from './'
-
+import getRecentlyOpenedFiles from './get'
+import removeRecentlyOpenedFile from './remove'
 import { validateDatabase } from '../../shared/validation'
 
 const MAX_FILES = 25
