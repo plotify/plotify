@@ -1,4 +1,4 @@
-import { addOrUpdateRecentlyOpenedFile } from './'
+import addOrUpdateRecentlyOpenedFile from './add-or-update'
 
 export const pinRecentlyOpenedFile = async (preferences, path) => {
   await pinOrUnpinRecentlyOpenedFile(preferences, path, true)

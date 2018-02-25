@@ -50,7 +50,7 @@ const open = (senderWindow, path) => async (dispatch, getState) => {
   try {
     const story = await openStory(path)
     dispatch(setStoryLoaded(path, story))
-    addOrUpdateRecentlyOpenedFile({ path, lastOpened: new Date().toISOString() }) // Asynchron: Soll das Öffnen der Geschichte nicht verzögern oder verhindern.
+    dispatch(addOrUpdateRecentlyOpenedFile({ path, lastOpened: new Date().toISOString() }))
     return story
   } catch (error) {
     dispatch(setWindowStoryPath(senderWindow.id, ''))

@@ -12,27 +12,26 @@ import {
 } from './recently-opened-files'
 
 import { requestHandler } from '../shared/communication'
+import store from '../store'
 
-const handleGetRecentlyOpenedFiles = (resolve, reject) => {
-  getRecentlyOpenedFiles()
-    .then((files) => resolve(files))
-    .catch((error) => reject(error))
+const handleGetRecentlyOpenedFiles = (resolve) => {
+  resolve(getRecentlyOpenedFiles(store.getState()))
 }
 
 const handlePinRecentlyOpenedFile = (resolve, reject, _, path) => {
-  pinRecentlyOpenedFile(path)
+  store.dispatch(pinRecentlyOpenedFile(path))
     .then(() => resolve())
     .catch((error) => reject(error))
 }
 
 const handleUnpinRecentlyOpenedFile = (resolve, reject, _, path) => {
-  unpinRecentlyOpenedFile(path)
+  store.dispatch(unpinRecentlyOpenedFile(path))
     .then(() => resolve())
     .catch((error) => reject(error))
 }
 
 const handleRemoveGetRecentlyOpenedFile = (resolve, reject, _, path) => {
-  removeRecentlyOpenedFile(path)
+  store.dispatch(removeRecentlyOpenedFile(path))
     .then(() => resolve())
     .catch((error) => reject(error))
 }

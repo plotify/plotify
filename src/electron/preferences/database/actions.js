@@ -1,16 +1,14 @@
 import * as t from './action-types'
 
-import { isDarkThemeEnabled, openOrCreate } from '../../../backend/preferences'
-
 import { app } from 'electron'
 import { getPreferencesDatabase } from './selectors'
 import { join } from 'path'
-import { setDarkThemeEnabled } from '../dark-theme'
+import { openOrCreate } from '../../../backend/preferences'
 
 const PREFERENCES_DIRECTORY = 'userData'
 const PREFERENCES_FILE = 'plotify.preferences.db'
 
-export const openPreferences = () => async (dispatch, getState) => {
+export const openPreferencesDatabase = () => async (dispatch, getState) => {
   if (getPreferencesDatabase(getState())) {
     return
   }
@@ -19,12 +17,9 @@ export const openPreferences = () => async (dispatch, getState) => {
   const path = join(directory, PREFERENCES_FILE)
   const database = await openOrCreate(path)
   dispatch(setPreferncesDatabase(database))
-
-  const darkThemeEnabled = await isDarkThemeEnabled(database)
-  dispatch(setDarkThemeEnabled(darkThemeEnabled))
 }
 
-export const closePreferences = () => async (dispatch, getState) => {
+export const closePreferencesDatabase = () => async (dispatch, getState) => {
   if (!getPreferencesDatabase(getState())) {
     return
   }

@@ -2,13 +2,19 @@ import { CLOSE_STORY_PREPARATION_REQUESTED, CREATE_STORY_REQUESTED, OPEN_STORY_R
 
 import { createSelector } from 'reselect'
 import { isStoryOpenInFocusedWindow } from '../story'
+import recentlyOpenedFiles from './recently-opened-files'
 import { request } from '../shared/communication'
 
-const fileMenu = (openStoryInFocusedWindow) => ({
+const fileMenu = (recentlyOpenedFiles, openStoryInFocusedWindow) => ({
   label: 'Datei',
   submenu: [
     { label: 'Neu...', click: createStory },
     { label: 'Öffnen...', click: openStory },
+    {
+      label: 'Zuletzt geöffnet',
+      enabled: recentlyOpenedFiles.length > 0,
+      submenu: recentlyOpenedFiles
+    },
     { label: 'Schließen', enabled: openStoryInFocusedWindow, click: closeStory },
     { type: 'separator' },
     { label: 'Beenden', role: 'quit' }
@@ -29,12 +35,10 @@ const closeStory = (_, window) => {
   request(window, CLOSE_STORY_PREPARATION_REQUESTED, { closeWindow, focusWelcomeWindow })
 }
 
-const openStoryInFocusedWindow = fileMenu(true)
-const noStoryInFocusedWindow = fileMenu(false)
-
 const selector = createSelector(
+  recentlyOpenedFiles,
   isStoryOpenInFocusedWindow,
-  (open) => open ? openStoryInFocusedWindow : noStoryInFocusedWindow
+  fileMenu
 )
 
 export default selector
