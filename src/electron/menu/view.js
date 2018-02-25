@@ -1,37 +1,48 @@
 import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../shared/view/requests'
+import { disableDarkTheme, enableDarkTheme, isDarkThemeEnabled } from '../preferences'
 
-import { Menu } from 'electron'
+import { createSelector } from 'reselect'
 import { getWindows } from '../windows'
 import { request } from '../shared/communication'
-import { setDarkThemeEnabled } from '../preferences'
+import store from '../store'
 
-// TODO Nachtmodus checked=true/false abhängig davon, ob der Nachtmodus bereits aktiviert ist.
-const view = () => ({
+const viewMenu = (darkThemeEnabled) => ({
   label: 'Ansicht',
   submenu: [
     { label: 'Vergrößern', role: 'zoomin' },
     { label: 'Verkleinern', role: 'zoomout' },
     { label: 'Standardgröße', role: 'resetzoom' },
     { type: 'separator' },
-    { label: 'Nachtmodus', type: 'checkbox', checked: false, click: toggleDarkTheme },
+    {
+      label: 'Nachtmodus',
+      type: 'checkbox',
+      checked: darkThemeEnabled,
+      click: toggleDarkTheme
+    },
     { type: 'separator' },
     { label: 'Vollbild', role: 'togglefullscreen' }
   ]
 })
 
-// TODO Theme von neuen Fenstern setzen.
-const toggleDarkTheme = (menuItem, window, _) => {
-  setDarkThemeEnabled(menuItem.checked)
+// Keine anonyme Funktion, damit kein kompletter Neuaufbau der Menüleiste notwendig ist.
+const toggleDarkTheme = (menuItem) => {
+  if (menuItem.checked) {
+    store.dispatch(enableDarkTheme())
+  } else {
+    store.dispatch(disableDarkTheme())
+  }
   const name = menuItem.checked ? ENABLE_DARK_THEME : DISABLE_DARK_THEME
-  for (let window of getWindows()) {
+  for (let window of getWindows(store.getState())) {
     request(window, name)
   }
-  unityWorkaround()
 }
 
-// Workaround: Unter Unity aktualisiert sich die Checkbox nicht.
-const unityWorkaround = () => {
-  Menu.setApplicationMenu(Menu.getApplicationMenu())
-}
+const enabledState = viewMenu(true)
+const disabledState = viewMenu(false)
 
-export default view
+const selector = createSelector(
+  isDarkThemeEnabled,
+  (enabled) => enabled ? enabledState : disabledState
+)
+
+export default selector

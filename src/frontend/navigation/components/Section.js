@@ -1,5 +1,4 @@
 import AppBar from 'material-ui/AppBar'
-import MediaQuery from 'react-responsive'
 import NavigationDrawerButton from './NavigationDrawerButton'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -21,20 +20,12 @@ const createSection = (props) => {
   const { classes, hideAppBar, children } = props
   const appBar = createAppBar(props)
   const contentClass = hideAppBar ? classes.contentWithoutAppBar : classes.content
-  const contentSmallAppBarClass = hideAppBar ? classes.contentWithoutAppBar : classes.contentSmallAppBar
   return (
     <div className={classes.wrapper}>
       {appBar}
-      <MediaQuery minWidth={600}>
-        <div className={contentClass}>
-          {children}
-        </div>
-      </MediaQuery>
-      <MediaQuery maxWidth={599}>
-        <div className={contentSmallAppBarClass}>
-          {children}
-        </div>
-      </MediaQuery>
+      <div className={contentClass}>
+        {children}
+      </div>
     </div>
   )
 }
@@ -93,13 +84,14 @@ const styles = (theme) => ({
   },
   content: {
     overflowY: 'auto',
-    paddingTop: '64px',
-    height: 'calc(100% - 64px)'
-  },
-  contentSmallAppBar: {
-    overflowY: 'auto',
-    paddingTop: '56px',
-    height: 'calc(100% - 56px)'
+    '@media (min-width: 600px)': {
+      height: 'calc(100% - 64px)',
+      marginTop: '64px'
+    },
+    '@media (max-width: 599px)': {
+      height: 'calc(100% - 56px)',
+      marginTop: '56px'
+    }
   },
   contentWithoutAppBar: {
     overflowY: 'auto',

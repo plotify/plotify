@@ -11,3 +11,4 @@ export const CREATE_STORY_CANCELED = 'story/create-story-canceled'
 export const CLOSE_CREATE_STORY_DIALOG = 'story/close-create-story-dialog'
 
 export const CLOSE_STORY_PREPARATION_STARTED = 'story/close-story-preparation-started'
+export const STORY_CLOSED = 'story/story-closed'

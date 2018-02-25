@@ -1,5 +1,5 @@
 language: node_js
-node_js: "7"
+node_js: "8"
 
 os:
   - linux
@@ -21,7 +21,7 @@ before_script:
 script:
   - npm run lint
   - npm run dist
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run coverage ; fi
+  - npm run coverage
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run report-coverage ; fi

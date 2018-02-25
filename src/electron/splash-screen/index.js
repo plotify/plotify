@@ -1,7 +1,2 @@
-export {
-  showSplashScreen,
-  closeSplashScreen,
-  focusSplashScreenIfExisting,
-  addListener,
-  removeListener
-} from './show-close'
+export { default as reducer } from './reducer'
+export { showSplashScreen, closeSplashScreen, focusSplashScreenIfExisting } from './actions'

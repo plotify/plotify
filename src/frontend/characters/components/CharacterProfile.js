@@ -1,8 +1,8 @@
 import {
-    getProfileGroupIds,
-    isCharacterEditModeEnabled,
-    isProfileEmpty,
-    isProfileFetching
+  getProfileGroupIds,
+  isCharacterEditModeEnabled,
+  isProfileEmpty,
+  isProfileFetching
 } from '../selectors'
 
 import CharacterProfileGroup from './CharacterProfileGroup'

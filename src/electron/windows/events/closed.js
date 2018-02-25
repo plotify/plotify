@@ -1,7 +1,7 @@
-import { removeWindow } from '../windows'
+import { removeWindow } from '../actions'
 
-const handleClosed = (event) => {
-  removeWindow(event.sender)
+const handleClosed = (event) => (dispatch) => {
+  dispatch(removeWindow(event.sender))
 }
 
 export default handleClosed

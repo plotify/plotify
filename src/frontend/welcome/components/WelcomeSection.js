@@ -18,7 +18,7 @@ const WelcomeSection = (props) => {
         <Paper className={classes.card}>
           <StarterList />
         </Paper>
-        <Typography className={classes.title} type='title'>Zuletzt verwendet</Typography>
+        <Typography className={classes.title} variant='title'>Zuletzt verwendet</Typography>
         <RecentFiles listClassName={classes.card} />
       </div>
     </Section>

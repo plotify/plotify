@@ -1,7 +1,7 @@
 import {
-    getSelectedCharacterId,
-    getSelectedCharacterName,
-    isCharacterEditModeEnabled
+  getSelectedCharacterId,
+  getSelectedCharacterName,
+  isCharacterEditModeEnabled
 } from '../selectors'
 
 import AutosavingTextField from '../../shared/AutosavingTextField'

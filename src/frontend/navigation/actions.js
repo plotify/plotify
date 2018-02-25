@@ -1,4 +1,4 @@
-import * as t from './actionTypes'
+import * as t from './action-types'
 
 export const setSection = (id) => ({
   type: t.SET_SECTION,

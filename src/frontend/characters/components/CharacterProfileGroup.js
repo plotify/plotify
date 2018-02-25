@@ -15,7 +15,7 @@ const CharacterProfileGroup = (props) => {
   return (
     <div className={classNames(className, classes.wrapper)}>
       <Typography
-        type='title'
+        variant='title'
         className={classes.title}
         gutterBottom>
         {group.title}
@@ -31,7 +31,7 @@ const CharacterProfileGroup = (props) => {
               entryId={entry}
               key={entry}
               editMode={editMode}
-          />
+            />
           ))}
       </Paper>
     </div>

@@ -1,4 +1,20 @@
-import * as t from './action-types'
+import {
+  ADD_RECENTLY_OPENED_FILE,
+  CLOSE_FOLDER_NOT_FOUND_DIALOG,
+  GET_RECENTLY_OPENED_FILES_FAILED,
+  GET_RECENTLY_OPENED_FILES_REQUEST,
+  GET_RECENTLY_OPENED_FILES_SUCCESSFUL,
+  OPEN_FOLDER_NOT_FOUND_DIALOG,
+  PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED,
+  PIN_UNPIN_RECENTLY_OPENED_FILE_REQUEST,
+  PIN_UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL,
+  REMOVE_ERROR,
+  REMOVE_RECENTLY_OPENED_FILE_FAILED,
+  REMOVE_RECENTLY_OPENED_FILE_REQUEST,
+  REMOVE_RECENTLY_OPENED_FILE_SUCCESSFUL
+} from './action-types'
+
+import { createReducer } from '../../../shared/redux'
 
 const initialState = {
   files: [],
@@ -6,84 +22,71 @@ const initialState = {
   error: null
 }
 
-// TODO Error pro Aktion
-const reducer = (state = initialState, action) => {
-  let files
-  switch (action.type) {
-    case t.GET_RECENTLY_OPENED_FILES_REQUEST:
-      return Object.assign({}, state, {
-        error: null
-      })
-    case t.GET_RECENTLY_OPENED_FILES_FAILED:
-      return Object.assign({}, state, {
-        error: action.payload.message
-      })
-    case t.GET_RECENTLY_OPENED_FILES_SUCCESSFUL:
-      return Object.assign({}, state, {
-        files: action.payload.files.map((file) => ({ ...file })),
-        error: null
-      })
+const removeError = (state) => ({
+  ...state,
+  error: null
+})
 
-    case t.PIN_RECENTLY_OPENED_FILE_REQUEST:
-    case t.UNPIN_RECENTLY_OPENED_FILE_REQUEST:
-      files = state.files.filter((file) => file.path !== action.payload.path)
-      files = [{ path: action.payload.path, pinned: action.payload.pin }, ...files]
-      return Object.assign({}, state, {
-        files,
-        error: null
-      })
-    case t.PIN_RECENTLY_OPENED_FILE_FAILED:
-    case t.UNPIN_RECENTLY_OPENED_FILE_FAILED:
-      files = state.files.filter((file) => file.path !== action.payload.path)
-      files = [...files, { path: action.payload.path, pinned: !action.payload.pin }]
-      return Object.assign({}, state, {
-        files,
-        error: action.payload.message
-      })
-    case t.PIN_RECENTLY_OPENED_FILE_SUCCESSFUL:
-    case t.UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL:
-      return Object.assign({}, state, {
-        error: null
-      })
+export default createReducer(initialState, {
+  [GET_RECENTLY_OPENED_FILES_REQUEST]: removeError,
+  [GET_RECENTLY_OPENED_FILES_FAILED]: (state, { message }) => ({
+    ...state,
+    error: message
+  }),
+  [GET_RECENTLY_OPENED_FILES_SUCCESSFUL]: (state, { files }) => ({
+    ...state,
+    files: files.map((file) => ({ ...file })),
+    error: null
+  }),
 
-    case t.REMOVE_RECENTLY_OPENED_FILE_REQUEST:
-      return Object.assign({}, state, {
-        files: state.files.filter((file) => file.path !== action.payload.path),
-        error: null
-      })
-    case t.REMOVE_RECENTLY_OPENED_FILE_FAILED:
-      return Object.assign({}, state, {
-        files: [ ...state.files, { path: action.payload.path, pinned: false } ],
-        error: action.payload.message
-      })
-    case t.REMOVE_RECENTLY_OPENED_FILE_SUCCESSFUL:
-      return Object.assign({}, state, {
-        error: null
-      })
+  [PIN_UNPIN_RECENTLY_OPENED_FILE_REQUEST]: (state, { path, pin }) => {
+    const files = state.files.filter((file) => file.path !== path)
+    const file = { path, pinned: pin }
+    return {
+      ...state,
+      files: [ file, ...files ],
+      error: null
+    }
+  },
+  [PIN_UNPIN_RECENTLY_OPENED_FILE_FAILED]: (state, { path, pin, message }) => {
+    const files = state.files.filter((file) => file.path !== path)
+    const file = { path, pinned: !pin }
+    return {
+      ...state,
+      files: [ ...files, file ],
+      error: message
+    }
+  },
+  [PIN_UNPIN_RECENTLY_OPENED_FILE_SUCCESSFUL]: removeError,
 
-    case t.OPEN_FOLDER_NOT_FOUND_DIALOG:
-      return Object.assign({}, state, {
-        showFolderNotFoundDialog: true
-      })
-    case t.CLOSE_FOLDER_NOT_FOUND_DIALOG:
-      return Object.assign({}, state, {
-        showFolderNotFoundDialog: false
-      })
+  [REMOVE_RECENTLY_OPENED_FILE_REQUEST]: (state, { path }) => ({
+    ...state,
+    files: state.files.filter((file) => file.path !== path),
+    error: null
+  }),
+  [REMOVE_RECENTLY_OPENED_FILE_FAILED]: (state, { path, message }) => ({
+    ...state,
+    files: [ ...state.files, { path, pinned: false } ],
+    error: message
+  }),
+  [REMOVE_RECENTLY_OPENED_FILE_SUCCESSFUL]: removeError,
 
-    case t.REMOVE_ERROR:
-      return Object.assign({}, state, {
-        error: null
-      })
+  [OPEN_FOLDER_NOT_FOUND_DIALOG]: (state) => ({
+    ...state,
+    showFolderNotFoundDialog: true
+  }),
+  [CLOSE_FOLDER_NOT_FOUND_DIALOG]: (state) => ({
+    ...state,
+    showFolderNotFoundDialog: false
+  }),
 
-    case t.ADD_RECENTLY_OPENED_FILE:
-      files = state.files.filter((file) => file.path !== action.payload.file.path)
-      return Object.assign({}, state, {
-        files: [ action.payload.file, ...files ]
-      })
+  [REMOVE_ERROR]: removeError,
 
-    default:
-      return state
+  [ADD_RECENTLY_OPENED_FILE]: (state, { file }) => {
+    const files = state.files.filter((f) => f.path !== file.path)
+    return {
+      ...state,
+      files: [ file, ...files ]
+    }
   }
-}
-
-export default reducer
+})

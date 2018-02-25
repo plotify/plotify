@@ -1,5 +1,5 @@
 install:
-  - ps: Install-Product node 7.9.0 x64
+  - ps: Install-Product node 8.2.1 x64
   - node --version
   - npm --version
 
@@ -11,6 +11,7 @@ before_build:
 build_script:
   - npm run lint
   - npm run dist
+  - npm run coverage
 
 test: off
 

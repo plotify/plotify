@@ -2,6 +2,7 @@ import { SHOW_UPDATE_NOTIFICATION } from '../../shared/updates/requests'
 import { checkUpdates } from '../../backend/updates'
 import { getWindows } from '../windows'
 import { request } from '../shared/communication'
+import store from '../store'
 
 const packageJson = require('../../package.json')
 
@@ -12,7 +13,7 @@ const check = async () => {
     const update = await checkUpdates(currentVersion)
     if (update) {
       console.log('[Updates] Es wurde ein Update gefunden:', update)
-      for (const window of getWindows()) {
+      for (const window of getWindows(store.getState())) {
         request(window, SHOW_UPDATE_NOTIFICATION, update)
       }
     } else {

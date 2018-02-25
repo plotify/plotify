@@ -1,13 +1,19 @@
 import 'babel-polyfill'
 
-import { closePreferences, initPreferences } from './preferences'
+import { closePreferences, openPreferences } from './preferences'
 import { closeSplashScreen, showSplashScreen } from './splash-screen'
 
 import { app } from 'electron'
 import { createOrFocus } from './windows'
-import initDevToolsExtensions from './dev-tools-extensions'
+import { initDevToolsExtensions } from './development'
+import { initMenu } from './menu'
 import isDev from 'electron-is-dev'
 import printWelcomeScreen from './versions'
+import store from './store'
+
+process.on('unhandledRejection', (error) => {
+  console.warn('WARNING: Unhandled promise rejection:', error)
+})
 
 let loadingBackend = true
 let storyPaths = new Set()
@@ -20,7 +26,7 @@ const isSecondInstance = app.makeSingleInstance((argv, _) => {
   if (loadingBackend) {
     paths.forEach((path) => storyPaths.add(path))
   } else {
-    paths.forEach(createOrFocus)
+    paths.forEach((path) => store.dispatch(createOrFocus(path)))
   }
 })
 
@@ -33,38 +39,38 @@ app.on('open-file', (event, path) => {
   if (loadingBackend) {
     storyPaths.add(path)
   } else {
-    createOrFocus(path)
+    store.dispatch(createOrFocus(path))
   }
 })
 
 printWelcomeScreen()
 
 const initSplashScreen = () => {
-  showSplashScreen().once('ready-to-show', initApp)
+  const splashScreen = store.dispatch(showSplashScreen())
+  splashScreen.on('ready-to-show', initDebugTools)
 }
 
-const initApp = () => {
-  const init = () => {
-    registerRequestHandlers()
-    initPreferences().then(() => {
-      createWindows()
-    })
+const initDebugTools = async () => {
+  try {
+    await initDevToolsExtensions()
+  } finally {
+    initApp()
   }
-  initDevToolsExtensions()
-    .then(() => init())
-    .catch(() => init())
 }
 
-const registerRequestHandlers = () => {
+const initApp = async () => {
+  initMenu()
   require('./request-handlers')()
+  await store.dispatch(openPreferences())
+  createWindows()
 }
 
 const createWindows = () => {
   loadingBackend = false
   getStoryPathsFromArguments(process.argv).forEach((path) => storyPaths.add(path))
   addDefaultPathIfEmpty(storyPaths)
-  storyPaths.forEach(createOrFocus)
-  closeSplashScreen()
+  storyPaths.forEach((path) => store.dispatch(createOrFocus(path)))
+  store.dispatch(closeSplashScreen())
 }
 
 const getStoryPathsFromArguments = (argv) => {
@@ -83,10 +89,12 @@ const addDefaultPathIfEmpty = (paths) => {
 
 app.on('ready', initSplashScreen)
 
-app.on('window-all-closed', () => {
+app.on('window-all-closed', async () => {
   if (process.platform !== 'darwin') {
-    closePreferences()
-      .then(() => app.quit())
-      .catch(() => app.quit())
+    try {
+      await store.dispatch(closePreferences())
+    } finally {
+      app.quit()
+    }
   }
 })

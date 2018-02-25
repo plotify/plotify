@@ -1,26 +1,21 @@
 import { createSelector } from 'reselect'
 
-export const isCreateCharacterDialogOpen = (state) => (
+export const isCreateCharacterDialogOpen = (state) =>
   state.characters.createDialogOpen === true
-)
 
 export const getFilteredCharacters = createSelector(
   (state) => state.characters.list,
   (state) => state.characters.entities,
-  (list, entities) => (
-    list
-      .map((id) => entities[id])
-      .filter((character) => character !== undefined)
-  )
+  (list, entities) => list
+    .map((id) => entities[id])
+    .filter((character) => character !== undefined)
 )
 
-export const isCharacterSelected = (state) => (
+export const isCharacterSelected = (state) =>
   state.characters.selected !== null
-)
 
-export const getSelectedCharacterId = (state) => (
+export const getSelectedCharacterId = (state) =>
   state.characters.selected
-)
 
 export const getSelectedCharacterName = (state) => {
   let result
@@ -31,26 +26,21 @@ export const getSelectedCharacterName = (state) => {
   return result
 }
 
-export const isCharacterEditModeEnabled = (state) => (
+export const isCharacterEditModeEnabled = (state) =>
   state.characters.editMode === true
-)
 
-export const getProfile = (state) => (
+export const getProfile = (state) =>
   state.characters.profile
-)
 
-export const getProfileGroupIds = (state) => (
+export const getProfileGroupIds = (state) =>
   getProfile(state).groupOrder
-)
 
-export const getProfileEntries = (state) => (
+export const getProfileEntries = (state) =>
   getProfile(state).entries
-)
 
 export const isProfileEmpty = (state) => {
   const entries = getProfileEntries(state)
   let result = true
-  if (entries.length === 0) return result
   Object.keys(entries).forEach(e => {
     if (result && !isProfileEntryEmpty(state, e)) {
       result = false
@@ -59,17 +49,14 @@ export const isProfileEmpty = (state) => {
   return result
 }
 
-export const isProfileFetching = (state) => (
+export const isProfileFetching = (state) =>
   state.characters.profileFetching === true
-)
 
-export const getProfileGroups = (state) => (
+export const getProfileGroups = (state) =>
   getProfile(state).groups
-)
 
-export const getProfileGroup = (state, groupId) => (
+export const getProfileGroup = (state, groupId) =>
   getProfileGroups(state)[groupId]
-)
 
 export const isProfileGroupEmpty = (state, groupId) => {
   let result = true
@@ -81,10 +68,8 @@ export const isProfileGroupEmpty = (state, groupId) => {
   return result
 }
 
-export const getProfileEntry = (state, entryId) => (
+export const getProfileEntry = (state, entryId) =>
   getProfileEntries(state)[entryId] || {}
-)
 
-export const isProfileEntryEmpty = (state, entryId) => (
+export const isProfileEntryEmpty = (state, entryId) =>
   getProfileEntry(state, entryId).value === ''
-)

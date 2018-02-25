@@ -1,37 +1,43 @@
 import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../../shared/view/requests'
 import { OPEN_STORY_FINISHED, OPEN_STORY_REQUESTED } from '../../../shared/story/requests'
-import { getWindowStoryPath, removeWindow, setWindowIsReady } from '../windows'
+import { removeWindow, setWindowIsReady } from '../actions'
 import { request, requestHandlerOnce } from '../../shared/communication'
 
 import { closeSplashScreen } from '../../splash-screen'
 import { dialog } from 'electron'
+import { getWindowStoryPath } from '../selectors'
 import { isDarkThemeEnabled } from '../../preferences'
 
-const handleReadyToShow = (event) => {
+const handleReadyToShow = (event) => async (dispatch, getState) => {
   const window = event.sender
-  const storyPath = getWindowStoryPath(window)
-  setWindowIsReady(window)
-  enableOrDisableDarkTheme(window)
-    .then(() => handleReadyWindow(window, storyPath))
-    .catch(() => handleReadyWindow(window, storyPath))
+  const storyPath = getWindowStoryPath(getState(), window.id)
+
+  dispatch(setWindowIsReady(window.id))
+  try {
+    await enableOrDisableDarkTheme(getState, window)
+  } finally {
+    await handleReadyWindow(dispatch, window, storyPath)
+  }
 }
 
-const enableOrDisableDarkTheme = async (window) => {
-  const enabled = await isDarkThemeEnabled()
-  if (enabled) {
+const enableOrDisableDarkTheme = async (getState, window) => {
+  if (isDarkThemeEnabled(getState())) {
     await request(window, ENABLE_DARK_THEME)
   } else {
     await request(window, DISABLE_DARK_THEME)
   }
 }
 
-const handleReadyWindow = (window, storyPath) => {
+const handleReadyWindow = async (dispatch, window, storyPath) => {
   if (storyPath !== '') {
-    openStory(window, storyPath)
-      .then(() => showWindow(window))
-      .catch((error) => showErrorAndCloseWindow(window, error))
+    try {
+      await openStory(window, storyPath)
+      showWindow(dispatch, window)
+    } catch (error) {
+      showErrorAndCloseWindow(dispatch, window, error)
+    }
   } else {
-    showWindow(window)
+    showWindow(dispatch, window)
   }
 }
 
@@ -49,8 +55,8 @@ const openStory = (window, storyPath) => {
   })
 }
 
-const showErrorAndCloseWindow = (window, error) => {
-  removeWindow(window)
+const showErrorAndCloseWindow = (dispatch, window, error) => {
+  dispatch(removeWindow(window))
   dialog.showMessageBox({
     type: 'error',
     title: 'Die Geschichte konnte nicht geöffnet werden.',
@@ -58,13 +64,13 @@ const showErrorAndCloseWindow = (window, error) => {
     buttons: ['Schließen'],
     defaultId: 0
   }, () => window.destroy())
-  closeSplashScreen()
+  dispatch(closeSplashScreen())
 }
 
-const showWindow = (window) => {
+const showWindow = (dispatch, window) => {
   window.maximize()
   window.show()
-  closeSplashScreen()
+  dispatch(closeSplashScreen())
 }
 
 export default handleReadyToShow

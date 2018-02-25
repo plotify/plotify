@@ -1,4 +1,4 @@
-import * as t from './actionTypes'
+import * as t from './action-types'
 
 import { dirname, join } from 'path'
 
@@ -26,31 +26,31 @@ export const closeContributorsDialog = () => ({
   payload: {}
 })
 
-export const openLicenseDialog = () => {
-  return async (dispatch) => {
-    const text = await loadLicenseText()
-    dispatch({
-      type: t.OPEN_LICENSE_DIALOG,
-      payload: { text }
-    })
-  }
+export const openLicenseDialog = () => async (dispatch) => {
+  const text = await loadLicenseText()
+  dispatch(_openLicenseDialog(text))
 }
+
+export const _openLicenseDialog = (text) => ({
+  type: t.OPEN_LICENSE_DIALOG,
+  payload: { text }
+})
 
 export const closeLicenseDialog = () => ({
   type: t.CLOSE_LICENSE_DIALOG,
   payload: {}
 })
 
-export const openDependenciesLicensesDialog = () => {
-  return async (dispatch) => {
-    dispatch({
-      type: t.OPEN_DEPENDENCIES_LICENSES_DIALOG,
-      payload: {}
-    })
-    const text = await loadDependenciesLicensesText()
-    dispatch(setDependenciesLicensesText(text))
-  }
+export const openDependenciesLicensesDialog = () => async (dispatch) => {
+  dispatch(_openDependenciesLicensesDialog())
+  const text = await loadDependenciesLicensesText()
+  dispatch(setDependenciesLicensesText(text))
 }
+
+export const _openDependenciesLicensesDialog = () => ({
+  type: t.OPEN_DEPENDENCIES_LICENSES_DIALOG,
+  payload: {}
+})
 
 export const closeDependenciesLicensesDialog = () => ({
   type: t.CLOSE_DEPENDENCIES_LICENSES_DIALOG,

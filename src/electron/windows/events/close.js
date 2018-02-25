@@ -1,13 +1,15 @@
 import { CLOSE_STORY_PREPARATION_REQUESTED } from '../../../shared/story/requests'
-import { getWindowStoryPath } from '../windows'
+import { getWindowStoryPath } from '../selectors'
 import { request } from '../../shared/communication'
 
-const handleClose = (event) => {
+const handleClose = (event) => (dispatch, getState) => {
   const window = event.sender
-  const storyPath = getWindowStoryPath(window)
+  const storyPath = getWindowStoryPath(getState(), window.id)
   if (storyPath !== undefined && storyPath !== '') {
     event.preventDefault()
-    request(window, CLOSE_STORY_PREPARATION_REQUESTED)
+    const closeWindow = true
+    const focusWelcomeWindow = false
+    request(window, CLOSE_STORY_PREPARATION_REQUESTED, { closeWindow, focusWelcomeWindow })
   }
 }
 

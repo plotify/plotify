@@ -1,22 +1,23 @@
 import { CLOSE_UPDATE_NOTIFICATION, UPDATE_NOTIFICATION_CLOSED } from '../../shared/updates/requests'
-import { addListener, removeListener } from '../splash-screen'
+import { getWindows, isAnyWindowReady } from '../windows'
 import { request, requestHandler } from '../shared/communication'
 
 import checkUpdates from './check-updates'
-import { getWindows } from '../windows'
+import store from '../store'
 
-let initialSplashScreen = true
+let updatesChecked = false
+let unsubscribe = null
 
-const handleSplashScreenEvents = (open) => {
-  if (initialSplashScreen && open === false) {
-    initialSplashScreen = false
-    removeListener(handleSplashScreenEvents)
-    checkUpdates()
+const waitForAnyWindowToBeReady = () => {
+  if (updatesChecked === false && isAnyWindowReady(store.getState())) {
+    updatesChecked = true
+    unsubscribe()
+    setTimeout(checkUpdates, 1000)
   }
 }
 
 const handleUpdateNotificationClosed = (resolve, _, senderWindow) => {
-  for (const window of getWindows()) {
+  for (const window of getWindows(store.getState())) {
     if (window !== senderWindow) {
       request(window, CLOSE_UPDATE_NOTIFICATION)
     }
@@ -25,6 +26,6 @@ const handleUpdateNotificationClosed = (resolve, _, senderWindow) => {
 }
 
 export const registerRequestHandlers = () => {
-  addListener(handleSplashScreenEvents)
+  unsubscribe = store.subscribe(waitForAnyWindowToBeReady)
   requestHandler(UPDATE_NOTIFICATION_CLOSED, handleUpdateNotificationClosed)
 }

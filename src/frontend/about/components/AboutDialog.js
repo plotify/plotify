@@ -23,7 +23,7 @@ const AboutDialog = (props) => {
   const content = [
     <img alt='Plotify Icon' src='./app-icon.png' key={1} />,
     <div key={2}>
-      <Typography type='headline'>{packageJson.productName}</Typography>
+      <Typography variant='headline'>{packageJson.productName}</Typography>
       <Typography>Version: {packageJson.version}</Typography>
       <Typography>
         Copyright © 2017-2018 Sebastian Schmidt & Jasper Meyer
