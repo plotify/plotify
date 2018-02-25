@@ -11,6 +11,10 @@ import isDev from 'electron-is-dev'
 import printWelcomeScreen from './versions'
 import store from './store'
 
+process.on('unhandledRejection', (error) => {
+  console.warn('WARNING: Unhandled promise rejection:', error)
+})
+
 let loadingBackend = true
 let storyPaths = new Set()
 
