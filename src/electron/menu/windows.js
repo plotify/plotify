@@ -4,6 +4,8 @@ import { basename } from 'path'
 import { createSelector } from 'reselect'
 import store from '../store'
 
+const prefix = 'window:'
+
 const windowsMenu = (windows, focusedWindow) => ({
   label: 'Fenster',
   submenu: windows
@@ -20,7 +22,7 @@ const sortWindows = (w1, w2) => {
 
 const createMenuItem = (window, focusedWindow) => ({
   type: 'checkbox',
-  id: window.storyPath,
+  id: prefix + window.storyPath,
   label: formatStoryPath(window.storyPath),
   checked: isFocusedWindow(window, focusedWindow),
   enabled: !isFocusedWindow(window, focusedWindow),
@@ -35,7 +37,8 @@ const isFocusedWindow = (window, focusedWindow) =>
 
 // Keine anonyme Funktion, damit kein kompletter Neuaufbau der Menüleiste notwendig ist.
 const _focusWindow = (menuItem) => {
-  const window = getWindowByStoryPath(store.getState(), menuItem.id)
+  const windowId = menuItem.id.substring(prefix.length)
+  const window = getWindowByStoryPath(store.getState(), windowId)
   focusWindow(window)
 }
 

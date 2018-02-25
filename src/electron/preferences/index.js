@@ -5,7 +5,7 @@ export {
 export {
   openPreferences,
   closePreferences
-} from './database'
+} from './actions'
 
 export {
   isDarkThemeEnabled,
