@@ -1,9 +1,9 @@
-import { CLOSE_STORY_PREPARATION_REQUESTED, CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../shared/story/requests'
+import { CLOSE_STORY_PREPARATION_REQUESTED, CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../../shared/story/requests'
 
 import { createSelector } from 'reselect'
-import { isStoryOpenInFocusedWindow } from '../story'
+import { isStoryOpenInFocusedWindow } from '../../story'
 import recentlyOpenedFiles from './recently-opened-files'
-import { request } from '../shared/communication'
+import { request } from '../../shared/communication'
 
 const fileMenu = (recentlyOpenedFiles, openStoryInFocusedWindow) => ({
   label: 'Datei',

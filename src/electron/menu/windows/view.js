@@ -1,10 +1,10 @@
-import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../shared/view/requests'
-import { disableDarkTheme, enableDarkTheme, isDarkThemeEnabled } from '../preferences'
+import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../../shared/view/requests'
+import { disableDarkTheme, enableDarkTheme, isDarkThemeEnabled } from '../../preferences'
 
 import { createSelector } from 'reselect'
-import { getWindows } from '../windows'
-import { request } from '../shared/communication'
-import store from '../store'
+import { getWindows } from '../../windows'
+import { request } from '../../shared/communication'
+import store from '../../store'
 
 const viewMenu = (darkThemeEnabled) => ({
   label: 'Ansicht',
