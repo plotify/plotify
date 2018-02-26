@@ -1,8 +1,8 @@
-import { OPEN_STORY_REQUESTED } from '../../shared/story/requests'
+import { OPEN_STORY_REQUESTED } from '../../../shared/story/requests'
 import { basename } from 'path'
 import { createSelector } from 'reselect'
-import { getRecentlyOpenedFiles } from '../preferences'
-import { request } from '../shared/communication'
+import { getRecentlyOpenedFiles } from '../../preferences'
+import { request } from '../../shared/communication'
 
 const prefix = 'story:'
 

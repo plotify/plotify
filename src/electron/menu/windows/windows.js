@@ -1,8 +1,8 @@
-import { focusWindow, getFocusedWindow, getWindowByStoryPath, getWindowEntities } from '../windows'
+import { focusWindow, getFocusedWindow, getWindowByStoryPath, getWindowEntities } from '../../windows'
 
 import { basename } from 'path'
 import { createSelector } from 'reselect'
-import store from '../store'
+import store from '../../store'
 
 const prefix = 'window:'
 

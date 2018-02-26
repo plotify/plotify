@@ -1,7 +1,7 @@
-import { exportState, importState } from '../development'
+import { exportState, importState } from '../../development'
 
-import { OPEN_ABOUT_DIALOG } from '../../shared/about/requests'
-import { request } from '../shared/communication'
+import { OPEN_ABOUT_DIALOG } from '../../../shared/about/requests'
+import { request } from '../../shared/communication'
 
 const menu = () => ({
   label: 'Hilfe',
