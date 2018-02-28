@@ -2,7 +2,7 @@
 
 Plotify befindet sich noch in einer frühen Entwicklungsphase.
 Aus diesem Grund sind bei der Installation von Plotify auf manchen Betriebssystemen einige zusätzliche Schritte notwendig.
-Damit ihr dennoch keine Probleme bei der Installation von Plotify habt, haben wir kurze Installationsanleitungen geschrieben.
+Damit du dennoch keine Probleme bei der Installation von Plotify hast, haben wir kurze Installationsanleitungen geschrieben.
 Wähle das jeweilige Betriebssystem aus, für das du die Installationsanleitung lesen möchtest.
 
 <table>
@@ -10,6 +10,11 @@ Wähle das jeweilige Betriebssystem aus, für das du die Installationsanleitung 
         <td align="center" width="33%">
             <a href="windows/README.md">
                 <img src="../assets/windows-logo.png" />
+            </a>
+        </td>
+        <td align="center" width="33%">
+            <a href="linux/README.md">
+                <img src="../assets/linux-logo.png" />
             </a>
         </td>
         <td align="center" width="33%">
@@ -22,6 +27,11 @@ Wähle das jeweilige Betriebssystem aus, für das du die Installationsanleitung 
         <td align="center">
             <a href="windows/README.md">
                 <b>Windows</b>
+            </a>
+        </td>
+        <td align="center">
+            <a href="linux/README.md">
+                <b>Linux</b>
             </a>
         </td>
         <td align="center">
