@@ -9,11 +9,21 @@ Wähle die jeweilige Linux-Distribution aus, für die du die Installationsanleit
                 <img src="linux-mint/logo.png" />
             </a>
         </td>
+        <td align="center" width="33%">
+            <a href="elementary-os/README.md">
+                <img src="elementary-os/logo.png" />
+            </a>
+        </td>
     </tr>
     <tr>
         <td align="center">
             <a href="linux-mint/README.md">
                 <b>Linux Mint</b>
+            </a>
+        </td>
+        <td align="center">
+            <a href="elementary-os/README.md">
+                <b>elementary OS</b>
             </a>
         </td>
     </tr>
