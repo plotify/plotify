@@ -1,3 +1,3 @@
 import createViewSelector from '../shared/view'
 
-export default createViewSelector('Ansicht')
+export default createViewSelector('Darstellung')
