@@ -24,7 +24,7 @@ const contributors = [
   },
   {
     name: 'Gesa Müller',
-    tasks: [],
+    tasks: ['Logo Design und Qualitätssicherung'],
     url: 'https://github.com/GesaMueller',
     image: './contributors/gesa-mueller.jpg'
   },
