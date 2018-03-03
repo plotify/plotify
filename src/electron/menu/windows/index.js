@@ -3,7 +3,7 @@ import edit from './edit'
 import file from './file'
 import help from './help'
 import view from './view'
-import windows from './windows'
+import windows from '../shared/windows'
 
 const templateCreator = createSelector(
   file, edit, view, windows, help,
