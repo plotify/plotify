@@ -1,12 +1,16 @@
 import { exportState, importState } from '../../development'
 
-const menu = () => ({
+import { createSelector } from 'reselect'
+import { isAnyWindowFocused } from '../../windows'
+
+const developmentMenu = (enabled) => ({
   label: 'Entwicklung',
+  enabled,
   submenu: [
-    { label: 'State exportieren...', click: exportStateMenu },
-    { label: 'State importieren...', click: importStateMenu },
+    { label: 'State exportieren...', click: exportStateMenu, enabled },
+    { label: 'State importieren...', click: importStateMenu, enabled },
     { type: 'separator' },
-    { label: 'Werkzeuge', role: 'toggledevtools' }
+    { label: 'Werkzeuge', role: 'toggledevtools', enabled }
   ]
 })
 
@@ -18,6 +22,7 @@ const importStateMenu = (_, window) => {
   importState(window)
 }
 
-const staticMenu = menu()
-
-export default () => staticMenu
+export default createSelector(
+  isAnyWindowFocused,
+  developmentMenu
+)

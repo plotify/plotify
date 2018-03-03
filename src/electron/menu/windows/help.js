@@ -1,11 +1,12 @@
 import { OPEN_ABOUT_DIALOG } from '../../../shared/about/requests'
+import { createSelector } from 'reselect'
 import development from '../shared/development'
 import { request } from '../../shared/communication'
 
-const menu = () => ({
+const helpMenu = (development) => ({
   label: 'Hilfe',
   submenu: [
-    development(),
+    development,
     { type: 'separator' },
     { label: 'Über Plotify', click: openAboutDialog }
   ]
@@ -15,6 +16,7 @@ const openAboutDialog = (_, window) => {
   request(window, OPEN_ABOUT_DIALOG)
 }
 
-const staticMenu = menu()
-
-export default () => staticMenu
+export default createSelector(
+  development,
+  helpMenu
+)

@@ -1,26 +1,27 @@
 import { DISABLE_DARK_THEME, ENABLE_DARK_THEME } from '../../../shared/view/requests'
 import { disableDarkTheme, enableDarkTheme, isDarkThemeEnabled } from '../../preferences'
+import { getWindows, isAnyWindowFocused } from '../../windows'
 
 import { createSelector } from 'reselect'
-import { getWindows } from '../../windows'
 import { request } from '../../shared/communication'
 import store from '../../store'
 
-const viewMenu = (menuLabel, darkThemeEnabled) => ({
+const viewMenu = (menuLabel, darkThemeEnabled, enabled) => ({
   label: menuLabel,
   submenu: [
-    { label: 'Vergrößern', role: 'zoomin' },
-    { label: 'Verkleinern', role: 'zoomout' },
-    { label: 'Standardgröße', role: 'resetzoom' },
+    { label: 'Vergrößern', role: 'zoomin', enabled },
+    { label: 'Verkleinern', role: 'zoomout', enabled },
+    { label: 'Originalgröße', role: 'resetzoom', enabled },
     { type: 'separator' },
     {
       label: 'Nachtmodus',
       type: 'checkbox',
       checked: darkThemeEnabled,
-      click: toggleDarkTheme
+      click: toggleDarkTheme,
+      enabled
     },
     { type: 'separator' },
-    { label: 'Vollbild', role: 'togglefullscreen' }
+    { label: 'Vollbild', role: 'togglefullscreen', enabled }
   ]
 })
 
@@ -40,5 +41,6 @@ const toggleDarkTheme = (menuItem) => {
 export default (menuLabel) => createSelector(
   () => menuLabel,
   isDarkThemeEnabled,
+  isAnyWindowFocused,
   viewMenu
 )
