@@ -36,13 +36,9 @@ const handleStateChanges = (templateCreator) => {
   if (prevTemplate === null) {
     createMenu(newTemplate)
   } else if (prevTemplate !== newTemplate) {
-    const changes = calculateChanges(prevTemplate, newTemplate)
-    if (changes.includes(COMPLETE_REBUILD)) {
-      createMenu(newTemplate)
-    } else {
-      applyChanges(Menu.getApplicationMenu(), changes)
-    }
+    handleTemplateChanges(prevTemplate, newTemplate)
   }
+
   prevTemplate = newTemplate
 }
 
@@ -50,4 +46,24 @@ const handleStateChanges = (templateCreator) => {
 const createMenu = (template) => {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+}
+
+const handleTemplateChanges = (prevTemplate, newTemplate) => {
+  if (isUbuntuUnity()) {
+    // Workaround: https://github.com/plotify/plotify/issues/167
+    createMenu(newTemplate)
+  } else {
+    const changes = calculateChanges(prevTemplate, newTemplate)
+    if (changes.includes(COMPLETE_REBUILD)) {
+      createMenu(newTemplate)
+    } else {
+      applyChanges(Menu.getApplicationMenu(), changes)
+    }
+  }
+}
+
+const isUbuntuUnity = () => {
+  return os.platform() === 'linux' &&
+    process.env.XDG_CURRENT_DESKTOP === 'Unity' &&
+    !process.env.hasOwnProperty('GNOME_SHELL_SESSION_MODE')
 }
