@@ -5,6 +5,11 @@ Wähle die jeweilige Linux-Distribution aus, für die du die Installationsanleit
 <table>
     <tr>
         <td align="center" width="33%">
+            <a href="ubuntu/README.md">
+                <img src="ubuntu/logo.png" />
+            </a>
+        </td>
+        <td align="center" width="33%">
             <a href="linux-mint/README.md">
                 <img src="linux-mint/logo.png" />
             </a>
@@ -16,6 +21,11 @@ Wähle die jeweilige Linux-Distribution aus, für die du die Installationsanleit
         </td>
     </tr>
     <tr>
+        <td align="center">
+            <a href="ubuntu/README.md">
+                <b>Ubuntu</b>
+            </a>
+        </td>
         <td align="center">
             <a href="linux-mint/README.md">
                 <b>Linux Mint</b>
