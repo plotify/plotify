@@ -67,7 +67,8 @@ const loadLicenseText = async () => {
   if (isDev) {
     licenseFile = './LICENSE'
   } else {
-    licenseFile = join(remote.app.getAppPath(), './LICENSE')
+    const appPathDirectory = dirname(remote.app.getAppPath() + '')
+    licenseFile = join(appPathDirectory, '../LICENSE')
   }
   return readFile(licenseFile, { encoding: 'utf-8' })
 }
