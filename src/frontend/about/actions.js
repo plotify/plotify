@@ -67,7 +67,8 @@ const loadLicenseText = async () => {
   if (isDev) {
     licenseFile = './LICENSE'
   } else {
-    licenseFile = join(remote.app.getAppPath(), './LICENSE')
+    const appPathDirectory = dirname(remote.app.getAppPath() + '')
+    licenseFile = join(appPathDirectory, '../LICENSE')
   }
   return readFile(licenseFile, { encoding: 'utf-8' })
 }
@@ -79,7 +80,7 @@ const loadDependenciesLicensesText = async () => {
     const appPathDirectory = dirname(remote.app.getAppPath() + '')
     const licenseFile = join(appPathDirectory, '../LICENSES.dependencies.txt')
     try {
-      return readFile(licenseFile, { encoding: 'utf-8' })
+      return await readFile(licenseFile, { encoding: 'utf-8' })
     } catch (error) {
       return 'Die Datei ' + licenseFile + ' konnte nicht geladen werden.'
     }
