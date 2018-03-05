@@ -2,9 +2,9 @@ import 'babel-polyfill'
 
 import { closePreferences, openPreferences } from './preferences'
 import { closeSplashScreen, showSplashScreen } from './splash-screen'
+import { createOrFocus, getNumberOfWindows } from './windows'
 
 import { app } from 'electron'
-import { createOrFocus } from './windows'
 import { initDevToolsExtensions } from './development'
 import { initMenu } from './menu'
 import isDev from 'electron-is-dev'
@@ -96,5 +96,11 @@ app.on('window-all-closed', async () => {
     } finally {
       app.quit()
     }
+  }
+})
+
+app.on('activate', () => {
+  if (!loadingBackend && getNumberOfWindows(store.getState()) === 0) {
+    store.dispatch(createOrFocus(''))
   }
 })
