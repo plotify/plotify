@@ -1,9 +1,10 @@
 import { CLOSE_STORY_PREPARATION_REQUESTED, CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../../shared/story/requests'
+import { openStory as _openStory, isStoryOpenInFocusedWindow } from '../../story'
 
 import { createSelector } from 'reselect'
-import { isStoryOpenInFocusedWindow } from '../../story'
 import recentlyOpenedFiles from './recently-opened-files'
 import { request } from '../../shared/communication'
+import store from '../../store'
 
 const fileMenu = (menuLabel, showQuit, recentlyOpenedFiles, openStoryInFocusedWindow) => {
   const menu = {
@@ -32,7 +33,11 @@ const createStory = (_, window) => {
 }
 
 const openStory = (_, window) => {
-  request(window, OPEN_STORY_REQUESTED)
+  if (window) {
+    request(window, OPEN_STORY_REQUESTED)
+  } else {
+    store.dispatch(_openStory())
+  }
 }
 
 const closeStory = (_, window) => {
