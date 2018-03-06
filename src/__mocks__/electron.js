@@ -1,8 +1,11 @@
 module.exports = {
-  shell: {
-    openExternal: jest.fn()
+  app: {
+    getPath: jest.fn()
   },
   Menu: {
     buildFromTemplate: jest.fn()
+  },
+  shell: {
+    openExternal: jest.fn()
   }
 }

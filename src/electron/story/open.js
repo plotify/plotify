@@ -24,6 +24,12 @@ const open = (senderWindow, path) => async (dispatch, getState) => {
     path = files[0]
   }
 
+  // Wenn kein Fenster übergeben wurde wird die Geschichte in einem neuen Fenster geöffnet.
+  if (!senderWindow) {
+    dispatch(createOrFocus(path))
+    return
+  }
+
   // Kann in diesem Fenster eine Geschichte geöffnet werden oder muss ein anderes Fenster verwendet werden?
   const senderWindowPath = getWindowStoryPath(getState(), senderWindow.id)
   if (senderWindowPath !== '' && senderWindowPath !== path) {
