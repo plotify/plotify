@@ -1,14 +1,13 @@
-import { OPEN_ABOUT_DIALOG } from '../../../shared/about/requests'
 import { createSelector } from 'reselect'
 import development from '../shared/development'
-import { request } from '../../shared/communication'
+import { openAboutDialog } from '../../about'
 
 const applicationName = require('../../../package.json').productName
 
 const plotifyMenu = (development) => ({
   label: applicationName,
   submenu: [
-    { label: 'Über ' + applicationName, click: openAboutDialog },
+    { label: 'Über ' + applicationName, click: _openAboutDialog },
     { type: 'separator' },
     development,
     { type: 'separator' },
@@ -20,8 +19,8 @@ const plotifyMenu = (development) => ({
   ]
 })
 
-const openAboutDialog = (_, window) => {
-  request(window, OPEN_ABOUT_DIALOG)
+const _openAboutDialog = (_, window) => {
+  openAboutDialog(window)
 }
 
 export default createSelector(
