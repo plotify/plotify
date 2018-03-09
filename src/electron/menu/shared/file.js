@@ -15,7 +15,7 @@ const fileMenu = (menuLabel, showQuit, recentlyOpenedFiles, openStoryInFocusedWi
       {
         label: 'Zuletzt geöffnet',
         enabled: recentlyOpenedFiles.length > 0,
-        submenu: recentlyOpenedFiles
+        submenu: recentlyOpenedFiles.length > 0 ? recentlyOpenedFiles : emptySubmenu
       },
       { type: 'separator' },
       { label: 'Schließen', enabled: openStoryInFocusedWindow, click: closeStory }
@@ -27,6 +27,13 @@ const fileMenu = (menuLabel, showQuit, recentlyOpenedFiles, openStoryInFocusedWi
   }
   return menu
 }
+
+const emptySubmenu = [
+  {
+    label: 'Keine Geschichten',
+    enabled: false
+  }
+]
 
 const createStory = (_, window) => {
   request(window, CREATE_STORY_REQUESTED)
