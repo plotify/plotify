@@ -1,6 +1,5 @@
 import { GET_STATE, SET_STATE } from '../shared/requests'
 
-import about from './about/request-handlers'
 import recentlyOpenedFiles from './welcome/recently-opened-files/request-handlers'
 import { requestHandler } from './shared/communication'
 import { setState } from './actions'
@@ -22,7 +21,6 @@ const registerRequestHandlers = () => {
   requestHandler(SET_STATE, handleSetState)
   view()
   updates()
-  about()
   story()
   recentlyOpenedFiles()
 }

@@ -1,7 +1,6 @@
 import { CLOSE_NAVIGATION_DRAWER, OPEN_NAVIGATION_DRAWER, SET_SECTION } from './action-types'
 import { CREATE_STORY_STARTED, OPEN_STORY_STARTED } from '../story/action-types'
 
-import { OPEN_ABOUT_DIALOG } from '../about/action-types'
 import { WELCOME_SECTION } from '../welcome/constants'
 import { createReducer } from '../../shared/redux'
 
@@ -27,7 +26,6 @@ export default createReducer(initialState, {
     drawerOpen: true
   }),
   [CLOSE_NAVIGATION_DRAWER]: closeDrawer,
-  [OPEN_ABOUT_DIALOG]: closeDrawer,
   [OPEN_STORY_STARTED]: closeDrawer,
   [CREATE_STORY_STARTED]: closeDrawer
 })

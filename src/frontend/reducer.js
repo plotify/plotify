@@ -1,5 +1,4 @@
 import { SET_STATE } from './action-types'
-import about from './about/reducer'
 import characters from './characters/reducer'
 import { combineReducers } from 'redux'
 import navigation from './navigation/reducer'
@@ -13,7 +12,6 @@ const appReducer = combineReducers({
   navigation,
   updates,
   welcome,
-  about,
   story,
   characters
 })
