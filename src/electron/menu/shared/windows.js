@@ -8,11 +8,21 @@ const prefix = 'window:'
 
 const windowsMenu = (windows, focusedWindow) => ({
   label: 'Fenster',
-  submenu: windows
+  submenu: createSubmenu(windows, focusedWindow)
+})
+
+const createSubmenu = (windows, focusedWindow) => {
+  const submenu = windows
     .filter((window) => window.ready === true)
     .sort(sortWindows)
     .map((window) => createMenuItem(window, focusedWindow))
-})
+
+  if (submenu.length !== 0) {
+    return submenu
+  } else {
+    return emptySubmenu
+  }
+}
 
 const sortWindows = (w1, w2) => {
   const w1s = w1.storyPath !== '' ? basename(w1.storyPath) : ''
@@ -41,6 +51,13 @@ const _focusWindow = (menuItem) => {
   const window = getWindowByStoryPath(store.getState(), windowId)
   focusWindow(window)
 }
+
+const emptySubmenu = [
+  {
+    label: 'Kein Fenster geöffnet',
+    enabled: false
+  }
+]
 
 export default createSelector(
   getWindowEntities,
