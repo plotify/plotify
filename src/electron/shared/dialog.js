@@ -7,3 +7,19 @@ export const showMessageBox = (browserWindow, options) => {
     })
   })
 }
+
+export const showOpenDialog = (browserWindow, options) => {
+  return new Promise((resolve, reject) => {
+    dialog.showOpenDialog(browserWindow, options, (filePaths) => {
+      resolve(filePaths)
+    })
+  })
+}
+
+export const showSaveDialog = (browserWindow, options) => {
+  return new Promise((resolve, reject) => {
+    dialog.showSaveDialog(browserWindow, options, (filename) => {
+      resolve(filename)
+    })
+  })
+}

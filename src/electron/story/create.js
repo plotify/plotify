@@ -1,9 +1,10 @@
-import { app, dialog } from 'electron'
 import { existsSync, unlink } from 'fs-extra'
 
+import { app } from 'electron'
 import { createStory } from '../../backend/story'
 import { extname } from 'path'
 import { getStoryPaths } from './selectors'
+import { showSaveDialog } from '../shared/dialog'
 
 const options = {
   title: 'Neue Geschichte',
@@ -14,7 +15,7 @@ const options = {
 }
 
 const create = (senderWindow) => async (_, getState) => {
-  const file = dialog.showSaveDialog(senderWindow, options)
+  const file = await showSaveDialog(senderWindow, options)
   if (!file) {
     return
   }
