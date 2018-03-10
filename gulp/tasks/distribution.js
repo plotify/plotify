@@ -10,7 +10,6 @@ import paths from '../paths'
 // Generate dependencies licenses file
 //
 
-const ownLicenseFile = './LICENSE'
 const dependenciesLicenseFile = join(paths.build.dist, 'LICENSES.dependencies.txt')
 const robotoLicenseFile = './src/frontend/static/fonts/roboto-license.txt'
 
@@ -83,8 +82,8 @@ const config = {
   },
   extraFiles: [
     {
-      from: ownLicenseFile,
-      to: basename(ownLicenseFile)
+      from: paths.licenseFile,
+      to: basename(paths.licenseFile) + '.txt'
     },
     {
       from: dependenciesLicenseFile,
