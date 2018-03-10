@@ -5,6 +5,11 @@ Wähle die jeweilige Version von Windows aus, für die du die Installationsanlei
 <table>
     <tr>
         <td align="center" width="33%">
+            <a href="10/README.md">
+                <img src="10/logo.png" />
+            </a>
+        </td>
+        <td align="center" width="33%">
             <a href="8/README.md">
                 <img src="8/logo.png" />
             </a>
@@ -16,6 +21,11 @@ Wähle die jeweilige Version von Windows aus, für die du die Installationsanlei
         </td>
     </tr>
     <tr>
+        <td align="center">
+            <a href="10/README.md">
+                <b>Windows 10</b>
+            </a>
+        </td>
         <td align="center">
             <a href="8/README.md">
                 <b>Windows 8</b>
