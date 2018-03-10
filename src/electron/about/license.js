@@ -13,7 +13,7 @@ Plotify ist lizenziert unter der GNU General Public License Version 3.
 `
 
 const appDirectory = dirname(app.getAppPath())
-const licenseFile = join(appDirectory, '../LICENSE')
+const licenseFile = join(appDirectory, '../LICENSE.txt')
 const dependenciesLicensesFile = join(appDirectory, '../LICENSES.dependencies.txt')
 
 const options = {
