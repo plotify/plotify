@@ -33,6 +33,7 @@
     "jss-global": "3.0.0",
     "material-ui": "1.0.0-beta.36",
     "material-ui-icons": "1.0.0-beta.36",
+    "minimist": "1.2.0",
     "node-watch": "0.5.7",
     "openpgp": "2.6.2",
     "prop-types": "15.6.1",

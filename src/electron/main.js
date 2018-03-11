@@ -8,6 +8,7 @@ import { app } from 'electron'
 import { initDevToolsExtensions } from './development'
 import { initMenu } from './menu'
 import isDev from 'electron-is-dev'
+import parseArguments from 'minimist'
 import printWelcomeScreen from './versions'
 import store from './store'
 
@@ -77,7 +78,7 @@ const getStoryPathsFromArguments = (argv) => {
   if (isDev) {
     return []
   } else {
-    return argv.slice(1)
+    return parseArguments(argv.slice(1))._
   }
 }
 
