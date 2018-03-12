@@ -1,6 +1,6 @@
 import { LATEST_URL } from './constants'
 import checkUpdates from './check-updates'
-import request from 'request-promise-native'
+import { concat } from 'simple-get'
 
 const latestFile = `{
   "stable": {
@@ -69,11 +69,9 @@ test('throws Error if the server sends unknown signature', async () => {
 })
 
 const mockRequests = (file = latestFile, signature = latestFileSignature) => {
-  request.mockImplementation((arg) => {
-    if (arg === LATEST_URL) {
-      return file
-    } else {
-      return signature
-    }
+  concat.mockImplementation((url, callback) => {
+    const result = { statusCode: 200 }
+    const data = url === LATEST_URL ? Buffer.from(file) : Buffer.from(signature)
+    callback(null, result, data)
   })
 }
