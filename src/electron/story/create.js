@@ -32,7 +32,7 @@ const create = (senderWindow) => async (_, getState) => {
     await deleteFileIfExists(path)
     const story = await createStory(path)
     await story.database.close()
-    return story
+    return path
   } catch (error) {
     throw errorMessage(error)
   }
