@@ -29,36 +29,36 @@ Es sollten keine Informationen ausschließlich in Plotify gespeichert werden.
 <table>
     <tr>
         <td align="center" width="33%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.3/plotify-0.2.0-alpha.3-windows-x64.exe">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-windows-x64.exe">
                 <img src="docs/assets/windows-logo.png" />
             </a>
          </td>
         <td align="center" width="33%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.3/plotify-0.2.0-alpha.3-linux-amd64.deb">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-linux-amd64.deb">
                 <img src="docs/assets/linux-logo.png" />
             </a>
         </td>
         <td align="center" width="33%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.3/plotify-0.2.0-alpha.3-macos-x64.dmg">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-macos-x64.dmg">
                 <img src="docs/assets/macos-logo.png" />
             </a>
         </td>
     </tr>
     <tr>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.3/plotify-0.2.0-alpha.3-windows-x64.exe">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-windows-x64.exe">
                 <b>Windows</b><br />
                 Windows 7, 8, 10
             </a>
         </td>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.3/plotify-0.2.0-alpha.3-linux-amd64.deb">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-linux-amd64.deb">
                 <b>Linux</b><br />
                 Ubuntu, Linux Mint, elementary OS
             </a>
         </td>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.3/plotify-0.2.0-alpha.3-macos-x64.dmg">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-macos-x64.dmg">
                 <b>macOS</b><br />
                 macOS 10.9+
             </a>

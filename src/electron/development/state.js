@@ -1,7 +1,7 @@
 import { GET_STATE, SET_STATE } from '../../shared/requests'
 import { readFile, writeFile } from 'fs-extra'
+import { showMessageBox, showOpenDialog, showSaveDialog } from '../shared/dialog'
 
-import { dialog } from 'electron'
 import { extname } from 'path'
 import { request } from '../shared/communication'
 
@@ -11,7 +11,7 @@ export const getState = (window) => {
 
 export const exportState = async (window) => {
   const options = { title: 'State exportieren' }
-  const file = dialog.showSaveDialog(window, options)
+  const file = await showSaveDialog(window, options)
   if (!file) {
     return
   }
@@ -33,7 +33,7 @@ export const importState = async (window) => {
     title: 'State importieren',
     properties: ['openFile']
   }
-  const files = dialog.showOpenDialog(window, options)
+  const files = await showOpenDialog(window, options)
   if (!files) {
     return
   }
@@ -63,7 +63,7 @@ export const importState = async (window) => {
 }
 
 const showError = (window, message) => {
-  dialog.showMessageBox(window, {
+  showMessageBox(window, {
     type: 'error',
     title: 'State konnte nicht importiert werden',
     buttons: ['Schließen'],

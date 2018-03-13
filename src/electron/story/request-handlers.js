@@ -8,7 +8,7 @@ import { requestHandler } from '../shared/communication'
 
 const handleCreateStory = (resolve, reject, senderWindow) => (dispatch) => {
   dispatch(createStory(senderWindow))
-    .then(story => resolve(story ? story.path : undefined))
+    .then(path => resolve(path))
     .catch(error => reject(error.message))
 }
 

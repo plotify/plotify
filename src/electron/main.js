@@ -1,13 +1,15 @@
 import 'babel-polyfill'
+import './quit-handler'
 
-import { closePreferences, openPreferences } from './preferences'
 import { closeSplashScreen, showSplashScreen } from './splash-screen'
+import { createOrFocus, getNumberOfWindows } from './windows'
 
 import { app } from 'electron'
-import { createOrFocus } from './windows'
 import { initDevToolsExtensions } from './development'
 import { initMenu } from './menu'
 import isDev from 'electron-is-dev'
+import { openPreferences } from './preferences'
+import parseArguments from 'minimist'
 import printWelcomeScreen from './versions'
 import store from './store'
 
@@ -77,7 +79,7 @@ const getStoryPathsFromArguments = (argv) => {
   if (isDev) {
     return []
   } else {
-    return argv.slice(1)
+    return parseArguments(argv.slice(1))._
   }
 }
 
@@ -89,12 +91,8 @@ const addDefaultPathIfEmpty = (paths) => {
 
 app.on('ready', initSplashScreen)
 
-app.on('window-all-closed', async () => {
-  if (process.platform !== 'darwin') {
-    try {
-      await store.dispatch(closePreferences())
-    } finally {
-      app.quit()
-    }
+app.on('activate', () => {
+  if (!loadingBackend && getNumberOfWindows(store.getState()) === 0) {
+    store.dispatch(createOrFocus(''))
   }
 })

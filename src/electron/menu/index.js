@@ -2,41 +2,43 @@ import { COMPLETE_REBUILD, calculateChanges } from './calculate-changes'
 
 import { Menu } from 'electron'
 import applyChanges from './apply-changes'
-import { createSelector } from 'reselect'
-import edit from './edit'
-import file from './file'
-import help from './help'
+import linux from './linux'
+import macos from './macos'
+import os from 'os'
 import store from '../store'
-import view from './view'
 import windows from './windows'
-
-const templateCreator = createSelector(
-  file, edit, view, windows, help,
-  (...categories) => [...categories]
-)
 
 let prevTemplate = null
 
 export const initMenu = () => {
   if (prevTemplate === null) {
-    store.subscribe(() => handleStateChanges())
-    handleStateChanges()
+    const templateCreator = getPlatformTemplateCreator()
+    store.subscribe(() => handleStateChanges(templateCreator))
+    handleStateChanges(templateCreator)
   }
 }
 
-const handleStateChanges = () => {
+const getPlatformTemplateCreator = () => {
+  switch (os.platform()) {
+    case 'linux':
+      return linux
+    case 'darwin':
+      return macos
+    case 'win32':
+    default:
+      return windows
+  }
+}
+
+const handleStateChanges = (templateCreator) => {
   const newTemplate = templateCreator(store.getState())
 
   if (prevTemplate === null) {
     createMenu(newTemplate)
   } else if (prevTemplate !== newTemplate) {
-    const changes = calculateChanges(prevTemplate, newTemplate)
-    if (changes.includes(COMPLETE_REBUILD)) {
-      createMenu(newTemplate)
-    } else {
-      applyChanges(Menu.getApplicationMenu(), changes)
-    }
+    handleTemplateChanges(prevTemplate, newTemplate)
   }
+
   prevTemplate = newTemplate
 }
 
@@ -44,4 +46,24 @@ const handleStateChanges = () => {
 const createMenu = (template) => {
   const menu = Menu.buildFromTemplate(template)
   Menu.setApplicationMenu(menu)
+}
+
+const handleTemplateChanges = (prevTemplate, newTemplate) => {
+  if (isUbuntuUnity()) {
+    // Workaround: https://github.com/plotify/plotify/issues/167
+    createMenu(newTemplate)
+  } else {
+    const changes = calculateChanges(prevTemplate, newTemplate)
+    if (changes.includes(COMPLETE_REBUILD)) {
+      createMenu(newTemplate)
+    } else {
+      applyChanges(Menu.getApplicationMenu(), changes)
+    }
+  }
+}
+
+const isUbuntuUnity = () => {
+  return os.platform() === 'linux' &&
+    process.env.XDG_CURRENT_DESKTOP === 'Unity' &&
+    !process.env.hasOwnProperty('GNOME_SHELL_SESSION_MODE')
 }

@@ -10,7 +10,8 @@ export {
   isWindowFocused,
   isAnyWindowFocused,
   getFocusedWindow,
-  getWindowEntities
+  getWindowEntities,
+  getNumberOfWindows
 } from './selectors'
 
 export {

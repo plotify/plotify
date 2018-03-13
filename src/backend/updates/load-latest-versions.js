@@ -1,8 +1,8 @@
 import { LATEST_SIG_URL, LATEST_URL } from './constants'
 import { cleartext, signature, verify } from 'openpgp'
 
+import { get } from '../../shared/http'
 import { releases } from '../public-keys'
-import request from '../shared/request'
 import validateLatestVersions from './validate-latest-versions'
 
 const loadLatestVersions = async () => {
@@ -13,17 +13,13 @@ const loadLatestVersions = async () => {
 }
 
 const loadFile = async () => {
-  return request(LATEST_URL)
+  const result = await get(LATEST_URL)
+  return result.toString()
 }
 
 const loadSignature = async () => {
-  const options = {
-    method: 'GET',
-    uri: LATEST_SIG_URL,
-    encoding: null
-  }
-  const content = await request(options)
-  return signature.read(new Uint8Array(content))
+  const result = await get(LATEST_SIG_URL)
+  return signature.read(new Uint8Array(result))
 }
 const verifySignature = async (file, signature) => {
   const message = new cleartext.CleartextMessage(file, signature)

@@ -4,7 +4,6 @@ import { getCurrentSection, isNavigationDrawerOpen } from './selectors'
 
 import { WELCOME_SECTION } from '../welcome/constants'
 import { createStore } from '../store'
-import { openAboutDialog } from '../about/actions'
 
 let store
 beforeEach(() => {
@@ -33,14 +32,6 @@ test('closeNavigationDrawer', async () => {
   expect(isNavigationDrawerOpen(store.getState())).toBe(true)
 
   await store.dispatch(closeNavigationDrawer())
-  expect(isNavigationDrawerOpen(store.getState())).toBe(false)
-})
-
-test('openAboutDialog', async () => {
-  await store.dispatch(openNavigationDrawer())
-  expect(isNavigationDrawerOpen(store.getState())).toBe(true)
-
-  await store.dispatch(openAboutDialog())
   expect(isNavigationDrawerOpen(store.getState())).toBe(false)
 })
 

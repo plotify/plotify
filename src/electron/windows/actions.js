@@ -62,6 +62,12 @@ export const focusWindow = (window) => {
     window.maximize()
   }
   window.focus()
+
+  // macOS-Workaround: https://github.com/plotify/plotify/issues/124
+  if (!window.isAlwaysOnTop()) {
+    window.setAlwaysOnTop(true)
+    setTimeout(() => window.setAlwaysOnTop(false), 500)
+  }
 }
 
 export const addWindow = (window) => ({

@@ -1,49 +1,41 @@
-import { appendFile, close, copy, open, readFile } from 'fs-extra'
+import { appendFile, close, mkdir, open, readFile } from 'fs-extra'
+import { basename, dirname, join } from 'path'
 
 import { build } from 'electron-builder'
 import gulp from 'gulp'
-import { join } from 'path'
 import licenseCheckerDirect from 'license-checker'
 import paths from '../paths'
 
 //
-// Generate license file
+// Generate dependencies licenses file
 //
 
-const ownLicenseFile = 'LICENSE'
-const dependenciesLicenseFile = 'LICENSES.dependencies.txt'
-const robotoLicenseFile = 'src/frontend/static/fonts/roboto-license.txt'
+const dependenciesLicenseFile = join(paths.build.dist, 'LICENSES.dependencies.txt')
+const robotoLicenseFile = './src/frontend/static/fonts/roboto-license.txt'
 
 const options = Object.freeze({ encoding: 'utf-8' })
 const separator = '\n\n--------------------------------------------------------------------------\n\n'
 
-const copyOwnLicenseFile = async (context) => {
-  const licenseFile = join(context.appOutDir, ownLicenseFile)
-  await copy(ownLicenseFile, licenseFile)
+const generateDependenciesLicensesFile = async () => {
+  console.log('Generate dependencies licenses file...')
+  await createDependenciesLicenseFile()
+  await addRobotoLicense()
+  await addDependenciesLicenses()
+  console.log('Dependencies licenses file generated.')
 }
 
-const generateLicenseFile = async (context) => {
-  console.log('Generate license files...')
-  await copyOwnLicenseFile(context)
-  const licenseFile = await createDependenciesLicenseFile(context)
-  await addRobotoLicense(licenseFile)
-  await addDependenciesLicenses(licenseFile)
-  console.log('License files generated.')
-}
-
-const createDependenciesLicenseFile = async (context) => {
-  const file = join(context.appOutDir, dependenciesLicenseFile)
-  const fd = await open(file, 'w')
+const createDependenciesLicenseFile = async () => {
+  await mkdir(dirname(dependenciesLicenseFile))
+  const fd = await open(dependenciesLicenseFile, 'w')
   await close(fd)
-  return file
 }
 
-const addRobotoLicense = async (targetFile) => {
+const addRobotoLicense = async () => {
   const robotoLicense = await readFile(robotoLicenseFile, options)
-  await appendFile(targetFile, robotoLicense, options)
+  await appendFile(dependenciesLicenseFile, robotoLicense, options)
 }
 
-const addDependenciesLicenses = async (targetFile) => {
+const addDependenciesLicenses = async () => {
   const dependencies = await licenseChecker({ start: paths.root })
 
   for (const name in dependencies) {
@@ -60,7 +52,7 @@ const addDependenciesLicenses = async (targetFile) => {
       content += await readFile(dependency.licenseFile, options)
     }
 
-    await appendFile(targetFile, header + content)
+    await appendFile(dependenciesLicenseFile, header + content)
   }
 }
 
@@ -88,7 +80,16 @@ const config = {
     output: paths.build.dist,
     buildResources: paths.distribution
   },
-  afterPack: generateLicenseFile,
+  extraFiles: [
+    {
+      from: paths.licenseFile,
+      to: basename(paths.licenseFile) + '.txt'
+    },
+    {
+      from: dependenciesLicenseFile,
+      to: basename(dependenciesLicenseFile)
+    }
+  ],
 
   //
   // Linux
@@ -172,5 +173,6 @@ const getPlatformConfig = () => {
 }
 
 gulp.task('distribution', () => {
-  return build(getPlatformConfig())
+  return generateDependenciesLicensesFile()
+    .then(() => build(getPlatformConfig()))
 })

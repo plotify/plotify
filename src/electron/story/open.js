@@ -1,10 +1,11 @@
 import { InvalidStoryFileError, UnsupportedStoryFileVersionError, openStory } from '../../backend/story'
 import { addLoadingStory, removeStoryByWindowId, setStoryLoaded } from './actions'
-import { app, dialog } from 'electron'
 import { createOrFocus, getWindowByStoryPath, getWindowStoryPath, setWindowStoryPath } from '../windows'
 import { getStoryByWindowId, isStoryLoading } from './selectors'
 
 import { addOrUpdateRecentlyOpenedFile } from '../preferences'
+import { app } from 'electron'
+import { showOpenDialog } from '../shared/dialog'
 
 const options = {
   title: 'Geschichte öffnen',
@@ -17,11 +18,17 @@ const options = {
 
 const open = (senderWindow, path) => async (dispatch, getState) => {
   if (path === undefined) {
-    const files = dialog.showOpenDialog(senderWindow, options)
+    const files = await showOpenDialog(senderWindow, options)
     if (!files) {
       return
     }
     path = files[0]
+  }
+
+  // Wenn kein Fenster übergeben wurde wird die Geschichte in einem neuen Fenster geöffnet.
+  if (!senderWindow) {
+    dispatch(createOrFocus(path))
+    return
   }
 
   // Kann in diesem Fenster eine Geschichte geöffnet werden oder muss ein anderes Fenster verwendet werden?
