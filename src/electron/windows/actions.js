@@ -1,5 +1,6 @@
 import * as t from './action-types'
 
+import { MIN_HEIGHT, MIN_WIDTH } from './constants'
 import { focusSplashScreenIfExisting, showSplashScreen } from '../splash-screen'
 import { getWindowByStoryPath, isWindowReady } from './selectors'
 
@@ -26,6 +27,8 @@ const createNewWindow = (dispatch, storyPath) => {
   const window = new BrowserWindow({
     width: 1000,
     height: 600,
+    minWidth: MIN_WIDTH,
+    minHeight: MIN_HEIGHT,
     backgroundColor: '#FAFAFA',
     show: false
   })
