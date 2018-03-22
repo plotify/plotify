@@ -71,7 +71,7 @@
     "gulp-babel": "7.0.1",
     "gulp-cached": "1.1.1",
     "jest": "22.4.3",
-    "license-checker": "16.0.0",
+    "license-checker": "18.0.0",
     "react-test-renderer": "16.2.0",
     "run-sequence": "2.2.1",
     "standard": "11.0.1"
