@@ -54,11 +54,19 @@ const styles = (theme) => ({
   },
   name: {
     borderBottom: '1px solid lightgray',
-    minWidth: 320
+    minWidth: 320,
+    userSelect: 'auto',
+    '&:hover': {
+      cursor: 'text'
+    }
   },
   emptyName: {
     fontStyle: 'italic',
-    opacity: 0.5
+    opacity: 0.5,
+    userSelect: 'none',
+    '&:hover': {
+      cursor: 'default'
+    }
   }
 })
 
