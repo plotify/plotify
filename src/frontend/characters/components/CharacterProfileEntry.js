@@ -67,7 +67,10 @@ const styles = (theme) => ({
   input: {
     '&:hover': {
       cursor: 'text'
-    }
+    },
+
+    // Workaround: https://github.com/plotify/plotify/issues/132
+    overflow: 'hidden'
   }
 })
 
