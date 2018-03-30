@@ -11,23 +11,21 @@ import { withStyles } from 'material-ui/styles'
 class CharacterProfileEntry extends Component {
   render () {
     const { classes, className, entry, editMode, visible } = this.props
-    let inputProps
-    if (!editMode) {
-      inputProps = {
-        disableUnderline: true,
-        classes: {
-          input: classes.inputDisabled
-        }
-      }
-    } else {
-      inputProps = {
-        classes: {
-          root: classes.inputRoot,
-          input: classes.input
-        }
+
+    if (!visible) return null
+
+    const inputProps = {
+      classes: {
+        root: classes.inputRoot,
+        input: classes.input
       }
     }
-    if (!visible) return null
+    if (!editMode) {
+      inputProps.disableUnderline = true
+      inputProps.classes.input = classNames(
+        inputProps.classes.input, classes.inputDisabled)
+    }
+
     return (
       <div className={classNames(classes.entry, className)}>
         <AutosavingTextField
@@ -61,9 +59,6 @@ const styles = (theme) => ({
       backgroundColor: 'rgba(0, 0, 0, 0.2)'
     }
   },
-  inputDisabled: {
-    color: theme.palette.text.primary
-  },
   input: {
     '&:hover': {
       cursor: 'text'
@@ -71,6 +66,9 @@ const styles = (theme) => ({
 
     // Workaround: https://github.com/plotify/plotify/issues/132
     overflow: 'hidden'
+  },
+  inputDisabled: {
+    color: theme.palette.text.primary
   }
 })
 
