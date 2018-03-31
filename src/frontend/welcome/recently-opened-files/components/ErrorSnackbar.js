@@ -18,15 +18,14 @@ const ErrorSnackbar = (props) => (
     autoHideDuration={5000}
     message={props.message}
     anchorOrigin={{ vertical, horizontal }}
-    action={[
+    action={
       <IconButton
-        key='close'
         aria-label='Schließen'
         color='inherit'
         onClick={props.onClose}>
         <CloseIcon />
       </IconButton>
-    ]} />
+    } />
 )
 
 ErrorSnackbar.propTypes = {
