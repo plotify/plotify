@@ -1,4 +1,5 @@
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import React, { Fragment } from 'react'
 import { getNotPinnedFiles, getPinnedFiles } from '../selectors'
 
 import ErrorSnackbar from './ErrorSnackbar'
@@ -6,7 +7,6 @@ import FolderNotFoundDialog from './FolderNotFoundDialog'
 import NoRecentFiles from './NoRecentFiles'
 import Paper from 'material-ui/Paper'
 import PropTypes from 'prop-types'
-import React from 'react'
 import RecentFilesList from './RecentFilesList'
 import { connect } from 'react-redux'
 import { withStyles } from 'material-ui/styles'
@@ -19,24 +19,25 @@ const RecentFiles = (props) => {
     exit: classes.exit,
     exitActive: classes.exitActive
   }
-  return [
-    <TransitionGroup key={0}>
-      {[
-        transition(0, noRecentFiles(props), transitionClassNames),
-        transition(1, list(pinnedFiles, listClassName), transitionClassNames),
-        transition(2, list(notPinnedFiles, listClassName), transitionClassNames)
-      ]}
-    </TransitionGroup>,
-    <FolderNotFoundDialog key={1} />,
-    <ErrorSnackbar key={2} />
-  ]
+  return (
+    <Fragment>
+      <TransitionGroup>
+        <Fragment>
+          {transition(noRecentFiles(props), transitionClassNames)}
+          {transition(list(pinnedFiles, listClassName), transitionClassNames)}
+          {transition(list(notPinnedFiles, listClassName), transitionClassNames)}
+        </Fragment>
+      </TransitionGroup>
+      <FolderNotFoundDialog />
+      <ErrorSnackbar />
+    </Fragment>
+  )
 }
 
-const transition = (key, element, transitionClassNames) => {
+const transition = (element, transitionClassNames) => {
   if (element) {
     return (
       <CSSTransition
-        key={key}
         classNames={transitionClassNames}
         timeout={150}>
         {element}
