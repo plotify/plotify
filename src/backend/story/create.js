@@ -4,7 +4,7 @@ import Story from './story'
 import fs from 'fs-extra'
 import path from 'path'
 
-const statementsFile = path.join(__dirname, 'create.sql')
+const statementsFile = path.join(__dirname, 'schema.sql')
 
 const create = async (path) => {
   const statements = await fs.readFile(statementsFile, 'utf-8')
