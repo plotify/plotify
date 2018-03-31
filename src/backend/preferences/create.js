@@ -4,7 +4,7 @@ import fs from 'fs-extra'
 import path from 'path'
 import { validateDatabase } from '../shared/validation'
 
-const statementsFile = path.join(__dirname, 'create.sql')
+const statementsFile = path.join(__dirname, 'schema.sql')
 
 export const create = async (path) => {
   const database = await open(path, mode.OPEN_CREATE | mode.OPEN_READWRITE)

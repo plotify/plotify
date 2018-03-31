@@ -1,6 +1,6 @@
 BEGIN;
 
-PRAGMA user_version = 2;
+PRAGMA user_version = 3;
 
 CREATE TABLE IF NOT EXISTS `appearance` (
   `id`           INTEGER NOT NULL DEFAULT    1 CHECK(id = 1),
@@ -9,18 +9,6 @@ CREATE TABLE IF NOT EXISTS `appearance` (
 );
 
 INSERT OR IGNORE INTO `appearance` ( `id` ) VALUES ( 1 );
-
-CREATE TABLE IF NOT EXISTS `window` (
-  `id`           INTEGER NOT NULL DEFAULT    1 CHECK(id = 1),
-  `x`            INTEGER          DEFAULT NULL,
-  `y`            INTEGER          DEFAULT NULL,
-  `width`        INTEGER NOT NULL DEFAULT 1000 CHECK(width > 0),
-  `height`       INTEGER NOT NULL DEFAULT  600 CHECK(height > 0),
-  `maximized`    INTEGER NOT NULL DEFAULT    1 CHECK(maximized = 0 OR maximized = 1),
-  PRIMARY KEY(id)
-);
-
-INSERT OR IGNORE INTO `window` ( `id` ) VALUES ( 1 );
 
 CREATE TABLE IF NOT EXISTS `recently_opened_files` (
   `path`         TEXT    NOT NULL,
