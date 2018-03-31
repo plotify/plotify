@@ -39,7 +39,7 @@ describe('#createSchema', () => {
 
 const checkTables = async (database) => {
   const tables = await database.all('SELECT name FROM sqlite_master WHERE type=?;', ['table'])
+  expect(tables.length).toBe(2)
   expect(tables).toContainEqual({ name: 'appearance' })
-  expect(tables).toContainEqual({ name: 'window' })
   expect(tables).toContainEqual({ name: 'recently_opened_files' })
 }

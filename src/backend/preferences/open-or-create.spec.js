@@ -27,7 +27,7 @@ describe('with path to existing database', () => {
       const database = await openOrCreate(path)
       const result = await database.get('PRAGMA user_version')
       await database.close()
-      expect(result['user_version']).toBe(2)
+      expect(result['user_version']).toBe(3)
     })
 
     test('updates table recently_opened_files', async () => {
@@ -40,6 +40,31 @@ describe('with path to existing database', () => {
       const tables = await database.all('SELECT name FROM sqlite_master WHERE type=?;', ['table'])
       await database.close()
       expect(tables).toContainEqual({ name: 'recently_opened_files' })
+    })
+  })
+
+  describe('with schema version 2', () => {
+    test('updates schema version', async () => {
+      const preparedDatabase = await create(path)
+      await preparedDatabase.run('PRAGMA user_version = 2')
+      await preparedDatabase.close()
+
+      const database = await openOrCreate(path)
+      const result = await database.get('PRAGMA user_version')
+      await database.close()
+      expect(result['user_version']).toBe(3)
+    })
+
+    test('deletes table window', async () => {
+      const preparedDatabase = await create(path)
+      await preparedDatabase.run('PRAGMA user_version = 2')
+      await preparedDatabase.run('CREATE TABLE `window` ( `id` INTEGER NOT NULL DEFAULT 1 CHECK(id = 1) )')
+      await preparedDatabase.close()
+
+      const database = await openOrCreate(path)
+      const tables = await database.all('SELECT name FROM sqlite_master WHERE type=?;', ['table'])
+      await database.close()
+      expect(tables).not.toContainEqual({ name: 'window' })
     })
   })
 
