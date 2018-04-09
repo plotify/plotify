@@ -1,4 +1,5 @@
 import 'babel-polyfill'
+import './unhandled-errors'
 import './quit-handler'
 
 import { closeSplashScreen, showSplashScreen } from './splash-screen'
@@ -12,10 +13,6 @@ import { openPreferences } from './preferences'
 import parseArguments from 'minimist'
 import printWelcomeScreen from './versions'
 import store from './store'
-
-process.on('unhandledRejection', (error) => {
-  console.warn('WARNING: Unhandled promise rejection:', error)
-})
 
 let loadingBackend = true
 let storyPaths = new Set()
