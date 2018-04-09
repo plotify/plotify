@@ -1,4 +1,5 @@
 import 'babel-polyfill'
+import './unhandled-errors'
 
 import App from './App'
 import { GET_SAVED_STATE } from '../shared/requests'

@@ -2,9 +2,16 @@ import { dialog } from 'electron'
 
 export const showMessageBox = (browserWindow, options) => {
   return new Promise((resolve, reject) => {
-    dialog.showMessageBox(browserWindow, options, (response) => {
-      resolve(response)
-    })
+    if (browserWindow) {
+      dialog.showMessageBox(browserWindow, options, (response) => {
+        resolve(response)
+      })
+    } else {
+      // Workaround: Ohne setTimeout wird der Button-Code (response) nicht zurückgegeben.
+      dialog.showMessageBox(options, (response) => {
+        setTimeout(() => resolve(response), 0)
+      })
+    }
   })
 }
 
@@ -21,5 +28,12 @@ export const showSaveDialog = (browserWindow, options) => {
     dialog.showSaveDialog(browserWindow, options, (filename) => {
       resolve(filename)
     })
+  })
+}
+
+export const showErrorBox = (title, content) => {
+  return new Promise((resolve) => {
+    dialog.showErrorBox(title, content)
+    resolve()
   })
 }
