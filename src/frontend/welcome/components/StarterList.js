@@ -1,8 +1,8 @@
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import { createStory, openStory } from '../../story/actions'
 
-import CreateNewFolderIcon from 'material-ui-icons/CreateNewFolder'
-import FolderOpenIcon from 'material-ui-icons/FolderOpen'
+import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder'
+import FolderOpenIcon from '@material-ui/icons/FolderOpen'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'

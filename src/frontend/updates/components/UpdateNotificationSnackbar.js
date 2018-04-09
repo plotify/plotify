@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { closeUpdateNotification, openUpdateNotificationUrl } from '../actions'
 
 import Button from 'material-ui/Button'
-import CloseIcon from 'material-ui-icons/Close'
+import CloseIcon from '@material-ui/icons/Close'
 import IconButton from 'material-ui/IconButton'
 import PropTypes from 'prop-types'
 import Snackbar from 'material-ui/Snackbar'

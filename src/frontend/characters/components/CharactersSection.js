@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { getSelectedCharacterName, isCharacterSelected } from '../selectors'
 
-import BackIcon from 'material-ui-icons/ArrowBack'
+import BackIcon from '@material-ui/icons/ArrowBack'
 import { CHARACTERS_SECTION } from '../constants'
 import CharacterProfile from './CharacterProfile'
 import CharactersList from './CharactersList'

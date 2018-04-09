@@ -1,6 +1,6 @@
 import IconButton from 'material-ui/IconButton'
 import React from 'react'
-import RedoIcon from 'material-ui-icons/Redo'
+import RedoIcon from '@material-ui/icons/Redo'
 import Tooltip from 'material-ui/Tooltip'
 
 // TODO Strg oder Command je nach Plattform
