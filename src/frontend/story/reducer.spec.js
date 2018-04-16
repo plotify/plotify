@@ -1,5 +1,5 @@
-import { closeCreateStoryDialog, closeOpenStoryDialog, closeStoryPreparationStarted, createStoryCanceled, createStoryFailed, createStoryStarted, createStorySuccessful, openStoryCanceled, openStoryFailed, openStoryStarted, openStorySuccessful, _storyClosed as storyClosed } from './actions'
-import { getCreatingStoryErrorMessage, getOpeningStoryErrorMessage, getStoryPath, isClosingStory, isCreatingStory, isCreatingStoryFailed, isOpeningStory, isOpeningStoryFailed, isShowCreateStoryDialog, isShowOpenStoryDialog, isStoryOpen } from './selectors'
+import { closeCreateStoryDialog, closeOpenStoryDialog, closeStoryPreparationStarted, createStoryCanceled, createStoryFailed, createStoryStarted, createStorySuccessful, openStoryFailed, openStoryStarted, openStorySuccessful, _storyClosed as storyClosed } from './actions'
+import { getCreatingStoryErrorMessage, getStoryPath, isClosingStory, isCreatingStory, isCreatingStoryFailed, isOpeningStory, isShowCreateStoryDialog, isShowOpenStoryDialog, isStoryOpen } from './selectors'
 
 import { createStore } from '../store'
 
@@ -18,8 +18,6 @@ const validateInitialState = () => {
   expect(getStoryPath(state)).toBe(null)
   expect(isOpeningStory(state)).toBe(false)
   expect(isShowOpenStoryDialog(state)).toBe(false)
-  expect(isOpeningStoryFailed(state)).toBe(false)
-  expect(getOpeningStoryErrorMessage(state)).toBe(null)
   expect(isCreatingStory(state)).toBe(false)
   expect(isShowCreateStoryDialog(state)).toBe(false)
   expect(isCreatingStoryFailed(state)).toBe(false)
@@ -33,8 +31,6 @@ test('openStoryStarted', async () => {
   const state = store.getState()
   expect(isOpeningStory(state)).toBe(true)
   expect(isShowOpenStoryDialog(state)).toBe(true)
-  expect(isOpeningStoryFailed(state)).toBe(false)
-  expect(getOpeningStoryErrorMessage(state)).toBe(null)
   expect(isShowCreateStoryDialog(state)).toBe(false)
 })
 
@@ -52,26 +48,12 @@ test('openStorySuccessful', async () => {
 
 test('openStoryFailed', async () => {
   await store.dispatch(openStoryStarted())
-
-  const message = 'Hello world!'
-  await store.dispatch(openStoryFailed(message))
+  await store.dispatch(openStoryFailed())
 
   const state = store.getState()
-  expect(isOpeningStoryFailed(state)).toBe(true)
-  expect(getOpeningStoryErrorMessage(state)).toBe(message)
   expect(isStoryOpen(state)).toBe(false)
   expect(getStoryPath(state)).toBe(null)
   expect(isOpeningStory(state)).toBe(false)
-})
-
-test('openStoryCanceled', async () => {
-  await store.dispatch(openStoryStarted())
-  await store.dispatch(openStoryCanceled())
-
-  const state = store.getState()
-  expect(isOpeningStory(state)).toBe(false)
-  expect(isOpeningStoryFailed(state)).toBe(false)
-  expect(getStoryPath(state)).toBe(null)
 })
 
 test('closeOpenStoryDialog', async () => {
