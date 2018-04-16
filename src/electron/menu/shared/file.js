@@ -1,5 +1,5 @@
-import { CLOSE_STORY_PREPARATION_REQUESTED, CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../../shared/story/requests'
-import { createStory as _createStory, openStory as _openStory, isStoryOpenInFocusedWindow } from '../../story'
+import { CLOSE_STORY_PREPARATION_REQUESTED, CREATE_STORY_REQUESTED } from '../../../shared/story/requests'
+import { createStory as _createStory, isStoryOpenInFocusedWindow, openStory } from '../../story'
 
 import { createSelector } from 'reselect'
 import recentlyOpenedFiles from './recently-opened-files'
@@ -12,7 +12,7 @@ const fileMenu = (menuLabel, showQuit, recentlyOpenedFiles, openStoryInFocusedWi
     label: menuLabel,
     submenu: [
       { label: 'Neu...', click: createStory },
-      { label: 'Öffnen...', click: openStory },
+      { label: 'Öffnen...', click: _openStory },
       {
         label: 'Zuletzt geöffnet',
         enabled: recentlyOpenedFiles.length > 0,
@@ -48,7 +48,7 @@ const createStoryInNewWindow = async () => {
   try {
     const path = await store.dispatch(_createStory())
     if (path) {
-      store.dispatch(_openStory(null, path))
+      store.dispatch(openStory(null, path))
     }
   } catch (error) {
     showMessageBox(null, {
@@ -61,12 +61,8 @@ const createStoryInNewWindow = async () => {
   }
 }
 
-const openStory = (_, window) => {
-  if (window) {
-    request(window, OPEN_STORY_REQUESTED)
-  } else {
-    store.dispatch(_openStory())
-  }
+const _openStory = (_, window) => {
+  store.dispatch(openStory(window))
 }
 
 const closeStory = (_, window) => {

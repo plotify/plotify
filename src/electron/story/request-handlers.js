@@ -12,10 +12,9 @@ const handleCreateStory = (resolve, reject, senderWindow) => (dispatch) => {
     .catch(error => reject(error.message))
 }
 
-const handleOpenStory = (resolve, reject, senderWindow, path) => (dispatch) => {
-  dispatch(openStory(senderWindow, path))
-    .then(story => resolve(story ? story.path : undefined))
-    .catch(error => reject(error.message))
+const handleOpenStory = (resolve, _, senderWindow, path) => async (dispatch) => {
+  await dispatch(openStory(senderWindow, path))
+  resolve()
 }
 
 const handleCloseStory = (resolve, _, senderWindow, { closeWindow, focusWelcomeWindow }) => (dispatch) => {

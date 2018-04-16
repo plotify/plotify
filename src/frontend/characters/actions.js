@@ -14,9 +14,9 @@ import { getSelectedCharacterId } from './selectors'
 import { request } from '../shared/communication'
 import { setSection } from '../navigation/actions'
 
-export const openCharactersSection = () => (dispatch) => {
-  dispatch(setSection(CHARACTERS_SECTION))
-  dispatch(getCharacters())
+export const openCharactersSection = () => async (dispatch) => {
+  await dispatch(getCharacters())
+  await dispatch(setSection(CHARACTERS_SECTION))
 }
 
 // TODO Optimistic creation
