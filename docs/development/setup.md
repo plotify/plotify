@@ -44,11 +44,10 @@ In diesem Dokument ist beschrieben, welche Software für die Weiterentwicklung v
 ## macOS
 
 1. Benötigte Software installieren:
-    1. [Git](https://git-scm.com/download/mac)
-    2. [Node.js 8.x](https://nodejs.org/dist/v8.9.4/node-v8.9.4.pkg)
-    3. [Python 2.7.x](https://www.python.org/) (Vermutlich bereits installiert.)
-    4. [Xcode](https://developer.apple.com/xcode/)
-    5. `Command Line Tools` über Xcode: `Xcode -> Preferences -> Downloads`
+    1. [Homebrew](https://brew.sh/)
+    2. Die benötigten [Command Line Tools](https://developer.apple.com/xcode/features/) werden bei der Installation von Homebrew automatisch installiert.
+    3. [Git](https://git-scm.com/download/mac) (z.B. über Homebrew im Terminal: `brew install git`)
+    4. [Node.js 8.x](https://nodejs.org/dist/v8.9.4/node-v8.9.4.pkg)
 2. Repository von Plotify klonen:
     ```bash
     git clone https://github.com/plotify/plotify.git
