@@ -1,5 +1,5 @@
-import { closeCreateStoryDialog, closeOpenStoryDialog, closeStoryPreparationStarted, createStoryCanceled, createStoryFailed, createStoryStarted, createStorySuccessful, openStoryFailed, openStoryStarted, openStorySuccessful, _storyClosed as storyClosed } from './actions'
-import { getCreatingStoryErrorMessage, getStoryPath, isClosingStory, isCreatingStory, isCreatingStoryFailed, isOpeningStory, isShowCreateStoryDialog, isShowOpenStoryDialog, isStoryOpen } from './selectors'
+import { closeCreateStoryDialog, closeOpenStoryDialog, closeStoryPreparationStarted, createStoryFailed, createStoryStarted, createStorySuccessful, openStoryFailed, openStoryStarted, openStorySuccessful, _storyClosed as storyClosed } from './actions'
+import { getStoryPath, isClosingStory, isCreatingStory, isOpeningStory, isShowCreateStoryDialog, isShowOpenStoryDialog, isStoryOpen } from './selectors'
 
 import { createStore } from '../store'
 
@@ -20,8 +20,6 @@ const validateInitialState = () => {
   expect(isShowOpenStoryDialog(state)).toBe(false)
   expect(isCreatingStory(state)).toBe(false)
   expect(isShowCreateStoryDialog(state)).toBe(false)
-  expect(isCreatingStoryFailed(state)).toBe(false)
-  expect(getCreatingStoryErrorMessage(state)).toBe(null)
   expect(isClosingStory(state)).toBe(false)
 }
 
@@ -69,8 +67,6 @@ test('createStoryStarted', async () => {
   const state = store.getState()
   expect(isCreatingStory(state)).toBe(true)
   expect(isShowCreateStoryDialog(state)).toBe(true)
-  expect(isCreatingStoryFailed(state)).toBe(false)
-  expect(getCreatingStoryErrorMessage(state)).toBe(null)
   expect(isShowOpenStoryDialog(state)).toBe(false)
 })
 
@@ -82,24 +78,11 @@ test('createStorySuccessful', async () => {
 
 test('createStoryFailed', async () => {
   await store.dispatch(createStoryStarted())
-
-  const message = 'Lorem ipsum'
-  await store.dispatch(createStoryFailed(message))
+  await store.dispatch(createStoryFailed())
 
   const state = store.getState()
   expect(isCreatingStory(state)).toBe(false)
   expect(isShowCreateStoryDialog(state)).toBe(true)
-  expect(isCreatingStoryFailed(state)).toBe(true)
-  expect(getCreatingStoryErrorMessage(state)).toBe(message)
-})
-
-test('createStoryCanceled', async () => {
-  await store.dispatch(createStoryStarted())
-  await store.dispatch(createStoryCanceled())
-
-  const state = store.getState()
-  expect(isCreatingStory(state)).toBe(false)
-  expect(isCreatingStoryFailed(state)).toBe(false)
 })
 
 test('closeCreateStoryDialog', async () => {

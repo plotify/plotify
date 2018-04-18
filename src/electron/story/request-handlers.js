@@ -6,10 +6,9 @@ import createStory from './create'
 import openStory from './open'
 import { requestHandler } from '../shared/communication'
 
-const handleCreateStory = (resolve, reject, senderWindow) => (dispatch) => {
-  dispatch(createStory(senderWindow))
-    .then(path => resolve(path))
-    .catch(error => reject(error.message))
+const handleCreateStory = (resolve, reject, senderWindow) => async (dispatch) => {
+  await dispatch(createStory(senderWindow))
+  resolve()
 }
 
 const handleOpenStory = (resolve, _, senderWindow, path) => async (dispatch) => {

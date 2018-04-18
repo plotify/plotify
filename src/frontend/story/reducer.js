@@ -2,7 +2,6 @@ import {
   CLOSE_CREATE_STORY_DIALOG,
   CLOSE_OPEN_STORY_DIALOG,
   CLOSE_STORY_PREPARATION_STARTED,
-  CREATE_STORY_CANCELED,
   CREATE_STORY_FAILED,
   CREATE_STORY_STARTED,
   CREATE_STORY_SUCCESSFUL,
@@ -20,8 +19,6 @@ const initialState = {
   showOpenStoryDialog: false,
   creatingStory: false,
   showCreateStoryDialog: false,
-  creatingStoryFailed: false,
-  creatingStoryErrorMessage: null,
   closingStory: false
 }
 
@@ -37,7 +34,7 @@ export default createReducer(initialState, {
     openStory: path,
     openingStory: false
   }),
-  [OPEN_STORY_FAILED]: (state, { message }) => ({
+  [OPEN_STORY_FAILED]: (state) => ({
     ...state,
     openingStory: false
   }),
@@ -56,16 +53,9 @@ export default createReducer(initialState, {
     ...state,
     creatingStory: false
   }),
-  [CREATE_STORY_FAILED]: (state, { message }) => ({
+  [CREATE_STORY_FAILED]: (state) => ({
     ...state,
-    creatingStory: false,
-    creatingStoryFailed: true,
-    creatingStoryErrorMessage: message
-  }),
-  [CREATE_STORY_CANCELED]: (state) => ({
-    ...state,
-    creatingStory: false,
-    creatingStoryFailed: false
+    creatingStory: false
   }),
   [CLOSE_CREATE_STORY_DIALOG]: (state) => ({
     ...state,
