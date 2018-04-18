@@ -22,7 +22,7 @@ const open = (senderWindow, path) => async (dispatch, getState) => {
   if (path === undefined) {
     const files = await showOpenDialog(senderWindow, options)
     if (!files) {
-      return
+      return false
     }
     path = files[0]
   }
@@ -30,27 +30,27 @@ const open = (senderWindow, path) => async (dispatch, getState) => {
   // Wenn kein Fenster übergeben wurde wird die Geschichte in einem neuen Fenster geöffnet.
   if (!senderWindow) {
     dispatch(createOrFocus(path))
-    return
+    return false
   }
 
   // Kann in diesem Fenster eine Geschichte geöffnet werden oder muss ein anderes Fenster verwendet werden?
   const senderWindowPath = getWindowStoryPath(getState(), senderWindow.id)
   if (senderWindowPath !== '' && senderWindowPath !== path) {
     dispatch(createOrFocus(path))
-    return
+    return false
   }
 
   // Wird die Geschichte in einem anderen Fenster bereits geladen oder ist bereits geöffnet?
   const otherWindow = getWindowByStoryPath(getState(), path)
   if (senderWindow !== otherWindow && otherWindow !== undefined) {
     dispatch(createOrFocus(path))
-    return
+    return false
   }
 
   // Wird die Geschichte in diesem Fenster bereits geladen oder ist bereits geöffnet?
   if (senderWindowPath === path &&
         (isStoryLoading(getState(), path) || getStoryByWindowId(getState(), senderWindow.id) !== undefined)) {
-    return
+    return false
   }
 
   await request(senderWindow, OPEN_STORY_STARTED, path)

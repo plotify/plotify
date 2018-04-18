@@ -16,11 +16,5 @@ export const isCreatingStory = (state) =>
 export const isShowCreateStoryDialog = (state) =>
   state.story.showCreateStoryDialog === true
 
-export const isCreatingStoryFailed = (state) =>
-  state.story.creatingStoryFailed === true
-
-export const getCreatingStoryErrorMessage = (state) =>
-  state.story.creatingStoryErrorMessage
-
 export const isClosingStory = (state) =>
   state.story.closingStory === true

@@ -1,17 +1,16 @@
-import { CLOSE_STORY_PREPARATION_REQUESTED, CREATE_STORY_REQUESTED } from '../../../shared/story/requests'
-import { createStory as _createStory, isStoryOpenInFocusedWindow, openStory } from '../../story'
+import { createStory, isStoryOpenInFocusedWindow, openStory } from '../../story'
 
+import { CLOSE_STORY_PREPARATION_REQUESTED } from '../../../shared/story/requests'
 import { createSelector } from 'reselect'
 import recentlyOpenedFiles from './recently-opened-files'
 import { request } from '../../shared/communication'
-import { showMessageBox } from '../../shared/dialog'
 import store from '../../store'
 
 const fileMenu = (menuLabel, showQuit, recentlyOpenedFiles, openStoryInFocusedWindow) => {
   const menu = {
     label: menuLabel,
     submenu: [
-      { label: 'Neu...', click: createStory },
+      { label: 'Neu...', click: _createStory },
       { label: 'Öffnen...', click: _openStory },
       {
         label: 'Zuletzt geöffnet',
@@ -36,29 +35,8 @@ const emptySubmenu = [
   }
 ]
 
-const createStory = (_, window) => {
-  if (window) {
-    request(window, CREATE_STORY_REQUESTED)
-  } else {
-    createStoryInNewWindow()
-  }
-}
-
-const createStoryInNewWindow = async () => {
-  try {
-    const path = await store.dispatch(_createStory())
-    if (path) {
-      store.dispatch(openStory(null, path))
-    }
-  } catch (error) {
-    showMessageBox(null, {
-      type: 'error',
-      title: 'Die Geschichte konnte nicht erstellt werden.',
-      message: error.message,
-      buttons: ['Schließen'],
-      defaultId: 0
-    })
-  }
+const _createStory = (_, window) => {
+  store.dispatch(createStory(window))
 }
 
 const _openStory = (_, window) => {

@@ -7,12 +7,9 @@ import { openWelcomeSection } from '../welcome/actions'
 import { request } from '../shared/communication'
 
 export const openStory = (path) => async (dispatch, getState) => {
-  if (isOpeningStory(getState()) || isCreatingStory(getState())) {
-    return
+  if (!isOpeningStory(getState()) && !isCreatingStory(getState())) {
+    request(OPEN_STORY, path)
   }
-
-  dispatch(openStoryStarted())
-  request(OPEN_STORY, path)
 }
 
 export const openStoryStarted = () => ({
@@ -36,28 +33,8 @@ export const closeOpenStoryDialog = () => ({
 })
 
 export const createStory = () => async (dispatch, getState) => {
-  if (isOpeningStory(getState()) || isCreatingStory(getState())) {
-    return
-  }
-
-  dispatch(createStoryStarted())
-
-  try {
-    const path = await request(CREATE_STORY)
-
-    if (path) {
-      dispatch(createStorySuccessful())
-    } else {
-      dispatch(createStoryCanceled())
-    }
-
-    dispatch(closeCreateStoryDialog())
-
-    if (path) {
-      dispatch(openStory(path))
-    }
-  } catch (error) {
-    dispatch(createStoryFailed(error))
+  if (!isOpeningStory(getState()) && !isCreatingStory(getState())) {
+    request(CREATE_STORY)
   }
 }
 
@@ -71,13 +48,8 @@ export const createStorySuccessful = () => ({
   payload: {}
 })
 
-export const createStoryFailed = (message) => ({
+export const createStoryFailed = () => ({
   type: t.CREATE_STORY_FAILED,
-  payload: { message }
-})
-
-export const createStoryCanceled = () => ({
-  type: t.CREATE_STORY_CANCELED,
   payload: {}
 })
 
