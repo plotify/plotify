@@ -43,11 +43,14 @@ const create = (senderWindow) => async (dispatch, getState) => {
     const story = await createStory(path)
     await story.database.close()
 
+    const result = await dispatch(openStory(senderWindow, path))
+
+    // Das Erstellen einer Geschichte ist erst dann abgeschlossen, wenn die Geschichte auch geöffnet wurde.
     if (openStoryInExistingWindow) {
       request(senderWindow, CREATE_STORY_SUCCESSFUL, path)
     }
 
-    return await dispatch(openStory(senderWindow, path))
+    return result
   } catch (error) {
     if (openStoryInExistingWindow) {
       request(senderWindow, CREATE_STORY_FAILED, path)

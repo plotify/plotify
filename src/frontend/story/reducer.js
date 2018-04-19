@@ -1,6 +1,4 @@
 import {
-  CLOSE_CREATE_STORY_DIALOG,
-  CLOSE_OPEN_STORY_DIALOG,
   CLOSE_STORY_PREPARATION_STARTED,
   CREATE_STORY_FAILED,
   CREATE_STORY_STARTED,
@@ -14,40 +12,31 @@ import {
 import { createReducer } from '../../shared/redux'
 
 const initialState = {
-  openStory: null,
+  storyPath: null,
   openingStory: false,
-  showOpenStoryDialog: false,
   creatingStory: false,
-  showCreateStoryDialog: false,
   closingStory: false
 }
 
 export default createReducer(initialState, {
-  [OPEN_STORY_STARTED]: (state) => ({
+  [OPEN_STORY_STARTED]: (state, { path }) => ({
     ...state,
     openingStory: true,
-    showOpenStoryDialog: true,
-    showCreateStoryDialog: false
+    storyPath: path
   }),
-  [OPEN_STORY_SUCCESSFUL]: (state, { path }) => ({
+  [OPEN_STORY_SUCCESSFUL]: (state) => ({
     ...state,
-    openStory: path,
     openingStory: false
   }),
   [OPEN_STORY_FAILED]: (state) => ({
     ...state,
-    openingStory: false
-  }),
-  [CLOSE_OPEN_STORY_DIALOG]: (state) => ({
-    ...state,
-    showOpenStoryDialog: false
+    openingStory: false,
+    storyPath: null
   }),
 
   [CREATE_STORY_STARTED]: (state) => ({
     ...state,
-    creatingStory: true,
-    showCreateStoryDialog: true,
-    showOpenStoryDialog: false
+    creatingStory: true
   }),
   [CREATE_STORY_SUCCESSFUL]: (state) => ({
     ...state,
@@ -57,16 +46,10 @@ export default createReducer(initialState, {
     ...state,
     creatingStory: false
   }),
-  [CLOSE_CREATE_STORY_DIALOG]: (state) => ({
-    ...state,
-    showCreateStoryDialog: false
-  }),
 
   [CLOSE_STORY_PREPARATION_STARTED]: (state) => ({
     ...state,
-    closingStory: true,
-    showOpenStoryDialog: false,
-    showCreateStoryDialog: false
+    closingStory: true
   }),
   [STORY_CLOSED]: () => initialState
 })

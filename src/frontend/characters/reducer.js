@@ -15,7 +15,6 @@ import {
 } from './action-types'
 import {
   CLOSE_STORY_PREPARATION_STARTED,
-  OPEN_STORY_SUCCESSFUL,
   STORY_CLOSED
 } from '../story/action-types'
 
@@ -144,6 +143,5 @@ export default createReducer(initialState, {
     editMode: false
   }),
 
-  [OPEN_STORY_SUCCESSFUL]: () => initialState,
   [STORY_CLOSED]: () => initialState
 })

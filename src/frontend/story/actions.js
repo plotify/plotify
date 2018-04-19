@@ -12,24 +12,19 @@ export const openStory = (path) => async (dispatch, getState) => {
   }
 }
 
-export const openStoryStarted = () => ({
+export const openStoryStarted = (path) => ({
   type: t.OPEN_STORY_STARTED,
-  payload: {}
+  payload: { path }
 })
 
-export const openStorySuccessful = (path) => ({
+export const openStorySuccessful = () => ({
   type: t.OPEN_STORY_SUCCESSFUL,
-  payload: { path }
+  payload: {}
 })
 
 export const openStoryFailed = () => ({
   type: t.OPEN_STORY_FAILED,
   payload: {}
-})
-
-export const closeOpenStoryDialog = () => ({
-  type: t.CLOSE_OPEN_STORY_DIALOG,
-  paylaod: {}
 })
 
 export const createStory = () => async (dispatch, getState) => {
@@ -50,11 +45,6 @@ export const createStorySuccessful = () => ({
 
 export const createStoryFailed = () => ({
   type: t.CREATE_STORY_FAILED,
-  payload: {}
-})
-
-export const closeCreateStoryDialog = () => ({
-  type: t.CLOSE_CREATE_STORY_DIALOG,
   payload: {}
 })
 

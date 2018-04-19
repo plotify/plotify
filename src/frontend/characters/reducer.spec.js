@@ -1,5 +1,5 @@
 import { closeCreateCharacterDialog, createCharacterSuccessful, deselectCharacter, disableCharacterEditMode, enableCharacterEditMode, findCharactersSuccessful, getCharactersSuccessful, loadProfileRequest, loadProfileSuccessful, openCreateCharacterDialog, _selectCharacter as selectCharacter, updateCharacterNameRequest, updateCharacterNameSuccessful, updateEntryRequest, updateEntrySuccessful } from './actions'
-import { closeStoryPreparationStarted, openStorySuccessful, _storyClosed as storyClosed } from '../story/actions'
+import { closeStoryPreparationStarted, _storyClosed as storyClosed } from '../story/actions'
 import { getFilteredCharacters, getProfile, getProfileEntries, getProfileGroup, getProfileGroupIds, getProfileGroups, getSelectedCharacterId, getSelectedCharacterName, isCharacterEditModeEnabled, isCharacterSelected, isCreateCharacterDialogOpen, isProfileEmpty, isProfileFetching, isProfileGroupEmpty } from './selectors'
 
 import { createStore } from '../store'
@@ -10,12 +10,6 @@ beforeEach(() => {
 })
 
 test('initial state', () => {
-  validateInitialState()
-})
-
-test('openStorySuccessful', async () => {
-  await store.dispatch(openCreateCharacterDialog())
-  await store.dispatch(openStorySuccessful())
   validateInitialState()
 })
 
