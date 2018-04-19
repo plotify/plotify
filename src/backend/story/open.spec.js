@@ -3,6 +3,7 @@ import { mode, open } from '../shared/sqlite'
 import InvalidStoryFileError from './invalid-story-file-error'
 import Story from './story'
 import UnsupportedStoryFileVersionError from './unsupported-story-file-version-error'
+import { appendFile } from 'fs-extra'
 import createStory from './create'
 import openStory from './open'
 import { tmpNameSync } from 'tmp'
@@ -28,6 +29,12 @@ test('returns instance of Story with passed path when called with valid path', a
 
 test('rejects to TypeError when called with invalid path', () => {
   return expect(openStory(123)).rejects.toBeInstanceOf(TypeError)
+})
+
+test('rejects to InvalidStoryFileError when called with invalid SQLite database', async () => {
+  const path = tmpNameSync({ postfix: '.story' })
+  await appendFile(path, 'Hello world')
+  return expect(openStory(path)).rejects.toHaveProperty('name', InvalidStoryFileError.name)
 })
 
 test('rejects to InvalidStoryFileError when called with SQLite database with invalid application id', async () => {

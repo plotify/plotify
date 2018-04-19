@@ -17,10 +17,18 @@ const openStory = async (path) => {
 }
 
 const validateApplicationId = async (database) => {
-  const result = await database.get('PRAGMA application_id')
-  const applicationId = result['application_id']
-  if (applicationId !== PLOTIFY_APPLICATION_ID) {
-    throw new InvalidStoryFileError('Invalid application id: ' + applicationId)
+  try {
+    const result = await database.get('PRAGMA application_id')
+    const applicationId = result['application_id']
+    if (applicationId !== PLOTIFY_APPLICATION_ID) {
+      throw new InvalidStoryFileError('Invalid application id: ' + applicationId)
+    }
+  } catch (error) {
+    if (error.message.startsWith('SQLITE_NOTADB')) {
+      throw new InvalidStoryFileError('Not a database')
+    } else {
+      throw error
+    }
   }
 }
 
