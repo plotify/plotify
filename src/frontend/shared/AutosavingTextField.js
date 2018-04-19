@@ -25,11 +25,12 @@ class AutosavingTextField extends Component {
 
   async handleChange (event) {
     const dirty = this.state.savedValue !== event.target.value
-    await this.setState({
+    this.setState({
       dirty,
       value: event.target.value
+    }, () => {
+      if (dirty) this.startTimer()
     })
-    if (dirty) this.startTimer()
   }
 
   startTimer () {
