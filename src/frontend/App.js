@@ -1,11 +1,9 @@
 import CharactersSection from './characters/components/CharactersSection'
-import ClosingStoryDialog from './story/components/ClosingStoryDialog'
-import CreatingStoryDialog from './story/components/CreatingStoryDialog'
 import FullScreenHint from './view/components/FullScreenHint'
 import NavigationDrawer from './navigation/components/NavigationDrawer'
-import OpeningStoryDialog from './story/components/OpeningStoryDialog'
 import PropTypes from 'prop-types'
 import React from 'react'
+import StoryStatusDialog from './story/components/StoryStatusDialog'
 import UpdateNotificationSnackbar from './updates/components/UpdateNotificationSnackbar'
 import WelcomeSection from './welcome/components/WelcomeSection'
 import { basename } from 'path'
@@ -34,9 +32,7 @@ class App extends React.Component {
         <NavigationDrawer />
         <UpdateNotificationSnackbar />
         <FullScreenHint />
-        <OpeningStoryDialog />
-        <CreatingStoryDialog />
-        <ClosingStoryDialog />
+        <StoryStatusDialog />
         <WelcomeSection />
         <CharactersSection />
       </div>

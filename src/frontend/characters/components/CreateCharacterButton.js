@@ -1,4 +1,4 @@
-import AddIcon from 'material-ui-icons/Add'
+import AddIcon from '@material-ui/icons/Add'
 import IconButton from 'material-ui/IconButton'
 import PropTypes from 'prop-types'
 import React from 'react'

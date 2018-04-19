@@ -1,18 +1,17 @@
-import { CLOSE_STORY_PREPARATION_REQUESTED, CREATE_STORY_REQUESTED, OPEN_STORY_REQUESTED } from '../../../shared/story/requests'
-import { createStory as _createStory, openStory as _openStory, isStoryOpenInFocusedWindow } from '../../story'
+import { createStory, isStoryOpenInFocusedWindow, openStory } from '../../story'
 
+import { CLOSE_STORY_PREPARATION_REQUESTED } from '../../../shared/story/requests'
 import { createSelector } from 'reselect'
 import recentlyOpenedFiles from './recently-opened-files'
 import { request } from '../../shared/communication'
-import { showMessageBox } from '../../shared/dialog'
 import store from '../../store'
 
 const fileMenu = (menuLabel, showQuit, recentlyOpenedFiles, openStoryInFocusedWindow) => {
   const menu = {
     label: menuLabel,
     submenu: [
-      { label: 'Neu...', click: createStory },
-      { label: 'Öffnen...', click: openStory },
+      { label: 'Neu...', click: _createStory },
+      { label: 'Öffnen...', click: _openStory },
       {
         label: 'Zuletzt geöffnet',
         enabled: recentlyOpenedFiles.length > 0,
@@ -36,37 +35,12 @@ const emptySubmenu = [
   }
 ]
 
-const createStory = (_, window) => {
-  if (window) {
-    request(window, CREATE_STORY_REQUESTED)
-  } else {
-    createStoryInNewWindow()
-  }
+const _createStory = (_, window) => {
+  store.dispatch(createStory(window))
 }
 
-const createStoryInNewWindow = async () => {
-  try {
-    const path = await store.dispatch(_createStory())
-    if (path) {
-      store.dispatch(_openStory(null, path))
-    }
-  } catch (error) {
-    showMessageBox(null, {
-      type: 'error',
-      title: 'Die Geschichte konnte nicht erstellt werden.',
-      message: error.message,
-      buttons: ['Schließen'],
-      defaultId: 0
-    })
-  }
-}
-
-const openStory = (_, window) => {
-  if (window) {
-    request(window, OPEN_STORY_REQUESTED)
-  } else {
-    store.dispatch(_openStory())
-  }
+const _openStory = (_, window) => {
+  store.dispatch(openStory(window))
 }
 
 const closeStory = (_, window) => {

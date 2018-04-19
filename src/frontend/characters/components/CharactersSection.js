@@ -1,6 +1,7 @@
+import React, { Fragment } from 'react'
 import { getSelectedCharacterName, isCharacterSelected } from '../selectors'
 
-import BackIcon from 'material-ui-icons/ArrowBack'
+import BackIcon from '@material-ui/icons/ArrowBack'
 import { CHARACTERS_SECTION } from '../constants'
 import CharacterProfile from './CharacterProfile'
 import CharactersList from './CharactersList'
@@ -10,7 +11,6 @@ import IconButton from 'material-ui/IconButton'
 import MediaQuery from 'react-responsive'
 import Paper from 'material-ui/Paper'
 import PropTypes from 'prop-types'
-import React from 'react'
 import Section from '../../navigation/components/Section'
 import ToggleEditModeButton from './ToggleEditModeButton'
 import Typography from 'material-ui/Typography'
@@ -19,49 +19,47 @@ import { connect } from 'react-redux'
 import { deselectCharacter } from '../actions'
 import { withStyles } from 'material-ui/styles'
 
-// import SearchIcon from 'material-ui-icons/Search'
-// import CharacterProfileMenu from './CharacterProfileMenu'
-// import UndoRedoButtons from './UndoRedoButtons'
-
 const CharactersSection = (props) => {
   const { classes, characterSelected, selectedCharacterName } = props
 
-  const listToolbar = ([
-    <Typography variant='title' color='inherit' className={classes.title} key={1}>
-      Charaktere
-    </Typography>,
-    <CreateCharacterButton key={2} />
-    // <IconButton color='inherit' key={3}>
-    //   <SearchIcon />
-    // </IconButton>
-  ])
-
-  const profileToolbar = characterSelected ? ([
-    <MediaQuery maxWidth={759} key={0}>
+  const listToolbar = (
+    <Fragment>
       <Typography variant='title' color='inherit' className={classes.title}>
-        {characterSelected && selectedCharacterName}
+        Charaktere
       </Typography>
-    </MediaQuery>,
-    // <UndoRedoButtons key={1} />,
-    <ToggleEditModeButton key={2} />
-    // <CharacterProfileMenu key={3} />
-  ]) : null
-  const toolbar = ([
-    <MediaQuery maxWidth={759} key={1}>
-      {!characterSelected &&
-      <div className={classNames(classes.listToolbar, classes.listToolbarSingleView)}>
-        {listToolbar}
-      </div>}
-    </MediaQuery>,
-    <MediaQuery minWidth={760} key={2}>
-      <div className={classes.listToolbar}>
-        {listToolbar}
+      <CreateCharacterButton />
+    </Fragment>
+  )
+
+  const profileToolbar = characterSelected ? (
+    <Fragment>
+      <MediaQuery maxWidth={759}>
+        <Typography variant='title' color='inherit' className={classes.title}>
+          {characterSelected && selectedCharacterName}
+        </Typography>
+      </MediaQuery>
+      <ToggleEditModeButton />
+    </Fragment>
+  ) : null
+
+  const toolbar = (
+    <Fragment>
+      <MediaQuery maxWidth={759}>
+        {!characterSelected &&
+        <div className={classNames(classes.listToolbar, classes.listToolbarSingleView)}>
+          {listToolbar}
+        </div>}
+      </MediaQuery>
+      <MediaQuery minWidth={760}>
+        <div className={classes.listToolbar}>
+          {listToolbar}
+        </div>
+      </MediaQuery>
+      <div className={classes.profileToolbar}>
+        {profileToolbar}
       </div>
-    </MediaQuery>,
-    <div className={classes.profileToolbar} key={3}>
-      {profileToolbar}
-    </div>
-  ])
+    </Fragment>
+  )
 
   let profile = null
   let BackButton
@@ -74,8 +72,7 @@ const CharactersSection = (props) => {
         color='inherit'
         onClick={props.deselectCharacter}
         aria-label='Back'
-        {...backProps}
-      >
+        {...backProps}>
         <BackIcon />
       </IconButton>
     )
@@ -98,25 +95,27 @@ const CharactersSection = (props) => {
     {profile}
   </div>
 
-  return [
-    <MediaQuery minWidth={760} key={0}>
-      <Section
-        id={CHARACTERS_SECTION}
-        title='Charaktere'
-        toolbar={toolbar}>
-        {content}
-      </Section>
-    </MediaQuery>,
-    <MediaQuery maxWidth={759} key={1}>
-      <Section
-        id={CHARACTERS_SECTION}
-        title='Charaktere'
-        toolbar={toolbar}
-        MenuButton={BackButton}>
-        {content}
-      </Section>
-    </MediaQuery>
-  ]
+  return (
+    <Fragment>
+      <MediaQuery minWidth={760}>
+        <Section
+          id={CHARACTERS_SECTION}
+          title='Charaktere'
+          toolbar={toolbar}>
+          {content}
+        </Section>
+      </MediaQuery>
+      <MediaQuery maxWidth={759}>
+        <Section
+          id={CHARACTERS_SECTION}
+          title='Charaktere'
+          toolbar={toolbar}
+          MenuButton={BackButton}>
+          {content}
+        </Section>
+      </MediaQuery>
+    </Fragment>
+  )
 }
 
 CharactersSection.propTypes = {

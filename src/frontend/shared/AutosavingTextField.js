@@ -23,13 +23,14 @@ class AutosavingTextField extends Component {
     this.handleSave()
   }
 
-  async handleChange (e) {
-    const dirty = this.state.savedValue !== e.target.value
-    await this.setState({
+  async handleChange (event) {
+    const dirty = this.state.savedValue !== event.target.value
+    this.setState({
       dirty,
-      value: e.target.value
+      value: event.target.value
+    }, () => {
+      if (dirty) this.startTimer()
     })
-    if (dirty) this.startTimer()
   }
 
   startTimer () {
@@ -44,7 +45,6 @@ class AutosavingTextField extends Component {
    */
   async handleSave () {
     const { dirty, saving, value, timer } = this.state
-    if (saving) console.warn('Aborting save call. Saving already in progress.')
     if (dirty && !saving) {
       try {
         this.setState({ saving: true })
@@ -53,11 +53,10 @@ class AutosavingTextField extends Component {
           savedValue: value,
           dirty: false
         })
-        console.log('AutoSavingTextField: after saved state', this.state)
         clearTimeout(timer)
-      } catch (e) {
+      } catch (error) {
         // TODO: error handling
-        console.error(e)
+        console.error('[AutosavingTextField] Fehler beim automatischen Speichern:', error)
       }
       this.setState({ saving: false })
     }
@@ -73,20 +72,17 @@ class AutosavingTextField extends Component {
       label
     } = this.props
     return (
-      <React.Fragment>
-        <TextField
-          label={this.state.dirty && label ? label + ' •' : label}
-          value={this.state.value}
-          InputLabelProps={{className: classes.inputLabel}}
-          InputProps={InputProps}
-          fullWidth={fullWidth}
-          disabled={disabled}
-          multiline={multiline}
-          onFocus={() => {}}
-          onBlur={this.handleSave}
-          onChange={this.handleChange}
-        />
-      </React.Fragment>
+      <TextField
+        label={this.state.dirty && label ? label + ' •' : label}
+        value={this.state.value}
+        InputLabelProps={{className: classes.inputLabel}}
+        InputProps={InputProps}
+        fullWidth={fullWidth}
+        disabled={disabled}
+        multiline={multiline}
+        onBlur={this.handleSave}
+        onChange={this.handleChange}
+      />
     )
   }
 }
@@ -98,6 +94,7 @@ AutosavingTextField.propTypes = {
   InputProps: PropTypes.object,
   defaultValue: PropTypes.any,
   label: PropTypes.any,
+
   /**
    * Save Function to ensure auto save.
    */

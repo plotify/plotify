@@ -25,40 +25,41 @@ Auf Basis dieser Version wollen wir zukünftig den Funktionsumfang von Plotify a
 Plotify befindet sich noch in einer sehr frühen Entwicklungsphase.
 Dies ist eine Testversion, die nicht für den produktiven Einsatz vorgesehen ist.
 Es sollten keine Informationen ausschließlich in Plotify gespeichert werden.
+Bitte lies die [Installationsanleitung](docs/installation/README.md), um zu erfahren, wie du die Testversion von Plotify installieren kannst.
 
 <table>
     <tr>
         <td align="center" width="33%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-windows-x64.exe">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.5/plotify-0.2.0-alpha.5-windows-x64.exe">
                 <img src="docs/assets/windows-logo.png" />
             </a>
          </td>
         <td align="center" width="33%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-linux-amd64.deb">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.5/plotify-0.2.0-alpha.5-linux-amd64.deb">
                 <img src="docs/assets/linux-logo.png" />
             </a>
         </td>
         <td align="center" width="33%">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-macos-x64.dmg">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.5/plotify-0.2.0-alpha.5-macos-x64.dmg">
                 <img src="docs/assets/macos-logo.png" />
             </a>
         </td>
     </tr>
     <tr>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-windows-x64.exe">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.5/plotify-0.2.0-alpha.5-windows-x64.exe">
                 <b>Windows</b><br />
                 Windows 7, 8, 10
             </a>
         </td>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-linux-amd64.deb">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.5/plotify-0.2.0-alpha.5-linux-amd64.deb">
                 <b>Linux</b><br />
                 Ubuntu, Linux Mint, elementary OS
             </a>
         </td>
         <td align="center">
-            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-macos-x64.dmg">
+            <a href="https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.5/plotify-0.2.0-alpha.5-macos-x64.dmg">
                 <b>macOS</b><br />
                 macOS 10.9+
             </a>

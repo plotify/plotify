@@ -1,6 +1,6 @@
 # Installation von Plotify unter macOS
 
-1. Lade die neuste Version von Plotify herunter: [Plotify für macOS](https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.4/plotify-0.2.0-alpha.4-macos-x64.dmg)
+1. Lade die neuste Version von Plotify herunter: [Plotify für macOS](https://github.com/plotify/plotify/releases/download/v0.2.0-alpha.5/plotify-0.2.0-alpha.5-macos-x64.dmg)
 2. Öffne die heruntergeladene Datei mit der Endung `.dmg` mit einem Doppelklick oder über das Kontextmenü.<br />![](open-dmg.png)
 3. Es öffnet sich ein Fenster, in dem das Logo von Plotify angezeigt wird. Ziehe das Logo von Plotify mit der Maus auf das Order-Symbol rechts daneben.<br />![](install.png)
 4. Wenn du Plotify bereits installiert hast, wird ein Dialog-Fenster angezeigt.

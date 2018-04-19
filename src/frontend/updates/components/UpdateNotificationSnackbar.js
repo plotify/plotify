@@ -1,10 +1,10 @@
+import React, { Fragment } from 'react'
 import { closeUpdateNotification, openUpdateNotificationUrl } from '../actions'
 
 import Button from 'material-ui/Button'
-import CloseIcon from 'material-ui-icons/Close'
+import CloseIcon from '@material-ui/icons/Close'
 import IconButton from 'material-ui/IconButton'
 import PropTypes from 'prop-types'
-import React from 'react'
 import Snackbar from 'material-ui/Snackbar'
 import { connect } from 'react-redux'
 import { isUpdateNotificationOpen } from '../selectors'
@@ -20,24 +20,22 @@ const UpdateNotificationSnackbar = (props) => {
       }}
       open={open}
       message='Ein Update für Plotify ist verfügbar!'
-      action={[
-        <Button
-          key='download'
-          size='small'
-          color='inherit'
-          onClick={onStartDownload}
-        >
-          Jetzt herunterladen
-        </Button>,
-        <IconButton
-          key='close'
-          color='inherit'
-          className={classes.close}
-          onClick={onClose}
-        >
-          <CloseIcon />
-        </IconButton>
-      ]}
+      action={
+        <Fragment>
+          <Button
+            size='small'
+            color='inherit'
+            onClick={onStartDownload}>
+            Jetzt herunterladen
+          </Button>
+          <IconButton
+            color='inherit'
+            className={classes.close}
+            onClick={onClose}>
+            <CloseIcon />
+          </IconButton>
+        </Fragment>
+      }
     />
   )
 }

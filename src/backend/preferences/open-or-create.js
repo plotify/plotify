@@ -25,16 +25,23 @@ const checkSchemaVersion = async (database) => {
       await updateSchemaV1(database)
       break
     case 2:
+      await updateSchemaV2(database)
+      break
+    case 3:
       break
     default:
       throw new Error('Unsupported preferences version: ' + schemaVersion)
   }
 }
 
-const deleteRecentlyOpenedFilesTableSql = 'DROP TABLE IF EXISTS recently_opened_files'
-
 const updateSchemaV1 = async (database) => {
-  await database.run(deleteRecentlyOpenedFilesTableSql)
+  await database.run('DROP TABLE IF EXISTS recently_opened_files')
+  await createSchema(database)
+  await updateSchemaV2(database)
+}
+
+const updateSchemaV2 = async (database) => {
+  await database.run('DROP TABLE IF EXISTS window')
   await createSchema(database)
 }
 

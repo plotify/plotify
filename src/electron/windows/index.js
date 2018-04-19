@@ -6,6 +6,7 @@ export {
   getWindowByStoryPath,
   getWindowStoryPath,
   getWindows,
+  isWindowReady,
   isAnyWindowReady,
   isWindowFocused,
   isAnyWindowFocused,

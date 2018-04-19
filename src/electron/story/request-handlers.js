@@ -6,16 +6,14 @@ import createStory from './create'
 import openStory from './open'
 import { requestHandler } from '../shared/communication'
 
-const handleCreateStory = (resolve, reject, senderWindow) => (dispatch) => {
-  dispatch(createStory(senderWindow))
-    .then(path => resolve(path))
-    .catch(error => reject(error.message))
+const handleCreateStory = (resolve, reject, senderWindow) => async (dispatch) => {
+  await dispatch(createStory(senderWindow))
+  resolve()
 }
 
-const handleOpenStory = (resolve, reject, senderWindow, path) => (dispatch) => {
-  dispatch(openStory(senderWindow, path))
-    .then(story => resolve(story ? story.path : undefined))
-    .catch(error => reject(error.message))
+const handleOpenStory = (resolve, _, senderWindow, path) => async (dispatch) => {
+  await dispatch(openStory(senderWindow, path))
+  resolve()
 }
 
 const handleCloseStory = (resolve, _, senderWindow, { closeWindow, focusWelcomeWindow }) => (dispatch) => {

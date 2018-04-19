@@ -1,10 +1,15 @@
+import { CREATE_STORY_FAILED, CREATE_STORY_STARTED, CREATE_STORY_SUCCESSFUL } from '../../shared/story/requests'
+import { closeSplashScreen, showSplashScreen } from '../splash-screen'
 import { existsSync, unlink } from 'fs-extra'
+import { showMessageBox, showSaveDialog } from '../shared/dialog'
 
 import { app } from 'electron'
 import { createStory } from '../../backend/story'
 import { extname } from 'path'
 import { getStoryPaths } from './selectors'
-import { showSaveDialog } from '../shared/dialog'
+import { getWindowStoryPath } from '../windows'
+import openStory from './open'
+import { request } from '../shared/communication'
 
 const options = {
   title: 'Neue Geschichte',
@@ -14,27 +19,50 @@ const options = {
   ]
 }
 
-const create = (senderWindow) => async (_, getState) => {
+const create = (senderWindow) => async (dispatch, getState) => {
   const file = await showSaveDialog(senderWindow, options)
   if (!file) {
-    return
+    return false
   }
 
-  let path
-  if (extname(file) === '.story') {
-    path = file
-  } else {
-    path = file + '.story'
+  const path = createStoryPath(file)
+  if (isStoryOpen(getState(), path)) {
+    await showErrorDialog(OVERWRITE_FILE_ERROR_MESSAGE, senderWindow)
+    return false
   }
-  checkCurrentStoryPath(getState(), path)
+
+  const openStoryInExistingWindow = senderWindow && getWindowStoryPath(getState(), senderWindow.id) === ''
+  if (openStoryInExistingWindow) {
+    await request(senderWindow, CREATE_STORY_STARTED, path)
+  } else {
+    dispatch(showSplashScreen())
+  }
 
   try {
     await deleteFileIfExists(path)
     const story = await createStory(path)
     await story.database.close()
-    return path
+
+    const result = await dispatch(openStory(senderWindow, path))
+
+    // Das Erstellen einer Geschichte ist erst dann abgeschlossen, wenn die Geschichte auch geöffnet wurde.
+    if (openStoryInExistingWindow) {
+      request(senderWindow, CREATE_STORY_SUCCESSFUL, path)
+    }
+
+    return result
   } catch (error) {
-    throw errorMessage(error)
+    if (openStoryInExistingWindow) {
+      request(senderWindow, CREATE_STORY_FAILED, path)
+    }
+
+    const errorMessage = createErrorMessage(error)
+    await showErrorDialog(errorMessage, senderWindow)
+    return false
+  } finally {
+    if (!openStoryInExistingWindow) {
+      dispatch(closeSplashScreen())
+    }
   }
 }
 
@@ -48,12 +76,21 @@ const CANT_CREATE_FILE_ERROR_MESSAGE =
   'Die Datei für die Geschichte konnte nicht erstellt werden. ' +
   'Hast du die notwendigen Berechtigungen, um eine Datei in dem ausgewählten Verzeichnis zu erstellen?'
 
-const checkCurrentStoryPath = (state, path) => {
+const createStoryPath = (path) => {
+  if (extname(path) === '.story') {
+    return path
+  } else {
+    return path + '.story'
+  }
+}
+
+const isStoryOpen = (state, path) => {
   for (let storyPath of getStoryPaths(state)) {
     if (path === storyPath) {
-      throw new Error(OVERWRITE_FILE_ERROR_MESSAGE)
+      return true
     }
   }
+  return false
 }
 
 const deleteFileIfExists = async (path) => {
@@ -66,7 +103,7 @@ const deleteFileIfExists = async (path) => {
   }
 }
 
-const errorMessage = (error) => {
+const createErrorMessage = (error) => {
   let message
 
   if (error.message.startsWith('SQLITE_CANTOPEN')) {
@@ -75,7 +112,18 @@ const errorMessage = (error) => {
     message = error.message
   }
 
-  return new Error(message)
+  return message
+}
+
+const showErrorDialog = (message, parentWindow) => {
+  return showMessageBox(parentWindow, {
+    type: 'error',
+    title: 'Die Geschichte konnte nicht erstellt werden.',
+    message: message,
+    buttons: ['Schließen'],
+    defaultId: 0,
+    noLink: true
+  })
 }
 
 export default create

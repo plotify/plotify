@@ -6,7 +6,12 @@ const theme = {
       50: '#e9e3f1',
       100: '#c9b9dd',
       200: '#a58ac6',
-      300: '#805baf',
+
+      // Diese Farbe wird für die Beschriftung eines fokussierten Textfeldes verwendet,
+      // wenn der Nachtmodus aktiviert ist. Die ursprüngliche Farbe (#805baf) war zu dunkel.
+      // Siehe: https://github.com/plotify/plotify/issues/146
+      300: '#e1bee7',
+
       400: '#65379d',
       500: '#4a148c',
       600: '#431284',

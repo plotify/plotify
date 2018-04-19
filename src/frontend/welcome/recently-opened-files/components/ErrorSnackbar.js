@@ -1,6 +1,6 @@
 import { getErrorMessage, isError } from '../selectors'
 
-import CloseIcon from 'material-ui-icons/Close'
+import CloseIcon from '@material-ui/icons/Close'
 import IconButton from 'material-ui/IconButton'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -18,15 +18,14 @@ const ErrorSnackbar = (props) => (
     autoHideDuration={5000}
     message={props.message}
     anchorOrigin={{ vertical, horizontal }}
-    action={[
+    action={
       <IconButton
-        key='close'
         aria-label='Schließen'
         color='inherit'
         onClick={props.onClose}>
         <CloseIcon />
       </IconButton>
-    ]} />
+    } />
 )
 
 ErrorSnackbar.propTypes = {

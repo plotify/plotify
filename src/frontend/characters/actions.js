@@ -14,9 +14,9 @@ import { getSelectedCharacterId } from './selectors'
 import { request } from '../shared/communication'
 import { setSection } from '../navigation/actions'
 
-export const openCharactersSection = () => (dispatch) => {
-  dispatch(setSection(CHARACTERS_SECTION))
-  dispatch(getCharacters())
+export const openCharactersSection = () => async (dispatch) => {
+  await dispatch(getCharacters())
+  await dispatch(setSection(CHARACTERS_SECTION))
 }
 
 // TODO Optimistic creation
@@ -51,10 +51,10 @@ export const getCharacters = () => async (dispatch) => {
   dispatch(getCharactersRequest())
   try {
     const characters = await request(GET_CHARACTERS)
-    dispatch(getCharactersSuccessful(characters))
-    dispatch(findCharacters())
+    await dispatch(getCharactersSuccessful(characters))
+    await dispatch(findCharacters())
   } catch (error) {
-    dispatch(getCharactersFailed(error))
+    await dispatch(getCharactersFailed(error))
   }
 }
 
@@ -77,9 +77,9 @@ export const findCharacters = () => async (dispatch) => {
   dispatch(findCharactersRequest)
   try {
     const characters = await request(FIND_CHARACTERS, { deleted: false })
-    dispatch(findCharactersSuccessful(characters))
+    await dispatch(findCharactersSuccessful(characters))
   } catch (error) {
-    dispatch(findCharactersFailed(error))
+    await dispatch(findCharactersFailed(error))
   }
 }
 
