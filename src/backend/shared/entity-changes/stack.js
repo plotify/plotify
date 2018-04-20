@@ -5,13 +5,24 @@ export const Stack = Object.freeze({
   FUTURE: 1
 })
 
+const emptySql = (type) => {
+  const sequenceTable = type.sequenceTable.name
+  const entityId = type.sequenceTable.entityIdColumn
+  return `
+    SELECT position
+    FROM ${sequenceTable}
+    WHERE ${entityId} = ? AND stack = ?
+    LIMIT 1
+  `
+}
+
 const topSql = (type) => {
   const sequenceTable = type.sequenceTable.name
   const entityId = type.sequenceTable.entityIdColumn
   return `
     SELECT ${entityId} AS entityId, stack, position, type, type_id AS typeId, history_id AS historyId
     FROM ${sequenceTable}
-    WHERE ${entityId}  = ? AND stack = ? AND position = (
+    WHERE ${entityId} = ? AND stack = ? AND position = (
       SELECT max(position)
       FROM ${sequenceTable}
       WHERE ${entityId} = ? AND stack = ?
@@ -72,6 +83,13 @@ const deleteSql = (type) => {
     DELETE FROM ${sequenceTable}
     WHERE ${entityId} = ? AND stack = ?
   `
+}
+
+export const isStackEmpty = async (stack, database, type, entityId) => {
+  validateType(type)
+  const sql = emptySql(type)
+  const params = [entityId, stack]
+  return await database.get(sql, params) === undefined
 }
 
 export const getStackTop = async (stack, database, type, entityId) => {
