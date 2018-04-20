@@ -30,7 +30,7 @@ export const closeSplashScreen = () => (dispatch, getState) => {
   dispatch(decrementLoadingProcesses())
   const loadingProccesses = getNumberOfLoadingProccesses(getState())
   if (loadingProccesses === 0) {
-    getWindow(getState()).close()
+    getWindow(getState()).destroy()
     dispatch(setWindow(null))
   }
 }

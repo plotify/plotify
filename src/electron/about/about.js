@@ -1,7 +1,9 @@
+import { getWindow } from '../splash-screen'
 import openContributorsDialog from './contributors'
 import openLicenseDialog from './license'
 import { shell } from 'electron'
 import { showMessageBox } from '../shared/dialog'
+import store from '../store'
 
 const packageJson = require('../../package.json')
 const productName = packageJson.productName
@@ -25,6 +27,11 @@ const options = {
 }
 
 export default async (window) => {
+  // Der About-Dialog soll nicht am Splash Screen angeheftet werden.
+  if (isSplashScreen(window)) {
+    window = null
+  }
+
   const button = await showMessageBox(window, options)
   switch (button) {
     case 0:
@@ -37,4 +44,9 @@ export default async (window) => {
       shell.openExternal(homepage)
       break
   }
+}
+
+const isSplashScreen = (window) => {
+  const splashScreen = getWindow(store.getState())
+  return splashScreen === window
 }
