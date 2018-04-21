@@ -158,8 +158,11 @@ const styles = (theme) => ({
   },
   profile: {
     height: '100%',
-    overflowY: 'auto',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+
+    // Verhindert, dass die Profileinträge nach links verschoben werden,
+    // wenn beim Aktivieren des Bearbeitenmodus eine Scrollbar eingeblendet wird.
+    overflowY: 'scroll'
   }
 })
 
