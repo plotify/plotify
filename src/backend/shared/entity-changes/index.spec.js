@@ -1,4 +1,4 @@
-import { addChange, canUndo, undo, validateType, validateTypeGroup } from './'
+import { addChange, canRedo, canUndo, redo, undo, validateType, validateTypeGroup } from './'
 
 test('exports addChange function', () => {
   expect(addChange).toBeInstanceOf(Function)
@@ -18,4 +18,12 @@ test('exports canUndo function', () => {
 
 test('exports undo function', () => {
   expect(undo).toBeInstanceOf(Function)
+})
+
+test('exports canRedo function', () => {
+  expect(canRedo).toBeInstanceOf(Function)
+})
+
+test('exports redo function', () => {
+  expect(redo).toBeInstanceOf(Function)
 })
