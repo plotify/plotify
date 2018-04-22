@@ -1,6 +1,6 @@
 import { canRedo, canUndo, createCharacter, getCharacters, redo, undo, updateCharacter } from './'
 
-import { CHARACTER_TYPE } from './types'
+import { CHARACTER_NAME_CHANGED } from '../../shared/characters/changes'
 import { createStory } from '../story'
 import { tmpNameSync } from 'tmp'
 
@@ -78,11 +78,14 @@ describe('#undo', () => {
       name: 'Erika Musterfrau',
       deleted: false
     })
+    expect(await getCharacterName(characterId)).toEqual('Erika Musterfrau')
 
     const result = await undo(database, characterId)
-    expect(JSON.stringify(result.type)).toEqual(JSON.stringify(CHARACTER_TYPE))
-    expect(result.typeId).toEqual(characterId)
-    expect(typeof result.historyId).toEqual('string')
+    expect(result.characterId).toEqual(characterId)
+    expect(result.type).toEqual(CHARACTER_NAME_CHANGED)
+    expect(typeof result.entity.id).toEqual('string')
+    expect(result.entity.name).toEqual('Max Mustermann')
+    expect(result.entity.deleted).toBe(false)
   })
 
   test('Throws Error if there are no changes that can be undone', () => {
@@ -158,12 +161,17 @@ describe('#redo', () => {
       name: 'Erika Musterfrau',
       deleted: false
     })
+    expect(await getCharacterName(characterId)).toEqual('Erika Musterfrau')
+
     await undo(database, characterId)
+    expect(await getCharacterName(characterId)).toEqual('Max Mustermann')
 
     const result = await redo(database, characterId)
-    expect(JSON.stringify(result.type)).toEqual(JSON.stringify(CHARACTER_TYPE))
-    expect(result.typeId).toEqual(characterId)
-    expect(typeof result.historyId).toEqual('string')
+    expect(result.characterId).toEqual(characterId)
+    expect(result.type).toEqual(CHARACTER_NAME_CHANGED)
+    expect(typeof result.entity.id).toEqual('string')
+    expect(result.entity.name).toEqual('Erika Musterfrau')
+    expect(result.entity.deleted).toBe(false)
   })
 
   test('Throws Error if there are no changes that can be redone', () => {
