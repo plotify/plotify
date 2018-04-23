@@ -10,13 +10,11 @@ export const get = async (url) => {
     concat(url, (error, result, data) => {
       if (error) {
         reject(error)
-      }
-
-      if (result.statusCode < 200 || result.statusCode > 299) {
+      } else if (result.statusCode < 200 || result.statusCode > 299) {
         reject(new Error('HTTP status code: ' + result.statusCode))
+      } else {
+        resolve(data)
       }
-
-      resolve(data)
     })
   })
 }
