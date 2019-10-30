@@ -27,3 +27,7 @@ export const ENTRY_TYPE = Object.freeze({
   entityTable: 'entry',
   historyTable: 'entry_history'
 })
+
+export const TYPES = Object.freeze([
+  CHARACTER_TYPE, ENTRY_GROUP_TYPE, ENTRY_TYPE
+])
