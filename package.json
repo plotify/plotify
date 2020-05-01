@@ -51,7 +51,8 @@
     "simple-get": "2.7.0",
     "sqlite3": "4.0.0",
     "tmp": "0.0.33",
-    "uuid": "3.2.1"
+    "uuid": "3.2.1",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
@@ -85,11 +86,14 @@
     "rebuild": "electron-builder install-app-deps",
     "dev:frontend": "gulp dev:frontend",
     "dev:backend": "gulp dev:backend",
-    "dist": "gulp dist"
+    "dist": "gulp dist",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "standard": {
     "env": [
       "jest"
     ]
-  }
+  },
+  "snyk": true
 }
