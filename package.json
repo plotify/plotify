@@ -64,7 +64,7 @@
     "check-dependencies": "1.1.0",
     "coveralls": "3.0.0",
     "del": "3.0.0",
-    "electron": "1.8.4",
+    "electron": "15.5.5",
     "electron-builder": "20.8.1",
     "electron-devtools-installer": "2.2.3",
     "gulp": "3.9.1",
