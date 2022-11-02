@@ -67,7 +67,7 @@
     "electron": "1.8.4",
     "electron-builder": "20.8.1",
     "electron-devtools-installer": "2.2.3",
-    "gulp": "3.9.1",
+    "gulp": "4.0.2",
     "gulp-babel": "7.0.1",
     "gulp-cached": "1.1.1",
     "jest": "22.4.3",
