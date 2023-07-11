@@ -46,7 +46,7 @@
     "redux": "4.0.0",
     "redux-thunk": "2.2.0",
     "reselect": "3.0.1",
-    "semver": "5.5.0",
+    "semver": "5.7.2",
     "shared-exclusive-lock": "0.2.3",
     "simple-get": "2.7.0",
     "sqlite3": "4.0.0",
