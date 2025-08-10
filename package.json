@@ -50,7 +50,7 @@
     "shared-exclusive-lock": "0.2.3",
     "simple-get": "2.7.0",
     "sqlite3": "4.0.0",
-    "tmp": "0.0.33",
+    "tmp": "0.2.4",
     "uuid": "3.2.1"
   },
   "devDependencies": {
